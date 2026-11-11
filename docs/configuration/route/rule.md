@@ -231,6 +231,9 @@ icon: material/new-box
 
     When a rule-set contains only a single default rule without `invert`, its fields are considered merged into the outer rule per the logic above; otherwise, it is matched as an `other field`; different rule-sets always keep OR semantics.
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### inbound
 
 Tags of [Inbound](/configuration/inbound/).
@@ -260,7 +263,7 @@ Sniffed client type, see [Protocol Sniff](/configuration/route/sniff/) for detai
 !!! quote "Changes in sing-box 1.13.0"
 
     Since sing-box 1.13.0, you can match ICMP echo (ping) requests via the new `icmp` network.
-    
+
     Such traffic originates from `TUN`, `WireGuard`, and `Tailscale` inbounds and can be routed to `Direct`, `WireGuard`, and `Tailscale` outbounds.
 
 Match network type.
@@ -552,6 +555,8 @@ Match [rule-set](/configuration/route/#rule_set).
 
 Make `ip_cidr` in rule-sets match the source IP.
 
+- Deprecated.
+
 #### rule_set_ip_cidr_match_source
 
 !!! question "Since sing-box 1.10.0"
@@ -574,7 +579,12 @@ See [Rule Actions](../rule_action/) for details.
 
     Moved to [Rule Action](../rule_action#route).
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### Logical Fields
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### type
 
@@ -591,3 +601,9 @@ See [Rule Actions](../rule_action/) for details.
 ==Required==
 
 Included rules.
+
+#### invert
+
+Invert match result.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

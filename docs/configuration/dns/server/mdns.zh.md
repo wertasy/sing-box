@@ -31,11 +31,16 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### interface
 
 用于发送 mDNS 查询的网络接口名称列表。
 
 留空时，将使用所有处于 up 状态、支持多播且非环回的接口。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

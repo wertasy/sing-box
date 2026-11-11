@@ -36,6 +36,9 @@ DERP 服务是一个 Tailscale DERP 服务器，类似于 [derper](https://pkg.g
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### tls
 
 TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
@@ -147,3 +150,5 @@ STUN 服务器监听选项。
 ```json
 { "enabled": true, "listen_port": __PORT__ }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-END -->

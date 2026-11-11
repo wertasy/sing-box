@@ -65,9 +65,16 @@ func (o NetworkNamespace) DescribeSchema(builder schema.Builder) (*schema.Node, 
 }
 
 type DefaultNetworkNamespaceOptions struct {
+	// @required
+	//
+	// Name or path of the network namespace, for example `sing` or `/run/netns/sing`.
 	Path string `json:"path"`
 }
 
 type UnshareNetworkNamespaceOptions struct {
+	// If set, the PID of the process holding the namespace open is written to this path.
+	//
+	// The namespace can be entered with `nsenter -t <pid> -n` when sing-box is run as root,
+	// or `nsenter -t <pid> -U --preserve-credentials -n` otherwise.
 	PidFile string `json:"pid_file,omitempty"`
 }

@@ -21,6 +21,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -59,6 +62,14 @@ Both is enabled by default.
 
 TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 
+#### multiplex
+
+See [Multiplex](/configuration/shared/multiplex#outbound) for details.
+
+#### transport
+
+V2Ray Transport configuration, see [V2Ray Transport](/configuration/shared/v2ray-transport/).
+
 #### packet_encoding
 
 UDP packet encoding, xudp is used by default.
@@ -69,13 +80,7 @@ UDP packet encoding, xudp is used by default.
 | packetaddr | Supported by v2ray 5+ |
 | xudp       | Supported by xray     |
 
-#### multiplex
-
-See [Multiplex](/configuration/shared/multiplex#outbound) for details.
-
-#### transport
-
-V2Ray Transport configuration, see [V2Ray Transport](/configuration/shared/v2ray-transport/).
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

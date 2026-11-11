@@ -5,7 +5,27 @@ import "github.com/sagernet/sing/common/json/badoption"
 type AnyTLSInboundOptions struct {
 	ListenOptions
 	InboundTLSOptionsContainer
-	Users         []AnyTLSUser               `json:"users,omitempty"`
+	// @required
+	//
+	// AnyTLS users.
+	Users []AnyTLSUser `json:"users,omitempty"`
+	// AnyTLS padding scheme line array.
+	//
+	// Default padding scheme:
+	//
+	// ```json
+	// [
+	//   "stop=8",
+	//   "0=30-30",
+	//   "1=100-400",
+	//   "2=400-500,c,500-1000,c,500-1000,c,500-1000,c,500-1000",
+	//   "3=9-9,500-1000",
+	//   "4=500-1000",
+	//   "5=500-1000",
+	//   "6=500-1000",
+	//   "7=500-1000"
+	// ]
+	// ```
 	PaddingScheme badoption.Listable[string] `json:"padding_scheme,omitempty"`
 }
 
@@ -18,9 +38,18 @@ type AnyTLSOutboundOptions struct {
 	DialerOptions
 	ServerOptions
 	OutboundTLSOptionsContainer
-	Password                 string             `json:"password,omitempty"`
+	// @required
+	//
+	// The AnyTLS password.
+	Password string `json:"password,omitempty"`
+	// Interval checking for idle sessions. Default: 30s.
 	IdleSessionCheckInterval badoption.Duration `json:"idle_session_check_interval,omitempty"`
-	IdleSessionTimeout       badoption.Duration `json:"idle_session_timeout,omitempty"`
-	MinIdleSession           int                `json:"min_idle_session,omitempty"`
-	ClientMetadata           string             `json:"client_metadata,omitempty"`
+	// In the check, close sessions that have been idle for longer than this. Default: 30s.
+	IdleSessionTimeout badoption.Duration `json:"idle_session_timeout,omitempty"`
+	// In the check, at least the first `n` idle sessions are kept open. Default value: `n`=0
+	MinIdleSession int `json:"min_idle_session,omitempty"`
+	// @since 1.13.16
+	//
+	//     Check [AnyTLS client metadata](/manual/misc/anytls-client-metadata/).
+	ClientMetadata string `json:"client_metadata,omitempty"`
 }

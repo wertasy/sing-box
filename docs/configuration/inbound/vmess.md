@@ -26,6 +26,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### users
 
 ==Required==
@@ -52,3 +55,5 @@ See [Multiplex](/configuration/shared/multiplex#inbound) for details.
 #### transport
 
 V2Ray Transport configuration, see [V2Ray Transport](/configuration/shared/v2ray-transport/).
+
+<!-- AUTO-GENERATED-CONFIG-END -->

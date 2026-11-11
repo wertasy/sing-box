@@ -16,10 +16,17 @@ import (
 )
 
 type RawDNSOptions struct {
-	Servers        []DNSServerOptions `json:"servers,omitempty"`
-	Rules          []DNSRule          `json:"rules,omitempty"`
-	Final          string             `json:"final,omitempty" reference:"dns_server"`
-	ReverseMapping bool               `json:"reverse_mapping,omitempty"`
+	Servers []DNSServerOptions `json:"servers,omitempty"`
+	Rules   []DNSRule          `json:"rules,omitempty"`
+	// Default dns server tag.
+	//
+	// The first server will be used if empty.
+	Final string `json:"final,omitempty" reference:"dns_server"`
+	// Stores a reverse mapping of IP addresses after responding to a DNS query in order to provide domain names when routing.
+	//
+	// Since this process relies on the act of resolving domain names by an application before making a request, it can be
+	// problematic in environments such as macOS, where DNS is proxied and cached by the system.
+	ReverseMapping bool `json:"reverse_mapping,omitempty"`
 	DNSClientOptions
 }
 
@@ -60,14 +67,72 @@ func (o DNSOptions) DescribeSchema(builder schema.Builder) (*schema.Node, error)
 }
 
 type DNSClientOptions struct {
-	Strategy         DomainStrategy        `json:"strategy,omitempty"`
-	Timeout          badoption.Duration    `json:"timeout,omitempty"`
-	DisableCache     bool                  `json:"disable_cache,omitempty"`
-	DisableExpire    bool                  `json:"disable_expire,omitempty"`
-	IndependentCache bool                  `json:"independent_cache,omitempty" schema:"omit"`
-	CacheCapacity    uint32                `json:"cache_capacity,omitempty"`
-	Optimistic       *OptimisticDNSOptions `json:"optimistic,omitempty"`
-	ClientSubnet     *badoption.Prefixable `json:"client_subnet,omitempty"`
+	// Default domain strategy for resolving the domain names.
+	//
+	// One of `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`.
+	Strategy DomainStrategy `json:"strategy,omitempty"`
+	// @since 1.14.0
+	//
+	// Default timeout for each DNS query.
+	//
+	// `10s` is used by default.
+	//
+	// Can be overridden by `rules.[].timeout` (DNS rule action) or `domain_resolver.timeout`.
+	Timeout badoption.Duration `json:"timeout,omitempty"`
+	// Disable dns cache.
+	//
+	// Conflict with `optimistic`.
+	DisableCache bool `json:"disable_cache,omitempty"`
+	// Disable dns cache expire.
+	//
+	// Conflict with `optimistic`.
+	DisableExpire bool `json:"disable_expire,omitempty"`
+	// @failure: Deprecated in sing-box 1.14.0
+	//
+	//     `independent_cache` is deprecated and will be removed in sing-box 1.16.0, check [Migration](/migration/#migrate-independent-dns-cache).
+	//
+	// Make each DNS server's cache independent for special purposes. If enabled, will slightly degrade performance.
+	IndependentCache bool `json:"independent_cache,omitempty" schema:"omit"`
+	// @since 1.11.0
+	//
+	// LRU cache capacity.
+	//
+	// Value less than 1024 will be ignored.
+	CacheCapacity uint32 `json:"cache_capacity,omitempty"`
+	// @since 1.14.0
+	//
+	// Enable optimistic DNS caching. When a cached DNS entry has expired but is still within the timeout window,
+	// the stale response is returned immediately while a background refresh is triggered.
+	//
+	// Conflict with `disable_cache` and `disable_expire`.
+	//
+	// Accepts a boolean or an object. When set to `true`, the default timeout of `3d` is used.
+	//
+	// ```json
+	// {
+	//   "enabled": true,
+	//   "timeout": "3d"
+	// }
+	// ```
+	//
+	// ##### enabled
+	//
+	// Enable optimistic DNS caching.
+	//
+	// ##### timeout
+	//
+	// The maximum time an expired cache entry can be served optimistically.
+	//
+	// `3d` is used by default.
+	Optimistic *OptimisticDNSOptions `json:"optimistic,omitempty"`
+	// @since 1.9.0
+	//
+	// Append a `edns0-subnet` OPT extra record with the specified IP prefix to every query by default.
+	//
+	// If value is an IP address instead of prefix, `/32` or `/128` will be appended automatically.
+	//
+	// Can be overridden by `servers.[].client_subnet` or `rules.[].client_subnet`.
+	ClientSubnet *badoption.Prefixable `json:"client_subnet,omitempty"`
 }
 
 type _OptimisticDNSOptions struct {
@@ -156,7 +221,15 @@ func (o DNSServerOptions) DescribeSchema(builder schema.Builder) (*schema.Node, 
 }
 
 type DNSServerAddressOptions struct {
-	Server     string `json:"server"`
+	// @required
+	//
+	// The address of the DNS server.
+	//
+	// If domain name is used, `domain_resolver` must also be set to resolve IP address.
+	Server string `json:"server"`
+	// The port of the DNS server.
+	//
+	// `53` will be used by default.
 	ServerPort uint16 `json:"server_port,omitempty"`
 }
 
@@ -177,7 +250,40 @@ func (o *DNSServerAddressOptions) ReplaceServerOptions(options ServerOptions) {
 }
 
 type HostsDNSServerOptions struct {
-	Path       badoption.Listable[string]                                `json:"path,omitempty"`
+	// List of paths to hosts files.
+	//
+	// `/etc/hosts` is used by default.
+	//
+	// `C:\Windows\System32\Drivers\etc\hosts` is used by default on Windows.
+	//
+	// Example:
+	//
+	// ```json
+	// {
+	//   // "path": "/etc/hosts"
+	//
+	//   "path": [
+	//     "/etc/hosts",
+	//     "$HOME/.hosts"
+	//   ]
+	// }
+	// ```
+	Path badoption.Listable[string] `json:"path,omitempty"`
+	// Predefined hosts.
+	//
+	// Example:
+	//
+	// ```json
+	// {
+	//   "predefined": {
+	//     "www.google.com": "127.0.0.1",
+	//     "localhost": [
+	//       "127.0.0.1",
+	//       "::1"
+	//     ]
+	//   }
+	// }
+	// ```
 	Predefined *badjson.TypedMap[string, badoption.Listable[netip.Addr]] `json:"predefined,omitempty"`
 }
 
@@ -187,7 +293,35 @@ type RawLocalDNSServerOptions struct {
 
 type LocalDNSServerOptions struct {
 	RawLocalDNSServerOptions
-	PreferGo       bool                       `json:"prefer_go,omitempty"`
+	// @since 1.13.0
+	//
+	// When enabled, `local` DNS server will resolve DNS by dialing itself whenever possible.
+	//
+	// Specifically, it disables following behaviors which was added as features in sing-box 1.13.0:
+	//
+	// 1. On Apple platforms: Attempt to resolve A/AAAA requests using `getaddrinfo` in NetworkExtension.
+	// 2. On Linux: Resolve through `systemd-resolvd`'s DBus interface when available.
+	//
+	// As a sole exception, it cannot disable the following behavior:
+	//
+	// 1. In the Android graphical client,
+	// `local` will always resolve DNS through the platform interface,
+	// as there is no other way to obtain upstream DNS servers;
+	// On devices running Android versions lower than 10, this interface can only resolve A/AAAA requests.
+	//
+	// 2. On macOS, `local` will try DHCP first in Network Extension, since DHCP respects DIal Fields,
+	// it will not be disabled by `prefer_go`.
+	PreferGo bool `json:"prefer_go,omitempty"`
+	// @since 1.14.0
+	//
+	// A list of domain suffixes for which A/AAAA queries are answered from the
+	// [neighbor resolver](/configuration/shared/neighbor/) instead of the upstream.
+	//
+	// Each entry must start with `.`. Only queries whose host part (the portion
+	// before the suffix) contains no dots are matched; `.` matches any
+	// single-label name such as `nas`.
+	//
+	// Example: `[".", ".lan"]`.
 	NeighborDomain badoption.Listable[string] `json:"neighbor_domain,omitempty"`
 }
 
@@ -203,22 +337,34 @@ type RemoteTLSDNSServerOptions struct {
 
 type RemoteHTTPSDNSServerOptions struct {
 	RemoteTLSDNSServerOptions
-	Path    string               `json:"path,omitempty"`
-	Method  string               `json:"method,omitempty"`
+	// The path of the DNS server.
+	//
+	// `/dns-query` will be used by default.
+	Path   string `json:"path,omitempty"`
+	Method string `json:"method,omitempty"`
+	// Additional headers to be sent to the DNS server.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`
 }
 
 type FakeIPDNSServerOptions struct {
+	// IPv4 address range for FakeIP.
 	Inet4Range *badoption.Prefix `json:"inet4_range,omitempty" examples:"198.18.0.0/15"`
+	// IPv6 address range for FakeIP.
 	Inet6Range *badoption.Prefix `json:"inet6_range,omitempty" examples:"2001:2::/48"`
 }
 
 type DHCPDNSServerOptions struct {
 	LocalDNSServerOptions
+	// Interface name to listen on.
+	//
+	// Tge default interface will be used by default.
 	Interface string `json:"interface,omitempty"`
 }
 
 type MDNSDNSServerOptions struct {
 	LocalDNSServerOptions
+	// List of network interface names to send mDNS queries on.
+	//
+	// When empty, all interfaces that are up, multicast-capable, and non-loopback are used.
 	Interface badoption.Listable[string] `json:"interface,omitempty"`
 }

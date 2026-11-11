@@ -29,6 +29,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### network
 
 监听的网络协议，`tcp` `udp` 之一。
@@ -58,3 +61,5 @@ QUIC 拥塞控制算法。
 #### tls
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

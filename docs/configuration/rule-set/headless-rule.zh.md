@@ -131,6 +131,9 @@ icon: material/new-box
     (`source_port` || `source_port_range`) &&  
     `other fields`
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### query_type
 
 !!! quote "sing-box 1.14.0 中的更改"
@@ -292,11 +295,18 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 
     仅在 Android 与 Apple 平台图形客户端中支持。
 
+匹配 WiFi BSSID。
+
 #### invert
 
 反选匹配结果。
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### 逻辑字段
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### type
 
@@ -313,3 +323,9 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 ==必填==
 
 包括的规则。
+
+#### invert
+
+Invert match result.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

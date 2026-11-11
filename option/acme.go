@@ -13,21 +13,76 @@ import (
 )
 
 type ACMECertificateProviderOptions struct {
-	Domain                  badoption.Listable[string]         `json:"domain,omitempty"`
-	DataDirectory           string                             `json:"data_directory,omitempty"`
-	DefaultServerName       string                             `json:"default_server_name,omitempty"`
-	Email                   string                             `json:"email,omitempty"`
-	Provider                string                             `json:"provider,omitempty"`
-	AccountKey              string                             `json:"account_key,omitempty"`
-	DisableHTTPChallenge    bool                               `json:"disable_http_challenge,omitempty"`
-	DisableTLSALPNChallenge bool                               `json:"disable_tls_alpn_challenge,omitempty"`
-	AlternativeHTTPPort     uint16                             `json:"alternative_http_port,omitempty"`
-	AlternativeTLSPort      uint16                             `json:"alternative_tls_port,omitempty"`
-	ExternalAccount         *ACMEExternalAccountOptions        `json:"external_account,omitempty"`
-	DNS01Challenge          *ACMEProviderDNS01ChallengeOptions `json:"dns01_challenge,omitempty"`
-	KeyType                 ACMEKeyType                        `json:"key_type,omitempty" enum:"ed25519,p256,p384,rsa2048,rsa4096"`
-	Profile                 string                             `json:"profile,omitempty"`
-	HTTPClient              *HTTPClientOptions                 `json:"http_client,omitempty"`
+	// @required
+	//
+	// List of domains.
+	Domain badoption.Listable[string] `json:"domain,omitempty"`
+	// The directory to store ACME data.
+	//
+	// `$XDG_DATA_HOME/certmagic|$HOME/.local/share/certmagic` will be used if empty.
+	DataDirectory string `json:"data_directory,omitempty"`
+	// Server name to use when choosing a certificate if the ClientHello's ServerName field is empty.
+	DefaultServerName string `json:"default_server_name,omitempty"`
+	// The email address to use when creating or selecting an existing ACME server account.
+	Email string `json:"email,omitempty"`
+	// The ACME CA provider to use.
+	//
+	// | Value                   | Provider      |
+	// |-------------------------|---------------|
+	// | `letsencrypt (default)` | Let's Encrypt |
+	// | `zerossl`               | ZeroSSL       |
+	// | `https://...`           | Custom        |
+	//
+	// When `provider` is `zerossl`, sing-box will automatically request ZeroSSL EAB credentials if `email` is set and `external_account` is empty.
+	//
+	// When `provider` is `zerossl`, at least one of `external_account`, `email`, or `account_key` is required.
+	Provider string `json:"provider,omitempty"`
+	// @since 1.14.0
+	//
+	// The PEM-encoded private key of an existing ACME account.
+	AccountKey string `json:"account_key,omitempty"`
+	// Disable all HTTP challenges.
+	DisableHTTPChallenge bool `json:"disable_http_challenge,omitempty"`
+	// Disable all TLS-ALPN challenges
+	DisableTLSALPNChallenge bool `json:"disable_tls_alpn_challenge,omitempty"`
+	// The alternate port to use for the ACME HTTP challenge; if non-empty, this port will be used instead of 80 to spin up a listener for the HTTP challenge.
+	AlternativeHTTPPort uint16 `json:"alternative_http_port,omitempty"`
+	// The alternate port to use for the ACME TLS-ALPN challenge; the system must forward 443 to this port for challenge to succeed.
+	AlternativeTLSPort uint16 `json:"alternative_tls_port,omitempty"`
+	// EAB (External Account Binding) contains information necessary to bind or map an ACME account to some other account known by the CA.
+	//
+	// External account bindings are used to associate an ACME account with an existing account in a non-ACME system, such as a CA customer database.
+	//
+	// To enable ACME account binding, the CA operating the ACME server needs to provide the ACME client with a MAC key and a key identifier, using some mechanism outside of ACME. §7.3.4
+	ExternalAccount *ACMEExternalAccountOptions `json:"external_account,omitempty"`
+	// ACME DNS01 challenge field. If configured, other challenge methods will be disabled.
+	//
+	// See [DNS01 Challenge Fields](/configuration/shared/dns01_challenge/) for details.
+	DNS01Challenge *ACMEProviderDNS01ChallengeOptions `json:"dns01_challenge,omitempty"`
+	// @since 1.14.0
+	//
+	// The private key type to generate for new certificates.
+	//
+	// | Value      | Type    |
+	// |------------|---------|
+	// | `ed25519`  | Ed25519 |
+	// | `p256`     | P-256   |
+	// | `p384`     | P-384   |
+	// | `rsa2048`  | RSA     |
+	// | `rsa4096`  | RSA     |
+	KeyType ACMEKeyType `json:"key_type,omitempty" enum:"ed25519,p256,p384,rsa2048,rsa4096"`
+	// @since 1.14.0
+	//
+	// The ACME profile to use for certificate issuance.
+	//
+	// When empty and `provider` is Let's Encrypt, `shortlived` will be used automatically if any domain is an IP address.
+	Profile string `json:"profile,omitempty"`
+	// @since 1.14.0
+	//
+	// HTTP Client for all provider HTTP requests.
+	//
+	// See [HTTP Client Fields](/configuration/shared/http-client/) for details.
+	HTTPClient *HTTPClientOptions `json:"http_client,omitempty"`
 }
 
 type _ACMEProviderDNS01ChallengeOptions struct {

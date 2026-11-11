@@ -25,6 +25,9 @@ icon: material/alert-decagram
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### override_address
 
 !!! failure "已在 sing-box 1.11.0 废弃"
@@ -40,6 +43,8 @@ icon: material/alert-decagram
     目标覆盖字段在 sing-box 1.11.0 中已废弃，并将在 sing-box 1.13.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-direct-出站中的目标地址覆盖字段到路由字段)。
 
 覆盖连接目标端口。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

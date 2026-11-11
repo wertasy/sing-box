@@ -14,24 +14,87 @@ import (
 )
 
 type HTTP2Options struct {
-	IdleTimeout             badoption.Duration       `json:"idle_timeout,omitempty"`
-	KeepAlivePeriod         badoption.Duration       `json:"keep_alive_period,omitempty"`
-	StreamReceiveWindow     *byteformats.MemoryBytes `json:"stream_receive_window,omitempty"`
+	// Idle connection timeout, in golang's Duration format.
+	IdleTimeout badoption.Duration `json:"idle_timeout,omitempty"`
+	// Keep alive period, in golang's Duration format.
+	KeepAlivePeriod badoption.Duration `json:"keep_alive_period,omitempty"`
+	// HTTP2 stream-level flow-control receive window size.
+	//
+	// Accepts memory size format, e.g. `"64 MB"`.
+	StreamReceiveWindow *byteformats.MemoryBytes `json:"stream_receive_window,omitempty"`
+	// HTTP2 connection-level flow-control receive window size.
+	//
+	// Accepts memory size format, e.g. `"64 MB"`.
 	ConnectionReceiveWindow *byteformats.MemoryBytes `json:"connection_receive_window,omitempty"`
-	MaxConcurrentStreams    int                      `json:"max_concurrent_streams,omitempty"`
+	// Maximum concurrent streams per connection.
+	MaxConcurrentStreams int `json:"max_concurrent_streams,omitempty"`
 }
 
 type QUICOptions struct {
 	HTTP2Options
-	InitialPacketSize       int  `json:"initial_packet_size,omitempty"`
+	// Initial QUIC packet size.
+	InitialPacketSize int `json:"initial_packet_size,omitempty"`
+	// Disable QUIC path MTU discovery.
 	DisablePathMTUDiscovery bool `json:"disable_path_mtu_discovery,omitempty"`
 }
 
-type _HTTPClientOptions struct {
-	Tag                     string               `json:"tag,omitempty"`
-	Engine                  string               `json:"engine,omitempty" enum:"go,apple"`
-	Version                 int                  `json:"version,omitempty" enum:"0,1,2,3"`
-	DisableVersionFallback  bool                 `json:"disable_version_fallback,omitempty"`
+type HTTPClientOptions struct {
+	Tag string `json:"tag,omitempty"`
+	// HTTP engine to use.
+	//
+	// Values:
+	//
+	// * `go` (default)
+	// * `apple`
+	//
+	// `apple` uses NSURLSession, only available on Apple platforms.
+	//
+	// @warning:
+	//
+	//     Experimental only: do not use in hot paths on iOS and tvOS.
+	//
+	// Supported fields:
+	//
+	// * `headers`
+	// * `tls.server_name` (must match request host)
+	// * `tls.insecure`
+	// * `tls.min_version` / `tls.max_version`
+	// * `tls.certificate` / `tls.certificate_path`
+	// * `tls.certificate_sha256`
+	// * `tls.certificate_public_key_sha256`
+	// * Dial Fields
+	//
+	// Unsupported fields:
+	//
+	// * `version`
+	// * `disable_version_fallback`
+	// * HTTP2 Fields
+	// * QUIC Fields
+	// * `tls.engine`
+	// * `tls.alpn`
+	// * `tls.disable_sni`
+	// * `tls.cipher_suites`
+	// * `tls.curve_preferences`
+	// * `tls.client_certificate` / `tls.client_certificate_path` / `tls.client_key` / `tls.client_key_path`
+	// * `tls.fragment` / `tls.record_fragment`
+	// * `tls.kernel_tx` / `tls.kernel_rx`
+	// * `tls.ech`
+	// * `tls.utls`
+	// * `tls.reality`
+	Engine string `json:"engine,omitempty" enum:"go,apple"`
+	// HTTP version.
+	//
+	// Available values: `1`, `2`, `3`.
+	//
+	// `2` is used by default.
+	//
+	// When `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).
+	Version int `json:"version,omitempty" enum:"0,1,2,3"`
+	// Disable automatic fallback to lower HTTP version.
+	DisableVersionFallback bool `json:"disable_version_fallback,omitempty"`
+	// Custom HTTP headers.
+	//
+	// `Host` header is used as request host.
 	Headers                 badoption.HTTPHeader `json:"headers,omitempty"`
 	HTTP2Options            HTTP2Options         `json:"-"`
 	HTTP3Options            QUICOptions          `json:"-"`
@@ -43,10 +106,7 @@ type _HTTPClientOptions struct {
 	DialerOptions
 }
 
-type (
-	HTTPClient        _HTTPClientOptions
-	HTTPClientOptions _HTTPClientOptions
-)
+type HTTPClient HTTPClientOptions
 
 func (h HTTPClient) Options() HTTPClientOptions {
 	options := HTTPClientOptions(h)
@@ -61,14 +121,14 @@ func (o HTTPClientOptions) IsEmpty() bool {
 	o.DefaultOutbound = false
 	o.ResolveOnDetour = false
 	o.DirectResolver = false
-	return reflect.ValueOf(_HTTPClientOptions(o)).IsZero()
+	return reflect.ValueOf(HTTPClientOptions(o)).IsZero()
 }
 
 func (o HTTPClientOptions) MarshalJSON() ([]byte, error) {
 	if o.Tag != "" {
 		return json.Marshal(o.Tag)
 	}
-	return badjson.MarshallObjects(_HTTPClientOptions(o), httpClientVariant(_HTTPClientOptions(o)))
+	return badjson.MarshallObjects(HTTPClientOptions(o), httpClientVariant(HTTPClientOptions(o)))
 }
 
 func (o *HTTPClientOptions) UnmarshalJSONContext(ctx context.Context, content []byte) error {
@@ -76,7 +136,7 @@ func (o *HTTPClientOptions) UnmarshalJSONContext(ctx context.Context, content []
 		*o = HTTPClientOptions{}
 		return json.Unmarshal(content, &o.Tag)
 	}
-	var options _HTTPClientOptions
+	var options HTTPClientOptions
 	err := json.UnmarshalContext(ctx, content, &options)
 	if err != nil {
 		return err
@@ -91,15 +151,15 @@ func (o *HTTPClientOptions) UnmarshalJSONContext(ctx context.Context, content []
 }
 
 func (h HTTPClient) MarshalJSON() ([]byte, error) {
-	return badjson.MarshallObjects(_HTTPClientOptions(h), httpClientVariant(_HTTPClientOptions(h)))
+	return badjson.MarshallObjects(HTTPClientOptions(h), httpClientVariant(HTTPClientOptions(h)))
 }
 
 func (h *HTTPClient) UnmarshalJSONContext(ctx context.Context, content []byte) error {
-	err := json.UnmarshalContext(ctx, content, (*_HTTPClientOptions)(h))
+	err := json.UnmarshalContext(ctx, content, (*HTTPClientOptions)(h))
 	if err != nil {
 		return err
 	}
-	return unmarshalHTTPVersionOptions(ctx, content, (*_HTTPClientOptions)(h), h.Version, &h.HTTP2Options, &h.HTTP3Options)
+	return unmarshalHTTPVersionOptions(ctx, content, (*HTTPClientOptions)(h), h.Version, &h.HTTP2Options, &h.HTTP3Options)
 }
 
 func unmarshalHTTPVersionOptions(ctx context.Context, content []byte, baseStruct any, version int, http2Options *HTTP2Options, http3Options *QUICOptions) error {
@@ -160,7 +220,7 @@ func httpVersionVariant(version int, http2Options HTTP2Options, http3Options QUI
 	}
 }
 
-func httpClientVariant(options _HTTPClientOptions) any {
+func httpClientVariant(options HTTPClientOptions) any {
 	return httpVersionVariant(options.Version, options.HTTP2Options, options.HTTP3Options)
 }
 

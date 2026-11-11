@@ -21,6 +21,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -96,6 +99,8 @@ UDP over TCP 配置。
 #### multiplex
 
 参阅 [多路复用](/zh/configuration/shared/multiplex#出站)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

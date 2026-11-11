@@ -25,6 +25,9 @@
 
 ### Inbound Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 Enable multiplex support.
@@ -37,7 +40,12 @@ If enabled, non-padded connections will be rejected.
 
 See [TCP Brutal](/configuration/shared/tcp-brutal/) for details.
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### Outbound Fields
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### enabled
 
@@ -84,3 +92,5 @@ Enable padding.
 #### brutal
 
 See [TCP Brutal](/configuration/shared/tcp-brutal/) for details.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

@@ -69,6 +69,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### external_controller
 
 RESTful web API listening address. Clash API will be disabled if empty.
@@ -127,6 +130,8 @@ To access the Clash API on a private network from a public website, `access_cont
 
 Store Clash mode in cache file.
 
+- Deprecated.
+
 #### store_selected
 
 !!! failure "Deprecated in sing-box 1.8.0"
@@ -139,6 +144,8 @@ Store Clash mode in cache file.
 
 Store selected outbound for the `Selector` outbound in cache file.
 
+- Deprecated.
+
 #### store_fakeip
 
 !!! failure "Deprecated in sing-box 1.8.0"
@@ -147,6 +154,8 @@ Store selected outbound for the `Selector` outbound in cache file.
 
 Store fakeip in cache file.
 
+- Deprecated.
+
 #### cache_file
 
 !!! failure "Deprecated in sing-box 1.8.0"
@@ -154,6 +163,8 @@ Store fakeip in cache file.
     `cache_file` is deprecated in Clash API and migrated to `cache_file.enabled` and `cache_file.path`.
 
 Cache file path, `cache.db` will be used if empty.
+
+- Deprecated.
 
 #### cache_id
 
@@ -164,3 +175,7 @@ Cache file path, `cache.db` will be used if empty.
 Identifier in cache file.
 
 If not empty, configuration specified data will use a separate store keyed by it.
+
+- Deprecated.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

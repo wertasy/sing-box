@@ -25,6 +25,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### service
 
 ==Required==
@@ -38,6 +41,8 @@ Indicates whether the default DNS resolvers should be accepted for fallback quer
 Specifically, default DNS resolvers are DNS servers that have `SetLinkDefaultRoute` or `SetLinkDomains ~.` set.
 
 If not enabled, `NXDOMAIN` will be returned for requests that do not match search or match domains.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Examples
 

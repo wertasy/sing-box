@@ -52,6 +52,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -130,6 +133,8 @@ TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 Only `server_name`, `certificate`, `certificate_path` and `ech` are supported.
 
 Self-signed certificates change traffic behavior significantly, which defeats the purpose of NaiveProxy's design to resist traffic analysis, and should not be used in production.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

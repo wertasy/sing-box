@@ -17,13 +17,18 @@ icon: material/new-box
 
 ### Fields
 
-#### initial_packet_size
-
-Initial QUIC packet size.
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### disable_path_mtu_discovery
 
 Disable QUIC path MTU discovery.
+
+#### initial_packet_size
+
+Initial QUIC packet size.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### HTTP2 Fields
 

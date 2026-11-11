@@ -24,6 +24,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -101,6 +104,8 @@ See [Multiplex](/configuration/shared/multiplex#outbound) for details.
 #### transport
 
 V2Ray Transport configuration, see [V2Ray Transport](/configuration/shared/v2ray-transport/).
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

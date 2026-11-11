@@ -33,6 +33,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### token
 
 ==必填==
@@ -87,3 +90,5 @@ Cloudflare edge 区域选择器。
 
 隧道客户端拨向 Cloudflare edge 数据面时使用的
 [拨号字段](/zh/configuration/shared/dial/)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

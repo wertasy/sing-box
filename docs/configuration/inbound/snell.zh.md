@@ -52,6 +52,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### version
 
 ==必填==
@@ -94,3 +97,5 @@ HTTP 混淆模式，`none` `http` 之一。
 流量整形模式，`default` `unshaped` `unsafe-raw` 之一。
 
 默认为 `default`。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

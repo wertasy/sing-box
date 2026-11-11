@@ -38,6 +38,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -65,6 +68,8 @@ Additional headers to be sent to the DNS server.
 #### tls
 
 TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

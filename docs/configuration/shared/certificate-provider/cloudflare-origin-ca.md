@@ -25,6 +25,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### domain
 
 ==Required==
@@ -80,3 +83,5 @@ Available values: `7`, `30`, `90`, `365`, `730`, `1095`, `5475`.
 HTTP Client for all provider HTTP requests.
 
 See [HTTP Client Fields](/configuration/shared/http-client/) for details.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

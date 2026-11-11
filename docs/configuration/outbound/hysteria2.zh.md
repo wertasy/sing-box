@@ -70,6 +70,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -162,9 +165,14 @@ QUIC 流量混淆器密码。
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### QUIC 字段
 
 参阅 [QUIC 字段](/zh/configuration/shared/quic/) 了解详情。
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### bbr_profile
 
@@ -266,6 +274,8 @@ Realm 的 Bearer 令牌，需与 realm 上配置的 `users[].token` 之一匹配
 与 realm 通信使用的 HTTP 客户端。
 
 参阅 [HTTP 客户端](/zh/configuration/shared/http-client/) 了解详情。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

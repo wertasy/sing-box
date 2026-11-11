@@ -33,6 +33,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -92,6 +95,8 @@ Allowed MAC algorithms. Default values are used if empty.
 !!! question "Since sing-box 1.14.0"
 
 Allowed key exchange algorithms. Default values are used if empty.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

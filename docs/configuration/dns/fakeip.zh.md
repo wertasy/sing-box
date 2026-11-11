@@ -18,6 +18,9 @@ icon: material/note-remove
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 启用 FakeIP 服务。
@@ -29,3 +32,5 @@ icon: material/note-remove
 #### inet6_range
 
 用于 FakeIP 的 IPv6 地址范围。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

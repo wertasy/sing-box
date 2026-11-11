@@ -18,6 +18,15 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
+#### connection_receive_window
+
+HTTP2 连接级别流控接收窗口大小。
+
+接受内存大小格式，例如 `"64 MB"`。
+
 #### idle_timeout
 
 空闲连接超时，采用 golang 的 Duration 格式。
@@ -26,18 +35,14 @@ icon: material/new-box
 
 Keep alive 周期，采用 golang 的 Duration 格式。
 
+#### max_concurrent_streams
+
+每个连接的最大并发流数。
+
 #### stream_receive_window
 
 HTTP2 流级别流控接收窗口大小。
 
 接受内存大小格式，例如 `"64 MB"`。
 
-#### connection_receive_window
-
-HTTP2 连接级别流控接收窗口大小。
-
-接受内存大小格式，例如 `"64 MB"`。
-
-#### max_concurrent_streams
-
-每个连接的最大并发流数。
+<!-- AUTO-GENERATED-CONFIG-END -->

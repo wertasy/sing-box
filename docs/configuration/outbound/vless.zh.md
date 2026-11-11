@@ -21,6 +21,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -59,6 +62,14 @@ VLESS 子协议。
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
+#### multiplex
+
+参阅 [多路复用](/zh/configuration/shared/multiplex#出站)。
+
+#### transport
+
+V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。
+
 #### packet_encoding
 
 UDP 包编码，默认使用 xudp。
@@ -69,13 +80,7 @@ UDP 包编码，默认使用 xudp。
 | packetaddr | 由 v2ray 5+ 支持 |
 | xudp       | 由 xray 支持     |
 
-#### multiplex
-
-参阅 [多路复用](/zh/configuration/shared/multiplex#出站)。
-
-#### transport
-
-V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

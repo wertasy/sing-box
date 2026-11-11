@@ -27,6 +27,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### version
 
 !!! question "Since sing-box 1.15.0"
@@ -60,6 +63,8 @@ No authentication required if empty.
     To work on Android and Apple platforms without privileges, use tun.platform.http_proxy instead.
 
 Automatically set system proxy configuration when start and clean up when stop.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### HTTP2 Fields
 

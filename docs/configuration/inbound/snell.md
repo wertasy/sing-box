@@ -52,6 +52,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### version
 
 ==Required==
@@ -94,3 +97,5 @@ HTTP obfuscation mode, one of `none` `http`.
 Traffic shaping mode, one of `default` `unshaped` `unsafe-raw`.
 
 `default` is used by default.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

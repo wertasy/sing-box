@@ -30,6 +30,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### servers
 
 ==Required==
@@ -56,3 +59,5 @@ to be restored on the next startup.
 #### tls
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
+
+<!-- AUTO-GENERATED-CONFIG-END -->

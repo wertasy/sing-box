@@ -33,6 +33,9 @@ OCM（OpenAI Codex 多路复用器）服务是一个多路复用服务，允许�
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### credential_path
 
 OpenAI OAuth 凭据文件的路径。
@@ -91,6 +94,8 @@ OpenAI OAuth 凭据文件的路径。
 #### tls
 
 TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 示例
 

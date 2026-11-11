@@ -29,11 +29,16 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### network
 
 Listen network, one of `tcp` `udp`.
 
 Both if empty.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### UDP NAT Fields
 

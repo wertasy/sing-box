@@ -44,6 +44,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -123,6 +126,32 @@ base64 编码的认证密码。
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
+#### recv_window_conn
+
+!!! failure "已在 sing-box 1.14.0 废弃"
+
+    请使用 QUIC 字段 `stream_receive_window` 代替。
+
+- 已废弃。
+
+#### recv_window
+
+!!! failure "已在 sing-box 1.14.0 废弃"
+
+    请使用 QUIC 字段 `connection_receive_window` 代替。
+
+- 已废弃。
+
+#### disable_mtu_discovery
+
+!!! failure "已在 sing-box 1.14.0 废弃"
+
+    请使用 QUIC 字段 `disable_path_mtu_discovery` 代替。
+
+- 已废弃。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### QUIC 字段
 
 参阅 [QUIC 字段](/zh/configuration/shared/quic/) 了解详情。
@@ -132,6 +161,9 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 参阅 [拨号字段](/zh/configuration/shared/dial/)。
 
 ### 废弃字段
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### recv_window_conn
 
@@ -150,3 +182,5 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 !!! failure "已在 sing-box 1.14.0 废弃"
 
     请使用 QUIC 字段 `disable_path_mtu_discovery` 代替。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

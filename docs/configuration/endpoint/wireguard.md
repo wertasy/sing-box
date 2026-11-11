@@ -50,6 +50,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### system
 
 Use system interface.
@@ -136,6 +139,12 @@ CPU count is used by default.
 !!! question "Since sing-box 1.15.0"
 
 Allow the endpoint to be disconnected when necessary.
+
+#### listen_port
+
+Listen port for incoming connections.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### UDP NAT Fields
 

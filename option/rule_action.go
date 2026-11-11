@@ -88,7 +88,27 @@ func (r *RuleAction) UnmarshalJSON(data []byte) error {
 }
 
 type _DNSRuleAction struct {
-	Action              string                       `json:"action,omitempty" enum:"route,evaluate,respond,route-options,reject,predefined"`
+	// The action to perform. `route` will be used by default.
+	Action string `json:"action,omitempty" enum:"route,evaluate,respond,route-options,reject,predefined"`
+	// @since 1.14.0
+	//
+	// Only available with `route`, `respond`, `reject` and `predefined` actions.
+	//
+	// Requires [`match_response`](/configuration/dns/rule/#match_response) (for logical rules, in sub-rules).
+	// Conflict with `speculative`.
+	//
+	// By default, rules are matched one after another in listed order: a rule with `match_response`
+	// waits for its referenced responses, and no later rule is matched until it has been judged.
+	//
+	// A rule with `race` enabled does not hold this order: rule matching continues past it while its
+	// referenced responses are still pending, so the matching of race rules runs in parallel — with
+	// each other and with the rules after them. Each race rule is judged once its referenced
+	// responses are available, and the first race rule that matches terminates rule evaluation
+	// immediately; the remaining queries are canceled.
+	//
+	// Rules without `race` still take effect strictly in listed order: while a preceding race rule is
+	// not yet judged, the action of any other matched rule is held until none of the race rules
+	// matched.
 	Race                bool                         `json:"race,omitempty"`
 	RouteOptions        DNSRouteActionOptions        `json:"-"`
 	EvaluateOptions     DNSEvaluateActionOptions     `json:"-"`
@@ -158,26 +178,97 @@ func (r *DNSRuleAction) UnmarshalJSONContext(ctx context.Context, data []byte) e
 }
 
 type RouteActionOptions struct {
+	// @required
+	//
+	// Tag of target outbound.
 	Outbound string `json:"outbound,omitempty" reference:"outbound"`
 	RawRouteOptionsActionOptions
 }
 
 type RawRouteOptionsActionOptions struct {
+	// Override the connection destination address.
 	OverrideAddress string `json:"override_address,omitempty"`
-	OverridePort    uint16 `json:"override_port,omitempty"`
-
+	// Override the connection destination port.
+	OverridePort uint16 `json:"override_port,omitempty"`
+	// See [Dial Fields](/configuration/shared/dial/#network_strategy) for details.
+	//
+	// Only take effect if outbound is direct without `outbound.bind_interface`,
+	// `outbound.inet4_bind_address` and `outbound.inet6_bind_address` set.
 	NetworkStrategy *NetworkStrategy `json:"network_strategy,omitempty"`
-	FallbackDelay   uint32           `json:"fallback_delay,omitempty"`
-
-	UDPDisableDomainUnmapping bool               `json:"udp_disable_domain_unmapping,omitempty"`
-	UDPConnect                bool               `json:"udp_connect,omitempty"`
-	UDPTimeout                badoption.Duration `json:"udp_timeout,omitempty"`
-
-	TLSFragment              bool               `json:"tls_fragment,omitempty"`
+	// See [Dial Fields](/configuration/shared/dial/#fallback_delay) for details.
+	FallbackDelay uint32 `json:"fallback_delay,omitempty"`
+	// If enabled, for UDP proxy requests addressed to a domain,
+	// the original packet address will be sent in the response instead of the mapped domain.
+	//
+	// This option is used for compatibility with clients that
+	// do not support receiving UDP packets with domain addresses, such as Surge.
+	UDPDisableDomainUnmapping bool `json:"udp_disable_domain_unmapping,omitempty"`
+	// If enabled, attempts to connect UDP connection to the destination instead of listen.
+	UDPConnect bool `json:"udp_connect,omitempty"`
+	// Timeout for UDP connections.
+	//
+	// Setting a larger value than the UDP timeout in inbounds will have no effect.
+	//
+	// Default value for protocol sniffed connections:
+	//
+	// | Timeout | Protocol             |
+	// |---------|----------------------|
+	// | `10s`   | `dns`, `ntp`, `stun` |
+	// | `30s`   | `quic`, `dtls`       |
+	//
+	// If no protocol is sniffed, the following ports will be recognized as protocols by default:
+	//
+	// | Port | Protocol |
+	// |------|----------|
+	// | 53   | `dns`    |
+	// | 123  | `ntp`    |
+	// | 443  | `quic`   |
+	// | 3478 | `stun`   |
+	UDPTimeout badoption.Duration `json:"udp_timeout,omitempty"`
+	// @since 1.12.0
+	//
+	// Fragment TLS handshakes to bypass firewalls.
+	//
+	// This feature is intended to circumvent simple firewalls based on **plaintext packet matching**,
+	// and should not be used to circumvent real censorship.
+	//
+	// Due to poor performance, try `tls_record_fragment` first, and only apply to server names known to be blocked.
+	//
+	// On Linux, Apple platforms, (administrator privileges required) Windows,
+	// the wait time can be automatically detected. Otherwise, it will fall back to
+	// waiting for a fixed time specified by `tls_fragment_fallback_delay`.
+	//
+	// In addition, if the actual wait time is less than 20ms, it will also fall back to waiting for a fixed time,
+	// because the target is considered to be local or behind a transparent proxy.
+	TLSFragment bool `json:"tls_fragment,omitempty"`
+	// @since 1.12.0
+	//
+	// The fallback value used when TLS segmentation cannot automatically determine the wait time.
+	//
+	// `500ms` is used by default.
 	TLSFragmentFallbackDelay badoption.Duration `json:"tls_fragment_fallback_delay,omitempty"`
-	TLSRecordFragment        bool               `json:"tls_record_fragment,omitempty"`
-	TLSSpoof                 string             `json:"tls_spoof,omitempty"`
-	TLSSpoofMethod           string             `json:"tls_spoof_method,omitempty" enum:"wrong-sequence,wrong-checksum,wrong-ack,wrong-md5,wrong-timestamp"`
+	// @since 1.12.0
+	//
+	// Fragment TLS handshake into multiple TLS records to bypass firewalls.
+	TLSRecordFragment bool `json:"tls_record_fragment,omitempty"`
+	// @since 1.14.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux, macOS, and Windows, and requires elevated privileges.
+	//
+	// Inject a forged TLS ClientHello carrying this SNI before the real one,
+	// to fool SNI-filtering middleboxes that permit specific hostnames.
+	//
+	// See outbound TLS [`spoof`](/configuration/shared/tls/#spoof) for details
+	// and required privileges.
+	TLSSpoof string `json:"tls_spoof,omitempty"`
+	// @since 1.14.0
+	//
+	// How the forged segment is rejected by the real server. See outbound TLS
+	// [`spoof_method`](/configuration/shared/tls/#spoof_method) for the full table
+	// of accepted values and platform notes.
+	TLSSpoofMethod string `json:"tls_spoof_method,omitempty" enum:"wrong-sequence,wrong-checksum,wrong-ack,wrong-md5,wrong-timestamp"`
 }
 
 type RouteOptionsActionOptions RawRouteOptionsActionOptions
@@ -197,26 +288,83 @@ func (r *RouteOptionsActionOptions) UnmarshalJSON(data []byte) error {
 }
 
 type DNSRouteActionOptions struct {
-	Server      string `json:"server,omitempty" reference:"dns_server"`
-	Speculative bool   `json:"speculative,omitempty"`
+	// @required
+	//
+	// Tag of target server.
+	Server string `json:"server,omitempty" reference:"dns_server"`
+	// @since 1.14.0
+	//
+	// Conflict with `race`. Has no effect without a preceding `race` rule.
+	//
+	// By default, no query is sent in parallel with pending race rules: a matched `route` action
+	// holds its query until none of the race rules matched.
+	//
+	// When `speculative` is enabled, the query is sent as soon as the rule matches, in parallel with
+	// the pending race rules; its response is used only after none of the race rules matched.
+	Speculative bool `json:"speculative,omitempty"`
 	AbstractDNSRouteActionOptions
 }
 
 type DNSEvaluateActionOptions struct {
-	Server      string `json:"server,omitempty" reference:"dns_server"`
-	Tag         string `json:"tag,omitempty"`
-	Speculative bool   `json:"speculative,omitempty"`
+	// @required
+	//
+	// Tag of target server.
+	Server string `json:"server,omitempty" reference:"dns_server"`
+	// Tag of the evaluated response.
+	//
+	// A tagged response is only referenced via [`match_response`](/configuration/dns/rule/#match_response) with the tag;
+	// `match_response: true` references the response of the latest `evaluate` action without `tag`.
+	Tag string `json:"tag,omitempty"`
+	// @since 1.14.0
+	//
+	// Has no effect without a preceding `race` rule.
+	//
+	// By default, no query is sent in parallel with pending race rules: a matched `evaluate` action
+	// holds its query, and rule matching stops there, until none of the race rules matched.
+	//
+	// When `speculative` is enabled, the query is sent as soon as the rule matches, in parallel with
+	// the pending race rules, and rule matching continues without waiting for them.
+	Speculative bool `json:"speculative,omitempty"`
 	AbstractDNSRouteActionOptions
 }
 
 type AbstractDNSRouteActionOptions struct {
-	Timeout                badoption.Duration    `json:"timeout,omitempty"`
-	Strategy               DomainStrategy        `json:"strategy,omitempty" schema:"omit"`
-	DisableCache           bool                  `json:"disable_cache,omitempty"`
-	DisableOptimisticCache bool                  `json:"disable_optimistic_cache,omitempty"`
-	RewriteTTL             *uint32               `json:"rewrite_ttl,omitempty"`
-	ClientSubnet           *badoption.Prefixable `json:"client_subnet,omitempty"`
-	RemoveClientSubnet     bool                  `json:"remove_client_subnet,omitempty"`
+	// @since 1.14.0
+	//
+	// Override the DNS query timeout for matched queries.
+	//
+	// Will override `dns.timeout`.
+	Timeout badoption.Duration `json:"timeout,omitempty"`
+	// @since 1.12.0
+	//
+	// @failure: Deprecated in sing-box 1.14.0
+	//
+	//     `strategy` is deprecated in sing-box 1.14.0 and will be removed in sing-box 1.16.0.
+	//
+	// Set domain strategy for this query.
+	//
+	// One of `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`.
+	Strategy DomainStrategy `json:"strategy,omitempty" schema:"omit"`
+	// Disable cache and save cache in this query.
+	DisableCache bool `json:"disable_cache,omitempty"`
+	// @since 1.14.0
+	//
+	// Disable optimistic DNS caching in this query.
+	DisableOptimisticCache bool `json:"disable_optimistic_cache,omitempty"`
+	// Rewrite TTL in DNS responses.
+	RewriteTTL *uint32 `json:"rewrite_ttl,omitempty"`
+	// Append a `edns0-subnet` OPT extra record with the specified IP prefix to every query by default.
+	//
+	// If value is an IP address instead of prefix, `/32` or `/128` will be appended automatically.
+	//
+	// Will override `dns.client_subnet`.
+	ClientSubnet *badoption.Prefixable `json:"client_subnet,omitempty"`
+	// @since 1.14.0
+	//
+	// Remove the `edns0-subnet` OPT extra record from the query, and suppress `dns.client_subnet`.
+	//
+	// Conflict with `client_subnet`.
+	RemoveClientSubnet bool `json:"remove_client_subnet,omitempty"`
 }
 
 type DNSRouteOptionsActionOptions AbstractDNSRouteActionOptions
@@ -233,8 +381,21 @@ func (r *DNSRouteOptionsActionOptions) UnmarshalJSON(data []byte) error {
 }
 
 type _RejectActionOptions struct {
+	// For TCP and UDP connections:
+	//
+	// - `default`: Reply with TCP RST for TCP connections, and ICMP port unreachable for UDP packets.
+	// - `drop`: Drop packets.
+	//
+	// For ICMP echo requests:
+	//
+	// - `default`: Reply with ICMP host unreachable.
+	// - `drop`: Drop packets.
+	// - `reply`: Reply with ICMP echo reply.
 	Method string `json:"method,omitempty" enum:"default,drop,reply"`
-	NoDrop bool   `json:"no_drop,omitempty"`
+	// If not enabled, `method` will be temporarily overwritten to `drop` after 50 triggers in 30s.
+	//
+	// Not available when `method` is set to drop.
+	NoDrop bool `json:"no_drop,omitempty"`
 }
 
 type RejectActionOptions _RejectActionOptions
@@ -267,25 +428,81 @@ func (r *RejectActionOptions) UnmarshalJSON(bytes []byte) error {
 }
 
 type RouteActionSniff struct {
+	// Enabled sniffers.
+	//
+	// All sniffers enabled by default.
+	//
+	// Available protocol values an be found on in [Protocol Sniff](../sniff/)
 	Sniffer badoption.Listable[string] `json:"sniffer,omitempty" enum:"tls,http,quic,dns,stun,bittorrent,dtls,ssh,rdp,ntp"`
-	Timeout badoption.Duration         `json:"timeout,omitempty"`
+	// Timeout for sniffing.
+	//
+	// `300ms` is used by default.
+	Timeout badoption.Duration `json:"timeout,omitempty"`
 }
 
 type RouteActionResolve struct {
-	Server                 string                `json:"server,omitempty" reference:"dns_server"`
-	Timeout                badoption.Duration    `json:"timeout,omitempty"`
-	Strategy               DomainStrategy        `json:"strategy,omitempty"`
-	DisableCache           bool                  `json:"disable_cache,omitempty"`
-	DisableOptimisticCache bool                  `json:"disable_optimistic_cache,omitempty"`
-	RewriteTTL             *uint32               `json:"rewrite_ttl,omitempty"`
-	ClientSubnet           *badoption.Prefixable `json:"client_subnet,omitempty"`
+	// Specifies DNS server tag to use instead of selecting through DNS routing.
+	Server string `json:"server,omitempty" reference:"dns_server"`
+	// @since 1.14.0
+	//
+	// Override the DNS query timeout for this lookup.
+	//
+	// Will override `dns.timeout`.
+	Timeout badoption.Duration `json:"timeout,omitempty"`
+	// DNS resolution strategy, available values are: `prefer_ipv4`, `prefer_ipv6`, `ipv4_only`, `ipv6_only`.
+	//
+	// `dns.strategy` will be used by default.
+	Strategy DomainStrategy `json:"strategy,omitempty"`
+	// @since 1.12.0
+	//
+	// Disable cache and save cache in this query.
+	DisableCache bool `json:"disable_cache,omitempty"`
+	// @since 1.14.0
+	//
+	// Disable optimistic DNS caching in this query.
+	DisableOptimisticCache bool `json:"disable_optimistic_cache,omitempty"`
+	// @since 1.12.0
+	//
+	// Rewrite TTL in DNS responses.
+	RewriteTTL *uint32 `json:"rewrite_ttl,omitempty"`
+	// @since 1.12.0
+	//
+	// Append a `edns0-subnet` OPT extra record with the specified IP prefix to every query by default.
+	//
+	// If value is an IP address instead of prefix, `/32` or `/128` will be appended automatically.
+	//
+	// Will override `dns.client_subnet`.
+	ClientSubnet *badoption.Prefixable `json:"client_subnet,omitempty"`
 }
 
 type DNSRouteActionPredefined struct {
-	Rcode  *DNSRCode                            `json:"rcode,omitempty"`
+	// The response code.
+	//
+	// | Value      | Value in the legacy rcode server | Description     |
+	// |------------|----------------------------------|-----------------|
+	// | `NOERROR`  | `success`                        | Ok              |
+	// | `FORMERR`  | `format_error`                   | Bad request     |
+	// | `SERVFAIL` | `server_failure`                 | Server failure  |
+	// | `NXDOMAIN` | `name_error`                     | Not found       |
+	// | `NOTIMP`   | `not_implemented`                | Not implemented |
+	// | `REFUSED`  | `refused`                        | Refused         |
+	//
+	// `NOERROR` will be used by default.
+	Rcode *DNSRCode `json:"rcode,omitempty"`
+	// List of text DNS record to respond as answers.
+	//
+	// Examples:
+	//
+	// | Record Type | Example                       |
+	// |-------------|-------------------------------|
+	// | `A`         | `localhost. IN A 127.0.0.1`   |
+	// | `AAAA`      | `localhost. IN AAAA ::1`      |
+	// | `TXT`       | `localhost. IN TXT \"Hello\"` |
 	Answer badoption.Listable[DNSRecordOptions] `json:"answer,omitempty"`
-	Ns     badoption.Listable[DNSRecordOptions] `json:"ns,omitempty"`
-	Extra  badoption.Listable[DNSRecordOptions] `json:"extra,omitempty"`
+	// List of text DNS record to respond as name servers.
+	Ns badoption.Listable[DNSRecordOptions] `json:"ns,omitempty"`
+	// List of text DNS record to respond as extra records.
+	Extra badoption.Listable[DNSRecordOptions] `json:"extra,omitempty"`
 }
 
 type actionVariant struct {

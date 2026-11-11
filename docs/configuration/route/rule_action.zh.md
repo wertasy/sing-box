@@ -38,6 +38,9 @@ icon: material/new-box
 
 `route` 继承了将连接路由到指定出站的经典规则动作。
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### outbound
 
 ==必填==
@@ -47,6 +50,8 @@ icon: material/new-box
 #### route-options 字段
 
 参阅下方的 `route-options` 字段。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### bypass
 
@@ -69,6 +74,9 @@ icon: material/new-box
 
 对于非 auto redirect 连接和已建立的连接，如果指定了 `outbound`，行为与 `route` 相同；否则规则将被跳过。
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### outbound
 
 目标出站的标签。
@@ -78,6 +86,8 @@ icon: material/new-box
 #### route-options 字段
 
 参阅下方的 `route-options` 字段。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### reject
 
@@ -99,6 +109,9 @@ icon: material/new-box
 
 对于非 tun 连接和已建立的连接，将直接关闭。
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### method
 
 对于 TCP 和 UDP 连接：
@@ -117,6 +130,8 @@ icon: material/new-box
 如果未启用，则 30 秒内触发 50 次后，`method` 将被暂时覆盖为 `drop`。
 
 当 `method` 设为 `drop` 时不可用。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### hijack-dns
 
@@ -155,6 +170,9 @@ icon: material/new-box
     当内容只有一项时，可以忽略 JSON 数组 [] 标签
 
 `route-options` 为路由设置选项。
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### override_address
 
@@ -264,6 +282,8 @@ UDP 连接超时时间。
 控制伪造报文被真实服务器拒绝的方式。完整取值表与平台说明参阅出站 TLS
 [`spoof_method`](/zh/configuration/shared/tls/#spoof_method)。
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### sniff
 
 ```json
@@ -278,6 +298,9 @@ UDP 连接超时时间。
 
 对于已弃用的 `inbound.sniff` 选项，被视为在路由之前执行的 `sniff`。
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### sniffer
 
 启用的探测器。
@@ -291,6 +314,8 @@ UDP 连接超时时间。
 探测超时时间。
 
 默认使用 300ms。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### resolve
 
@@ -308,6 +333,9 @@ UDP 连接超时时间。
 ```
 
 `resolve` 将请求的目标从域名解析为 IP 地址。
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### server
 
@@ -354,3 +382,5 @@ DNS 解析策略，可用值有：`prefer_ipv4`、`prefer_ipv6`、`ipv4_only`、
 如果值是 IP 地址而不是前缀，则会自动附加 `/32` 或 `/128`。
 
 将覆盖 `dns.client_subnet`.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

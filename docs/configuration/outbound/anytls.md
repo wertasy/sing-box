@@ -26,6 +26,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -37,6 +40,12 @@ The server address.
 ==Required==
 
 The server port.
+
+#### tls
+
+==Required==
+
+TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 
 #### password
 
@@ -60,13 +69,9 @@ In the check, at least the first `n` idle sessions are kept open. Default value:
 
 !!! question "Since sing-box 1.13.16"
 
-Check [AnyTLS client metadata](/manual/misc/anytls-client-metadata/).
+    Check [AnyTLS client metadata](/manual/misc/anytls-client-metadata/).
 
-#### tls
-
-==Required==
-
-TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

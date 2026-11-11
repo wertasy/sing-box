@@ -34,6 +34,9 @@ USB/IP Client 服务通过 [USB/IP](https://usbip.sourceforge.net/) 导入由 [U
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -67,3 +70,5 @@ USB/IP Client 服务通过 [USB/IP](https://usbip.sourceforge.net/) 导入由 [U
 - `serial`：设备序列号。
 
 在一个对象内，所有指定的字段都必须匹配；多个对象之间取并集。至少需要一个字段。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

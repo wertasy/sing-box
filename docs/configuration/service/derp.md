@@ -36,6 +36,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### tls
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
@@ -100,7 +103,7 @@ Object format:
   "server_port": "",
   "host": "",
   "tls": {},
-  
+
   ... // Dial Fields
 }
 ```
@@ -130,7 +133,7 @@ Object format:
 ```json
 {
   "enabled": true,
-  
+
   ... // Listen Fields
 }
 ```
@@ -147,3 +150,5 @@ Setting `stun` value to a number `__PORT__` is equivalent to configuring:
 ```json
 { "enabled": true, "listen_port": __PORT__ }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-END -->

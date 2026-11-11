@@ -205,7 +205,20 @@ type OpenVPNPushDNSServerOptions struct {
 }
 
 type OpenVPNDNSServerOptions struct {
-	Endpoint               string `json:"endpoint,omitempty"`
-	AcceptDefaultResolvers bool   `json:"accept_default_resolvers,omitempty"`
-	AcceptSearchDomain     bool   `json:"accept_search_domain,omitempty"`
+	// @required
+	//
+	// The tag of the [OpenVPN Client Endpoint](/configuration/endpoint/openvpn-client).
+	//
+	// DNS queries are sent through the endpoint to resolvers pushed by the OpenVPN server.
+	//
+	// Both modern `dns` options and legacy `dhcp-option DNS`/`DNS6` and `DOMAIN-ROUTE` options are supported. `dnssec yes` is not supported.
+	Endpoint string `json:"endpoint,omitempty"`
+	// Use pushed resolvers for queries that do not match a pushed `resolve-domains`, `DOMAIN-ROUTE`, or search-domain suffix.
+	//
+	// When disabled, unmatched queries return `NXDOMAIN`.
+	AcceptDefaultResolvers bool `json:"accept_default_resolvers,omitempty"`
+	// When enabled and pushed search domains are available, single-label queries (for example, `intranet`) are retried with each search domain until one resolves.
+	//
+	// If no search domain is available, the original single-label query follows normal default-resolver behavior.
+	AcceptSearchDomain bool `json:"accept_search_domain,omitempty"`
 }

@@ -34,6 +34,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 启用缓存文件。
@@ -62,6 +65,8 @@
 
 [旧版地址筛选字段](/zh/configuration/dns/rule/#旧版地址筛选字段) 的检查结果将被缓存至过期。
 
+- 已废弃。
+
 #### rdrc_timeout
 
 !!! failure "已在 sing-box 1.14.0 废弃"
@@ -71,6 +76,8 @@
 拒绝的 DNS 响应缓存超时。
 
 默认使用 `7d`。
+
+- 已废弃。
 
 #### store_dns
 
@@ -93,3 +100,5 @@
 自动冲刷写缓存的间隔。
 
 默认禁用。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

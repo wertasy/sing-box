@@ -26,10 +26,15 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### inet4_range
 
-FakeIP 的 IPv4 地址范围。
+用于 FakeIP 的 IPv4 地址范围。
 
 #### inet6_range
 
-FakeIP 的 IPv6 地址范围。
+用于 FakeIP 的 IPv6 地址范围。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

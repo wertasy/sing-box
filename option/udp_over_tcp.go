@@ -9,7 +9,11 @@ import (
 )
 
 type _UDPOverTCPOptions struct {
-	Enabled bool  `json:"enabled,omitempty"`
+	// Enable the UDP over TCP protocol.
+	Enabled bool `json:"enabled,omitempty"`
+	// The protocol version, `1` or `2`.
+	//
+	// 2 is used by default.
 	Version uint8 `json:"version,omitempty" enum:"1,2"`
 }
 

@@ -42,6 +42,9 @@ See [HTTP2 Fields](/configuration/shared/http2/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### tls
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
@@ -69,3 +72,5 @@ Bearer token presented by Hysteria2 inbounds and outbounds via `Authorization: B
 #### users.max_realms
 
 Maximum number of realm slots this user may hold concurrently.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

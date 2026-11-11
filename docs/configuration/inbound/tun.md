@@ -207,6 +207,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### interface_name
 
 Virtual device name, automatically selected if empty.
@@ -241,6 +244,8 @@ IPv4 and IPv6 prefix for the tun interface.
 
 IPv4 prefix for the tun interface.
 
+- Deprecated.
+
 #### inet6_address
 
 !!! failure "Deprecated in sing-box 1.10.0"
@@ -248,6 +253,8 @@ IPv4 prefix for the tun interface.
     `inet6_address` is merged to `address` and will be removed in sing-box 1.12.0.
 
 IPv6 prefix for the tun interface.
+
+- Deprecated.
 
 #### mtu
 
@@ -307,6 +314,8 @@ route rule to handle DNS traffic to these addresses.
 
 Enable generic segmentation offload.
 
+- Deprecated.
+
 #### auto_route
 
 Set the default route to the Tun.
@@ -359,7 +368,7 @@ Pre-matching requires nfqueue support in the kernel (`nfnetlink_queue`).
 or a root shell, including forwarded traffic (hotspot, repeater).
 
 `auto_redirect` also automatically inserts compatibility rules
-into the OpenWrt fw4 table, i.e. 
+into the OpenWrt fw4 table, i.e.
 it will work on routers without any extra configuration.
 
 Conflict with `route.default_mark` and `[dialOptions].routing_mark`.
@@ -474,6 +483,8 @@ instead.
 
 Use custom routes instead of default when `auto_route` is enabled.
 
+- Deprecated.
+
 #### inet6_route_address
 
 !!! failure "Deprecated in sing-box 1.10.0"
@@ -482,6 +493,8 @@ Use custom routes instead of default when `auto_route` is enabled.
 instead.
 
 Use custom routes instead of default when `auto_route` is enabled.
+
+- Deprecated.
 
 #### route_exclude_address
 
@@ -498,6 +511,8 @@ use [route_exclude_address](#route_exclude_address) instead.
 
 Exclude custom routes when `auto_route` is enabled.
 
+- Deprecated.
+
 #### inet6_route_exclude_address
 
 !!! failure "Deprecated in sing-box 1.10.0"
@@ -507,6 +522,8 @@ use [route_exclude_address](#route_exclude_address) instead.
 
 Exclude custom routes when `auto_route` is enabled.
 
+- Deprecated.
+
 #### route_address_set
 
 === "With `auto_redirect` enabled"
@@ -514,18 +531,18 @@ Exclude custom routes when `auto_route` is enabled.
     !!! question "Since sing-box 1.10.0"
 
     !!! quote ""
-    
+
         Only supported on Linux and requires `auto_route` and `auto_redirect` enabled.
-    
+
     Match the destination IP CIDR rules in the specified rule-sets during pre-matching.
     Unmatched traffic will bypass the sing-box routes.
-    
+
     Conflict with `route.default_mark` and `[dialOptions].routing_mark`.
 
 === "Without `auto_redirect` enabled"
 
     !!! question "Since sing-box 1.11.0"
-    
+
     Add the destination IP CIDR rules in the specified rule-sets to routes, equivalent to adding to `route_address`.
     Unmatched traffic will bypass the sing-box routes.
 
@@ -549,7 +566,7 @@ Exclude custom routes when `auto_route` is enabled.
 === "Without `auto_redirect` enabled"
 
     !!! question "Since sing-box 1.11.0"
-    
+
     Add the destination IP CIDR rules in the specified rule-sets to routes, equivalent to adding to `route_exclude_address`.
     Matched traffic will bypass the sing-box routes.
 
@@ -563,6 +580,8 @@ This option has had no effect since sing-box 1.11.0 and can be removed from the 
 
 Since sing-box 1.14.0, use [UDP NAT fields](/configuration/shared/udp-nat/)
 to customize the mapping and filtering behavior.
+
+- Deprecated.
 
 #### stack
 
@@ -583,7 +602,7 @@ to customize the mapping and filtering behavior.
 
 TCP/IP stack.
 
-| Stack    | Description                                                                                           | 
+| Stack    | Description                                                                                           |
 |----------|-------------------------------------------------------------------------------------------------------|
 | `system` | Perform L3 to L4 translation using the system network stack                                           |
 | `gvisor` | Perform L3 to L4 translation using [gVisor](https://github.com/google/gvisor)'s virtual network stack |
@@ -721,6 +740,62 @@ Hostnames that bypass the HTTP proxy.
     Only supported in graphical clients on Apple platforms.
 
 Hostnames that use the HTTP proxy.
+
+#### sniff
+
+!!! failure "Deprecated in sing-box 1.11.0"
+
+    Inbound fields are deprecated and will be removed in sing-box 1.13.0, check [Migration](/migration/#migrate-legacy-inbound-fields-to-rule-actions).
+
+Enable sniffing.
+
+See [Protocol Sniff](/configuration/route/sniff/) for details.
+
+#### sniff_override_destination
+
+!!! failure "Deprecated in sing-box 1.11.0"
+
+    Inbound fields are deprecated and will be removed in sing-box 1.13.0.
+
+Override the connection destination address with the sniffed domain.
+
+If the domain name is invalid (like tor), this will not work.
+
+#### sniff_timeout
+
+!!! failure "Deprecated in sing-box 1.11.0"
+
+    Inbound fields are deprecated and will be removed in sing-box 1.13.0, check [Migration](/migration/#migrate-legacy-inbound-fields-to-rule-actions).
+
+Timeout for sniffing.
+
+`300ms` is used by default.
+
+#### domain_strategy
+
+!!! failure "Deprecated in sing-box 1.11.0"
+
+    Inbound fields are deprecated and will be removed in sing-box 1.13.0, check [Migration](/migration/#migrate-legacy-inbound-fields-to-rule-actions).
+
+One of `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`.
+
+If set, the requested domain name will be resolved to IP before routing.
+
+If `sniff_override_destination` is in effect, its value will be taken as a fallback.
+
+#### udp_disable_domain_unmapping
+
+!!! failure "Deprecated in sing-box 1.11.0"
+
+    Inbound fields are deprecated and will be removed in sing-box 1.13.0, check [Migration](/migration/#migrate-legacy-inbound-fields-to-rule-actions).
+
+If enabled, for UDP proxy requests addressed to a domain,
+the original packet address will be sent in the response instead of the mapped domain.
+
+This option is used for compatibility with clients that
+do not support receiving UDP packets with domain addresses, such as Surge.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### UDP NAT Fields
 

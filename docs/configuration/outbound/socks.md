@@ -21,6 +21,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -60,6 +63,8 @@ Both is enabled by default.
 UDP over TCP protocol settings.
 
 See [UDP Over TCP](/configuration/shared/udp-over-tcp/) for details.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

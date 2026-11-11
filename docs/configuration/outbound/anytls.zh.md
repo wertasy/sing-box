@@ -26,6 +26,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -37,6 +40,12 @@ icon: material/new-box
 ==必填==
 
 服务器端口。
+
+#### tls
+
+==必填==
+
+TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
 #### password
 
@@ -62,11 +71,7 @@ AnyTLS 密码。
 
 参阅 [AnyTLS 客户端元数据](/zh/manual/misc/anytls-client-metadata/)。
 
-#### tls
-
-==必填==
-
-TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

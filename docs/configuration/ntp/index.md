@@ -23,6 +23,9 @@ synchronization is not possible.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 Enable NTP service.
@@ -44,6 +47,12 @@ NTP server port.
 Time synchronization interval.
 
 30 minutes is used by default.
+
+#### write_to_system
+
+Update system time after synchronization.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

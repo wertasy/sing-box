@@ -16,6 +16,18 @@ const (
 
 type _USBIPServerServiceOptions struct {
 	ListenOptions
+	// The device source provider.
+	//
+	// - `default`: Exports the local devices matched by `devices`. The default value.
+	// - `dynamic`: Devices are provided at runtime through a [sing-box API](/configuration/service/api/)
+	//   client instead of from configuration, on supported platforms: the sing-box graphical clients on
+	//   [macOS](/clients/apple/) and [Android](/clients/android/), and Chromium-based browsers with
+	//   [sing-box Dashboard](https://github.com/SagerNet/sing-box-dashboard).
+	//
+	// @quote:
+	//
+	//     The `default` provider is only supported when running directly via the CLI on Linux, Windows,
+	//     and macOS, and requires elevated privileges.
 	Provider string `json:"provider,omitempty" enum:"default,dynamic"`
 	Options  any    `json:"-"`
 }
@@ -64,6 +76,29 @@ func (o USBIPServerServiceOptions) DescribeSchema(builder schema.Builder) (*sche
 type USBIPClientServiceOptions struct {
 	DialerOptions
 	ServerOptions
+	// List of device matches selecting which remote devices to import. If empty, all exported devices
+	// are imported.
+	//
+	// Object format:
+	//
+	// ```json
+	// {
+	//   "bus_id": "",
+	//   "vendor_id": 0,
+	//   "product_id": 0,
+	//   "serial": ""
+	// }
+	// ```
+	//
+	// Object fields:
+	//
+	// - `bus_id`: USB bus ID, e.g. `1-2`.
+	// - `vendor_id`: USB vendor ID, as a number.
+	// - `product_id`: USB product ID, as a number.
+	// - `serial`: Device serial number.
+	//
+	// Within one object, all specified fields must match; multiple objects are combined as a union. At
+	// least one field is required.
 	Devices []USBIPDeviceMatch `json:"devices,omitempty"`
 }
 

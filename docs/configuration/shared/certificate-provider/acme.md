@@ -45,6 +45,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### domain
 
 ==Required==
@@ -75,8 +78,7 @@ The ACME CA provider to use.
 | `zerossl`               | ZeroSSL       |
 | `https://...`           | Custom        |
 
-When `provider` is `zerossl`, sing-box will automatically request ZeroSSL EAB credentials if `email` is set and
-`external_account` is empty.
+When `provider` is `zerossl`, sing-box will automatically request ZeroSSL EAB credentials if `email` is set and `external_account` is empty.
 
 When `provider` is `zerossl`, at least one of `external_account`, `email`, or `account_key` is required.
 
@@ -96,32 +98,19 @@ Disable all TLS-ALPN challenges
 
 #### alternative_http_port
 
-The alternate port to use for the ACME HTTP challenge; if non-empty, this port will be used instead of 80 to spin up a
-listener for the HTTP challenge.
+The alternate port to use for the ACME HTTP challenge; if non-empty, this port will be used instead of 80 to spin up a listener for the HTTP challenge.
 
 #### alternative_tls_port
 
-The alternate port to use for the ACME TLS-ALPN challenge; the system must forward 443 to this port for challenge to
-succeed.
+The alternate port to use for the ACME TLS-ALPN challenge; the system must forward 443 to this port for challenge to succeed.
 
 #### external_account
 
-EAB (External Account Binding) contains information necessary to bind or map an ACME account to some other account known
-by the CA.
+EAB (External Account Binding) contains information necessary to bind or map an ACME account to some other account known by the CA.
 
-External account bindings are used to associate an ACME account with an existing account in a non-ACME system, such as
-a CA customer database.
+External account bindings are used to associate an ACME account with an existing account in a non-ACME system, such as a CA customer database.
 
-To enable ACME account binding, the CA operating the ACME server needs to provide the ACME client with a MAC key and a
-key identifier, using some mechanism outside of ACME. §7.3.4
-
-#### external_account.key_id
-
-The key identifier.
-
-#### external_account.mac_key
-
-The MAC key.
+To enable ACME account binding, the CA operating the ACME server needs to provide the ACME client with a MAC key and a key identifier, using some mechanism outside of ACME. §7.3.4
 
 #### dns01_challenge
 
@@ -158,3 +147,13 @@ When empty and `provider` is Let's Encrypt, `shortlived` will be used automatica
 HTTP Client for all provider HTTP requests.
 
 See [HTTP Client Fields](/configuration/shared/http-client/) for details.
+
+#### external_account.key_id
+
+The key identifier.
+
+#### external_account.mac_key
+
+The MAC key.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

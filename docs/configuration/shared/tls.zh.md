@@ -197,11 +197,263 @@ TLS 版本值：
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
+
 
 启用 TLS
 
+#### server_name
+
+
+用于验证返回证书上的主机名，除非设置不安全。
+
+它还包含在 ClientHello 中以支持虚拟主机，除非它是 IP 地址。
+
+#### insecure
+
+
+==仅客户端==
+
+接受任何服务器证书。
+
+#### alpn
+
+
+支持的应用层协议协商列表，按优先顺序排列。
+
+如果两个对等点都支持 ALPN，则选择的协议将是此列表中的一个，如果没有相互支持的协议则连接将失败。
+
+参阅 [Application-Layer Protocol Negotiation](https://en.wikipedia.org/wiki/Application-Layer_Protocol_Negotiation)。
+
+#### min_version
+
+
+可接受的最低 TLS 版本。
+
+默认使用 TLS 1.2。
+
+#### max_version
+
+
+可接受的最大 TLS 版本。
+
+默认情况下，当前最高版本为 TLS 1.3。
+
+#### cipher_suites
+
+
+启用的 TLS 1.0–1.2 密码套件列表。列表的顺序被忽略。请注意，TLS 1.3 的密码套件是不可配置的。
+
+如果为空，则使用安全的默认列表。默认密码套件可能会随着时间的推移而改变。
+
+#### curve_preferences
+
+
+!!! question "自 sing-box 1.13.0 起"
+
+支持的密钥交换机制集合。列表的顺序被忽略，密钥交换机制通过 Golang 的内部偏好顺序从此列表中选择。
+
+可用值，同时也是默认列表：
+
+* `P256`
+* `P384`
+* `P521`
+* `X25519`
+* `X25519MLKEM768`
+
+#### certificate
+
+
+服务器证书链行数组，PEM 格式。
+
+#### certificate_path
+
+
+!!! note ""
+
+    文件更改时将自动重新加载。
+
+服务器证书链路径，PEM 格式。
+
+#### client_authentication
+
+
+!!! question "自 sing-box 1.13.0 起"
+
+==仅服务器==
+
+要使用的客户端身份验证类型。
+
+可用值：
+
+* `no`（默认）
+* `request`
+* `require-any`
+* `verify-if-given`
+* `require-and-verify`
+
+如果此选项设置为 `verify-if-given` 或 `require-and-verify`，
+则需要 `client_certificate`、`client_certificate_path`、`client_certificate_sha256` 或 `client_certificate_public_key_sha256` 中的一个。
+
+#### client_certificate
+
+
+!!! question "自 sing-box 1.13.0 起"
+
+==仅客户端==
+
+客户端证书链行数组，PEM 格式。
+
+
+!!! question "自 sing-box 1.13.0 起"
+
+==仅服务器==
+
+客户端证书链行数组，PEM 格式。
+
+#### client_certificate_path
+
+
+!!! question "自 sing-box 1.13.0 起"
+
+==仅客户端==
+
+客户端证书链路径，PEM 格式。
+
+
+!!! question "自 sing-box 1.13.0 起"
+
+==仅服务器==
+
+!!! note ""
+
+    文件更改时将自动重新加载。
+
+客户端证书链路径列表，PEM 格式。
+
+#### client_certificate_sha256
+
+
+!!! question "自 sing-box 1.15.0 起"
+
+==仅服务器==
+
+客户端证书的 SHA-256 哈希列表，base64 格式。
+
+哈希基于整个 DER 编码的证书计算，参阅 [certificate_sha256](#certificate_sha256)。
+
+#### client_certificate_public_key_sha256
+
+
+!!! question "自 sing-box 1.13.0 起"
+
+==仅服务器==
+
+客户端证书公钥的 SHA-256 哈希列表，base64 格式。
+
+要生成证书公钥的 SHA-256 哈希，请使用以下命令：
+
+```bash
+# 对于证书文件
+openssl x509 -in certificate.pem -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+
+# 对于远程服务器的证书
+echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+```
+
+#### key
+
+
+==仅服务器==
+
+!!! note ""
+
+    文件更改时将自动重新加载。
+
+服务器 PEM 私钥行数组。
+
+#### key_path
+
+
+==仅服务器==
+
+!!! note ""
+
+    文件更改时将自动重新加载。
+
+服务器私钥路径，PEM 格式。
+
+#### kernel_tx
+
+
+!!! question "自 sing-box 1.13.0 起"
+
+!!! quote ""
+
+    仅支持 Linux 5.1+，如果可能，使用较新的内核。
+
+!!! quote ""
+
+    仅支持 TLS 1.3。
+
+!!! warning ""
+
+    kTLS TX 仅当 `splice(2)` 可用时（两端经过握手后必须为没有附加协议的 TCP 或 TLS）才能提高性能；否则肯定会降低性能。
+
+启用内核 TLS 发送支持。
+
+#### kernel_rx
+
+
+!!! question "自 sing-box 1.13.0 起"
+
+!!! quote ""
+
+    仅支持 Linux 5.1+，如果可能，使用较新的内核。
+
+!!! quote ""
+
+    仅支持 TLS 1.3。
+
+!!! failure ""
+
+    即使使用 `splice(2)`，kTLS RX 也肯定会降低性能，因此不建议启用。
+
+启用内核 TLS 接收支持。
+
+#### handshake_timeout
+
+
+!!! question "自 sing-box 1.14.0 起"
+
+TLS 握手超时，采用 golang 的 Duration 格式。
+
+默认使用 `15s`。
+
+#### certificate_provider
+
+
+!!! question "自 sing-box 1.14.0 起"
+
+==仅服务器==
+
+字符串或对象。
+
+为字符串时，共享[证书提供者](/zh/configuration/shared/certificate-provider/)的标签。
+
+为对象时，内联的证书提供者。可用类型和字段参阅[证书提供者](/zh/configuration/shared/certificate-provider/)。
+
+## 自定义 TLS 支持
+
+!!! info "QUIC 支持"
+
+    只有 ECH 在 QUIC 中被支持.
+
 #### engine
+
 
 !!! question "自 sing-box 1.14.0 起"
 
@@ -251,75 +503,13 @@ TLS 版本值：
 
 #### disable_sni
 
+
 ==仅客户端==
 
 不要在 ClientHello 中发送服务器名称.
 
-#### server_name
-
-用于验证返回证书上的主机名，除非设置不安全。
-
-它还包含在 ClientHello 中以支持虚拟主机，除非它是 IP 地址。
-
-#### insecure
-
-==仅客户端==
-
-接受任何服务器证书。
-
-#### alpn
-
-支持的应用层协议协商列表，按优先顺序排列。
-
-如果两个对等点都支持 ALPN，则选择的协议将是此列表中的一个，如果没有相互支持的协议则连接将失败。
-
-参阅 [Application-Layer Protocol Negotiation](https://en.wikipedia.org/wiki/Application-Layer_Protocol_Negotiation)。
-
-#### min_version
-
-可接受的最低 TLS 版本。
-
-默认使用 TLS 1.2。
-
-#### max_version
-
-可接受的最大 TLS 版本。
-
-默认情况下，当前最高版本为 TLS 1.3。
-
-#### cipher_suites
-
-启用的 TLS 1.0–1.2 密码套件列表。列表的顺序被忽略。请注意，TLS 1.3 的密码套件是不可配置的。
-
-如果为空，则使用安全的默认列表。默认密码套件可能会随着时间的推移而改变。
-
-#### curve_preferences
-
-!!! question "自 sing-box 1.13.0 起"
-
-支持的密钥交换机制集合。列表的顺序被忽略，密钥交换机制通过 Golang 的内部偏好顺序从此列表中选择。
-
-可用值，同时也是默认列表：
-
-* `P256`
-* `P384`
-* `P521`
-* `X25519`
-* `X25519MLKEM768`
-
-#### certificate
-
-服务器证书链行数组，PEM 格式。
-
-#### certificate_path
-
-!!! note ""
-
-    文件更改时将自动重新加载。
-
-服务器证书链路径，PEM 格式。
-
 #### certificate_sha256
+
 
 !!! question "自 sing-box 1.15.0 起"
 
@@ -341,6 +531,7 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 #### certificate_public_key_sha256
 
+
 !!! question "自 sing-box 1.13.0 起"
 
 ==仅客户端==
@@ -357,23 +548,8 @@ openssl x509 -in certificate.pem -pubkey -noout | openssl pkey -pubin -outform d
 echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
 ```
 
-#### client_certificate
-
-!!! question "自 sing-box 1.13.0 起"
-
-==仅客户端==
-
-客户端证书链行数组，PEM 格式。
-
-#### client_certificate_path
-
-!!! question "自 sing-box 1.13.0 起"
-
-==仅客户端==
-
-客户端证书链路径，PEM 格式。
-
 #### client_key
+
 
 !!! question "自 sing-box 1.13.0 起"
 
@@ -383,162 +559,15 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 #### client_key_path
 
+
 !!! question "自 sing-box 1.13.0 起"
 
 ==仅客户端==
 
 客户端私钥路径，PEM 格式。
 
-#### key
-
-==仅服务器==
-
-!!! note ""
-
-    文件更改时将自动重新加载。
-
-服务器 PEM 私钥行数组。
-
-#### key_path
-
-==仅服务器==
-
-!!! note ""
-
-    文件更改时将自动重新加载。
-
-服务器私钥路径，PEM 格式。
-
-#### client_authentication
-
-!!! question "自 sing-box 1.13.0 起"
-
-==仅服务器==
-
-要使用的客户端身份验证类型。
-
-可用值：
-
-* `no`（默认）
-* `request`
-* `require-any`
-* `verify-if-given`
-* `require-and-verify`
-
-如果此选项设置为 `verify-if-given` 或 `require-and-verify`，
-则需要 `client_certificate`、`client_certificate_path`、`client_certificate_sha256` 或 `client_certificate_public_key_sha256` 中的一个。
-
-#### client_certificate
-
-!!! question "自 sing-box 1.13.0 起"
-
-==仅服务器==
-
-客户端证书链行数组，PEM 格式。
-
-#### client_certificate_path
-
-!!! question "自 sing-box 1.13.0 起"
-
-==仅服务器==
-
-!!! note ""
-
-    文件更改时将自动重新加载。
-
-客户端证书链路径列表，PEM 格式。
-
-#### client_certificate_sha256
-
-!!! question "自 sing-box 1.15.0 起"
-
-==仅服务器==
-
-客户端证书的 SHA-256 哈希列表，base64 格式。
-
-哈希基于整个 DER 编码的证书计算，参阅 [certificate_sha256](#certificate_sha256)。
-
-#### client_certificate_public_key_sha256
-
-!!! question "自 sing-box 1.13.0 起"
-
-==仅服务器==
-
-客户端证书公钥的 SHA-256 哈希列表，base64 格式。
-
-要生成证书公钥的 SHA-256 哈希，请使用以下命令：
-
-```bash
-# 对于证书文件
-openssl x509 -in certificate.pem -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
-
-# 对于远程服务器的证书
-echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
-```
-
-#### kernel_tx
-
-!!! question "自 sing-box 1.13.0 起"
-
-!!! quote ""
-
-    仅支持 Linux 5.1+，如果可能，使用较新的内核。
-
-!!! quote ""
-
-    仅支持 TLS 1.3。
-
-!!! warning ""
-
-    kTLS TX 仅当 `splice(2)` 可用时（两端经过握手后必须为没有附加协议的 TCP 或 TLS）才能提高性能；否则肯定会降低性能。
-
-启用内核 TLS 发送支持。
-
-#### kernel_rx
-
-!!! question "自 sing-box 1.13.0 起"
-
-!!! quote ""
-
-    仅支持 Linux 5.1+，如果可能，使用较新的内核。
-
-!!! quote ""
-
-    仅支持 TLS 1.3。
-
-!!! failure ""
-
-    即使使用 `splice(2)`，kTLS RX 也肯定会降低性能，因此不建议启用。
-
-启用内核 TLS 接收支持。
-
-#### handshake_timeout
-
-!!! question "自 sing-box 1.14.0 起"
-
-TLS 握手超时，采用 golang 的 Duration 格式。
-
-默认使用 `15s`。
-
-#### certificate_provider
-
-!!! question "自 sing-box 1.14.0 起"
-
-==仅服务器==
-
-字符串或对象。
-
-为字符串时，共享[证书提供者](/zh/configuration/shared/certificate-provider/)的标签。
-
-为对象时，内联的证书提供者。可用类型和字段参阅[证书提供者](/zh/configuration/shared/certificate-provider/)。
-
-## 自定义 TLS 支持
-
-!!! info "QUIC 支持"
-
-    只有 ECH 在 QUIC 中被支持.
-
 #### utls
+
 
 ==仅客户端==
 
@@ -580,38 +609,26 @@ uTLS 是 "crypto/tls" 的一个分支，它提供了 ClientHello 指纹识别阻
 
 默认使用 chrome 指纹。
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### ECH 字段
 
 ECH (Encrypted Client Hello) 是一个 TLS 扩展，它允许客户端加密其 ClientHello 的第一部分信息。
 
 ECH 密钥和配置可以通过 `sing-box generate ech-keypair` 生成。
 
-#### pq_signature_schemes_enabled
-
-!!! failure "已在 sing-box 1.12.0 废弃"
-
-    `pq_signature_schemes_enabled` 已在 sing-box 1.12.0 废弃且已在 sing-box 1.13.0 中被移除。
-
-启用对后量子对等证书签名方案的支持。
-
-#### dynamic_record_sizing_disabled
-
-!!! failure "已在 sing-box 1.12.0 废弃"
-
-    `dynamic_record_sizing_disabled` 已在 sing-box 1.12.0 废弃且已在 sing-box 1.13.0 中被移除。
-
-禁用 TLS 记录的自适应大小调整。
-
-当为 true 时，总是使用最大可能的 TLS 记录大小。
-当为 false 时，可能会调整 TLS 记录的大小以尝试改善延迟。
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### key
+
 
 ==仅服务器==
 
 ECH 密钥行数组，PEM 格式。
 
 #### key_path
+
 
 ==仅服务器==
 
@@ -623,6 +640,7 @@ ECH 密钥路径，PEM 格式。
 
 #### config
 
+
 ==仅客户端==
 
 ECH 配置行数组，PEM 格式。
@@ -630,6 +648,7 @@ ECH 配置行数组，PEM 格式。
 如果为空，将尝试从 DNS 加载。
 
 #### config_path
+
 
 ==仅客户端==
 
@@ -639,6 +658,7 @@ ECH 配置路径，PEM 格式。
 
 #### query_server_name
 
+
 !!! question "自 sing-box 1.13.0 起"
 
 ==仅客户端==
@@ -647,7 +667,22 @@ ECH 配置路径，PEM 格式。
 
 如果为空，使用 `server_name` 查询。
 
+#### dynamic_record_sizing_disabled
+
+
+!!! failure "已在 sing-box 1.12.0 废弃"
+
+    `dynamic_record_sizing_disabled` 已在 sing-box 1.12.0 废弃且已在 sing-box 1.13.0 中被移除。
+
+禁用 TLS 记录的自适应大小调整。
+
+当为 true 时，总是使用最大可能的 TLS 记录大小。
+当为 false 时，可能会调整 TLS 记录的大小以尝试改善延迟。
+
+- 已废弃。
+
 #### fragment
+
 
 !!! question "自 sing-box 1.12.0 起"
 
@@ -668,6 +703,7 @@ ECH 配置路径，PEM 格式。
 
 #### fragment_fallback_delay
 
+
 !!! question "自 sing-box 1.12.0 起"
 
 ==仅客户端==
@@ -676,7 +712,19 @@ ECH 配置路径，PEM 格式。
 
 默认使用 `500ms`。
 
+#### pq_signature_schemes_enabled
+
+
+!!! failure "已在 sing-box 1.12.0 废弃"
+
+    `pq_signature_schemes_enabled` 已在 sing-box 1.12.0 废弃且已在 sing-box 1.13.0 中被移除。
+
+启用对后量子对等证书签名方案的支持。
+
+- 已废弃。
+
 #### record_fragment
+
 
 !!! question "自 sing-box 1.12.0 起"
 
@@ -685,6 +733,7 @@ ECH 配置路径，PEM 格式。
 将 TLS 握手分段为多个 TLS 记录以绕过防火墙。
 
 #### spoof
+
 
 !!! question "自 sing-box 1.14.0 起"
 
@@ -702,6 +751,7 @@ Linux 上需要 `CAP_NET_RAW` 和 `CAP_NET_ADMIN`，macOS 上需要 root，Windo
 
 #### spoof_method
 
+
 !!! question "自 sing-box 1.14.0 起"
 
 ==仅客户端==
@@ -716,19 +766,29 @@ Linux 上需要 `CAP_NET_RAW` 和 `CAP_NET_ADMIN`，macOS 上需要 root，Windo
 | `wrong-md5`              | 伪造报文携带 TCP-MD5 签名选项。                                   |
 | `wrong-timestamp`        | 伪造报文携带回退的 TCP 时间戳。仅支持 Linux/Windows，不支持 macOS。 |
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### ACME 字段
 
 !!! failure "已在 sing-box 1.14.0 废弃"
 
     内联 ACME 选项已在 sing-box 1.14.0 废弃且将在 sing-box 1.16.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移内联-acme-到证书提供者)。
 
-#### domain
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
-域名列表。
+#### alternative_http_port
 
-如果为空则禁用 ACME。
+
+用于 ACME HTTP 质询的备用端口；如果非空，将使用此端口而不是 80 来启动 HTTP 质询的侦听器。
+
+#### alternative_tls_port
+
+
+用于 ACME TLS-ALPN 质询的备用端口； 系统必须将 443 转发到此端口以使质询成功。
 
 #### data_directory
+
 
 ACME 数据存储目录。
 
@@ -736,39 +796,40 @@ ACME 数据存储目录。
 
 #### default_server_name
 
+
 如果 ClientHello 的 ServerName 字段为空，则选择证书时要使用的服务器名称。
 
-#### email
-
-创建或选择现有 ACME 服务器帐户时使用的电子邮件地址。
-
-#### provider
-
-要使用的 ACME CA 供应商。
-
-| 值                  | 供应商           |
-|--------------------|---------------|
-| `letsencrypt (默认)` | Let's Encrypt |
-| `zerossl`          | ZeroSSL       |
-| `https://...`      | 自定义           |
-
 #### disable_http_challenge
+
 
 禁用所有 HTTP 质询。
 
 #### disable_tls_alpn_challenge
 
+
 禁用所有 TLS-ALPN 质询。
 
-#### alternative_http_port
+#### dns01_challenge
 
-用于 ACME HTTP 质询的备用端口；如果非空，将使用此端口而不是 80 来启动 HTTP 质询的侦听器。
 
-#### alternative_tls_port
+ACME DNS01 验证字段。如果配置，将禁用其他验证方法。
 
-用于 ACME TLS-ALPN 质询的备用端口； 系统必须将 443 转发到此端口以使质询成功。
+参阅 [DNS01 验证字段](/zh/configuration/shared/dns01_challenge/)。
+
+#### domain
+
+
+域名列表。
+
+如果为空则禁用 ACME。
+
+#### email
+
+
+创建或选择现有 ACME 服务器帐户时使用的电子邮件地址。
 
 #### external_account
+
 
 EAB（外部帐户绑定）包含将 ACME 帐户绑定或映射到 CA 已知的其他帐户所需的信息。
 
@@ -778,21 +839,43 @@ EAB（外部帐户绑定）包含将 ACME 帐户绑定或映射到 CA 已知的�
 
 #### external_account.key_id
 
+
 密钥标识符。
 
 #### external_account.mac_key
 
+
 MAC 密钥。
 
-#### dns01_challenge
+#### provider
 
-ACME DNS01 验证字段。如果配置，将禁用其他验证方法。
 
-参阅 [DNS01 验证字段](/zh/configuration/shared/dns01_challenge/)。
+要使用的 ACME CA 供应商。
+
+| 值                  | 供应商           |
+|--------------------|---------------|
+| `letsencrypt (默认)` | Let's Encrypt |
+| `zerossl`          | ZeroSSL       |
+| `https://...`      | 自定义           |
+
+#### profile
+
+
+!!! question "自 sing-box 1.14.0 起"
+
+用于证书签发的 ACME 配置文件。
+
+当为空且 `provider` 为 Let's Encrypt 时，如果任何域名为 IP 地址，将自动使用 `shortlived`。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Reality 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### handshake
+
 
 ==仅服务器==
 
@@ -802,21 +885,15 @@ ACME DNS01 验证字段。如果配置，将禁用其他验证方法。
 
 #### private_key
 
+
 ==仅服务器==
 
 ==必填==
 
 私钥，由 `sing-box generate reality-keypair` 生成。
 
-#### public_key
-
-==仅客户端==
-
-==必填==
-
-公钥，由 `sing-box generate reality-keypair` 生成。
-
 #### short_id
+
 
 ==必填==
 
@@ -824,8 +901,20 @@ ACME DNS01 验证字段。如果配置，将禁用其他验证方法。
 
 #### max_time_difference
 
+
 ==仅服务器==
 
 服务器和客户端之间的最大时间差。
 
 如果为空则禁用检查。
+
+#### public_key
+
+
+==仅客户端==
+
+==必填==
+
+公钥，由 `sing-box generate reality-keypair` 生成。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

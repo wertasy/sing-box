@@ -31,11 +31,16 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### interface
 
 List of network interface names to send mDNS queries on.
 
 When empty, all interfaces that are up, multicast-capable, and non-loopback are used.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

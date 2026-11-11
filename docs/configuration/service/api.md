@@ -42,6 +42,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### secret
 
 Secret for the API.
@@ -101,3 +104,5 @@ Update interval of the dashboard.
 #### tls
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
+
+<!-- AUTO-GENERATED-CONFIG-END -->

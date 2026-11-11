@@ -131,6 +131,9 @@ icon: material/new-box
     (`source_port` || `source_port_range`) &&  
     `other fields`
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### query_type
 
 !!! quote "Changes in sing-box 1.14.0"
@@ -304,7 +307,12 @@ Match WiFi BSSID.
 
 Invert match result.
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### Logical Fields
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### type
 
@@ -321,3 +329,9 @@ Invert match result.
 ==Required==
 
 Included rules.
+
+#### invert
+
+Invert match result.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

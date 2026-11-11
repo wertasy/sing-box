@@ -33,11 +33,16 @@ icon: material/new-box
 
 ### 字段
 
-#### ttl
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
+#### override_domain
 
 !!! question "自 sing-box 1.14.0 起"
 
-DNS 质询临时 TXT 记录的 TTL。
+覆盖 DNS 质询记录使用的域名。
+
+适用于将 `_acme-challenge` 委托到其他 zone 的场景。
 
 #### propagation_delay
 
@@ -53,25 +58,44 @@ DNS 质询临时 TXT 记录的 TTL。
 
 设为 `-1` 可禁用传播检查。
 
+#### provider
+
+DNS 提供商。提供商专有字段见下文。
+
 #### resolvers
 
 !!! question "自 sing-box 1.14.0 起"
 
 进行 DNS 传播检查时优先使用的 DNS 解析器。
 
-#### override_domain
+#### ttl
 
 !!! question "自 sing-box 1.14.0 起"
 
-覆盖 DNS 质询记录使用的域名。
+DNS 质询临时 TXT 记录的 TTL。
 
-适用于将 `_acme-challenge` 委托到其他 zone 的场景。
-
-#### provider
-
-DNS 提供商。提供商专有字段见下文。
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 提供商字段
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
+#### ACME-DNS
+
+!!! question "自 sing-box 1.13.0 起"
+
+```json
+{
+  "provider": "acmedns",
+  "username": "",
+  "password": "",
+  "subdomain": "",
+  "server_url": ""
+}
+```
+
+参阅 [ACME-DNS](https://github.com/joohoi/acme-dns)。
 
 #### Alibaba Cloud DNS
 
@@ -109,18 +133,4 @@ DNS 提供商。提供商专有字段见下文。
 
 提供后可将 `api_token` 限定到单个区域。
 
-#### ACME-DNS
-
-!!! question "自 sing-box 1.13.0 起"
-
-```json
-{
-  "provider": "acmedns",
-  "username": "",
-  "password": "",
-  "subdomain": "",
-  "server_url": ""
-}
-```
-
-参阅 [ACME-DNS](https://github.com/joohoi/acme-dns)。
+<!-- AUTO-GENERATED-CONFIG-END -->

@@ -51,8 +51,16 @@ func (r ResolvedServiceOptions) DescribeSchema(builder schema.Builder) (*schema.
 }
 
 type ResolvedDNSServerOptions struct {
-	Service                string `json:"service"`
-	AcceptDefaultResolvers bool   `json:"accept_default_resolvers,omitempty"`
+	// @required
+	//
+	// The tag of the [Resolved Service](/configuration/service/resolved).
+	Service string `json:"service"`
+	// Indicates whether the default DNS resolvers should be accepted for fallback queries in addition to matching domains.
+	//
+	// Specifically, default DNS resolvers are DNS servers that have `SetLinkDefaultRoute` or `SetLinkDomains ~.` set.
+	//
+	// If not enabled, `NXDOMAIN` will be returned for requests that do not match search or match domains.
+	AcceptDefaultResolvers bool `json:"accept_default_resolvers,omitempty"`
 	// Timeout                badoption.Duration `json:"timeout,omitempty"`
 	// Attempts               int                `json:"attempts,omitempty"`
 	// Rotate                 bool               `json:"rotate,omitempty"`

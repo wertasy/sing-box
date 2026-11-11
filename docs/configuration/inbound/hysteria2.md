@@ -72,6 +72,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### up_mbps, down_mbps
 
 Max bandwidth, in Mbps.
@@ -130,9 +133,17 @@ Deny clients to use the BBR CC.
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
 
+#### users.name
+
+
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### QUIC Fields
 
 See [QUIC Fields](/configuration/shared/quic/) for details.
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### masquerade
 
@@ -278,3 +289,5 @@ Lease lifetime of the mapping.
 HTTP client used to talk to the realm.
 
 See [HTTP Client](/configuration/shared/http-client/) for details.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

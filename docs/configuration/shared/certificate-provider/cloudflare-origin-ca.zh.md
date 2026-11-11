@@ -25,6 +25,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### domain
 
 ==必填==
@@ -80,3 +83,5 @@ Cloudflare Origin CA Key。
 用于所有提供者 HTTP 请求的 HTTP 客户端。
 
 参阅 [HTTP 客户端字段](/zh/configuration/shared/http-client/) 了解详情。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

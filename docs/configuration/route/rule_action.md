@@ -42,6 +42,9 @@ icon: material/new-box
 
 `route` inherits the classic rule behavior of routing connection to the specified outbound.
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### outbound
 
 ==Required==
@@ -51,6 +54,8 @@ Tag of target outbound.
 #### route-options Fields
 
 See `route-options` fields below.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### bypass
 
@@ -75,6 +80,9 @@ For non-auto-redirect connections and already established connections,
 if `outbound` is specified, the behavior is the same as `route`;
 otherwise, the rule will be skipped.
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### outbound
 
 Tag of target outbound.
@@ -85,6 +93,8 @@ from auto redirect, and will be skipped in other contexts.
 #### route-options Fields
 
 See `route-options` fields below.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### reject
 
@@ -106,6 +116,9 @@ The specified method is used for reject tun connections if `sniff` action has no
 
 For non-tun connections and already established connections, will just be closed.
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### method
 
 For TCP and UDP connections:
@@ -124,6 +137,8 @@ For ICMP echo requests:
 If not enabled, `method` will be temporarily overwritten to `drop` after 50 triggers in 30s.
 
 Not available when `method` is set to drop.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### hijack-dns
 
@@ -158,6 +173,9 @@ Not available when `method` is set to drop.
 ```
 
 `route-options` set options for routing.
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### override_address
 
@@ -274,6 +292,8 @@ How the forged segment is rejected by the real server. See outbound TLS
 [`spoof_method`](/configuration/shared/tls/#spoof_method) for the full table
 of accepted values and platform notes.
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### sniff
 
 ```json
@@ -288,6 +308,9 @@ of accepted values and platform notes.
 
 For deprecated `inbound.sniff` options, it is considered to `sniff()` performed before routing.
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### sniffer
 
 Enabled sniffers.
@@ -301,6 +324,8 @@ Available protocol values an be found on in [Protocol Sniff](../sniff/)
 Timeout for sniffing.
 
 `300ms` is used by default.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### resolve
 
@@ -318,6 +343,9 @@ Timeout for sniffing.
 ```
 
 `resolve` resolve request destination from domain to IP addresses.
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### server
 
@@ -364,3 +392,5 @@ Append a `edns0-subnet` OPT extra record with the specified IP prefix to every q
 If value is an IP address instead of prefix, `/32` or `/128` will be appended automatically.
 
 Will override `dns.client_subnet`.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

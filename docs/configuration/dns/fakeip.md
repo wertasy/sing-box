@@ -18,6 +18,9 @@ icon: material/note-remove
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 Enable FakeIP service.
@@ -29,3 +32,5 @@ IPv4 address range for FakeIP.
 #### inet6_range
 
 IPv6 address range for FakeIP.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

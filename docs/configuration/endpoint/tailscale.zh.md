@@ -57,6 +57,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### state_directory
 
 存储 Tailscale 状态的目录。
@@ -232,6 +235,8 @@ UDP NAT 过期时间。
 !!! question "自 sing-box 1.15.0 起"
 
 允许该 endpoint 在需要时断开连接。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

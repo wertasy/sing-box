@@ -21,6 +21,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### network
 
 Listen network, one of `tcp` `udp`.
@@ -34,3 +37,5 @@ Override the connection destination address.
 #### override_port
 
 Override the connection destination port.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

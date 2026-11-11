@@ -55,6 +55,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### network
 
 Listen network, one of `tcp` `udp`.
@@ -94,3 +97,5 @@ Defaults to `false`. Enable this when the inbound is managed by the [SSM API](/c
 #### multiplex
 
 See [Multiplex](/configuration/shared/multiplex#inbound) for details.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

@@ -119,7 +119,18 @@ type OpenConnectFormEntryOptions struct {
 }
 
 type OpenConnectDNSServerOptions struct {
-	Endpoint               string `json:"endpoint,omitempty"`
-	AcceptDefaultResolvers bool   `json:"accept_default_resolvers,omitempty"`
-	AcceptSearchDomain     bool   `json:"accept_search_domain,omitempty"`
+	// @required
+	//
+	// The tag of the [OpenConnect Endpoint](/configuration/endpoint/openconnect).
+	//
+	// DNS queries are sent to the resolvers pushed by the VPN server through the OpenConnect endpoint.
+	Endpoint string `json:"endpoint,omitempty"`
+	// Accept the general resolvers pushed by the VPN server for unmatched queries.
+	//
+	// When enabled, the general resolvers are used as the default only if the server requests all DNS through the tunnel, or if it does not provide split-DNS rules or suffixes. Otherwise, unmatched queries return `NXDOMAIN`.
+	AcceptDefaultResolvers bool `json:"accept_default_resolvers,omitempty"`
+	// When enabled and pushed search domains are available, single-label queries (for example, `intranet`) are retried with each search domain until one resolves.
+	//
+	// If every search-domain expansion returns `NXDOMAIN`, the original unqualified name follows normal default-resolver behavior.
+	AcceptSearchDomain bool `json:"accept_search_domain,omitempty"`
 }

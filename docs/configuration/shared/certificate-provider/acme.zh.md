@@ -45,6 +45,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### domain
 
 ==必填==
@@ -110,14 +113,6 @@ EAB（外部帐户绑定）包含将 ACME 帐户绑定或映射到 CA 已知的�
 
 为了启用 ACME 帐户绑定，运行 ACME 服务器的 CA 需要使用 ACME 之外的某种机制向 ACME 客户端提供 MAC 密钥和密钥标识符。§7.3.4
 
-#### external_account.key_id
-
-密钥标识符。
-
-#### external_account.mac_key
-
-MAC 密钥。
-
 #### dns01_challenge
 
 ACME DNS01 质询字段。如果配置，将禁用其他质询方法。
@@ -153,3 +148,13 @@ ACME DNS01 质询字段。如果配置，将禁用其他质询方法。
 用于所有提供者 HTTP 请求的 HTTP 客户端。
 
 参阅 [HTTP 客户端字段](/zh/configuration/shared/http-client/) 了解详情。
+
+#### external_account.key_id
+
+密钥标识符。
+
+#### external_account.mac_key
+
+MAC 密钥。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

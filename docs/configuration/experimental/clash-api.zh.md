@@ -69,6 +69,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### external_controller
 
 RESTful web API 监听地址。如果为空，则禁用 Clash API。
@@ -125,6 +128,8 @@ Clash 中的默认模式，默认使用 `Rule`。
 
 将 Clash 模式存储在缓存文件中。
 
+- 已废弃。
+
 #### store_selected
 
 !!! failure "已在 sing-box 1.8.0 废弃"
@@ -137,6 +142,8 @@ Clash 中的默认模式，默认使用 `Rule`。
 
 将 `Selector` 中出站的选定的目标出站存储在缓存文件中。
 
+- 已废弃。
+
 #### store_fakeip
 
 !!! failure "已在 sing-box 1.8.0 废弃"
@@ -145,20 +152,28 @@ Clash 中的默认模式，默认使用 `Rule`。
 
 将 fakeip 存储在缓存文件中。
 
+- 已废弃。
+
 #### cache_file
 
 !!! failure "已在 sing-box 1.8.0 废弃"
- 
+
     `cache_file` 已在 Clash API 中废弃，且已迁移到 `cache_file.enabled` 和 `cache_file.path`。
 
 缓存文件路径，默认使用`cache.db`。
 
+- 已废弃。
+
 #### cache_id
 
 !!! failure "已在 sing-box 1.8.0 废弃"
- 
+
     `cache_id` 已在 Clash API 中废弃，且已迁移到 `cache_file.cache_id`。
 
 缓存 ID。
 
 如果不为空，配置特定的数据将使用由其键控的单独存储。
+
+- 已废弃。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

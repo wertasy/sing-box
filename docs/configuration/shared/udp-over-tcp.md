@@ -19,6 +19,9 @@ The UDP over TCP protocol is used to transmit UDP packets in TCP.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 Enable the UDP over TCP protocol.
@@ -28,6 +31,8 @@ Enable the UDP over TCP protocol.
 The protocol version, `1` or `2`.
 
 2 is used by default.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Application support
 

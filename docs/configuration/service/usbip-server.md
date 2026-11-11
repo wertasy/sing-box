@@ -34,6 +34,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### provider
 
 The device source provider.
@@ -75,3 +78,5 @@ Object fields:
 
 Within one object, all specified fields must match; multiple objects are combined as a union. At
 least one field is required.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

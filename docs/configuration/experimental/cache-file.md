@@ -34,6 +34,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 Enable cache file.
@@ -65,6 +68,8 @@ Store rejected DNS response cache in the cache file
 The check results of [Legacy Address Filter Fields](/configuration/dns/rule/#legacy-address-filter-fields)
 will be cached until expiration.
 
+- Deprecated.
+
 #### rdrc_timeout
 
 !!! failure "Deprecated in sing-box 1.14.0"
@@ -74,6 +79,8 @@ will be cached until expiration.
 Timeout of rejected DNS response cache.
 
 `7d` is used by default.
+
+- Deprecated.
 
 #### store_dns
 
@@ -96,3 +103,5 @@ Size of the write buffer.
 Interval for flushing the write buffer automatically.
 
 Disabled by default.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

@@ -20,6 +20,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### outbounds
 
 ==Required==
@@ -47,3 +50,5 @@ The idle timeout. `30m` will be used if empty.
 Interrupt existing connections when the selected outbound has changed.
 
 Only inbound connections are affected by this setting, internal connections will always be interrupted.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

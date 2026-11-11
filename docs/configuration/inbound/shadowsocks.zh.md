@@ -55,6 +55,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### network
 
 监听的网络协议，`tcp` `udp` 之一。
@@ -94,3 +97,5 @@
 #### multiplex
 
 参阅 [多路复用](/zh/configuration/shared/multiplex#入站)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

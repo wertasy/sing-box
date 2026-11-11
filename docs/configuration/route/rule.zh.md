@@ -229,6 +229,9 @@ icon: material/new-box
 
     当规则集仅包含一条默认规则且非 invert 时，其中字段视为按以上规则与外层规则合并；否则，作为一条 `其他字段` 匹配；不同规则集之间始终保持 or。
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### inbound
 
 [入站](/zh/configuration/inbound/) 标签。
@@ -550,6 +553,8 @@ icon: material/new-box
 
 使规则集中的 `ip_cidr` 规则匹配源 IP。
 
+- 已废弃。
+
 #### rule_set_ip_cidr_match_source
 
 !!! question "自 sing-box 1.10.0 起"
@@ -572,7 +577,12 @@ icon: material/new-box
 
     已移动到 [规则动作](../rule_action#route).
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### 逻辑字段
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### type
 
@@ -589,3 +599,9 @@ icon: material/new-box
 ==必填==
 
 包括的规则。
+
+#### invert
+
+Invert match result.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

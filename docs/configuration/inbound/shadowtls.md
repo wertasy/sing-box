@@ -48,6 +48,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### version
 
 ShadowTLS protocol version.
@@ -105,3 +108,5 @@ Available values are:
 Additionally, connections matching `handshake_for_server_name` are not affected.
 
 Only available in the ShadowTLS protocol 3.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

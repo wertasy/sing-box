@@ -50,6 +50,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### system
 
 使用系统设备。
@@ -138,6 +141,12 @@ WireGuard worker 数量。
 !!! question "自 sing-box 1.15.0 起"
 
 允许该 endpoint 在需要时断开连接。
+
+#### listen_port
+
+Listen port for incoming connections.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### UDP NAT 字段
 

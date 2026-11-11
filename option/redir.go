@@ -6,6 +6,9 @@ type RedirectInboundOptions struct {
 
 type TProxyInboundOptions struct {
 	ListenOptions
+	// Listen network, one of `tcp` `udp`.
+	//
+	// Both if empty.
 	Network      NetworkList    `json:"network,omitempty"`
 	UDPMapping   UDPNATBehavior `json:"udp_mapping,omitempty"`
 	UDPFiltering UDPNATBehavior `json:"udp_filtering,omitempty"`

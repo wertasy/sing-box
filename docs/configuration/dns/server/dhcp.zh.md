@@ -27,11 +27,16 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### interface
 
 要监听的网络接口名称。
 
 默认使用默认接口。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

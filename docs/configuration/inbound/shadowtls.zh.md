@@ -48,6 +48,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### version
 
 ShadowTLS 协议版本。
@@ -105,3 +108,5 @@ ShadowTLS 通配符 SNI 模式。
 此外，匹配 `handshake_for_server_name` 的连接不受影响。
 
 仅在 ShadowTLS 协议 3 中可用。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

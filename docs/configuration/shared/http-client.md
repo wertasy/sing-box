@@ -29,6 +29,9 @@ When object:
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### engine
 
 HTTP engine to use.
@@ -92,6 +95,8 @@ Disable automatic fallback to lower HTTP version.
 Custom HTTP headers.
 
 `Host` header is used as request host.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### HTTP2 Fields
 

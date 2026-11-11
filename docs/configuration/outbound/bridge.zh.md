@@ -37,6 +37,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### interface
 
 转发流量流出的网络接口名称。
@@ -68,3 +71,5 @@ Linux iproute2 路由表索引。
 Linux iproute2 规则起始索引。
 
 默认使用 `100`。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

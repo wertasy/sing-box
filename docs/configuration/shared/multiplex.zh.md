@@ -24,6 +24,9 @@
 
 ### 入站字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 启用多路复用支持。
@@ -36,7 +39,12 @@
 
 参阅 [TCP Brutal](/zh/configuration/shared/tcp-brutal/)。
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### 出站字段
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### enabled
 
@@ -83,3 +91,5 @@
 #### brutal
 
 参阅 [TCP Brutal](/zh/configuration/shared/tcp-brutal/)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

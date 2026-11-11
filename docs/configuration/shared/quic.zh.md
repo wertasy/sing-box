@@ -17,13 +17,18 @@ icon: material/new-box
 
 ### 字段
 
-#### initial_packet_size
-
-初始 QUIC 数据包大小。
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### disable_path_mtu_discovery
 
 禁用 QUIC 路径 MTU 发现。
+
+#### initial_packet_size
+
+初始 QUIC 数据包大小。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### HTTP2 字段
 

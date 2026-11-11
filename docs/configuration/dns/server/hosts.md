@@ -30,6 +30,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### path
 
 List of paths to hosts files.
@@ -43,7 +46,7 @@ Example:
 ```json
 {
   // "path": "/etc/hosts"
-  
+
   "path": [
     "/etc/hosts",
     "$HOME/.hosts"
@@ -68,6 +71,8 @@ Example:
   }
 }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Examples
 

@@ -209,6 +209,9 @@ icon: material/new-box
 
 ### Tun 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### interface_name
 
 虚拟设备名称，默认自动选择。
@@ -245,6 +248,8 @@ tun 接口的 IPv4 和 IPv6 前缀。
 
 tun 接口的 IPv4 前缀。
 
+- 已废弃。
+
 #### inet6_address
 
 !!! failure "已在 sing-box 1.10.0 废弃"
@@ -252,6 +257,8 @@ tun 接口的 IPv4 前缀。
     `inet6_address` 已合并到 `address` 且将在 sing-box 1.12.0 中被移除。
 
 tun 接口的 IPv6 前缀。
+
+- 已废弃。
 
 #### mtu
 
@@ -306,6 +313,8 @@ TUN 接口上 DNS 的处理方式。
     仅支持 Linux。
 
 启用通用分段卸载。
+
+- 已废弃。
 
 #### auto_route
 
@@ -467,6 +476,8 @@ TUN 接口上 DNS 的处理方式。
 
 启用 `auto_route` 时使用自定义路由而不是默认路由。
 
+- 已废弃。
+
 #### inet6_route_address
 
 !!! failure "已在 sing-box 1.10.0 废弃"
@@ -474,6 +485,8 @@ TUN 接口上 DNS 的处理方式。
     `inet6_route_address` 已合并到 `route_address` 且将在 sing-box 1.12.0 中被移除。
 
 启用 `auto_route` 时使用自定义路由而不是默认路由。
+
+- 已废弃。
 
 #### route_exclude_address
 
@@ -489,6 +502,8 @@ TUN 接口上 DNS 的处理方式。
 
 启用 `auto_route` 时排除自定义路由。
 
+- 已废弃。
+
 #### inet6_route_exclude_address
 
 !!! failure "已在 sing-box 1.10.0 废弃"
@@ -497,7 +512,11 @@ TUN 接口上 DNS 的处理方式。
 
 启用 `auto_route` 时排除自定义路由。
 
+- 已废弃。
+
 #### route_address_set
+
+!!! question "自 sing-box 1.10.0 起"
 
 === "`auto_redirect` 已启用"
 
@@ -521,6 +540,8 @@ TUN 接口上 DNS 的处理方式。
     但除此之外，它在所有命令行客户端以及 Linux 和 Windows 图形客户端上都可以正常工作。
 
 #### route_exclude_address_set
+
+!!! question "自 sing-box 1.10.0 起"
 
 === "`auto_redirect` 已启用"
 
@@ -550,6 +571,8 @@ TUN 接口上 DNS 的处理方式。
 此选项自 sing-box 1.11.0 起不再生效，可从配置中移除。
 
 自 sing-box 1.14.0 起，可使用 [UDP NAT 字段](/zh/configuration/shared/udp-nat/)自定义映射和过滤行为。
+
+- 已废弃。
 
 #### stack
 
@@ -676,23 +699,23 @@ TCP/IP 栈。
 
 系统 HTTP 代理设置。
 
-##### platform.http_proxy.enabled
+#### platform.http_proxy.enabled
 
 启用系统 HTTP 代理。
 
-##### platform.http_proxy.server
+#### platform.http_proxy.server
 
 ==必填==
 
 系统 HTTP 代理服务器地址。
 
-##### platform.http_proxy.server_port
+#### platform.http_proxy.server_port
 
 ==必填==
 
 系统 HTTP 代理服务器端口。
 
-##### platform.http_proxy.bypass_domain
+#### platform.http_proxy.bypass_domain
 
 !!! note ""
 
@@ -700,13 +723,67 @@ TCP/IP 栈。
 
 绕过代理的主机名列表。
 
-##### platform.http_proxy.match_domain
+#### platform.http_proxy.match_domain
 
 !!! quote ""
 
     仅在 Apple 平台图形客户端中支持。
 
 代理的主机名列表。
+
+#### sniff
+
+!!! failure "已在 sing-box 1.11.0 废弃"
+
+    入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
+
+启用协议探测。
+
+参阅 [协议探测](/zh/configuration/route/sniff/)
+
+#### sniff_override_destination
+
+!!! failure "已在 sing-box 1.11.0 废弃"
+
+    入站字段已废弃且将在 sing-box 1.12.0 中被移除。
+
+用探测出的域名覆盖连接目标地址。
+
+如果域名无效（如 Tor），将不生效。
+
+#### sniff_timeout
+
+!!! failure "已在 sing-box 1.11.0 废弃"
+
+    入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
+
+探测超时时间。
+
+默认使用 300ms。
+
+#### domain_strategy
+
+!!! failure "已在 sing-box 1.11.0 废弃"
+
+    入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
+
+可选值： `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`。
+
+如果设置，请求的域名将在路由之前解析为 IP。
+
+如果 `sniff_override_destination` 生效，它的值将作为后备。
+
+#### udp_disable_domain_unmapping
+
+!!! failure "已在 sing-box 1.11.0 废弃"
+
+    入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
+
+如果启用，对于地址为域的 UDP 代理请求，将在响应中发送原始包地址而不是映射的域。
+
+此选项用于兼容不支持接收带有域地址的 UDP 包的客户端，如 Surge。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### UDP NAT 字段
 

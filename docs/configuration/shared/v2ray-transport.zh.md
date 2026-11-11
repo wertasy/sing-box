@@ -44,6 +44,9 @@ V2Ray Transport 是 v2ray 发明的一组私有协议，并污染了其他协议
 
     不强制执行 TLS。如果未配置 TLS，将使用纯 HTTP 1.1。
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### host
 
 主机域名列表。
@@ -91,6 +94,8 @@ HTTP 请求的额外标头
 
 指定发送 PING 帧后，在指定的超时时间内必须接收到响应。如果在指定的超时时间内没有收到 PING 帧的响应，则连接将关闭。默认超时持续时间为 15 秒。
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### WebSocket
 
 ```json
@@ -102,6 +107,9 @@ HTTP 请求的额外标头
   "early_data_header_name": ""
 }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### path
 
@@ -126,6 +134,8 @@ HTTP 请求的额外标头
 要与 Xray-core 兼容，请将其设置为 `Sec-WebSocket-Protocol`。
 
 它需要与服务器保持一致。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### QUIC
 
@@ -155,6 +165,9 @@ HTTP 请求的额外标头
   "permit_without_stream": false
 }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### service_name
 
@@ -188,6 +201,8 @@ gRPC 服务名称。
 
 默认禁用。
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### HTTPUpgrade
 
 ```json
@@ -198,6 +213,9 @@ gRPC 服务名称。
   "headers": {}
 }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### host
 
@@ -216,3 +234,5 @@ HTTP 请求路径
 HTTP 请求的额外标头。
 
 如果设置，服务器将写入响应。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

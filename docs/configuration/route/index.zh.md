@@ -64,6 +64,9 @@ icon: material/alert-decagram
 | `geoip`   | [GeoIP](./geoip/)     |
 | `geosite` | [Geosite](./geosite/) |
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### rule
 
 一组 [路由规则](./rule/)    。
@@ -193,3 +196,27 @@ icon: material/alert-decagram
 !!! question "自 sing-box 1.11.0 起"
 
 详情参阅 [拨号字段](/zh/configuration/shared/dial/#fallback_delay)。
+
+#### rules
+
+一组 [路由规则](./rule/)    。
+
+#### default_network_strategy
+
+!!! question "自 sing-box 1.11.0 起"
+
+详情参阅 [拨号字段](/zh/configuration/shared/dial/#network_strategy)。
+
+当 `outbound.bind_interface`, `outbound.inet4_bind_address` 或 `outbound.inet6_bind_address` 已设置时不生效。
+
+可以被 `outbound.network_strategy` 覆盖。
+
+与 `default_interface` 冲突。
+
+#### geoip
+
+
+#### geosite
+
+
+<!-- AUTO-GENERATED-CONFIG-END -->

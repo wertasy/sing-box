@@ -33,11 +33,16 @@ icon: material/new-box
 
 ### Fields
 
-#### ttl
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
+#### override_domain
 
 !!! question "Since sing-box 1.14.0"
 
-The TTL of the temporary TXT record used for the DNS challenge.
+Override the domain name used for the DNS challenge record.
+
+Useful when `_acme-challenge` is delegated to a different zone.
 
 #### propagation_delay
 
@@ -53,25 +58,44 @@ The maximum time to wait for the challenge record to propagate.
 
 Set to `-1` to disable propagation checks.
 
+#### provider
+
+The DNS provider. See below for provider-specific fields.
+
 #### resolvers
 
 !!! question "Since sing-box 1.14.0"
 
 Preferred DNS resolvers to use for DNS propagation checks.
 
-#### override_domain
+#### ttl
 
 !!! question "Since sing-box 1.14.0"
 
-Override the domain name used for the DNS challenge record.
+The TTL of the temporary TXT record used for the DNS challenge.
 
-Useful when `_acme-challenge` is delegated to a different zone.
-
-#### provider
-
-The DNS provider. See below for provider-specific fields.
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Provider Fields
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
+#### ACME-DNS
+
+!!! question "Since sing-box 1.13.0"
+
+```json
+{
+  "provider": "acmedns",
+  "username": "",
+  "password": "",
+  "subdomain": "",
+  "server_url": ""
+}
+```
+
+See [ACME-DNS](https://github.com/joohoi/acme-dns) for details.
 
 #### Alibaba Cloud DNS
 
@@ -109,18 +133,4 @@ Optional API token with `Zone:Read` permission.
 
 When provided, allows `api_token` to be scoped to a single zone.
 
-#### ACME-DNS
-
-!!! question "Since sing-box 1.13.0"
-
-```json
-{
-  "provider": "acmedns",
-  "username": "",
-  "password": "",
-  "subdomain": "",
-  "server_url": ""
-}
-```
-
-See [ACME-DNS](https://github.com/joohoi/acme-dns) for details.
+<!-- AUTO-GENERATED-CONFIG-END -->

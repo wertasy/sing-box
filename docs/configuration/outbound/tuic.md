@@ -25,6 +25,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -92,6 +95,22 @@ Both is enabled by default.
 ==Required==
 
 TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
+
+#### zero_rtt_handshake
+
+Enable 0-RTT QUIC connection handshake on the client.
+This has little performance impact, because the protocol is fully multiplexed.
+
+!!! warning ""
+
+    Disabling this feature is highly recommended, as it is vulnerable to replay attacks.
+    See [Attack of the clones](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/#attack-of-the-clones)
+
+#### heartbeat
+
+Heartbeat interval for keeping the connection alive
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### QUIC Fields
 

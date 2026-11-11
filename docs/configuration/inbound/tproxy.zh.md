@@ -29,11 +29,16 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### network
 
 监听的网络协议，`tcp` `udp` 之一。
 
 默认所有。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### UDP NAT 字段
 

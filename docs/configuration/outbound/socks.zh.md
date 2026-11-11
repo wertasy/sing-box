@@ -21,6 +21,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -60,6 +63,8 @@ SOCKS5 密码。
 UDP over TCP 配置。
 
 参阅 [UDP Over TCP](/zh/configuration/shared/udp-over-tcp/)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

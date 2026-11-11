@@ -30,6 +30,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### users
 
 TUIC 用户
@@ -78,6 +81,11 @@ QUIC 拥塞控制算法
 ==必填==
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+
+#### users.name
+
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### QUIC 字段
 

@@ -22,6 +22,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 启用 NTP 服务。
@@ -43,6 +46,12 @@ NTP 服务器端口。
 时间同步间隔。
 
 默认使用 30 分钟。
+
+#### write_to_system
+
+Update system time after synchronization.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

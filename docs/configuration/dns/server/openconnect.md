@@ -27,6 +27,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### endpoint
 
 ==Required==
@@ -46,6 +49,8 @@ When enabled, the general resolvers are used as the default only if the server r
 When enabled and pushed search domains are available, single-label queries (for example, `intranet`) are retried with each search domain until one resolves.
 
 If every search-domain expansion returns `NXDOMAIN`, the original unqualified name follows normal default-resolver behavior.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Examples
 

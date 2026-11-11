@@ -25,6 +25,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### listen
 
 gRPC API listening address. V2Ray API will be disabled if empty.
@@ -48,3 +51,5 @@ Outbound list to count traffic.
 #### stats.users
 
 User list to count traffic.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

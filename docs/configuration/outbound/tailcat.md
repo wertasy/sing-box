@@ -26,6 +26,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### private_key
 
 Private key.
@@ -74,6 +77,8 @@ Conflicts with `derp_map_url` and `derp_region`.
 HTTP client used to fetch the DERP map.
 
 See [HTTP Client](/configuration/shared/http-client/) for details.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

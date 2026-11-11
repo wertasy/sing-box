@@ -24,6 +24,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -43,6 +46,10 @@ Basic 认证用户名。
 #### password
 
 Basic 认证密码。
+
+#### tls
+
+TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
 #### path
 
@@ -72,9 +79,7 @@ HTTP 版本。
 
 禁用自动回退到更低的 HTTP 版本。
 
-#### tls
-
-TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### HTTP2 字段
 

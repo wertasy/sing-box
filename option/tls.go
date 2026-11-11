@@ -11,27 +11,215 @@ import (
 )
 
 type InboundTLSOptions struct {
-	Enabled                          bool                            `json:"enabled,omitempty"`
-	ServerName                       string                          `json:"server_name,omitempty"`
-	Insecure                         bool                            `json:"insecure,omitempty"`
-	ALPN                             badoption.Listable[string]      `json:"alpn,omitempty" examples:"http/1.1,h2,h3"`
-	MinVersion                       string                          `json:"min_version,omitempty" enum:"1.0,1.1,1.2,1.3"`
-	MaxVersion                       string                          `json:"max_version,omitempty" enum:"1.0,1.1,1.2,1.3"`
-	CipherSuites                     LegacyListable[string]          `json:"cipher_suites,omitempty"`
-	CurvePreferences                 LegacyListable[CurvePreference] `json:"curve_preferences,omitempty"`
-	Certificate                      badoption.Listable[string]      `json:"certificate,omitempty"`
-	CertificatePath                  string                          `json:"certificate_path,omitempty"`
-	ClientAuthentication             ClientAuthType                  `json:"client_authentication,omitempty"`
-	ClientCertificate                badoption.Listable[string]      `json:"client_certificate,omitempty"`
-	ClientCertificatePath            badoption.Listable[string]      `json:"client_certificate_path,omitempty"`
-	ClientCertificateSHA256          badoption.Listable[[]byte]      `json:"client_certificate_sha256,omitempty"`
-	ClientCertificatePublicKeySHA256 badoption.Listable[[]byte]      `json:"client_certificate_public_key_sha256,omitempty"`
-	Key                              badoption.Listable[string]      `json:"key,omitempty"`
-	KeyPath                          string                          `json:"key_path,omitempty"`
-	KernelTx                         bool                            `json:"kernel_tx,omitempty"`
-	KernelRx                         bool                            `json:"kernel_rx,omitempty"`
-	HandshakeTimeout                 badoption.Duration              `json:"handshake_timeout,omitempty"`
-	CertificateProvider              *CertificateProviderOptions     `json:"certificate_provider,omitempty"`
+	//
+	// Enable TLS.
+	Enabled bool `json:"enabled,omitempty"`
+	//
+	// Used to verify the hostname on the returned certificates unless insecure is given.
+	//
+	// It is also included in the client's handshake to support virtual hosting unless it is an IP address.
+	ServerName string `json:"server_name,omitempty"`
+	//
+	// @indicator: Client only
+	//
+	// Accepts any server certificate.
+	Insecure bool `json:"insecure,omitempty"`
+	//
+	// List of supported application level protocols, in order of preference.
+	//
+	// If both peers support ALPN, the selected protocol will be one from this list, and the connection will fail if there is
+	// no mutually supported protocol.
+	//
+	// See [Application-Layer Protocol Negotiation](https://en.wikipedia.org/wiki/Application-Layer_Protocol_Negotiation).
+	ALPN badoption.Listable[string] `json:"alpn,omitempty" examples:"http/1.1,h2,h3"`
+	//
+	// The minimum TLS version that is acceptable.
+	//
+	// TLS 1.2 is used by default.
+	MinVersion string `json:"min_version,omitempty" enum:"1.0,1.1,1.2,1.3"`
+	//
+	// The maximum TLS version that is acceptable.
+	//
+	// By default, the maximum version is currently TLS 1.3.
+	MaxVersion string `json:"max_version,omitempty" enum:"1.0,1.1,1.2,1.3"`
+	//
+	// List of enabled TLS 1.0–1.2 cipher suites. The order of the list is ignored.
+	// Note that TLS 1.3 cipher suites are not configurable.
+	//
+	// If empty, a safe default list is used. The default cipher suites might change over time.
+	CipherSuites LegacyListable[string] `json:"cipher_suites,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// Set of supported key exchange mechanisms. The order of the list is ignored, and key exchange mechanisms are chosen
+	// from this list using an internal preference order by Golang.
+	//
+	// Available values, also the default list:
+	//
+	// * `P256`
+	// * `P384`
+	// * `P521`
+	// * `X25519`
+	// * `X25519MLKEM768`
+	CurvePreferences LegacyListable[CurvePreference] `json:"curve_preferences,omitempty"`
+	//
+	// Server certificates chain line array, in PEM format.
+	Certificate badoption.Listable[string] `json:"certificate,omitempty"`
+	//
+	// @note:
+	//
+	//     Will be automatically reloaded if file modified.
+	//
+	// The path to server certificate chain, in PEM format.
+	CertificatePath string `json:"certificate_path,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Server only
+	//
+	// The type of client authentication to use.
+	//
+	// Available values:
+	//
+	// * `no` (default)
+	// * `request`
+	// * `require-any`
+	// * `verify-if-given`
+	// * `require-and-verify`
+	//
+	// One of `client_certificate`, `client_certificate_path`, `client_certificate_sha256`, or `client_certificate_public_key_sha256` is required
+	// if this option is set to `verify-if-given`, or `require-and-verify`.
+	ClientAuthentication ClientAuthType `json:"client_authentication,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Client only
+	//
+	// Client certificate chain line array, in PEM format.
+	//
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Server only
+	//
+	// Client certificate chain line array, in PEM format.
+	ClientCertificate badoption.Listable[string] `json:"client_certificate,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Client only
+	//
+	// The path to client certificate chain, in PEM format.
+	//
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Server only
+	//
+	// @note:
+	//
+	//     Will be automatically reloaded if file modified.
+	//
+	// List of path to client certificate chain, in PEM format.
+	ClientCertificatePath badoption.Listable[string] `json:"client_certificate_path,omitempty"`
+	//
+	// @since 1.15.0
+	//
+	// @indicator: Server only
+	//
+	// List of SHA-256 hashes of client certificates, in base64 format.
+	//
+	// The hash is computed over the whole DER-encoded certificate, see [certificate_sha256](#certificate_sha256).
+	ClientCertificateSHA256 badoption.Listable[[]byte] `json:"client_certificate_sha256,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Server only
+	//
+	// List of SHA-256 hashes of client certificate public keys, in base64 format.
+	//
+	// To generate the SHA-256 hash for a certificate's public key, use the following commands:
+	//
+	// ```bash
+	// # For a certificate file
+	// openssl x509 -in certificate.pem -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+	//
+	// # For a certificate from a remote server
+	// echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+	// ```
+	ClientCertificatePublicKeySHA256 badoption.Listable[[]byte] `json:"client_certificate_public_key_sha256,omitempty"`
+	//
+	// @indicator: Server only
+	//
+	// The server private key line array, in PEM format.
+	Key badoption.Listable[string] `json:"key,omitempty"`
+	//
+	// @indicator: Server only
+	//
+	// @note:
+	//
+	//     Will be automatically reloaded if file modified.
+	//
+	// The path to the server private key, in PEM format.
+	KeyPath string `json:"key_path,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux 5.1+, use a newer kernel if possible.
+	//
+	// @quote:
+	//
+	//     Only TLS 1.3 is supported.
+	//
+	// @warning:
+	//
+	//     kTLS TX may only improve performance when `splice(2)` is available (both ends must be TCP or TLS without additional protocols after handshake); otherwise, it will definitely degrade performance.
+	//
+	// Enable kernel TLS transmit support.
+	KernelTx bool `json:"kernel_tx,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux 5.1+, use a newer kernel if possible.
+	//
+	// @quote:
+	//
+	//     Only TLS 1.3 is supported.
+	//
+	// @failure:
+	//
+	//     kTLS RX will definitely degrade performance even if `splice(2)` is in use, so enabling it is not recommended.
+	//
+	// Enable kernel TLS receive support.
+	KernelRx bool `json:"kernel_rx,omitempty"`
+	//
+	// @since 1.14.0
+	//
+	// TLS handshake timeout, in golang's Duration format.
+	//
+	// `15s` is used by default.
+	HandshakeTimeout badoption.Duration `json:"handshake_timeout,omitempty"`
+	//
+	// @since 1.14.0
+	//
+	// @indicator: Server only
+	//
+	// A string or an object.
+	//
+	// When string, the tag of a shared [Certificate Provider](/configuration/shared/certificate-provider/).
+	//
+	// When object, an inline certificate provider. See [Certificate Provider](/configuration/shared/certificate-provider/) for available types and fields.
+	//
+	// ## Custom TLS support
+	//
+	// @info: QUIC support
+	//
+	//     Only ECH is supported in QUIC.
+	CertificateProvider *CertificateProviderOptions `json:"certificate_provider,omitempty"`
 
 	// Deprecated: use certificate_provider
 	ACME *InboundACMEOptions `json:"acme,omitempty" schema:"omit"`
@@ -89,6 +277,7 @@ func (t ClientAuthType) DescribeSchema(builder schema.Builder) (*schema.Node, er
 }
 
 type InboundTLSOptionsContainer struct {
+	// TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
 	TLS *InboundTLSOptions `json:"tls,omitempty"`
 }
 
@@ -106,38 +295,232 @@ func (o *InboundTLSOptionsContainer) ReplaceInboundTLSOptions(options *InboundTL
 }
 
 type OutboundTLSOptions struct {
-	Enabled                    bool                            `json:"enabled,omitempty"`
-	Engine                     string                          `json:"engine,omitempty" enum:"go,apple,windows"`
-	DisableSNI                 bool                            `json:"disable_sni,omitempty"`
-	ServerName                 string                          `json:"server_name,omitempty"`
-	Insecure                   bool                            `json:"insecure,omitempty"`
-	ALPN                       badoption.Listable[string]      `json:"alpn,omitempty" examples:"http/1.1,h2,h3"`
-	MinVersion                 string                          `json:"min_version,omitempty" enum:"1.0,1.1,1.2,1.3"`
-	MaxVersion                 string                          `json:"max_version,omitempty" enum:"1.0,1.1,1.2,1.3"`
-	CipherSuites               LegacyListable[string]          `json:"cipher_suites,omitempty"`
-	CurvePreferences           LegacyListable[CurvePreference] `json:"curve_preferences,omitempty"`
-	Certificate                badoption.Listable[string]      `json:"certificate,omitempty"`
-	CertificatePath            string                          `json:"certificate_path,omitempty"`
-	CertificateSHA256          badoption.Listable[[]byte]      `json:"certificate_sha256,omitempty"`
-	CertificatePublicKeySHA256 badoption.Listable[[]byte]      `json:"certificate_public_key_sha256,omitempty"`
-	ClientCertificate          badoption.Listable[string]      `json:"client_certificate,omitempty"`
-	ClientCertificatePath      string                          `json:"client_certificate_path,omitempty"`
-	ClientKey                  badoption.Listable[string]      `json:"client_key,omitempty"`
-	ClientKeyPath              string                          `json:"client_key_path,omitempty"`
-	Fragment                   bool                            `json:"fragment,omitempty"`
-	FragmentFallbackDelay      badoption.Duration              `json:"fragment_fallback_delay,omitempty"`
-	RecordFragment             bool                            `json:"record_fragment,omitempty"`
-	Spoof                      string                          `json:"spoof,omitempty"`
-	SpoofMethod                string                          `json:"spoof_method,omitempty" enum:"wrong-sequence,wrong-checksum,wrong-ack,wrong-md5,wrong-timestamp"`
-	KernelTx                   bool                            `json:"kernel_tx,omitempty"`
-	KernelRx                   bool                            `json:"kernel_rx,omitempty"`
-	HandshakeTimeout           badoption.Duration              `json:"handshake_timeout,omitempty"`
-	ECH                        *OutboundECHOptions             `json:"ech,omitempty"`
-	UTLS                       *OutboundUTLSOptions            `json:"utls,omitempty"`
-	Reality                    *OutboundRealityOptions         `json:"reality,omitempty"`
+	Enabled bool `json:"enabled,omitempty"`
+	//
+	// @since 1.14.0
+	//
+	// @indicator: Client only
+	//
+	// TLS engine to use.
+	//
+	// Values:
+	//
+	// * `go` (default)
+	// * `apple`
+	// * `windows`
+	//
+	// Supported fields:
+	//
+	// * `server_name`
+	// * `insecure`
+	// * `alpn`
+	// * `min_version`
+	// * `max_version`
+	// * `certificate` / `certificate_path`
+	// * `certificate_sha256`
+	// * `certificate_public_key_sha256`
+	// * `handshake_timeout`
+	//
+	// Unsupported fields:
+	//
+	// * `disable_sni`
+	// * `cipher_suites`
+	// * `curve_preferences`
+	// * `client_certificate` / `client_certificate_path` / `client_key` / `client_key_path`
+	// * `fragment` / `record_fragment`
+	// * `kernel_tx` / `kernel_rx`
+	// * `ech`
+	// * `utls`
+	// * `reality`
+	//
+	// @note:
+	//
+	//     `windows` uses Schannel via SSPI. Only available on Windows build 17763 or later (Windows 10 version 1809, Windows Server 2019, or newer).
+	//
+	// @note:
+	//
+	//     TLS 1.3 is only negotiated on Windows 11 or Windows Server 2022 and newer.
+	//
+	// The default version range is TLS 1.2 to TLS 1.3, matching the `go` engine.
+	Engine string `json:"engine,omitempty" enum:"go,apple,windows"`
+	//
+	// @indicator: Client only
+	//
+	// Do not send server name in ClientHello.
+	DisableSNI       bool                            `json:"disable_sni,omitempty"`
+	ServerName       string                          `json:"server_name,omitempty"`
+	Insecure         bool                            `json:"insecure,omitempty"`
+	ALPN             badoption.Listable[string]      `json:"alpn,omitempty" examples:"http/1.1,h2,h3"`
+	MinVersion       string                          `json:"min_version,omitempty" enum:"1.0,1.1,1.2,1.3"`
+	MaxVersion       string                          `json:"max_version,omitempty" enum:"1.0,1.1,1.2,1.3"`
+	CipherSuites     LegacyListable[string]          `json:"cipher_suites,omitempty"`
+	CurvePreferences LegacyListable[CurvePreference] `json:"curve_preferences,omitempty"`
+	Certificate      badoption.Listable[string]      `json:"certificate,omitempty"`
+	CertificatePath  string                          `json:"certificate_path,omitempty"`
+	//
+	// @since 1.15.0
+	//
+	// @indicator: Client only
+	//
+	// List of SHA-256 hashes of server certificates, in base64 format.
+	//
+	// The hash is computed over the whole DER-encoded certificate. Use `certificate_public_key_sha256` to pin only the public key.
+	//
+	// To generate the SHA-256 hash for a certificate, use the following commands:
+	//
+	// ```bash
+	// # For a certificate file
+	// openssl x509 -in certificate.pem -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+	//
+	// # For a certificate from a remote server
+	// echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+	// ```
+	CertificateSHA256 badoption.Listable[[]byte] `json:"certificate_sha256,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Client only
+	//
+	// List of SHA-256 hashes of server certificate public keys, in base64 format.
+	//
+	// To generate the SHA-256 hash for a certificate's public key, use the following commands:
+	//
+	// ```bash
+	// # For a certificate file
+	// openssl x509 -in certificate.pem -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+	//
+	// # For a certificate from a remote server
+	// echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+	// ```
+	CertificatePublicKeySHA256 badoption.Listable[[]byte] `json:"certificate_public_key_sha256,omitempty"`
+	ClientCertificate          badoption.Listable[string] `json:"client_certificate,omitempty"`
+	ClientCertificatePath      string                     `json:"client_certificate_path,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Client only
+	//
+	// Client private key line array, in PEM format.
+	ClientKey badoption.Listable[string] `json:"client_key,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Client only
+	//
+	// The path to client private key, in PEM format.
+	ClientKeyPath string `json:"client_key_path,omitempty"`
+	// @since 1.12.0
+	//
+	// @indicator: Client only
+	//
+	// Fragment TLS handshakes to bypass firewalls.
+	//
+	// This feature is intended to circumvent simple firewalls based on **plaintext packet matching**,
+	// and should not be used to circumvent real censorship.
+	//
+	// Due to poor performance, try `record_fragment` first, and only apply to server names known to be blocked.
+	//
+	// On Linux, Apple platforms, (administrator privileges required) Windows,
+	// the wait time can be automatically detected. Otherwise, it will fall back to
+	// waiting for a fixed time specified by `fragment_fallback_delay`.
+	//
+	// In addition, if the actual wait time is less than 20ms, it will also fall back to waiting for a fixed time,
+	// because the target is considered to be local or behind a transparent proxy.
+	Fragment bool `json:"fragment,omitempty"`
+	// @since 1.12.0
+	//
+	// @indicator: Client only
+	//
+	// The fallback value used when TLS segmentation cannot automatically determine the wait time.
+	//
+	// `500ms` is used by default.
+	FragmentFallbackDelay badoption.Duration `json:"fragment_fallback_delay,omitempty"`
+	// @since 1.12.0
+	//
+	// @indicator: Client only
+	//
+	// Fragment TLS handshake into multiple TLS records to bypass firewalls.
+	RecordFragment bool `json:"record_fragment,omitempty"`
+	// @since 1.14.0
+	//
+	// @indicator: Client only
+	//
+	// @quote:
+	//
+	//     Only supported on Linux, macOS, and Windows, and requires elevated privileges.
+	//
+	// Inject a forged TLS ClientHello carrying a whitelisted SNI before the real one,
+	// to fool SNI-filtering middleboxes that permit specific hostnames.
+	//
+	// Requires `CAP_NET_RAW` and `CAP_NET_ADMIN` on Linux, root on macOS, and
+	// Administrator on Windows. Windows on ARM64 is not supported.
+	Spoof string `json:"spoof,omitempty"`
+	// @since 1.14.0
+	//
+	// @indicator: Client only
+	//
+	// How the forged segment is rejected by the real server.
+	//
+	// | Value                      | Behavior                                                                                                       |
+	// |----------------------------|----------------------------------------------------------------------------------------------------------------|
+	// | `wrong-sequence` (default) | The forged segment's TCP sequence number is placed before the server's receive window.                         |
+	// | `wrong-checksum`           | The forged segment's TCP checksum is deliberately invalid.                                                     |
+	// | `wrong-ack`                | The forged segment's TCP acknowledgment number is placed before the server's send window.                      |
+	// | `wrong-md5`                | The forged segment carries a TCP-MD5 signature option.                                                         |
+	// | `wrong-timestamp`          | The forged segment carries a backdated TCP timestamp. Linux/Windows only; not supported on macOS.              |
+	SpoofMethod      string              `json:"spoof_method,omitempty" enum:"wrong-sequence,wrong-checksum,wrong-ack,wrong-md5,wrong-timestamp"`
+	KernelTx         bool                `json:"kernel_tx,omitempty"`
+	KernelRx         bool                `json:"kernel_rx,omitempty"`
+	HandshakeTimeout badoption.Duration  `json:"handshake_timeout,omitempty"`
+	ECH              *OutboundECHOptions `json:"ech,omitempty"`
+	//
+	// @indicator: Client only
+	//
+	// @failure: Not Recommended
+	//
+	//     uTLS has had repeated fingerprinting vulnerabilities discovered by researchers.
+	//
+	//     uTLS is a Go library that attempts to imitate browser TLS fingerprints by copying
+	//     ClientHello structure. However, browsers use completely different TLS stacks
+	//     (Chrome uses BoringSSL, Firefox uses NSS) with distinct implementation behaviors
+	//     that cannot be replicated by simply copying the handshake format, making detection possible.
+	//     Additionally, the library lacks active maintenance and has poor code quality,
+	//     making it unsuitable for censorship circumvention.
+	//
+	//     For TLS fingerprint resistance, use [NaiveProxy](/configuration/inbound/naive/) instead.
+	//
+	// uTLS is a fork of "crypto/tls", which provides ClientHello fingerprinting resistance.
+	//
+	// Available fingerprint values:
+	//
+	// @warning: Removed since sing-box 1.10.0
+	//
+	//     Some legacy chrome fingerprints have been removed and will fallback to chrome:
+	//
+	//     :material-close: chrome_psk
+	//     :material-close: chrome_psk_shuffle
+	//     :material-close: chrome_padding_psk_shuffle
+	//     :material-close: chrome_pq
+	//     :material-close: chrome_pq_psk
+	//
+	// * chrome
+	// * firefox
+	// * edge
+	// * safari
+	// * 360
+	// * qq
+	// * ios
+	// * android
+	// * random
+	// * randomized
+	//
+	// Chrome fingerprint will be used if empty.
+	UTLS    *OutboundUTLSOptions    `json:"utls,omitempty"`
+	Reality *OutboundRealityOptions `json:"reality,omitempty"`
 }
 
 type OutboundTLSOptionsContainer struct {
+	// TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 	TLS *OutboundTLSOptions `json:"tls,omitempty"`
 }
 
@@ -211,11 +594,33 @@ func (c CurvePreference) DescribeSchema(builder schema.Builder) (*schema.Node, e
 }
 
 type InboundRealityOptions struct {
-	Enabled           bool                           `json:"enabled,omitempty"`
-	Handshake         InboundRealityHandshakeOptions `json:"handshake,omitempty"`
-	PrivateKey        string                         `json:"private_key,omitempty"`
-	ShortID           badoption.Listable[string]     `json:"short_id,omitempty"`
-	MaxTimeDifference badoption.Duration             `json:"max_time_difference,omitempty"`
+	Enabled bool `json:"enabled,omitempty"`
+	//
+	// @indicator: Server only
+	//
+	// @required
+	//
+	// Handshake server address and [Dial Fields](/configuration/shared/dial/).
+	Handshake InboundRealityHandshakeOptions `json:"handshake,omitempty"`
+	//
+	// @indicator: Server only
+	//
+	// @required
+	//
+	// Private key, generated by `sing-box generate reality-keypair`.
+	PrivateKey string `json:"private_key,omitempty"`
+	//
+	// @required
+	//
+	// A hexadecimal string with zero to eight digits.
+	ShortID badoption.Listable[string] `json:"short_id,omitempty"`
+	//
+	// @indicator: Server only
+	//
+	// The maximum time difference between the server and the client.
+	//
+	// Check disabled if empty.
+	MaxTimeDifference badoption.Duration `json:"max_time_difference,omitempty"`
 }
 
 type InboundRealityHandshakeOptions struct {
@@ -224,9 +629,21 @@ type InboundRealityHandshakeOptions struct {
 }
 
 type InboundECHOptions struct {
-	Enabled bool                       `json:"enabled,omitempty"`
-	Key     badoption.Listable[string] `json:"key,omitempty"`
-	KeyPath string                     `json:"key_path,omitempty"`
+	Enabled bool `json:"enabled,omitempty"`
+	//
+	// @indicator: Server only
+	//
+	// ECH key line array, in PEM format.
+	Key badoption.Listable[string] `json:"key,omitempty"`
+	//
+	// @indicator: Server only
+	//
+	// @note:
+	//
+	//     Will be automatically reloaded if file modified.
+	//
+	// The path to ECH key, in PEM format.
+	KeyPath string `json:"key_path,omitempty"`
 
 	// Deprecated: not supported by stdlib
 	PQSignatureSchemesEnabled bool `json:"pq_signature_schemes_enabled,omitempty" schema:"omit"`
@@ -235,14 +652,49 @@ type InboundECHOptions struct {
 }
 
 type OutboundECHOptions struct {
-	Enabled         bool                       `json:"enabled,omitempty"`
-	Config          badoption.Listable[string] `json:"config,omitempty"`
-	ConfigPath      string                     `json:"config_path,omitempty"`
-	QueryServerName string                     `json:"query_server_name,omitempty"`
+	Enabled bool `json:"enabled,omitempty"`
+	//
+	// @indicator: Client only
+	//
+	// ECH configuration line array, in PEM format.
+	//
+	// If empty, load from DNS will be attempted.
+	Config badoption.Listable[string] `json:"config,omitempty"`
+	//
+	// @indicator: Client only
+	//
+	// The path to ECH configuration, in PEM format.
+	//
+	// If empty, load from DNS will be attempted.
+	ConfigPath string `json:"config_path,omitempty"`
+	//
+	// @since 1.13.0
+	//
+	// @indicator: Client only
+	//
+	// Overrides the domain name used for ECH HTTPS record queries.
+	//
+	// If empty, `server_name` is used for queries.
+	QueryServerName string `json:"query_server_name,omitempty"`
 
 	// Deprecated: not supported by stdlib
+	//
+	// @failure: Deprecated in sing-box 1.12.0
+	//
+	//     `pq_signature_schemes_enabled` is deprecated in sing-box 1.12.0 and removed in sing-box 1.13.0.
+	//
+	// Enable support for post-quantum peer certificate signature schemes.
 	PQSignatureSchemesEnabled bool `json:"pq_signature_schemes_enabled,omitempty" schema:"omit"`
 	// Deprecated: added by fault
+	//
+	// @failure: Deprecated in sing-box 1.12.0
+	//
+	//     `dynamic_record_sizing_disabled` is deprecated in sing-box 1.12.0 and removed in sing-box 1.13.0.
+	//
+	// Disables adaptive sizing of TLS records.
+	//
+	// When true, the largest possible TLS record size is always used.
+	// When false, the size of TLS records may be adjusted in an attempt to improve latency.
 	DynamicRecordSizingDisabled bool `json:"dynamic_record_sizing_disabled,omitempty" schema:"omit"`
 }
 
@@ -252,7 +704,13 @@ type OutboundUTLSOptions struct {
 }
 
 type OutboundRealityOptions struct {
-	Enabled   bool   `json:"enabled,omitempty"`
+	Enabled bool `json:"enabled,omitempty"`
+	//
+	// @indicator: Client only
+	//
+	// @required
+	//
+	// Public key, generated by `sing-box generate reality-keypair`.
 	PublicKey string `json:"public_key,omitempty"`
 	ShortID   string `json:"short_id,omitempty"`
 }

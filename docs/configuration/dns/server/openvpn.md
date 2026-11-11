@@ -27,6 +27,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### endpoint
 
 ==Required==
@@ -48,6 +51,8 @@ When disabled, unmatched queries return `NXDOMAIN`.
 When enabled and pushed search domains are available, single-label queries (for example, `intranet`) are retried with each search domain until one resolves.
 
 If no search domain is available, the original single-label query follows normal default-resolver behavior.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Example
 

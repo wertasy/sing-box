@@ -40,6 +40,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### up, down
 
 ==Required==
@@ -87,11 +90,39 @@ Authentication password.
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
 
+#### users.name
+
+
+#### recv_window_conn
+
+
+- Deprecated.
+
+#### recv_window_client
+
+
+- Deprecated.
+
+#### max_conn_client
+
+
+- Deprecated.
+
+#### disable_mtu_discovery
+
+
+- Deprecated.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### QUIC Fields
 
 See [QUIC Fields](/configuration/shared/quic/) for details.
 
 ### Deprecated Fields
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### recv_window_conn
 
@@ -116,3 +147,5 @@ See [QUIC Fields](/configuration/shared/quic/) for details.
 !!! failure "Deprecated in sing-box 1.14.0"
 
     Use QUIC fields `disable_path_mtu_discovery` instead.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

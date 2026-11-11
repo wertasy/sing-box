@@ -25,6 +25,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -80,8 +83,9 @@ UDP 包中继模式
 这对性能影响不大，因为协议是完全复用的
 
 !!! warning ""
-强烈建议禁用此功能，因为它容易受到重放攻击。
-请参阅 [Attack of the clones](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/#attack-of-the-clones)
+
+    强烈建议禁用此功能，因为它容易受到重放攻击。
+    请参阅 [Attack of the clones](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/#attack-of-the-clones)
 
 #### heartbeat
 
@@ -100,6 +104,8 @@ UDP 包中继模式
 ==必填==
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### QUIC 字段
 

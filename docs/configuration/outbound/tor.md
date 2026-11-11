@@ -22,6 +22,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### executable_path
 
 The path to the Tor executable.
@@ -45,6 +48,8 @@ Each start will be very slow if not specified.
 Map of torrc options.
 
 See [tor(1)](https://linux.die.net/man/1/tor) for details.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

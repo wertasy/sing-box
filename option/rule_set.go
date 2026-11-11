@@ -248,31 +248,129 @@ func (r HeadlessRule) DescribeSchema(builder schema.Builder) (*schema.Node, erro
 }
 
 type DefaultHeadlessRule struct {
-	QueryType               badoption.Listable[DNSQueryType]                                            `json:"query_type,omitempty"`
-	Network                 badoption.Listable[string]                                                  `json:"network,omitempty" enum:"tcp,udp,icmp"`
-	Domain                  badoption.Listable[string]                                                  `json:"domain,omitempty"`
-	DomainSuffix            badoption.Listable[string]                                                  `json:"domain_suffix,omitempty"`
-	DomainKeyword           badoption.Listable[string]                                                  `json:"domain_keyword,omitempty"`
-	DomainRegex             badoption.Listable[string]                                                  `json:"domain_regex,omitempty"`
-	SourceIPCIDR            badoption.Listable[*badoption.Prefixable]                                   `json:"source_ip_cidr,omitempty"`
-	IPCIDR                  badoption.Listable[*badoption.Prefixable]                                   `json:"ip_cidr,omitempty"`
-	SourcePort              badoption.Listable[uint16]                                                  `json:"source_port,omitempty"`
-	SourcePortRange         badoption.Listable[string]                                                  `json:"source_port_range,omitempty"`
-	Port                    badoption.Listable[uint16]                                                  `json:"port,omitempty"`
-	PortRange               badoption.Listable[string]                                                  `json:"port_range,omitempty"`
-	ProcessName             badoption.Listable[string]                                                  `json:"process_name,omitempty"`
-	ProcessPath             badoption.Listable[string]                                                  `json:"process_path,omitempty"`
-	ProcessPathRegex        badoption.Listable[string]                                                  `json:"process_path_regex,omitempty"`
-	PackageName             badoption.Listable[string]                                                  `json:"package_name,omitempty"`
-	PackageNameRegex        badoption.Listable[string]                                                  `json:"package_name_regex,omitempty"`
-	NetworkType             badoption.Listable[InterfaceType]                                           `json:"network_type,omitempty"`
-	NetworkIsExpensive      bool                                                                        `json:"network_is_expensive,omitempty"`
-	NetworkIsConstrained    bool                                                                        `json:"network_is_constrained,omitempty"`
-	WIFISSID                badoption.Listable[string]                                                  `json:"wifi_ssid,omitempty"`
-	WIFIBSSID               badoption.Listable[string]                                                  `json:"wifi_bssid,omitempty"`
+	// @quote: Changes in sing-box 1.14.0
+	//
+	//     When a DNS rule references this rule-set, this field now also applies
+	//     when the DNS rule is matched from an internal domain resolution that
+	//     does not target a specific DNS server. See
+	//     [Migration](/migration/#ip_version-and-query_type-behavior-changes-in-dns-rules).
+	//
+	//     When a DNS rule references a rule-set containing this field, the DNS
+	//     rule is incompatible in the same DNS configuration with Legacy Address
+	//     Filter Fields in DNS rules, the Legacy `strategy` DNS rule action
+	//     option, and the Legacy `rule_set_ip_cidr_accept_empty` DNS rule item.
+	//
+	// DNS query type. Values can be integers or type name strings.
+	QueryType badoption.Listable[DNSQueryType] `json:"query_type,omitempty"`
+	// `tcp` or `udp`.
+	Network badoption.Listable[string] `json:"network,omitempty" enum:"tcp,udp,icmp"`
+	// Match full domain.
+	Domain badoption.Listable[string] `json:"domain,omitempty"`
+	// Match domain suffix.
+	DomainSuffix badoption.Listable[string] `json:"domain_suffix,omitempty"`
+	// Match domain using keyword.
+	DomainKeyword badoption.Listable[string] `json:"domain_keyword,omitempty"`
+	// Match domain using regular expression.
+	DomainRegex badoption.Listable[string] `json:"domain_regex,omitempty"`
+	// Match source IP CIDR.
+	SourceIPCIDR badoption.Listable[*badoption.Prefixable] `json:"source_ip_cidr,omitempty"`
+	// @info:
+	//
+	//     `ip_cidr` is an alias for `source_ip_cidr` when `rule_set_ipcidr_match_source` enabled in route/DNS rules.
+	//
+	// Match IP CIDR.
+	IPCIDR badoption.Listable[*badoption.Prefixable] `json:"ip_cidr,omitempty"`
+	// Match source port.
+	SourcePort badoption.Listable[uint16] `json:"source_port,omitempty"`
+	// Match source port range.
+	SourcePortRange badoption.Listable[string] `json:"source_port_range,omitempty"`
+	// Match port.
+	Port badoption.Listable[uint16] `json:"port,omitempty"`
+	// Match port range.
+	PortRange badoption.Listable[string] `json:"port_range,omitempty"`
+	// @quote:
+	//
+	//     Only supported on Linux, Windows, and macOS.
+	//
+	// Match process name.
+	ProcessName badoption.Listable[string] `json:"process_name,omitempty"`
+	// @quote:
+	//
+	//     Only supported on Linux, Windows, and macOS.
+	//
+	// Match process path.
+	ProcessPath badoption.Listable[string] `json:"process_path,omitempty"`
+	// @since 1.10.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux, Windows, and macOS.
+	//
+	// Match process path using regular expression.
+	ProcessPathRegex badoption.Listable[string] `json:"process_path_regex,omitempty"`
+	// Match android package name.
+	PackageName badoption.Listable[string] `json:"package_name,omitempty"`
+	// @since 1.14.0
+	//
+	// Match android package name using regular expression.
+	PackageNameRegex badoption.Listable[string] `json:"package_name_regex,omitempty"`
+	// @since 1.11.0
+	//
+	// @quote:
+	//
+	//     Only supported in graphical clients on Android and Apple platforms.
+	//
+	// Match network type.
+	//
+	// Available values: `wifi`, `cellular`, `ethernet` and `other`.
+	NetworkType badoption.Listable[InterfaceType] `json:"network_type,omitempty"`
+	// @since 1.11.0
+	//
+	// @quote:
+	//
+	//     Only supported in graphical clients on Android and Apple platforms.
+	//
+	// Match if network is considered Metered (on Android) or considered expensive,
+	// such as Cellular or a Personal Hotspot (on Apple platforms).
+	NetworkIsExpensive bool `json:"network_is_expensive,omitempty"`
+	// @since 1.11.0
+	//
+	// @quote:
+	//
+	//     Only supported in graphical clients on Apple platforms.
+	//
+	// Match if network is in Low Data Mode.
+	NetworkIsConstrained bool `json:"network_is_constrained,omitempty"`
+	// @quote:
+	//
+	//     Only supported in graphical clients on Android and Apple platforms.
+	//
+	// Match WiFi SSID.
+	WIFISSID badoption.Listable[string] `json:"wifi_ssid,omitempty"`
+	// @quote:
+	//
+	//     Only supported in graphical clients on Android and Apple platforms.
+	//
+	// Match WiFi BSSID.
+	WIFIBSSID badoption.Listable[string] `json:"wifi_bssid,omitempty"`
+	// @since 1.13.0
+	//
+	// @quote:
+	//
+	//     Only supported in graphical clients on Android and Apple platforms.
+	//
+	// Matches network interface (same values as `network_type`) address.
 	NetworkInterfaceAddress *badjson.TypedMap[InterfaceType, badoption.Listable[*badoption.Prefixable]] `json:"network_interface_address,omitempty"`
-	DefaultInterfaceAddress badoption.Listable[*badoption.Prefixable]                                   `json:"default_interface_address,omitempty"`
+	// @since 1.13.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux, Windows, and macOS.
+	//
+	// Match default interface address.
+	DefaultInterfaceAddress badoption.Listable[*badoption.Prefixable] `json:"default_interface_address,omitempty"`
 
+	// Invert match result.
 	Invert bool `json:"invert,omitempty"`
 
 	DomainMatcher *domain.Matcher `json:"-"`
@@ -290,9 +388,16 @@ func (r DefaultHeadlessRule) IsValid() bool {
 }
 
 type LogicalHeadlessRule struct {
-	Mode   string         `json:"mode" enum:"and,or"`
-	Rules  []HeadlessRule `json:"rules,omitempty"`
-	Invert bool           `json:"invert,omitempty"`
+	// @required
+	//
+	// `and` or `or`
+	Mode string `json:"mode" enum:"and,or"`
+	// @required
+	//
+	// Included rules.
+	Rules []HeadlessRule `json:"rules,omitempty"`
+	// Invert match result.
+	Invert bool `json:"invert,omitempty"`
 }
 
 func (r LogicalHeadlessRule) IsValid() bool {

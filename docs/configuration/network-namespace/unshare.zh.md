@@ -28,9 +28,14 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### pid_file
 
 如果设置，持有该命名空间的进程 PID 将写入此路径。
 
 当 sing-box 以 root 运行时，可通过 `nsenter -t <pid> -n` 进入该命名空间，
 否则使用 `nsenter -t <pid> -U --preserve-credentials -n`。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

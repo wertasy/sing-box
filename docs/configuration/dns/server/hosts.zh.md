@@ -30,6 +30,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### path
 
 hosts 文件路径列表。
@@ -68,6 +71,8 @@ hosts 文件路径列表。
   }
 }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 示例
 

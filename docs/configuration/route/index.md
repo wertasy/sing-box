@@ -65,6 +65,9 @@ icon: material/alert-decagram
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### rules
 
 List of [Route Rule](./rule/)
@@ -194,3 +197,11 @@ See [Dial Fields](/configuration/shared/dial/#fallback_network_type) for details
 !!! question "Since sing-box 1.11.0"
 
 See [Dial Fields](/configuration/shared/dial/#fallback_delay) for details.
+
+#### geoip
+
+
+#### geosite
+
+
+<!-- AUTO-GENERATED-CONFIG-END -->

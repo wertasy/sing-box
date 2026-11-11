@@ -33,6 +33,9 @@ incoming tunnel traffic (TCP, UDP, ICMP) through sing-box's routing engine.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### token
 
 ==Required==
@@ -87,3 +90,5 @@ Cloudflare control plane.
 
 [Dial Fields](/configuration/shared/dial/) used when the tunnel client dials the
 Cloudflare edge data plane.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

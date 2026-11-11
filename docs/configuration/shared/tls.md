@@ -197,63 +197,12 @@ Cipher suite values:
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 Enable TLS.
-
-#### engine
-
-!!! question "Since sing-box 1.14.0"
-
-==Client only==
-
-TLS engine to use.
-
-Values:
-
-* `go` (default)
-* `apple`
-* `windows`
-
-Supported fields:
-
-* `server_name`
-* `insecure`
-* `alpn`
-* `min_version`
-* `max_version`
-* `certificate` / `certificate_path`
-* `certificate_sha256`
-* `certificate_public_key_sha256`
-* `handshake_timeout`
-
-Unsupported fields:
-
-* `disable_sni`
-* `cipher_suites`
-* `curve_preferences`
-* `client_certificate` / `client_certificate_path` / `client_key` / `client_key_path`
-* `fragment` / `record_fragment`
-* `kernel_tx` / `kernel_rx`
-* `ech`
-* `utls`
-* `reality`
-
-!!! note ""
-
-    `windows` uses Schannel via SSPI. Only available on Windows build 17763 or later (Windows 10 version 1809, Windows Server 2019, or newer).
-
-!!! note ""
-
-    TLS 1.3 is only negotiated on Windows 11 or Windows Server 2022 and newer.
-
-The default version range is TLS 1.2 to TLS 1.3, matching the `go` engine.
-
-#### disable_sni
-
-==Client only==
-
-Do not send server name in ClientHello.
 
 #### server_name
 
@@ -322,93 +271,6 @@ Server certificates chain line array, in PEM format.
 
 The path to server certificate chain, in PEM format.
 
-
-#### certificate_sha256
-
-!!! question "Since sing-box 1.15.0"
-
-==Client only==
-
-List of SHA-256 hashes of server certificates, in base64 format.
-
-The hash is computed over the whole DER-encoded certificate. Use `certificate_public_key_sha256` to pin only the public key.
-
-To generate the SHA-256 hash for a certificate, use the following commands:
-
-```bash
-# For a certificate file
-openssl x509 -in certificate.pem -outform der | openssl dgst -sha256 -binary | openssl enc -base64
-
-# For a certificate from a remote server
-echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -outform der | openssl dgst -sha256 -binary | openssl enc -base64
-```
-
-#### certificate_public_key_sha256
-
-!!! question "Since sing-box 1.13.0"
-
-==Client only==
-
-List of SHA-256 hashes of server certificate public keys, in base64 format.
-
-To generate the SHA-256 hash for a certificate's public key, use the following commands:
-
-```bash
-# For a certificate file
-openssl x509 -in certificate.pem -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
-
-# For a certificate from a remote server
-echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
-```
-
-#### client_certificate
-
-!!! question "Since sing-box 1.13.0"
-
-==Client only==
-
-Client certificate chain line array, in PEM format.
-
-#### client_certificate_path
-
-!!! question "Since sing-box 1.13.0"
-
-==Client only==
-
-The path to client certificate chain, in PEM format.
-
-#### client_key
-
-!!! question "Since sing-box 1.13.0"
-
-==Client only==
-
-Client private key line array, in PEM format.
-
-#### client_key_path
-
-!!! question "Since sing-box 1.13.0"
-
-==Client only==
-
-The path to client private key, in PEM format.
-
-#### key
-
-==Server only==
-
-The server private key line array, in PEM format.
-
-#### key_path
-
-==Server only==
-
-!!! note ""
-
-    Will be automatically reloaded if file modified.
-
-The path to the server private key, in PEM format.
-
 #### client_authentication
 
 !!! question "Since sing-box 1.13.0"
@@ -432,11 +294,23 @@ if this option is set to `verify-if-given`, or `require-and-verify`.
 
 !!! question "Since sing-box 1.13.0"
 
+==Client only==
+
+Client certificate chain line array, in PEM format.
+
+!!! question "Since sing-box 1.13.0"
+
 ==Server only==
 
 Client certificate chain line array, in PEM format.
 
 #### client_certificate_path
+
+!!! question "Since sing-box 1.13.0"
+
+==Client only==
+
+The path to client certificate chain, in PEM format.
 
 !!! question "Since sing-box 1.13.0"
 
@@ -475,6 +349,22 @@ openssl x509 -in certificate.pem -pubkey -noout | openssl pkey -pubin -outform d
 # For a certificate from a remote server
 echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
 ```
+
+#### key
+
+==Server only==
+
+The server private key line array, in PEM format.
+
+#### key_path
+
+==Server only==
+
+!!! note ""
+
+    Will be automatically reloaded if file modified.
+
+The path to the server private key, in PEM format.
 
 #### kernel_tx
 
@@ -538,6 +428,114 @@ When object, an inline certificate provider. See [Certificate Provider](/configu
 
     Only ECH is supported in QUIC.
 
+#### engine
+
+!!! question "Since sing-box 1.14.0"
+
+==Client only==
+
+TLS engine to use.
+
+Values:
+
+* `go` (default)
+* `apple`
+* `windows`
+
+Supported fields:
+
+* `server_name`
+* `insecure`
+* `alpn`
+* `min_version`
+* `max_version`
+* `certificate` / `certificate_path`
+* `certificate_sha256`
+* `certificate_public_key_sha256`
+* `handshake_timeout`
+
+Unsupported fields:
+
+* `disable_sni`
+* `cipher_suites`
+* `curve_preferences`
+* `client_certificate` / `client_certificate_path` / `client_key` / `client_key_path`
+* `fragment` / `record_fragment`
+* `kernel_tx` / `kernel_rx`
+* `ech`
+* `utls`
+* `reality`
+
+!!! note ""
+
+    `windows` uses Schannel via SSPI. Only available on Windows build 17763 or later (Windows 10 version 1809, Windows Server 2019, or newer).
+
+!!! note ""
+
+    TLS 1.3 is only negotiated on Windows 11 or Windows Server 2022 and newer.
+
+The default version range is TLS 1.2 to TLS 1.3, matching the `go` engine.
+
+#### disable_sni
+
+==Client only==
+
+Do not send server name in ClientHello.
+
+#### certificate_sha256
+
+!!! question "Since sing-box 1.15.0"
+
+==Client only==
+
+List of SHA-256 hashes of server certificates, in base64 format.
+
+The hash is computed over the whole DER-encoded certificate. Use `certificate_public_key_sha256` to pin only the public key.
+
+To generate the SHA-256 hash for a certificate, use the following commands:
+
+```bash
+# For a certificate file
+openssl x509 -in certificate.pem -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+
+# For a certificate from a remote server
+echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+```
+
+#### certificate_public_key_sha256
+
+!!! question "Since sing-box 1.13.0"
+
+==Client only==
+
+List of SHA-256 hashes of server certificate public keys, in base64 format.
+
+To generate the SHA-256 hash for a certificate's public key, use the following commands:
+
+```bash
+# For a certificate file
+openssl x509 -in certificate.pem -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+
+# For a certificate from a remote server
+echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/null | openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+```
+
+#### client_key
+
+!!! question "Since sing-box 1.13.0"
+
+==Client only==
+
+Client private key line array, in PEM format.
+
+#### client_key_path
+
+!!! question "Since sing-box 1.13.0"
+
+==Client only==
+
+The path to client private key, in PEM format.
+
 #### utls
 
 ==Client only==
@@ -563,10 +561,10 @@ Available fingerprint values:
 
     Some legacy chrome fingerprints have been removed and will fallback to chrome:
 
-    :material-close: chrome_psk  
-    :material-close: chrome_psk_shuffle  
-    :material-close: chrome_padding_psk_shuffle  
-    :material-close: chrome_pq  
+    :material-close: chrome_psk
+    :material-close: chrome_psk_shuffle
+    :material-close: chrome_padding_psk_shuffle
+    :material-close: chrome_pq
     :material-close: chrome_pq_psk
 
 * chrome
@@ -582,31 +580,16 @@ Available fingerprint values:
 
 Chrome fingerprint will be used if empty.
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### ECH Fields
 
-ECH (Encrypted Client Hello) is a TLS extension that allows a client to encrypt the first part of its ClientHello
-message.
+ECH (Encrypted Client Hello) is a TLS extension that allows a client to encrypt the first part of its ClientHello message.
 
 The ECH key and configuration can be generated by `sing-box generate ech-keypair`.
 
-#### pq_signature_schemes_enabled
-
-!!! failure "Deprecated in sing-box 1.12.0"
-
-    `pq_signature_schemes_enabled` is deprecated in sing-box 1.12.0 and removed in sing-box 1.13.0.
-
-Enable support for post-quantum peer certificate signature schemes.
-
-#### dynamic_record_sizing_disabled
-
-!!! failure "Deprecated in sing-box 1.12.0"
-
-    `dynamic_record_sizing_disabled` is deprecated in sing-box 1.12.0 and removed in sing-box 1.13.0.
-
-Disables adaptive sizing of TLS records.
-
-When true, the largest possible TLS record size is always used.  
-When false, the size of TLS records may be adjusted in an attempt to improve latency.
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### key
 
@@ -650,6 +633,19 @@ Overrides the domain name used for ECH HTTPS record queries.
 
 If empty, `server_name` is used for queries.
 
+#### dynamic_record_sizing_disabled
+
+!!! failure "Deprecated in sing-box 1.12.0"
+
+    `dynamic_record_sizing_disabled` is deprecated in sing-box 1.12.0 and removed in sing-box 1.13.0.
+
+Disables adaptive sizing of TLS records.
+
+When true, the largest possible TLS record size is always used.
+When false, the size of TLS records may be adjusted in an attempt to improve latency.
+
+- Deprecated.
+
 #### fragment
 
 !!! question "Since sing-box 1.12.0"
@@ -679,6 +675,16 @@ because the target is considered to be local or behind a transparent proxy.
 The fallback value used when TLS segmentation cannot automatically determine the wait time.
 
 `500ms` is used by default.
+
+#### pq_signature_schemes_enabled
+
+!!! failure "Deprecated in sing-box 1.12.0"
+
+    `pq_signature_schemes_enabled` is deprecated in sing-box 1.12.0 and removed in sing-box 1.13.0.
+
+Enable support for post-quantum peer certificate signature schemes.
+
+- Deprecated.
 
 #### record_fragment
 
@@ -720,17 +726,24 @@ How the forged segment is rejected by the real server.
 | `wrong-md5`                | The forged segment carries a TCP-MD5 signature option.                                                         |
 | `wrong-timestamp`          | The forged segment carries a backdated TCP timestamp. Linux/Windows only; not supported on macOS.              |
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### ACME Fields
 
 !!! failure "Deprecated in sing-box 1.14.0"
 
     Inline ACME options are deprecated in sing-box 1.14.0 and will be removed in sing-box 1.16.0, check [Migration](/migration/#migrate-inline-acme-to-certificate-provider).
 
-#### domain
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
-List of domain.
+#### alternative_http_port
 
-ACME will be disabled if empty.
+The alternate port to use for the ACME HTTP challenge; if non-empty, this port will be used instead of 80 to spin up a listener for the HTTP challenge.
+
+#### alternative_tls_port
+
+The alternate port to use for the ACME TLS-ALPN challenge; the system must forward 443 to this port for challenge to succeed.
 
 #### data_directory
 
@@ -742,9 +755,45 @@ The directory to store ACME data.
 
 Server name to use when choosing a certificate if the ClientHello's ServerName field is empty.
 
+#### disable_http_challenge
+
+Disable all HTTP challenges.
+
+#### disable_tls_alpn_challenge
+
+Disable all TLS-ALPN challenges
+
+#### dns01_challenge
+
+ACME DNS01 challenge field. If configured, other challenge methods will be disabled.
+
+See [DNS01 Challenge Fields](/configuration/shared/dns01_challenge/) for details.
+
+#### domain
+
+List of domain.
+
+ACME will be disabled if empty.
+
 #### email
 
 The email address to use when creating or selecting an existing ACME server account
+
+#### external_account
+
+EAB (External Account Binding) contains information necessary to bind or map an ACME account to some other account known by the CA.
+
+External account bindings are "used to associate an ACME account with an existing account in a non-ACME system, such as a CA customer database.
+
+To enable ACME account binding, the CA operating the ACME server needs to provide the ACME client with a MAC key and a key identifier, using some mechanism outside of ACME. §7.3.4
+
+#### external_account.key_id
+
+The key identifier.
+
+#### external_account.mac_key
+
+The MAC key.
 
 #### provider
 
@@ -756,50 +805,20 @@ The ACME CA provider to use.
 | `zerossl`               | ZeroSSL       |
 | `https://...`           | Custom        |
 
-#### disable_http_challenge
+#### profile
 
-Disable all HTTP challenges.
+!!! question "Since sing-box 1.14.0"
 
-#### disable_tls_alpn_challenge
+The ACME profile to use for certificate issuance.
 
-Disable all TLS-ALPN challenges
+When empty and `provider` is Let's Encrypt, `shortlived` will be used automatically if any domain is an IP address.
 
-#### alternative_http_port
-
-The alternate port to use for the ACME HTTP challenge; if non-empty, this port will be used instead of 80 to spin up a
-listener for the HTTP challenge.
-
-#### alternative_tls_port
-
-The alternate port to use for the ACME TLS-ALPN challenge; the system must forward 443 to this port for challenge to
-succeed.
-
-#### external_account
-
-EAB (External Account Binding) contains information necessary to bind or map an ACME account to some other account known
-by the CA.
-
-External account bindings are "used to associate an ACME account with an existing account in a non-ACME system, such as
-a CA customer database.
-
-To enable ACME account binding, the CA operating the ACME server needs to provide the ACME client with a MAC key and a
-key identifier, using some mechanism outside of ACME. §7.3.4
-
-#### external_account.key_id
-
-The key identifier.
-
-#### external_account.mac_key
-
-The MAC key.
-
-#### dns01_challenge
-
-ACME DNS01 challenge field. If configured, other challenge methods will be disabled.
-
-See [DNS01 Challenge Fields](/configuration/shared/dns01_challenge/) for details.
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Reality Fields
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### handshake
 
@@ -817,14 +836,6 @@ Handshake server address and [Dial Fields](/configuration/shared/dial/).
 
 Private key, generated by `sing-box generate reality-keypair`.
 
-#### public_key
-
-==Client only==
-
-==Required==
-
-Public key, generated by `sing-box generate reality-keypair`.
-
 #### short_id
 
 ==Required==
@@ -838,3 +849,13 @@ A hexadecimal string with zero to eight digits.
 The maximum time difference between the server and the client.
 
 Check disabled if empty.
+
+#### public_key
+
+==Client only==
+
+==Required==
+
+Public key, generated by `sing-box generate reality-keypair`.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

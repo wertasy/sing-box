@@ -17,6 +17,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -50,6 +53,8 @@ Only available in the ShadowTLS v2/v3 protocol.
 ==Required==
 
 TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

@@ -16,6 +16,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### disabled
 
 禁用日志，启动后不输出日志。
@@ -31,3 +34,5 @@
 #### timestamp
 
 添加时间到每行。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

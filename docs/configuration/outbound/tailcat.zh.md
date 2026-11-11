@@ -26,6 +26,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### private_key
 
 私钥。
@@ -74,6 +77,8 @@ DERP map 中的 DERP 区域 ID。
 用于获取 DERP map 的 HTTP 客户端。
 
 参阅 [HTTP 客户端](/zh/configuration/shared/http-client/) 了解详情。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

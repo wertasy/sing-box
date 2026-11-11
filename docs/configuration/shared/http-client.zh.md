@@ -29,6 +29,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### engine
 
 要使用的 HTTP 引擎。
@@ -92,6 +95,8 @@ HTTP 版本。
 自定义 HTTP 标头。
 
 `Host` 标头用作请求主机。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### HTTP2 字段
 

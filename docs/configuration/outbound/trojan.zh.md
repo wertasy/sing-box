@@ -19,6 +19,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -56,6 +59,8 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 #### transport
 
 V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

@@ -10,13 +10,48 @@ import (
 )
 
 type CloudflareOriginCACertificateProviderOptions struct {
-	Domain            badoption.Listable[string]        `json:"domain,omitempty"`
-	DataDirectory     string                            `json:"data_directory,omitempty"`
-	APIToken          string                            `json:"api_token,omitempty"`
-	OriginCAKey       string                            `json:"origin_ca_key,omitempty"`
-	RequestType       CloudflareOriginCARequestType     `json:"request_type,omitempty" enum:"origin-rsa,origin-ecc"`
+	// @required
+	//
+	// List of domain names or wildcard domain names to include in the certificate.
+	Domain badoption.Listable[string] `json:"domain,omitempty"`
+	// Root directory used to store the issued certificate, private key, and metadata.
+	//
+	// If empty, sing-box uses the same default data directory as the ACME certificate provider:
+	// `$XDG_DATA_HOME/certmagic` or `$HOME/.local/share/certmagic`.
+	DataDirectory string `json:"data_directory,omitempty"`
+	// Cloudflare API token used to create the certificate.
+	//
+	// Get or create one in [Cloudflare Dashboard > My Profile > API Tokens](https://dash.cloudflare.com/profile/api-tokens).
+	//
+	// Requires the `Zone / SSL and Certificates / Edit` permission.
+	//
+	// Conflict with `origin_ca_key`.
+	APIToken string `json:"api_token,omitempty"`
+	// Cloudflare Origin CA Key.
+	//
+	// Get it in [Cloudflare Dashboard > My Profile > API Tokens > API Keys > Origin CA Key](https://dash.cloudflare.com/profile/api-tokens).
+	//
+	// Conflict with `api_token`.
+	OriginCAKey string `json:"origin_ca_key,omitempty"`
+	// The signature type to request from Cloudflare.
+	//
+	// | Value                | Type        |
+	// |----------------------|-------------|
+	// | `origin-rsa`         | RSA         |
+	// | `origin-ecc`         | ECDSA P-256 |
+	//
+	// `origin-rsa` is used if empty.
+	RequestType CloudflareOriginCARequestType `json:"request_type,omitempty" enum:"origin-rsa,origin-ecc"`
+	// The requested certificate validity in days.
+	//
+	// Available values: `7`, `30`, `90`, `365`, `730`, `1095`, `5475`.
+	//
+	// `5475` days (15 years) is used if empty.
 	RequestedValidity CloudflareOriginCARequestValidity `json:"requested_validity,omitempty" enum:"0,7,30,90,365,730,1095,5475"`
-	HTTPClient        *HTTPClientOptions                `json:"http_client,omitempty"`
+	// HTTP Client for all provider HTTP requests.
+	//
+	// See [HTTP Client Fields](/configuration/shared/http-client/) for details.
+	HTTPClient *HTTPClientOptions `json:"http_client,omitempty"`
 }
 
 type CloudflareOriginCARequestType string

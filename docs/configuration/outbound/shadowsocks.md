@@ -21,6 +21,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -96,6 +99,8 @@ Conflict with `multiplex`.
 #### multiplex
 
 See [Multiplex](/configuration/shared/multiplex#outbound) for details.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

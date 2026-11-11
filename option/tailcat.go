@@ -8,10 +8,22 @@ import (
 )
 
 type TailcatDERPOptions struct {
-	DERPMapURL  string              `json:"derp_map_url,omitempty"`
-	DERPRegion  int                 `json:"derp_region,omitempty"`
+	// URL of the [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap).
+	//
+	// `https://tailcat.dev/derpmap.json` is used by default.
+	DERPMapURL string `json:"derp_map_url,omitempty"`
+	// DERP region ID in the DERP map.
+	//
+	// Conflicts with `derp_servers`.
+	DERPRegion int `json:"derp_region,omitempty"`
+	// Custom DERP servers, see [derp_servers](/configuration/inbound/tailcat/#derp_servers) in Tailcat inbound.
+	//
+	// Conflicts with `derp_map_url` and `derp_region`.
 	DERPServers []TailcatDERPServer `json:"derp_servers,omitempty"`
-	HTTPClient  *HTTPClientOptions  `json:"http_client,omitempty"`
+	// HTTP client used to fetch the DERP map.
+	//
+	// See [HTTP Client](/configuration/shared/http-client/) for details.
+	HTTPClient *HTTPClientOptions `json:"http_client,omitempty"`
 }
 
 type _TailcatDERPServer struct {
@@ -52,23 +64,52 @@ func (s TailcatDERPServer) DescribeSchema(builder schema.Builder) (*schema.Node,
 }
 
 type TailcatUser struct {
-	Name      string `json:"name,omitempty"`
+	Name string `json:"name,omitempty"`
+	// @required
+	//
+	// Client public key.
 	PublicKey string `json:"public_key"`
 }
 
 type TailcatInboundOptions struct {
-	PrivateKey   string        `json:"private_key"`
-	PreSharedKey string        `json:"pre_shared_key,omitempty"`
-	Users        []TailcatUser `json:"users,omitempty"`
+	// @required
+	//
+	// Private key.
+	//
+	// Generate with `sing-box generate tailcat-keypair`.
+	PrivateKey string `json:"private_key"`
+	// Pre-shared key.
+	PreSharedKey string `json:"pre_shared_key,omitempty"`
+	// Tailcat users.
+	//
+	// Clients are not verified if empty.
+	//
+	// To use a DERP server with client verification, set `verify_client_inbound` or `verify_client_key` in
+	// [DERP service](/configuration/service/derp/#verify_client_inbound), and clients must use fixed
+	// private keys.
+	Users []TailcatUser `json:"users,omitempty"`
 	TailcatDERPOptions
 	DialerOptions
 }
 
 type TailcatOutboundOptions struct {
-	PrivateKey      string `json:"private_key,omitempty"`
+	// Private key.
+	//
+	// A random key is used by default.
+	//
+	// Required when the server verifies clients with `users`, or the DERP server verifies clients with
+	// `verify_client_inbound` or `verify_client_key`.
+	PrivateKey string `json:"private_key,omitempty"`
+	// @required
+	//
+	// Server public key.
 	ServerPublicKey string `json:"server_public_key"`
-	ServerDiscoKey  string `json:"server_disco_key"`
-	PreSharedKey    string `json:"pre_shared_key,omitempty"`
+	// @required
+	//
+	// Server disco public key.
+	ServerDiscoKey string `json:"server_disco_key"`
+	// Pre-shared key.
+	PreSharedKey string `json:"pre_shared_key,omitempty"`
 	TailcatDERPOptions
 	DialerOptions
 }

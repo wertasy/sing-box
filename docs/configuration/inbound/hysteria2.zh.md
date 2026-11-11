@@ -71,6 +71,9 @@ icon: material/alert-decagram
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### up_mbps, down_mbps
 
 支持的速率，默认不限制。
@@ -127,9 +130,17 @@ Hysteria 用户
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
 
+#### users.name
+
+
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### QUIC 字段
 
 参阅 [QUIC 字段](/zh/configuration/shared/quic/) 了解详情。
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### masquerade
 
@@ -275,3 +286,5 @@ Realm 上的槽位标识符。
 与 realm 通信使用的 HTTP 客户端。
 
 参阅 [HTTP 客户端](/zh/configuration/shared/http-client/) 了解详情。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

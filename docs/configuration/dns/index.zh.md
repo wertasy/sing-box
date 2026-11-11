@@ -48,6 +48,9 @@ icon: material/alert-decagram
 | `server` | 一组 [DNS 服务器](./server/) |
 | `rules`  | 一组 [DNS 规则](./rule/)    |
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### final
 
 默认 DNS 服务器的标签。
@@ -145,3 +148,5 @@ LRU 缓存容量。
 #### fakeip :material-note-remove:
 
 [FakeIP](./fakeip/) 设置。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

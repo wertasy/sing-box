@@ -27,6 +27,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### version
 
 !!! question "自 sing-box 1.15.0 起"
@@ -60,6 +63,8 @@ HTTP 用户
     要在无特权的 Android 和 iOS 上工作，请改用 tun.platform.http_proxy。
 
 启动时自动设置系统代理，停止时自动清理。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### HTTP2 字段
 

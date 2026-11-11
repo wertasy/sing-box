@@ -38,6 +38,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -65,6 +68,8 @@ DNS 服务器的路径。
 #### tls
 
 TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

@@ -47,6 +47,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -119,6 +122,8 @@ The HTTP `Host` header sent when `obfs_mode` is `http`.
 Traffic shaping mode, one of `default` `unshaped` `unsafe-raw`.
 
 `default` is used by default.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

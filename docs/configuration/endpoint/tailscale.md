@@ -57,6 +57,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### state_directory
 
 The directory where the Tailscale state is stored.
@@ -68,7 +71,7 @@ Example: `$HOME/.tailscale`
 #### auth_key
 
 !!! note
-    
+
     Auth key is not required. By default, sing-box will log the login URL.
 
 The auth key to create the node. If the node is already created (from state previously stored), then this field is not
@@ -234,6 +237,8 @@ is.
 !!! question "Since sing-box 1.15.0"
 
 Allow the endpoint to be disconnected when necessary.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

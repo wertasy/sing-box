@@ -33,6 +33,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -92,6 +95,8 @@ SSH 用户, 默认使用 root。
 !!! question "自 sing-box 1.14.0 起"
 
 允许的密钥交换算法。留空使用默认值。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

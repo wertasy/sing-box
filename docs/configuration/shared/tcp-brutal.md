@@ -17,6 +17,9 @@ See [tcp-brutal](https://github.com/apernet/tcp-brutal) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 Enable TCP Brutal congestion control algorithm。
@@ -26,3 +29,5 @@ Enable TCP Brutal congestion control algorithm。
 ==Required==
 
 Upload and download bandwidth, in Mbps.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

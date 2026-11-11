@@ -25,6 +25,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### listen
 
 gRPC API 监听地址。如果为空，则禁用 V2Ray API。
@@ -48,3 +51,5 @@ gRPC API 监听地址。如果为空，则禁用 V2Ray API。
 #### stats.users
 
 统计流量的用户列表。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

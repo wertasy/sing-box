@@ -65,6 +65,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### detour
 
 上游出站的标签。
@@ -264,3 +267,7 @@ TCP keep alive 间隔。
 |----------|-----------|---------------------------|
 | `direct` | 请求中的域名    | `inbound.domain_strategy` | 
 | others   | 服务器地址中的域名 | /                         |
+
+- 已废弃。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

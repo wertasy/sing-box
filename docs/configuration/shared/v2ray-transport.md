@@ -45,6 +45,9 @@ Available transports:
 
     TLS is not enforced. If TLS is not configured, plain HTTP 1.1 is used.
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### host
 
 List of host domain.
@@ -55,7 +58,7 @@ The client will choose randomly and the server will verify if not empty.
 
 !!! warning
 
-    V2Ray's documentation says that the path between the server and the client must be consistent, 
+    V2Ray's documentation says that the path between the server and the client must be consistent,
     but the actual code allows the client to add any suffix to the path.
     sing-box uses the same behavior as V2Ray, but note that the behavior does not exist in `WebSocket` and `HTTPUpgrade` transport.
 
@@ -98,6 +101,8 @@ Specifies the timeout duration after sending a PING frame, within which a respon
 If a response to the PING frame is not received within the specified timeout duration, the connection will be closed.
 The default timeout duration is 15 seconds.
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### WebSocket
 
 ```json
@@ -109,6 +114,9 @@ The default timeout duration is 15 seconds.
   "early_data_header_name": ""
 }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### path
 
@@ -133,6 +141,8 @@ Early data is sent in path instead of header by default.
 To be compatible with Xray-core, set this to `Sec-WebSocket-Protocol`.
 
 It needs to be consistent with the server.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### QUIC
 
@@ -162,6 +172,9 @@ It needs to be consistent with the server.
   "permit_without_stream": false
 }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### service_name
 
@@ -199,6 +212,8 @@ pings will be sent.
 
 Disabled by default.
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### HTTPUpgrade
 
 ```json
@@ -209,6 +224,9 @@ Disabled by default.
   "headers": {}
 }
 ```
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### host
 
@@ -227,3 +245,5 @@ The server will verify.
 Extra headers of HTTP request.
 
 The server will write in response if not empty.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

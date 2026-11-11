@@ -31,6 +31,9 @@ icon: material/new-box
 }
 ```
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### action
 
 The action to perform. `route` will be used by default.
@@ -57,6 +60,8 @@ Rules without `race` still take effect strictly in listed order: while a precedi
 not yet judged, the action of any other matched rule is held until none of the race rules
 matched.
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### route
 
 ```json
@@ -75,6 +80,9 @@ matched.
 ```
 
 `route` inherits the classic rule behavior of routing DNS requests to the specified server.
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### server
 
@@ -144,6 +152,8 @@ Remove the `edns0-subnet` OPT extra record from the query, and suppress `dns.cli
 
 Conflict with `client_subnet`.
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### evaluate
 
 !!! question "Since sing-box 1.14.0"
@@ -170,6 +180,9 @@ Unlike `route`, it does **not** terminate rule evaluation.
 Only allowed on top-level DNS rules (not inside logical sub-rules).
 Rules that use [`match_response`](/configuration/dns/rule/#match_response) or Response Match Fields
 require a preceding top-level rule with `evaluate` action.
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### server
 
@@ -234,6 +247,20 @@ Remove the `edns0-subnet` OPT extra record from the query, and suppress `dns.cli
 
 Conflict with `client_subnet`.
 
+#### strategy
+
+!!! question "Since sing-box 1.12.0"
+
+!!! failure "Deprecated in sing-box 1.14.0"
+
+    `strategy` is deprecated in sing-box 1.14.0 and will be removed in sing-box 1.16.0.
+
+Set domain strategy for this query.
+
+One of `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### respond
 
 !!! question "Since sing-box 1.14.0"
@@ -276,6 +303,9 @@ Only allowed after a preceding top-level `evaluate` rule. If the action is reach
 
 `reject` reject DNS requests.
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### method
 
 - `default`: Reply with REFUSED.
@@ -288,6 +318,8 @@ Only allowed after a preceding top-level `evaluate` rule. If the action is reach
 If not enabled, `method` will be temporarily overwritten to `drop` after 50 triggers in 30s.
 
 Not available when `method` is set to drop.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### predefined
 
@@ -304,6 +336,9 @@ Not available when `method` is set to drop.
 ```
 
 `predefined` responds with predefined DNS records.
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### rcode
 
@@ -339,3 +374,5 @@ List of text DNS record to respond as name servers.
 #### extra
 
 List of text DNS record to respond as extra records.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

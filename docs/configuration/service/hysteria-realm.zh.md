@@ -42,6 +42,9 @@ Hysteria Realm 是用于 Hysteria2 NAT 穿透的会合服务。
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### tls
 
 TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
@@ -69,3 +72,5 @@ Hysteria2 入站和出站通过 `Authorization: Bearer <token>` 出示的 Bearer
 #### users.max_realms
 
 此用户可同时持有的 realm 槽位数量上限。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

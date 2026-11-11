@@ -42,6 +42,9 @@ cannot be routed.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### interface
 
 Interface name for forwarded traffic to egress.
@@ -73,3 +76,5 @@ Linux iproute2 table index.
 Linux iproute2 rule start index.
 
 `100` is used by default.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

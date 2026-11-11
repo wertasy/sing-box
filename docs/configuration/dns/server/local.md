@@ -40,6 +40,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### prefer_go
 
 !!! question "Since sing-box 1.13.0"
@@ -73,6 +76,8 @@ before the suffix) contains no dots are matched; `.` matches any
 single-label name such as `nas`.
 
 Example: `[".", ".lan"]`.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

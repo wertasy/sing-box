@@ -30,6 +30,9 @@ SSM API 服务是一个用于管理 Shadowsocks 服务器的 RESTful API 服务�
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### servers
 
 ==必填==
@@ -56,3 +59,5 @@ SSM API 服务是一个用于管理 Shadowsocks 服务器的 RESTful API 服务�
 #### tls
 
 TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

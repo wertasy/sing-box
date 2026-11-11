@@ -29,6 +29,9 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### network
 
 Listen network, one of `tcp` `udp`.
@@ -58,3 +61,5 @@ QUIC congestion control algorithm.
 #### tls
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
+
+<!-- AUTO-GENERATED-CONFIG-END -->

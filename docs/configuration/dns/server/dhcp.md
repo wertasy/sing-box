@@ -27,11 +27,16 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### interface
 
-Interface name to listen on. 
+Interface name to listen on.
 
 Tge default interface will be used by default.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

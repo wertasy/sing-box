@@ -40,6 +40,9 @@ sing-box API 服务是用于观察与控制正在运行的 sing-box 实例的 gR
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### secret
 
 API 密钥。
@@ -98,3 +101,5 @@ API 密钥。
 #### tls
 
 TLS 配置,参阅 [TLS](/zh/configuration/shared/tls/#inbound)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

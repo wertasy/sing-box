@@ -57,6 +57,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### listen
 
 ==Required==
@@ -103,18 +106,6 @@ Set network namespace, name or path.
 
 Since sing-box 1.14.0, the tag of a [network namespace](/configuration/network-namespace/) can also be used.
 
-#### tcp_fast_open
-
-Enable TCP Fast Open.
-
-#### tcp_multi_path
-
-!!! warning ""
-
-    Go 1.21 required.
-
-Enable TCP Multi Path.
-
 #### disable_tcp_keep_alive
 
 !!! question "Since sing-box 1.13.0"
@@ -137,6 +128,18 @@ TCP keep alive interval.
 
 `75s` will be used by default.
 
+#### tcp_fast_open
+
+Enable TCP Fast Open.
+
+#### tcp_multi_path
+
+!!! warning ""
+
+    Go 1.21 required.
+
+Enable TCP Multi Path.
+
 #### udp_fragment
 
 Enable UDP fragmentation.
@@ -152,6 +155,18 @@ UDP NAT expiration time.
 If set, connections will be forwarded to the specified inbound.
 
 Requires target inbound support, see [Injectable](/configuration/inbound/#fields).
+
+#### domain_strategy
+
+!!! failure "Deprecated in sing-box 1.11.0"
+
+    Inbound fields are deprecated and will be removed in sing-box 1.13.0, check [Migration](/migration/#migrate-legacy-inbound-fields-to-rule-actions).
+
+One of `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`.
+
+If set, the requested domain name will be resolved to IP before routing.
+
+If `sniff_override_destination` is in effect, its value will be taken as a fallback.
 
 #### sniff
 
@@ -183,26 +198,26 @@ Timeout for sniffing.
 
 `300ms` is used by default.
 
-#### domain_strategy
-
-!!! failure "Deprecated in sing-box 1.11.0"
-
-    Inbound fields are deprecated and will be removed in sing-box 1.13.0, check [Migration](/migration/#migrate-legacy-inbound-fields-to-rule-actions).
-
-One of `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`.
-
-If set, the requested domain name will be resolved to IP before routing.
-
-If `sniff_override_destination` is in effect, its value will be taken as a fallback.
-
 #### udp_disable_domain_unmapping
 
 !!! failure "Deprecated in sing-box 1.11.0"
 
     Inbound fields are deprecated and will be removed in sing-box 1.13.0, check [Migration](/migration/#migrate-legacy-inbound-fields-to-rule-actions).
 
-If enabled, for UDP proxy requests addressed to a domain, 
+If enabled, for UDP proxy requests addressed to a domain,
 the original packet address will be sent in the response instead of the mapped domain.
 
-This option is used for compatibility with clients that 
+This option is used for compatibility with clients that
 do not support receiving UDP packets with domain addresses, such as Surge.
+
+#### proxy_protocol
+
+
+- Deprecated.
+
+#### proxy_protocol_accept_no_header
+
+
+- Deprecated.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

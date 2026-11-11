@@ -31,6 +31,9 @@ icon: material/new-box
 }
 ```
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### action
 
 要执行的动作。默认使用 `route`。
@@ -50,6 +53,8 @@ icon: material/new-box
 
 未启用 `race` 的规则仍严格按顺序生效：只要前面还有未判定的竞态规则，其他已匹配规则的动作就被扣住，直到所有竞态规则均未匹配。
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### route
 
 ```json
@@ -68,6 +73,9 @@ icon: material/new-box
 ```
 
 `route` 继承了将 DNS 请求 路由到指定服务器的经典规则动作。
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### server
 
@@ -135,6 +143,8 @@ icon: material/new-box
 
 与 `client_subnet` 冲突。
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### evaluate
 
 !!! question "自 sing-box 1.14.0 起"
@@ -159,6 +169,9 @@ icon: material/new-box
 仅允许在顶层 DNS 规则中使用（不可在逻辑子规则内部使用）。
 使用 [`match_response`](/zh/configuration/dns/rule/#match_response) 或响应匹配字段的规则，
 需要位于更早的顶层 `evaluate` 规则之后。
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### server
 
@@ -221,6 +234,20 @@ icon: material/new-box
 
 与 `client_subnet` 冲突。
 
+#### strategy
+
+!!! question "自 sing-box 1.12.0 起"
+
+!!! failure "已在 sing-box 1.14.0 废弃"
+
+    `strategy` 已在 sing-box 1.14.0 废弃，且将在 sing-box 1.16.0 中被移除。
+
+为此查询设置域名策略。
+
+可选项：`prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### respond
 
 !!! question "自 sing-box 1.14.0 起"
@@ -263,6 +290,9 @@ icon: material/new-box
 
 `reject` 拒绝 DNS 请求。
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### method
 
 - `default`: 返回 REFUSED。
@@ -275,6 +305,8 @@ icon: material/new-box
 如果未启用，则 30 秒内触发 50 次后，`method` 将被暂时覆盖为 `drop`。
 
 当 `method` 设为 `drop` 时不可用。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### predefined
 
@@ -291,6 +323,9 @@ icon: material/new-box
 ```
 
 `predefined` 以预定义的 DNS 记录响应。
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### rcode
 
@@ -326,3 +361,5 @@ icon: material/new-box
 #### extra
 
 用于作为额外记录响应的文本 DNS 记录列表。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

@@ -27,6 +27,9 @@ Resolved 服务是一个伪造的 systemd-resolved DBUS 服务，用于从其他
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### listen
 
 ==必填==
@@ -42,3 +45,5 @@ Resolved 服务是一个伪造的 systemd-resolved DBUS 服务，用于从其他
 监听端口。
 
 默认使用 `53`。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

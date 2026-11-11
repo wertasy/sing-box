@@ -65,6 +65,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### detour
 
 The tag of the upstream outbound.
@@ -189,7 +192,7 @@ Setting this option directly to a string is equivalent to setting `server` of th
 
 | Outbound/Endpoints | Effected domains         |
 |--------------------|--------------------------|
-| `direct`           | Domain in request        | 
+| `direct`           | Domain in request        |
 | others             | Domain in server address |
 
 #### network_strategy
@@ -273,6 +276,9 @@ If set, the requested domain name will be resolved to IP before connect.
 
 | Outbound | Effected domains         | Fallback Value                            |
 |----------|--------------------------|-------------------------------------------|
-| `direct` | Domain in request        | Take `inbound.domain_strategy` if not set | 
+| `direct` | Domain in request        | Take `inbound.domain_strategy` if not set |
 | others   | Domain in server address | /                                         |
 
+- Deprecated.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

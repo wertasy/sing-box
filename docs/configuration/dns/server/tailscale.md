@@ -31,6 +31,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### endpoint
 
 ==Required==
@@ -48,6 +51,8 @@ if not enabled, `NXDOMAIN` will be returned for non-Tailscale domain queries.
 !!! question "Since sing-box 1.14.0"
 
 When enabled, single-label queries (e.g. `my-device`) are retried against each Tailscale search domain until one resolves.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Examples
 

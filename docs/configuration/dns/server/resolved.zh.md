@@ -24,6 +24,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### service
 
 ==必填==
@@ -37,6 +40,8 @@ icon: material/new-box
 具体来说，默认 DNS 解析器是设置了 `SetLinkDefaultRoute` 或 `SetLinkDomains ~.` 的 DNS 服务器。
 
 如果未启用，对于不匹配搜索域或匹配域的请求，将返回 `NXDOMAIN`。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 示例
 

@@ -67,11 +67,15 @@ func (o *Options) SetComments(comments *json.CommentSet) {
 }
 
 type LogOptions struct {
-	Disabled     bool   `json:"disabled,omitempty"`
-	Level        string `json:"level,omitempty" enum:"trace,debug,info,warn,warning,error,fatal,panic"`
-	Output       string `json:"output,omitempty"`
-	Timestamp    bool   `json:"timestamp,omitempty"`
-	DisableColor bool   `json:"-"`
+	// Disable logging, no output after start.
+	Disabled bool `json:"disabled,omitempty"`
+	// Log level. One of: `trace` `debug` `info` `warn` `error` `fatal` `panic`.
+	Level string `json:"level,omitempty" enum:"trace,debug,info,warn,warning,error,fatal,panic"`
+	// Output file path. Will not write log to console after enable.
+	Output string `json:"output,omitempty"`
+	// Add time to each line.
+	Timestamp    bool `json:"timestamp,omitempty"`
+	DisableColor bool `json:"-"`
 }
 
 type StubOptions struct{}

@@ -25,6 +25,9 @@ icon: material/alert-decagram
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### override_address
 
 !!! failure "Deprecated in sing-box 1.11.0"
@@ -42,6 +45,8 @@ Override the connection destination address.
 Override the connection destination port.
 
 Protocol value can be `1` or `2`.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

@@ -52,6 +52,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==必填==
@@ -130,6 +133,8 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 只有 `server_name`、`certificate`、`certificate_path` 和 `ech` 是被支持的。
 
 自签名证书会显著改变流量行为，违背了 NaiveProxy 旨在抵抗流量分析的设计初衷，不应该在生产环境中使用。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

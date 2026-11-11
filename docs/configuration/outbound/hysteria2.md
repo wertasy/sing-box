@@ -72,6 +72,9 @@
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -164,9 +167,14 @@ Both is enabled by default.
 
 TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### QUIC Fields
 
 See [QUIC Fields](/configuration/shared/quic/) for details.
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### bbr_profile
 
@@ -270,6 +278,8 @@ Lease lifetime of the mapping.
 HTTP client used to talk to the realm.
 
 See [HTTP Client](/configuration/shared/http-client/) for details.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

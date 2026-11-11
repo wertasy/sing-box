@@ -22,6 +22,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### executable_path
 
 Tor 可执行文件路径
@@ -45,6 +48,8 @@ Tor 的数据目录。
 torrc 参数表。
 
 参阅 [tor(1)](https://linux.die.net/man/1/tor)。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 

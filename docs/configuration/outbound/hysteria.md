@@ -44,6 +44,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -123,6 +126,23 @@ Both is enabled by default.
 
 TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 
+#### recv_window_conn
+
+
+- Deprecated.
+
+#### recv_window
+
+
+- Deprecated.
+
+#### disable_mtu_discovery
+
+
+- Deprecated.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
+
 ### QUIC Fields
 
 See [QUIC Fields](/configuration/shared/quic/) for details.
@@ -132,6 +152,9 @@ See [QUIC Fields](/configuration/shared/quic/) for details.
 See [Dial Fields](/configuration/shared/dial/) for details.
 
 ### Deprecated Fields
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### recv_window_conn
 
@@ -150,3 +173,5 @@ See [Dial Fields](/configuration/shared/dial/) for details.
 !!! failure "Deprecated in sing-box 1.14.0"
 
     Use QUIC fields `disable_path_mtu_discovery` instead.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

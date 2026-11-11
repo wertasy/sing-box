@@ -27,6 +27,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### endpoint
 
 ==必填==
@@ -46,6 +49,8 @@ DNS 查询会通过 OpenConnect 端点发送到 VPN 服务器推送的解析器�
 启用且存在推送的搜索域时，单标签查询（例如 `intranet`）会依次附加各个搜索域进行重试，直到其中一个解析成功。
 
 如果所有搜索域扩展均返回 `NXDOMAIN`，原始未限定名称将按普通默认解析器行为处理。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 示例
 

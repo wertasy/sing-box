@@ -33,6 +33,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### server
 
 ==Required==
@@ -46,6 +49,8 @@ If domain name is used, `domain_resolver` must also be set to resolve IP address
 The port of the DNS server.
 
 `53` will be used by default.
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 

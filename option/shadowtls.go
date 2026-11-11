@@ -10,13 +10,50 @@ import (
 
 type ShadowTLSInboundOptions struct {
 	ListenOptions
-	Version                int                                                  `json:"version,omitempty" enum:"1,2,3"`
-	Password               string                                               `json:"password,omitempty"`
-	Users                  []ShadowTLSUser                                      `json:"users,omitempty"`
-	Handshake              ShadowTLSHandshakeOptions                            `json:"handshake,omitempty"`
+	// ShadowTLS protocol version.
+	//
+	// | Value         | Protocol Version                                                                        |
+	// |---------------|-----------------------------------------------------------------------------------------|
+	// | `1` (default) | [ShadowTLS v1](https://github.com/ihciah/shadow-tls/blob/master/docs/protocol-en.md#v1) |
+	// | `2`           | [ShadowTLS v2](https://github.com/ihciah/shadow-tls/blob/master/docs/protocol-en.md#v2) |
+	// | `3`           | [ShadowTLS v3](https://github.com/ihciah/shadow-tls/blob/master/docs/protocol-v3-en.md) |
+	Version int `json:"version,omitempty" enum:"1,2,3"`
+	// ShadowTLS password.
+	//
+	// Only available in the ShadowTLS protocol 2.
+	Password string `json:"password,omitempty"`
+	// ShadowTLS users.
+	//
+	// Only available in the ShadowTLS protocol 3.
+	Users []ShadowTLSUser `json:"users,omitempty"`
+	// @required
+	//
+	// When `wildcard_sni` is configured to `all`, the server address is optional.
+	//
+	// Handshake server address and [Dial Fields](/configuration/shared/dial/).
+	Handshake ShadowTLSHandshakeOptions `json:"handshake,omitempty"`
+	// Handshake server address and [Dial Fields](/configuration/shared/dial/) for specific server name.
+	//
+	// Only available in the ShadowTLS protocol 2/3.
 	HandshakeForServerName *badjson.TypedMap[string, ShadowTLSHandshakeOptions] `json:"handshake_for_server_name,omitempty"`
-	StrictMode             bool                                                 `json:"strict_mode,omitempty"`
-	WildcardSNI            WildcardSNI                                          `json:"wildcard_sni,omitempty"`
+	// ShadowTLS strict mode.
+	//
+	// Only available in the ShadowTLS protocol 3.
+	StrictMode bool `json:"strict_mode,omitempty"`
+	// @since 1.12.0
+	//
+	// ShadowTLS wildcard SNI mode.
+	//
+	// Available values are:
+	//
+	// * `off`: (default) Disabled.
+	// * `authed`: Authenticated connections will have their destination overwritten to `(servername):443`
+	// * `all`: All connections will have their destination overwritten to `(servername):443`
+	//
+	// Additionally, connections matching `handshake_for_server_name` are not affected.
+	//
+	// Only available in the ShadowTLS protocol 3.
+	WildcardSNI WildcardSNI `json:"wildcard_sni,omitempty"`
 }
 
 type WildcardSNI int
@@ -68,7 +105,9 @@ func (w WildcardSNI) DescribeSchema(builder schema.Builder) (*schema.Node, error
 }
 
 type ShadowTLSUser struct {
-	Name     string `json:"name,omitempty"`
+	// User name.
+	Name string `json:"name,omitempty"`
+	// User password.
 	Password string `json:"password,omitempty"`
 }
 
@@ -80,7 +119,17 @@ type ShadowTLSHandshakeOptions struct {
 type ShadowTLSOutboundOptions struct {
 	DialerOptions
 	ServerOptions
-	Version  int    `json:"version,omitempty" enum:"1,2,3"`
+	// ShadowTLS protocol version.
+	//
+	// | Value         | Protocol Version                                                                        |
+	// |---------------|-----------------------------------------------------------------------------------------|
+	// | `1` (default) | [ShadowTLS v1](https://github.com/ihciah/shadow-tls/blob/master/docs/protocol-en.md#v1) |
+	// | `2`           | [ShadowTLS v2](https://github.com/ihciah/shadow-tls/blob/master/docs/protocol-en.md#v2) |
+	// | `3`           | [ShadowTLS v3](https://github.com/ihciah/shadow-tls/blob/master/docs/protocol-v3-en.md) |
+	Version int `json:"version,omitempty" enum:"1,2,3"`
+	// Set password.
+	//
+	// Only available in the ShadowTLS v2/v3 protocol.
 	Password string `json:"password,omitempty"`
 	OutboundTLSOptionsContainer
 }

@@ -12,65 +12,409 @@ import (
 )
 
 type TunInboundOptions struct {
-	InterfaceName                 string                           `json:"interface_name,omitempty"`
-	NetNs                         string                           `json:"netns,omitempty" reference:"network_namespace"`
-	MTU                           uint32                           `json:"mtu,omitempty"`
-	Address                       badoption.Listable[netip.Prefix] `json:"address,omitempty" examples:"172.19.0.1/30,fdfe:dcba:9876::1/126"`
-	DNSMode                       string                           `json:"dns_mode,omitempty" enum:"disabled,native,hijack"`
-	DNSAddress                    badoption.Listable[netip.Addr]   `json:"dns_address,omitempty"`
-	AutoRoute                     bool                             `json:"auto_route,omitempty"`
-	IPRoute2TableIndex            int                              `json:"iproute2_table_index,omitempty"`
-	IPRoute2RuleIndex             int                              `json:"iproute2_rule_index,omitempty"`
-	AutoRedirect                  bool                             `json:"auto_redirect,omitempty"`
-	AutoRedirectInputMark         FwMark                           `json:"auto_redirect_input_mark,omitempty"`
-	AutoRedirectOutputMark        FwMark                           `json:"auto_redirect_output_mark,omitempty"`
-	AutoRedirectResetMark         FwMark                           `json:"auto_redirect_reset_mark,omitempty"`
-	AutoRedirectTProxyMark        FwMark                           `json:"auto_redirect_tproxy_mark,omitempty"`
-	AutoRedirectNFQueue           uint16                           `json:"auto_redirect_nfqueue,omitempty"`
-	AutoRedirectFallbackRuleIndex int                              `json:"auto_redirect_iproute2_fallback_rule_index,omitempty"`
-	ExcludeMPTCP                  bool                             `json:"exclude_mptcp,omitempty"`
-	LoopbackAddress               badoption.Listable[netip.Addr]   `json:"loopback_address,omitempty"`
-	StrictRoute                   bool                             `json:"strict_route,omitempty"`
-	RouteAddress                  badoption.Listable[netip.Prefix] `json:"route_address,omitempty"`
-	RouteAddressSet               badoption.Listable[string]       `json:"route_address_set,omitempty"`
-	RouteExcludeAddress           badoption.Listable[netip.Prefix] `json:"route_exclude_address,omitempty"`
-	RouteExcludeAddressSet        badoption.Listable[string]       `json:"route_exclude_address_set,omitempty"`
-	IncludeInterface              badoption.Listable[string]       `json:"include_interface,omitempty"`
-	ExcludeInterface              badoption.Listable[string]       `json:"exclude_interface,omitempty"`
-	IncludeUID                    badoption.Listable[uint32]       `json:"include_uid,omitempty"`
-	IncludeUIDRange               badoption.Listable[string]       `json:"include_uid_range,omitempty"`
-	ExcludeUID                    badoption.Listable[uint32]       `json:"exclude_uid,omitempty"`
-	ExcludeUIDRange               badoption.Listable[string]       `json:"exclude_uid_range,omitempty"`
-	IncludeAndroidUser            badoption.Listable[int]          `json:"include_android_user,omitempty"`
-	IncludePackage                badoption.Listable[string]       `json:"include_package,omitempty"`
-	ExcludePackage                badoption.Listable[string]       `json:"exclude_package,omitempty"`
-	IncludeMACAddress             badoption.Listable[string]       `json:"include_mac_address,omitempty"`
-	ExcludeMACAddress             badoption.Listable[string]       `json:"exclude_mac_address,omitempty"`
-	UDPTimeout                    UDPTimeoutCompat                 `json:"udp_timeout,omitempty"`
-	UDPMapping                    UDPNATBehavior                   `json:"udp_mapping,omitempty"`
-	UDPFiltering                  UDPNATBehavior                   `json:"udp_filtering,omitempty"`
-	UDPNATMax                     uint32                           `json:"udp_nat_max,omitempty"`
-	MultiQueue                    bool                             `json:"multi_queue,omitempty"`
-	Platform                      *TunPlatformOptions              `json:"platform,omitempty"`
+	// Virtual device name, automatically selected if empty.
+	InterfaceName string `json:"interface_name,omitempty"`
+	// @since 1.14.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux.
+	//
+	// Create the tun interface in the specified network namespace, name, path, or the tag of a
+	// [network namespace](/configuration/network-namespace/).
+	//
+	// When set, `auto_route` and `auto_redirect` operate inside the namespace, and no root privilege is
+	// required if the namespace is owned by the current user.
+	//
+	// Conflict with `platform`.
+	NetNs string `json:"netns,omitempty" reference:"network_namespace"`
+	// The maximum transmission unit.
+	MTU uint32 `json:"mtu,omitempty"`
+	// @since 1.10.0
+	//
+	// IPv4 and IPv6 prefix for the tun interface.
+	Address badoption.Listable[netip.Prefix] `json:"address,omitempty" examples:"172.19.0.1/30,fdfe:dcba:9876::1/126"`
+	// @since 1.14.0
+	//
+	// How DNS is handled on the TUN interface.
+	//
+	// | Mode       | Description                                                                                                                                                |
+	// |------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+	// | `disabled` | Do not configure native DNS and do not hijack DNS traffic.                                                                                                 |
+	// | `native`   | Set the platform's native interface DNS where possible: per-interface DNS on Windows and Apple platforms, and `systemd-resolved` interface DNS on Linux.   |
+	// | `hijack`   | Same as `native`, with additional port 53 hijacking described below.                                                                                       |
+	//
+	// `hijack` is used by default when [`auto_route`](#auto_route) is enabled, otherwise `disabled` is used by default.
+	//
+	// `hijack` adds the following on top of `native`:
+	//
+	// *On Linux*: DNS sent to addresses on the host's own interfaces (such as
+	// `127.0.0.53` or the host's LAN-side IP) is not hijacked.
+	//
+	// - Without `auto_redirect`, port 53 traffic to directly-attached subnets is
+	//   also routed through the TUN.
+	// - With `auto_redirect`, port 53 traffic is redirected to
+	//   [`dns_address`](#dns_address).
+	//
+	// *On Windows with [`strict_route`](#strict_route)*: port 53 traffic going
+	// through interfaces other than the TUN is blocked.
+	DNSMode string `json:"dns_mode,omitempty" enum:"disabled,native,hijack"`
+	// @since 1.14.0
+	//
+	// List of DNS server addresses used by [`dns_mode`](#dns_mode).
+	//
+	// When unset, the next address after the first IPv4 and IPv6 entry in
+	// [`address`](#address) is used, and connections to it are handled as a
+	// [`hijack-dns`](/configuration/route/rule_action/#hijack-dns) route action.
+	//
+	// When set, configure a [`hijack-dns`](/configuration/route/rule_action/#hijack-dns)
+	// route rule to handle DNS traffic to these addresses.
+	DNSAddress badoption.Listable[netip.Addr] `json:"dns_address,omitempty"`
+	// Set the default route to the Tun.
+	//
+	// @quote:
+	//
+	//     To avoid traffic loopback, set `route.auto_detect_interface` or `route.default_interface` or `outbound.bind_interface`
+	//
+	// @note: Use with Android VPN
+	//
+	//     By default, VPN takes precedence over tun. To make tun go through VPN, enable `route.override_android_vpn`.
+	//
+	// @note: Also enable `auto_redirect`
+	//
+	//     `auto_redirect` is always recommended on Linux, it provides better routing, higher performance (better than tproxy), and avoids conflicts between TUN and Docker bridge networks.
+	AutoRoute bool `json:"auto_route,omitempty"`
+	// @since 1.10.0
+	//
+	// Linux iproute2 table index generated by `auto_route`.
+	//
+	// `2022` is used by default.
+	IPRoute2TableIndex int `json:"iproute2_table_index,omitempty"`
+	// @since 1.10.0
+	//
+	// Linux iproute2 rule start index generated by `auto_route`.
+	//
+	// `9000` is used by default.
+	IPRoute2RuleIndex int `json:"iproute2_rule_index,omitempty"`
+	// @since 1.10.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux with `auto_route` enabled.
+	//
+	// Improve TUN routing and performance using nftables.
+	//
+	// `auto_redirect` is always recommended on Linux, it provides better routing,
+	// higher performance (better than tproxy),
+	// and avoids conflicts between TUN and Docker bridge networks.
+	//
+	// Pre-matching requires nfqueue support in the kernel (`nfnetlink_queue`).
+	//
+	// `auto_redirect` is fully supported on Android through the root service of the graphical client
+	// or a root shell, including forwarded traffic (hotspot, repeater).
+	//
+	// `auto_redirect` also automatically inserts compatibility rules
+	// into the OpenWrt fw4 table, i.e.
+	// it will work on routers without any extra configuration.
+	//
+	// Conflict with `route.default_mark` and `[dialOptions].routing_mark`.
+	AutoRedirect bool `json:"auto_redirect,omitempty"`
+	// @since 1.10.0
+	//
+	// Connection input mark used by `auto_redirect`.
+	//
+	// `0x2023` is used by default (`0x400000` on Android).
+	AutoRedirectInputMark FwMark `json:"auto_redirect_input_mark,omitempty"`
+	// @since 1.10.0
+	//
+	// Connection output mark used by `auto_redirect`.
+	//
+	// `0x2024` is used by default (`0x200000` on Android).
+	AutoRedirectOutputMark FwMark `json:"auto_redirect_output_mark,omitempty"`
+	// @since 1.13.0
+	//
+	// Connection reset mark used by `auto_redirect` pre-matching.
+	//
+	// `0x2025` is used by default (`0x600000` on Android).
+	AutoRedirectResetMark FwMark `json:"auto_redirect_reset_mark,omitempty"`
+	// @since 1.15.0
+	//
+	// Connection TPROXY mark used by the `auto_redirect` iptables backend for IPv6 TCP.
+	//
+	// `0x2026` is used by default (`0x800000` on Android).
+	AutoRedirectTProxyMark FwMark `json:"auto_redirect_tproxy_mark,omitempty"`
+	// @since 1.13.0
+	//
+	// NFQueue number used by `auto_redirect` pre-matching.
+	//
+	// `100` is used by default.
+	AutoRedirectNFQueue uint16 `json:"auto_redirect_nfqueue,omitempty"`
+	// @since 1.12.18
+	//
+	// Linux iproute2 fallback rule index generated by `auto_redirect`.
+	//
+	// This rule is checked after system default rules (32766: main, 32767: default),
+	// routing traffic to the sing-box table only when no route is found in system tables.
+	//
+	// `32768` is used by default.
+	AutoRedirectFallbackRuleIndex int `json:"auto_redirect_iproute2_fallback_rule_index,omitempty"`
+	// @since 1.13.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux with nftables and requires `auto_route` and `auto_redirect` enabled.
+	//
+	// MPTCP cannot be transparently proxied due to protocol limitations.
+	//
+	// Such traffic is usually created by Apple systems.
+	//
+	// When enabled, MPTCP connections will bypass sing-box and connect directly, otherwise, will be rejected to avoid errors by default.
+	ExcludeMPTCP bool `json:"exclude_mptcp,omitempty"`
+	// @since 1.12.0
+	//
+	// Loopback addresses make TCP connections to the specified address connect to the source address.
+	//
+	// Setting option value to `10.7.0.1` achieves the same behavior as SideStore/StosVPN.
+	//
+	// When `auto_redirect` is enabled, the same behavior can be achieved for LAN devices (not just local) as a gateway.
+	LoopbackAddress badoption.Listable[netip.Addr] `json:"loopback_address,omitempty"`
+	// Enforce strict routing rules when `auto_route` is enabled:
+	//
+	// *In Linux*:
+	//
+	// * Let unsupported network unreachable
+	// * For legacy reasons, when neither `strict_route` nor `auto_redirect` are enabled, all ICMP traffic will not go through TUN.
+	// * When `auto_redirect` is enabled, `strict_route` also affects `SO_BINDTODEVICE` traffic:
+	//     * Enabled: `SO_BINDTODEVICE` traffic is redirected through sing-box.
+	//     * Disabled: `SO_BINDTODEVICE` traffic bypasses sing-box.
+	//
+	// *In Windows*:
+	//
+	// * Let unsupported network unreachable
+	// * prevent DNS leak caused by
+	//   Windows' [ordinary multihomed DNS resolution behavior](https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/dd197552%28v%3Dws.10%29)
+	//
+	// It may prevent some Windows applications (such as VirtualBox) from working properly in certain situations.
+	StrictRoute bool `json:"strict_route,omitempty"`
+	// @since 1.10.0
+	//
+	// Use custom routes instead of default when `auto_route` is enabled.
+	RouteAddress badoption.Listable[netip.Prefix] `json:"route_address,omitempty"`
+	// @tab "With `auto_redirect` enabled"
+	//
+	//     @since 1.10.0
+	//
+	//     @quote:
+	//
+	//         Only supported on Linux and requires `auto_route` and `auto_redirect` enabled.
+	//
+	//     Match the destination IP CIDR rules in the specified rule-sets during pre-matching.
+	//     Unmatched traffic will bypass the sing-box routes.
+	//
+	//     Conflict with `route.default_mark` and `[dialOptions].routing_mark`.
+	//
+	// @tab "Without `auto_redirect` enabled"
+	//
+	//     @since 1.11.0
+	//
+	//     Add the destination IP CIDR rules in the specified rule-sets to routes, equivalent to adding to `route_address`.
+	//     Unmatched traffic will bypass the sing-box routes.
+	//
+	//     Note that it **doesn't work on the Android and Apple graphical clients**
+	//     as they cannot handle a large number of routes,
+	//     but otherwise it works fine on all command line clients and the Linux and Windows graphical clients.
+	RouteAddressSet badoption.Listable[string] `json:"route_address_set,omitempty"`
+	// @since 1.10.0
+	//
+	// Exclude custom routes when `auto_route` is enabled.
+	RouteExcludeAddress badoption.Listable[netip.Prefix] `json:"route_exclude_address,omitempty"`
+	// @tab "With `auto_redirect` enabled"
+	//
+	//     @since 1.10.0
+	//
+	//     @quote:
+	//
+	//         Only supported on Linux and requires `auto_route` and `auto_redirect` enabled.
+	//
+	//     Match the destination IP CIDR rules in the specified rule-sets during pre-matching.
+	//     Matched traffic will bypass the sing-box routes.
+	//
+	// @tab "Without `auto_redirect` enabled"
+	//
+	//     @since 1.11.0
+	//
+	//     Add the destination IP CIDR rules in the specified rule-sets to routes, equivalent to adding to `route_exclude_address`.
+	//     Matched traffic will bypass the sing-box routes.
+	//
+	//     Note that it **doesn't work on the Android and Apple graphical clients**
+	//     as they cannot handle a large number of routes,
+	//     but otherwise it works fine on all command line clients and the Linux and Windows graphical clients.
+	RouteExcludeAddressSet badoption.Listable[string] `json:"route_exclude_address_set,omitempty"`
+	// @quote:
+	//
+	//     Interface rules are only supported on Linux and require auto_route.
+	//
+	// Limit interfaces in route. Not limited by default.
+	//
+	// Conflict with `exclude_interface`.
+	IncludeInterface badoption.Listable[string] `json:"include_interface,omitempty"`
+	// @warning:
+	//
+	//     When `strict_route` enabled, return traffic to excluded interfaces will not be automatically excluded, so add them as well (example: `br-lan` and `pppoe-wan`).
+	//
+	// Exclude interfaces in route.
+	//
+	// Conflict with `include_interface`.
+	ExcludeInterface badoption.Listable[string] `json:"exclude_interface,omitempty"`
+	// @quote:
+	//
+	//     UID rules are only supported on Linux and require auto_route.
+	//
+	// Limit users in route. Not limited by default.
+	IncludeUID badoption.Listable[uint32] `json:"include_uid,omitempty"`
+	// Limit users in route, but in range.
+	IncludeUIDRange badoption.Listable[string] `json:"include_uid_range,omitempty"`
+	// Exclude users in route.
+	ExcludeUID badoption.Listable[uint32] `json:"exclude_uid,omitempty"`
+	// Exclude users in route, but in range.
+	ExcludeUIDRange badoption.Listable[string] `json:"exclude_uid_range,omitempty"`
+	// @quote:
+	//
+	//     Android user and package rules are only supported on Android and require auto_route.
+	//
+	// Limit android users in route.
+	//
+	// | Common user  | ID |
+	// |--------------|----|
+	// | Main         | 0  |
+	// | Work Profile | 10 |
+	IncludeAndroidUser badoption.Listable[int] `json:"include_android_user,omitempty"`
+	// Limit android packages in route.
+	IncludePackage badoption.Listable[string] `json:"include_package,omitempty"`
+	// Exclude android packages in route.
+	ExcludePackage badoption.Listable[string] `json:"exclude_package,omitempty"`
+	// @since 1.14.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux with `auto_route` and `auto_redirect` enabled.
+	//
+	// Limit MAC addresses in route. Not limited by default.
+	//
+	// Conflict with `exclude_mac_address`.
+	IncludeMACAddress badoption.Listable[string] `json:"include_mac_address,omitempty"`
+	// @since 1.14.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux with `auto_route` and `auto_redirect` enabled.
+	//
+	// Exclude MAC addresses in route.
+	//
+	// Conflict with `include_mac_address`.
+	ExcludeMACAddress badoption.Listable[string] `json:"exclude_mac_address,omitempty"`
+	UDPTimeout        UDPTimeoutCompat           `json:"udp_timeout,omitempty"`
+	UDPMapping        UDPNATBehavior             `json:"udp_mapping,omitempty"`
+	UDPFiltering      UDPNATBehavior             `json:"udp_filtering,omitempty"`
+	UDPNATMax         uint32                     `json:"udp_nat_max,omitempty"`
+	// @quote:
+	//
+	//     Only supported on Linux, and requires sing-tun's own TCP/IP stack.
+	//
+	// Enable multi-queue support based on `IFF_MULTI_QUEUE`, allowing throughput to scale with the number of CPU cores.
+	MultiQueue bool `json:"multi_queue,omitempty"`
+	// Platform-specific settings, provided by client applications.
+	Platform *TunPlatformOptions `json:"platform,omitempty"`
 	InboundOptions
 
+	// @failure: Deprecated in sing-box 1.15.0
+	//
+	//     `stack` is deprecated and will be removed in sing-box 1.17.0.
+	//     Remove the `stack` option to use sing-tun's own TCP/IP stack.
+	//     See [Migration](/migration/#migrate-tun-stack).
+	//
+	// @quote: Changes in sing-box 1.15.0
+	//
+	//     Since 1.15.0, sing-tun uses its own TCP/IP stack, with substantial improvements over all previous
+	//     implementations in peak performance, energy efficiency, and memory usage.
+	//
+	// @quote: Changes in sing-box 1.8.0
+	//
+	//     :material-delete-alert: The legacy LWIP stack has been deprecated and removed.
+	//
+	// TCP/IP stack.
+	//
+	// | Stack    | Description                                                                                           |
+	// |----------|-------------------------------------------------------------------------------------------------------|
+	// | `system` | Perform L3 to L4 translation using the system network stack                                           |
+	// | `gvisor` | Perform L3 to L4 translation using [gVisor](https://github.com/google/gvisor)'s virtual network stack |
+	// | `mixed`  | Mixed `system` TCP stack and `gvisor` UDP stack                                                       |
 	Stack string `json:"stack,omitempty" schema:"omit"`
 
 	// Deprecated: removed
+	// @failure: Deprecated in sing-box 1.11.0
+	//
+	//     GSO has no advantages for transparent proxy scenarios, is deprecated and no longer works, and will be removed in sing-box 1.12.0.
+	//
+	// @since 1.8.0
+	//
+	// @quote:
+	//
+	//     Only supported on Linux with `auto_route` enabled.
+	//
+	// Enable generic segmentation offload.
 	GSO bool `json:"gso,omitempty" schema:"omit"`
 	// Deprecated: merged to Address
+	// @failure: Deprecated in sing-box 1.10.0
+	//
+	//     `inet4_address` is merged to `address` and will be removed in sing-box 1.12.0.
+	//
+	// IPv4 prefix for the tun interface.
 	Inet4Address badoption.Listable[netip.Prefix] `json:"inet4_address,omitempty" schema:"omit"`
 	// Deprecated: merged to Address
+	// @failure: Deprecated in sing-box 1.10.0
+	//
+	//     `inet6_address` is merged to `address` and will be removed in sing-box 1.12.0.
+	//
+	// IPv6 prefix for the tun interface.
 	Inet6Address badoption.Listable[netip.Prefix] `json:"inet6_address,omitempty" schema:"omit"`
 	// Deprecated: merged to RouteAddress
+	// @failure: Deprecated in sing-box 1.10.0
+	//
+	// `inet4_route_address` is deprecated and will be removed in sing-box 1.12.0, please use [route_address](#route_address)
+	// instead.
+	//
+	// Use custom routes instead of default when `auto_route` is enabled.
 	Inet4RouteAddress badoption.Listable[netip.Prefix] `json:"inet4_route_address,omitempty" schema:"omit"`
 	// Deprecated: merged to RouteAddress
+	// @failure: Deprecated in sing-box 1.10.0
+	//
+	// `inet6_route_address` is deprecated and will be removed in sing-box 1.12.0, please use [route_address](#route_address)
+	// instead.
+	//
+	// Use custom routes instead of default when `auto_route` is enabled.
 	Inet6RouteAddress badoption.Listable[netip.Prefix] `json:"inet6_route_address,omitempty" schema:"omit"`
 	// Deprecated: merged to RouteExcludeAddress
+	// @failure: Deprecated in sing-box 1.10.0
+	//
+	// `inet4_route_exclude_address` is deprecated and will be removed in sing-box 1.12.0, please
+	// use [route_exclude_address](#route_exclude_address) instead.
+	//
+	// Exclude custom routes when `auto_route` is enabled.
 	Inet4RouteExcludeAddress badoption.Listable[netip.Prefix] `json:"inet4_route_exclude_address,omitempty" schema:"omit"`
 	// Deprecated: merged to RouteExcludeAddress
+	// @failure: Deprecated in sing-box 1.10.0
+	//
+	// `inet6_route_exclude_address` is deprecated and will be removed in sing-box 1.12.0, please
+	// use [route_exclude_address](#route_exclude_address) instead.
+	//
+	// Exclude custom routes when `auto_route` is enabled.
 	Inet6RouteExcludeAddress badoption.Listable[netip.Prefix] `json:"inet6_route_exclude_address,omitempty" schema:"omit"`
 	// Deprecated: removed
+	// This option has had no effect since sing-box 1.11.0 and can be removed from the configuration.
+	//
+	// Since sing-box 1.14.0, use [UDP NAT fields](/configuration/shared/udp-nat/)
+	// to customize the mapping and filtering behavior.
 	EndpointIndependentNat bool `json:"endpoint_independent_nat,omitempty" schema:"omit"`
 }
 

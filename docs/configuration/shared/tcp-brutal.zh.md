@@ -17,6 +17,9 @@
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 启用 TCP Brutal 拥塞控制算法。
@@ -26,3 +29,5 @@
 ==必填==
 
 上传和下载带宽，以 Mbps 为单位。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

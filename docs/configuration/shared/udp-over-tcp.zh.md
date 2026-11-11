@@ -19,6 +19,9 @@ UDP over TCP 协议用于在 TCP 中传输 UDP 数据包。
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### enabled
 
 启用 UDP over TCP 协议。
@@ -28,6 +31,8 @@ UDP over TCP 协议用于在 TCP 中传输 UDP 数据包。
 协议版本，`1` 或 `2`。
 
 默认使用 2。
+
+<!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 应用程序支持
 
