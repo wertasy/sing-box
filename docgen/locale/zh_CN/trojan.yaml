@@ -1,0 +1,27 @@
+ServerOptions.server: |-
+  @required
+
+  服务器地址。
+
+ServerOptions.server_port: |-
+  @required
+
+  服务器端口。
+
+TrojanOutboundOptions.multiplex: 参阅 [多路复用](/zh/configuration/shared/multiplex#出站)。
+
+TrojanOutboundOptions.network: |-
+  启用的网络协议。
+
+  `tcp` 或 `udp`。
+
+  默认所有。
+
+TrojanOutboundOptions.password: |-
+  @required
+
+  Trojan 密码。
+
+TrojanOutboundOptions.tls: TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+TrojanOutboundOptions.transport: V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。

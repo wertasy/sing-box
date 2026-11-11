@@ -1,0 +1,41 @@
+defaults:
+  heading: '### Fields'
+  omit_origins:
+  - ListenOptions
+  - InboundOptions
+
+pages:
+
+- file: inbound/trojan.md
+  defs:
+  - name: trojan
+    registry: Inbound
+
+- file: inbound/shadowtls.md
+  defs:
+  - name: shadowtls
+    registry: Inbound
+
+- file: inbound/tun.md
+  defs:
+  - name: tun
+    omit_origins: []
+    omit_keys:
+    - tag
+    - udp_timeout
+    - udp_mapping
+    - udp_filtering
+    - udp_nat_max
+  expand:
+  - platform
+  overrides:
+    platform.http_proxy.server:
+      prose: |-
+        @required
+
+        HTTP proxy server address.
+    platform.http_proxy.server_port:
+      prose: |-
+        @required
+
+        HTTP proxy server port.

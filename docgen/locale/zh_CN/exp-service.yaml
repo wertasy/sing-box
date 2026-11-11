@@ -1,0 +1,491 @@
+APIServiceOptions.access_control_allow_origin: 允许的 CORS 来源,默认使用 `*`。
+
+APIServiceOptions.access_control_allow_private_network: 允许从私有网络访问。
+
+APIServiceOptions.dashboard: |-
+  下载并通过 API 监听器在 `/dashboard/` 提供的 Web 仪表板；其他浏览器请求将被重定向到该路径。
+
+  @info:
+
+      该对象可以替换为布尔值（等同于 `{ "enabled": <bool> }`），
+      或字符串路径（等同于 `{ "enabled": true, "path": "<string>" }`）。
+
+  ##### enabled
+
+  启用仪表板。
+
+  ##### path
+
+  存放仪表板文件的目录。
+
+  默认使用工作目录下的 `dashboard`。
+
+  如果目录中包含非 sing-box 下载的文件，将按原样提供。
+
+  ##### download_url
+
+  仪表板压缩包（zip）的下载 URL。
+
+  默认使用 `https://github.com/SagerNet/sing-box-dashboard/archive/refs/heads/gh-pages.zip`。
+
+  ##### http_client
+
+  用于下载仪表板的 HTTP 客户端。
+
+  参阅 [HTTP 客户端字段](/zh/configuration/shared/http-client/)。
+
+  ##### update_interval
+
+  仪表板的更新间隔。
+
+  默认使用 `1d`。
+
+APIServiceOptions.secret: |-
+  API 密钥。
+
+  客户端通过标准的 `authorization: Bearer <secret>` gRPC metadata 头认证。
+
+  默认无需认证。
+
+CCMServiceOptions.credential_path: |-
+  Claude Code OAuth 凭据文件的路径。
+
+  如果未指定，默认值为：
+  - 如果设置了 `CLAUDE_CONFIG_DIR` 环境变量，则使用 `$CLAUDE_CONFIG_DIR/.credentials.json`
+  - 否则使用 `~/.claude/.credentials.json`
+
+  在 macOS 上，首先从系统钥匙串读取凭据，如果不可用则回退到文件。
+
+  刷新的令牌会自动写回相同位置。
+
+CCMServiceOptions.detour: 用于连接 Claude API 的出站标签。
+
+CCMServiceOptions.headers: |-
+  发送到 Claude API 的自定义 HTTP 头。
+
+  这些头会覆盖同名的现有头。
+
+CCMServiceOptions.usages_path: |-
+  用于存储聚合 API 使用统计信息的文件路径。
+
+  如果未指定，使用跟踪将被禁用。
+
+  启用后，服务会跟踪并保存全面的统计信息，包括：
+  - 请求计数
+  - 令牌使用量（输入、输出、缓存读取、缓存创建）
+  - 基于 Claude API 定价计算的美元成本
+
+  统计信息按模型、上下文窗口（200k 标准版 vs 1M 高级版）以及可选的用户（启用身份验证时）进行组织。
+
+  统计文件每分钟自动保存一次，并在服务关闭时保存。
+
+CCMServiceOptions.users: |-
+  用于令牌身份验证的授权用户列表。
+
+  如果为空，则不需要身份验证。
+
+  对象格式：
+
+  ```json
+  {
+    "name": "",
+    "token": ""
+  }
+  ```
+
+  对象字段：
+
+  - `name`：用于跟踪的用户名标识符。
+  - `token`：用于身份验证的 Bearer 令牌。Claude Code 通过设置 `ANTHROPIC_AUTH_TOKEN` 环境变量为其令牌值进行身份验证。
+
+CacheFileOptions.buffer_size: |-
+  @since 1.15.0
+
+  写缓存的大小。
+
+  默认使用 `1MB`。
+
+CacheFileOptions.cache_id: |-
+  缓存文件中的标识符。
+
+  如果不为空，配置特定的数据将使用由其键控的单独存储。
+
+CacheFileOptions.enabled: 启用缓存文件。
+
+CacheFileOptions.flush_interval: |-
+  @since 1.15.0
+
+  自动冲刷写缓存的间隔。
+
+  默认禁用。
+
+CacheFileOptions.path: 缓存文件路径，默认使用`cache.db`。
+
+CacheFileOptions.rdrc_timeout: |-
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      `rdrc_timeout` 已在 sing-box 1.14.0 废弃，且将在 sing-box 1.16.0 中被移除，参阅[迁移指南](/zh/migration/#迁移-store_rdrc)。
+
+  拒绝的 DNS 响应缓存超时。
+
+  默认使用 `7d`。
+
+CacheFileOptions.store_dns: |-
+  @since 1.14.0
+
+  将 DNS 缓存存储在缓存文件中。
+
+CacheFileOptions.store_fakeip: 将 fakeip 存储在缓存文件中。
+
+CacheFileOptions.store_rdrc: |-
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      `store_rdrc` 已在 sing-box 1.14.0 废弃，且将在 sing-box 1.16.0 中被移除，参阅[迁移指南](/zh/migration/#迁移-store_rdrc)。
+
+  将拒绝的 DNS 响应缓存存储在缓存文件中。
+
+  [旧版地址筛选字段](/zh/configuration/dns/rule/#旧版地址筛选字段) 的检查结果将被缓存至过期。
+
+ClashAPIOptions.access_control_allow_origin: |-
+  @since 1.10.0
+
+  允许的 CORS 来源，默认使用 `*`。
+
+  要从公共网站访问私有网络上的 Clash API，必须在 `access_control_allow_origin` 中明确指定它而不是使用 `*`。
+
+ClashAPIOptions.access_control_allow_private_network: |-
+  @since 1.10.0
+
+  允许从私有网络访问。
+
+  要从公共网站访问私有网络上的 Clash API，必须启用 `access_control_allow_private_network`。
+
+ClashAPIOptions.cache_file: |-
+  @failure: 已在 sing-box 1.8.0 废弃
+
+      `cache_file` 已在 Clash API 中废弃，且已迁移到 `cache_file.enabled` 和 `cache_file.path`。
+
+  缓存文件路径，默认使用`cache.db`。
+
+ClashAPIOptions.cache_id: |-
+  @failure: 已在 sing-box 1.8.0 废弃
+
+      `cache_id` 已在 Clash API 中废弃，且已迁移到 `cache_file.cache_id`。
+
+  缓存 ID。
+
+  如果不为空，配置特定的数据将使用由其键控的单独存储。
+
+ClashAPIOptions.default_mode: |-
+  Clash 中的默认模式，默认使用 `Rule`。
+
+  此设置没有直接影响，但可以通过 `clash_mode` 规则项在路由和 DNS 规则中使用。
+
+ClashAPIOptions.external_controller: RESTful web API 监听地址。如果为空，则禁用 Clash API。
+
+ClashAPIOptions.external_ui: 到静态网页资源目录的相对路径或绝对路径。sing-box 会在 `http://{{external-controller}}/ui` 下提供它。
+
+ClashAPIOptions.external_ui_download_detour: |-
+  用于下载静态网页资源的出站的标签。
+
+  如果为空，将使用默认出站。
+
+ClashAPIOptions.external_ui_download_url: |-
+  静态网页资源的 ZIP 下载 URL，如果指定的 `external_ui` 目录为空，将使用。
+
+  默认使用 `https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip`。
+
+ClashAPIOptions.secret: |-
+  RESTful API 的密钥（可选）
+  通过指定 HTTP 标头 `Authorization: Bearer ${secret}` 进行身份验证
+  如果 RESTful API 正在监听 0.0.0.0，请始终设置一个密钥。
+
+ClashAPIOptions.store_fakeip: |-
+  @failure: 已在 sing-box 1.8.0 废弃
+
+      `store_selected` 已在 Clash API 中废弃，且已迁移到 `cache_file.store_fakeip`。
+
+  将 fakeip 存储在缓存文件中。
+
+ClashAPIOptions.store_mode: |-
+  @failure: 已在 sing-box 1.8.0 废弃
+
+      `store_mode` 已在 Clash API 中废弃，且默认启用当 `cache_file.enabled`。
+
+  将 Clash 模式存储在缓存文件中。
+
+ClashAPIOptions.store_selected: |-
+  @failure: 已在 sing-box 1.8.0 废弃
+
+      `store_selected` 已在 Clash API 中废弃，且默认启用当 `cache_file.enabled`。
+
+  @note:
+
+      必须为目标出站设置标签。
+
+  将 `Selector` 中出站的选定的目标出站存储在缓存文件中。
+
+DERPServiceOptions.config_path: |-
+  @required
+
+  Derper 配置文件路径。
+
+  示例：`derper.key`
+
+DERPServiceOptions.home: 在根路径提供的内容。可以留空（默认值，显示默认主页）、`blank` 显示空白页面，或一个重定向的 URL。
+
+DERPServiceOptions.mesh_psk: DERP 组网的预共享密钥。
+
+DERPServiceOptions.mesh_psk_file: DERP 组网的预共享密钥文件。
+
+DERPServiceOptions.mesh_with: |-
+  与其他 DERP 服务器组网。
+
+  对象格式：
+
+  ```json
+  {
+    "server": "",
+    "server_port": "",
+    "host": "",
+    "tls": {},
+
+    ... // 拨号字段
+  }
+  ```
+
+  对象字段：
+
+  - `server`：**必填** DERP 服务器地址。
+  - `server_port`：**必填** DERP 服务器端口。
+  - `host`：自定义 DERP 主机名。
+  - `tls`：[TLS](/zh/configuration/shared/tls/#出站)
+  - `拨号字段`：[拨号字段](/zh/configuration/shared/dial/)
+
+DERPServiceOptions.stun: |-
+  STUN 服务器监听选项。
+
+  对象格式：
+
+  ```json
+  {
+    "enabled": true,
+
+    ... // 监听字段
+  }
+  ```
+
+  对象字段：
+
+  - `enabled`：**必填** 启用 STUN 服务器。
+  - `listen`：**必填** STUN 服务器监听地址，默认为 `::`。
+  - `listen_port`：**必填** STUN 服务器监听端口，默认为 `3478`。
+  - `其他监听字段`：[监听字段](/zh/configuration/shared/listen/)
+
+  将 `stun` 值设置为数字 `__PORT__` 等同于配置：
+
+  ```json
+  { "enabled": true, "listen_port": __PORT__ }
+  ```
+
+DERPServiceOptions.verify_client_endpoint: 用于验证客户端的 Tailscale 端点标签。
+
+DERPServiceOptions.verify_client_inbound: |-
+  @since 1.15.0
+
+  用于验证客户端的 Tailcat 入站标签。
+
+DERPServiceOptions.verify_client_key: |-
+  @since 1.15.0
+
+  用于验证客户端的 Tailcat 公钥。
+
+DERPServiceOptions.verify_client_url: |-
+  用于验证客户端的 URL。
+
+  对象格式：
+
+  ```json
+  {
+    "url": "",
+
+    ... // HTTP 客户端字段
+  }
+  ```
+
+  将数组值设置为字符串 `__URL__` 等同于配置：
+
+  ```json
+  { "url": __URL__ }
+  ```
+
+HysteriaRealmServiceOptions.users: |-
+  @required
+
+  授权用户。
+
+HysteriaRealmServiceOptions.users.max_realms: 此用户可同时持有的 realm 槽位数量上限。
+
+HysteriaRealmServiceOptions.users.name: |-
+  @required
+
+  用户名，用于日志记录和配额键。
+
+HysteriaRealmServiceOptions.users.token: |-
+  @required
+
+  Hysteria2 入站和出站通过 `Authorization: Bearer <token>` 出示的 Bearer 令牌。
+
+OCMServiceOptions.credential_path: |-
+  OpenAI OAuth 凭据文件的路径。
+
+  如果未指定，默认值为：
+  - 如果设置了 `CODEX_HOME` 环境变量，则使用 `$CODEX_HOME/auth.json`
+  - 否则使用 `~/.codex/auth.json`
+
+  刷新的令牌会自动写回相同位置。
+
+OCMServiceOptions.detour: 用于连接 OpenAI API 的出站标签。
+
+OCMServiceOptions.headers: |-
+  发送到 OpenAI API 的自定义 HTTP 头。
+
+  这些头会覆盖同名的现有头。
+
+OCMServiceOptions.usages_path: |-
+  用于存储聚合 API 使用统计信息的文件路径。
+
+  如果未指定，使用跟踪将被禁用。
+
+  启用后，服务会跟踪并保存全面的统计信息，包括：
+  - 请求计数
+  - 令牌使用量（输入、输出、缓存）
+  - 基于 OpenAI API 定价计算的美元成本
+
+  统计信息按模型以及可选的用户（启用身份验证时）进行组织。
+
+  统计文件每分钟自动保存一次，并在服务关闭时保存。
+
+OCMServiceOptions.users: |-
+  用于令牌身份验证的授权用户列表。
+
+  如果为空，则不需要身份验证。
+
+  对象格式：
+
+  ```json
+  {
+    "name": "",
+    "token": ""
+  }
+  ```
+
+  对象字段：
+
+  - `name`：用于跟踪的用户名标识符。
+  - `token`：用于身份验证的 Bearer 令牌。客户端通过设置 `Authorization: Bearer <token>` 头进行身份验证。
+
+ResolvedServiceOptions.listen: |-
+  @required
+
+  监听地址。
+
+  默认使用 `127.0.0.53`。
+
+ResolvedServiceOptions.listen_port: |-
+  @required
+
+  监听端口。
+
+  默认使用 `53`。
+
+SSMAPIServiceOptions.cache_path: |-
+  如果设置，当服务器即将停止时，流量和用户状态将保存到指定的 JSON 文件中，
+  以便在下次启动时恢复。
+
+SSMAPIServiceOptions.servers: |-
+  @required
+
+  从 HTTP 端点到 [Shadowsocks 入站](/zh/configuration/inbound/shadowsocks) 标签的映射对象。
+
+  选定的 Shadowsocks 入站必须配置启用 [managed](/zh/configuration/inbound/shadowsocks#managed)。
+
+  示例：
+
+  ```json
+  {
+    "servers": {
+      "/": "ss-in"
+    }
+  }
+  ```
+
+USBIPClientServiceOptions.devices: |-
+  设备匹配列表，用于选择要导入的远程设备。如果为空，则导入所有已导出的设备。
+
+  对象格式：
+
+  ```json
+  {
+    "bus_id": "",
+    "vendor_id": 0,
+    "product_id": 0,
+    "serial": ""
+  }
+  ```
+
+  对象字段：
+
+  - `bus_id`：USB 总线 ID，例如 `1-2`。
+  - `vendor_id`：USB 供应商 ID，为数字。
+  - `product_id`：USB 产品 ID，为数字。
+  - `serial`：设备序列号。
+
+  在一个对象内，所有指定的字段都必须匹配；多个对象之间取并集。至少需要一个字段。
+
+USBIPDefaultProviderOptions.devices: |-
+  使用 `default` 提供者时 ==必填==。
+
+  设备匹配列表，用于选择要导出的本地 USB 设备。
+
+  对象格式：
+
+  ```json
+  {
+    "bus_id": "",
+    "vendor_id": 0,
+    "product_id": 0,
+    "serial": ""
+  }
+  ```
+
+  对象字段：
+
+  - `bus_id`：USB 总线 ID，例如 `1-2`。
+  - `vendor_id`：USB 供应商 ID，为数字。
+  - `product_id`：USB 产品 ID，为数字。
+  - `serial`：设备序列号。
+
+  在一个对象内，所有指定的字段都必须匹配；多个对象之间取并集。至少需要一个字段。
+
+USBIPServerServiceOptions.provider: |-
+  设备来源提供者。
+
+  - `default`：导出由 `devices` 匹配的本地设备。默认值。
+  - `dynamic`：设备在运行时通过 [sing-box API](/zh/configuration/service/api/) 客户端提供，而非来自配置文件，支持的平台包括 [macOS](/zh/clients/apple/) 和 [Android](/zh/clients/android/) 上的 sing-box 图形客户端，以及配合 [sing-box Dashboard](https://github.com/SagerNet/sing-box-dashboard) 的基于 Chromium 的浏览器。
+
+  @quote:
+
+      `default` 提供者仅支持通过 CLI 直接运行在 Linux、Windows 和 macOS 上，并且需要提升的权限。
+
+V2RayAPIOptions.listen: gRPC API 监听地址。如果为空，则禁用 V2Ray API。
+
+V2RayAPIOptions.stats: 流量统计服务设置。
+
+V2RayAPIOptions.stats.enabled: 启用统计服务。
+
+V2RayAPIOptions.stats.inbounds: 统计流量的入站列表。
+
+V2RayAPIOptions.stats.outbounds: 统计流量的出站列表。
+
+V2RayAPIOptions.stats.users: 统计流量的用户列表。

@@ -1,0 +1,225 @@
+SSHOutboundOptions.cipher: |-
+  @since 1.14.0
+
+  允许的加密算法。留空使用默认值。
+
+SSHOutboundOptions.client_version: 客户端版本，默认使用随机值。
+
+SSHOutboundOptions.host_key: 主机密钥，留空接受所有。
+
+SSHOutboundOptions.host_key_algorithms: 主机密钥算法。
+
+SSHOutboundOptions.kex_algorithm: |-
+  @since 1.14.0
+
+  允许的密钥交换算法。留空使用默认值。
+
+SSHOutboundOptions.mac: |-
+  @since 1.14.0
+
+  允许的 MAC 算法。留空使用默认值。
+
+SSHOutboundOptions.password: 密码。
+
+SSHOutboundOptions.private_key: 密钥。
+
+SSHOutboundOptions.private_key_passphrase: 密钥密码。
+
+SSHOutboundOptions.private_key_path: 密钥路径。
+
+SSHOutboundOptions.server_port: 服务器端口，默认使用 22。
+
+SSHOutboundOptions.user: SSH 用户, 默认使用 root。
+
+SelectorOutboundOptions.default: 默认的出站标签。默认使用第一个出站。
+
+SelectorOutboundOptions.interrupt_exist_connections: |-
+  当选定的出站发生更改时，中断现有连接。
+
+  仅入站连接受此设置影响，内部连接将始终被中断。
+
+SelectorOutboundOptions.outbounds: |-
+  @required
+
+  用于选择的出站标签列表。
+
+ShadowTLSOutboundOptions.password: |-
+  设置密码。
+
+  仅在 ShadowTLS v2/v3 协议中可用。
+
+ShadowTLSOutboundOptions.tls: |-
+  @required
+
+  TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+ShadowTLSOutboundOptions.version: |-
+  ShadowTLS 协议版本。
+
+  | 值             | 协议版本                                                                                    |
+  |---------------|-----------------------------------------------------------------------------------------|
+  | `1` (default) | [ShadowTLS v1](https://github.com/ihciah/shadow-tls/blob/master/docs/protocol-en.md#v1) |
+  | `2`           | [ShadowTLS v2](https://github.com/ihciah/shadow-tls/blob/master/docs/protocol-en.md#v2) |
+  | `3`           | [ShadowTLS v3](https://github.com/ihciah/shadow-tls/blob/master/docs/protocol-v3-en.md) |
+
+TailcatDERPOptions.derp_map_url: |-
+  [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap) 的 URL。
+
+  默认使用 `https://tailcat.dev/derpmap.json`。
+
+TailcatDERPOptions.derp_region: |-
+  DERP map 中的 DERP 区域 ID。
+
+  与 `derp_servers` 冲突。
+
+TailcatDERPOptions.derp_servers: |-
+  自定义 DERP 服务器，参阅 Tailcat 入站的 [derp_servers](/zh/configuration/inbound/tailcat/#derp_servers)。
+
+  与 `derp_map_url` 和 `derp_region` 冲突。
+
+TailcatDERPOptions.http_client: |-
+  用于获取 DERP map 的 HTTP 客户端。
+
+  参阅 [HTTP 客户端](/zh/configuration/shared/http-client/) 了解详情。
+
+TailcatOutboundOptions.pre_shared_key: 预共享密钥。
+
+TailcatOutboundOptions.private_key: |-
+  私钥。
+
+  默认使用随机密钥。
+
+  当服务器通过 `users` 验证客户端，或 DERP 服务器通过 `verify_client_inbound` 或 `verify_client_key`
+  验证客户端时必须设置。
+
+TailcatOutboundOptions.server_disco_key: |-
+  @required
+
+  服务器 disco 公钥。
+
+TailcatOutboundOptions.server_public_key: |-
+  @required
+
+  服务器公钥。
+
+TorOutboundOptions.data_directory: |-
+  @indicator: 推荐
+
+  Tor 的数据目录。
+
+  如未设置，每次启动都需要长时间。
+
+TorOutboundOptions.executable_path: |-
+  Tor 可执行文件路径
+
+  如果设置，将覆盖嵌入式 Tor。
+
+TorOutboundOptions.extra_args: 启动 Tor 时传递的附加参数列表。
+
+TorOutboundOptions.torrc: |-
+  torrc 参数表。
+
+  参阅 [tor(1)](https://linux.die.net/man/1/tor)。
+
+URLTestOutboundOptions.idle_timeout: 空闲超时。默认使用 `30m`。
+
+URLTestOutboundOptions.interrupt_exist_connections: |-
+  当选定的出站发生更改时，中断现有连接。
+
+  仅入站连接受此设置影响，内部连接将始终被中断。
+
+URLTestOutboundOptions.interval: 测试间隔。 默认使用 `3m`。
+
+URLTestOutboundOptions.outbounds: |-
+  @required
+
+  用于测试的出站标签列表。
+
+URLTestOutboundOptions.tolerance: 以毫秒为单位的测试容差。 默认使用 `50`。
+
+URLTestOutboundOptions.url: 用于测试的链接。默认使用 `https://www.gstatic.com/generate_204`。
+
+VLESSOutboundOptions.flow: |-
+  VLESS 子协议。
+
+  可用值：
+
+  * `xtls-rprx-vision`
+
+VLESSOutboundOptions.multiplex: 参阅 [多路复用](/zh/configuration/shared/multiplex#出站)。
+
+VLESSOutboundOptions.network: |-
+  启用的网络协议。
+
+  `tcp` 或 `udp`。
+
+  默认所有。
+
+VLESSOutboundOptions.packet_encoding: |-
+  UDP 包编码，默认使用 xudp。
+
+  | 编码         | 描述            |
+  |------------|---------------|
+  | (空)        | 禁用            |
+  | packetaddr | 由 v2ray 5+ 支持 |
+  | xudp       | 由 xray 支持     |
+
+VLESSOutboundOptions.tls: TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+VLESSOutboundOptions.transport: V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。
+
+VLESSOutboundOptions.uuid: |-
+  @required
+
+  VLESS 用户 ID。
+
+VMessOutboundOptions.alter_id: |-
+  | Alter ID | 描述         |
+  |----------|------------|
+  | 0        | 禁用旧协议      |
+  | 1        | 启用旧协议      |
+  | > 1      | 未使用, 行为同 1 |
+
+VMessOutboundOptions.authenticated_length: 协议参数。启用长度块加密。
+
+VMessOutboundOptions.global_padding: 协议参数。 如果启用会随机浪费流量（在 v2ray 中默认启用并且无法禁用）。
+
+VMessOutboundOptions.multiplex: 参阅 [多路复用](/zh/configuration/shared/multiplex#出站)。
+
+VMessOutboundOptions.network: |-
+  启用的网络协议。
+
+  `tcp` 或 `udp`。
+
+  默认所有。
+
+VMessOutboundOptions.packet_encoding: |-
+  UDP 包编码。
+
+  | 编码         | 描述            |
+  |------------|---------------|
+  | (空)        | 禁用            |
+  | packetaddr | 由 v2ray 5+ 支持 |
+  | xudp       | 由 xray 支持     |
+
+VMessOutboundOptions.security: |-
+  加密方法：
+
+  * `auto`
+  * `none`
+  * `zero`
+  * `aes-128-gcm`
+  * `chacha20-poly1305`
+
+  旧加密方法：
+
+  * `aes-128-ctr`
+
+VMessOutboundOptions.tls: TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+VMessOutboundOptions.transport: V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。
+
+VMessOutboundOptions.uuid: |-
+  @required
+
+  VMess 用户 ID。

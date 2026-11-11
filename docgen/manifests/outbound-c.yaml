@@ -1,0 +1,59 @@
+defaults:
+  heading: '### Fields'
+  omit_origins:
+  - DialerOptions
+  - AbstractDialerOptions
+
+pages:
+
+- file: outbound/shadowtls.md
+  defs:
+  - name: shadowtls
+    registry: Outbound
+  overrides:
+    tls:
+      prose: |-
+        @required
+
+        TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
+
+- file: outbound/vless.md
+  defs:
+  - name: vless
+    registry: Outbound
+
+- file: outbound/vmess.md
+  defs:
+  - name: vmess
+    registry: Outbound
+
+- file: outbound/ssh.md
+  defs:
+  - name: ssh
+  overrides:
+    server:
+      prose: |-
+        @required
+
+        Server address.
+    server_port:
+      prose: Server port. 22 will be used if empty.
+
+- file: outbound/tor.md
+  defs:
+  - name: tor
+
+- file: outbound/tailcat.md
+  defs:
+  - name: tailcat
+    registry: Outbound
+
+- file: outbound/selector.md
+  defs:
+  - name: selector
+    omit_origins: []
+
+- file: outbound/urltest.md
+  defs:
+  - name: urltest
+    omit_origins: []

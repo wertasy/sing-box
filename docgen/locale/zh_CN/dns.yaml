@@ -1,0 +1,799 @@
+AbstractDNSRouteActionOptions.client_subnet: |-
+  默认情况下，将带有指定 IP 前缀的 `edns0-subnet` OPT 附加记录附加到每个查询。
+
+  如果值是 IP 地址而不是前缀，则会自动附加 `/32` 或 `/128`。
+
+  将覆盖 `dns.client_subnet`.
+
+AbstractDNSRouteActionOptions.disable_cache: 在此查询中禁用缓存。
+
+AbstractDNSRouteActionOptions.disable_optimistic_cache: |-
+  @since 1.14.0
+
+  在此查询中禁用乐观 DNS 缓存。
+
+AbstractDNSRouteActionOptions.remove_client_subnet: |-
+  @since 1.14.0
+
+  移除查询中的 `edns0-subnet` OPT 附加记录，并抑制 `dns.client_subnet`。
+
+  与 `client_subnet` 冲突。
+
+AbstractDNSRouteActionOptions.rewrite_ttl: 重写 DNS 回应中的 TTL。
+
+AbstractDNSRouteActionOptions.strategy: |-
+  @since 1.12.0
+
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      `strategy` 已在 sing-box 1.14.0 废弃，且将在 sing-box 1.16.0 中被移除。
+
+  为此查询设置域名策略。
+
+  可选项：`prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`。
+
+AbstractDNSRouteActionOptions.timeout: |-
+  @since 1.14.0
+
+  覆盖匹配查询的 DNS 查询超时时间。
+
+  将覆盖 `dns.timeout`。
+
+DHCPDNSServerOptions.interface: |-
+  要监听的网络接口名称。
+
+  默认使用默认接口。
+
+DNSClientOptions.cache_capacity: |-
+  @since 1.11.0
+
+  LRU 缓存容量。
+
+  小于 1024 的值将被忽略。
+
+DNSClientOptions.client_subnet: |-
+  @since 1.9.0
+
+  默认情况下，将带有指定 IP 前缀的 `edns0-subnet` OPT 附加记录附加到每个查询。
+
+  如果值是 IP 地址而不是前缀，则会自动附加 `/32` 或 `/128`。
+
+  可以被 `servers.[].client_subnet` 或 `rules.[].client_subnet` 覆盖。
+
+DNSClientOptions.disable_cache: |-
+  禁用 DNS 缓存。
+
+  与 `optimistic` 冲突。
+
+DNSClientOptions.disable_expire: |-
+  禁用 DNS 缓存过期。
+
+  与 `optimistic` 冲突。
+
+DNSClientOptions.independent_cache: |-
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      `independent_cache` 已在 sing-box 1.14.0 废弃，且将在 sing-box 1.16.0 中被移除，参阅[迁移指南](/zh/migration/#迁移-independent-dns-cache)。
+
+  使每个 DNS 服务器的缓存独立，以满足特殊目的。如果启用，将轻微降低性能。
+
+DNSClientOptions.optimistic: |-
+  @since 1.14.0
+
+  启用乐观 DNS 缓存。当缓存的 DNS 条目已过期但仍在超时窗口内时，
+  立即返回过期的响应，同时在后台触发刷新。
+
+  与 `disable_cache` 和 `disable_expire` 冲突。
+
+  接受布尔值或对象。当设置为 `true` 时，使用默认超时 `3d`。
+
+  ```json
+  {
+    "enabled": true,
+    "timeout": "3d"
+  }
+  ```
+
+  ##### enabled
+
+  启用乐观 DNS 缓存。
+
+  ##### timeout
+
+  过期缓存条目可被乐观提供的最长时间。
+
+  默认使用 `3d`。
+
+DNSClientOptions.strategy: |-
+  默认解析域名策略。
+
+  可选值: `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`。
+
+DNSClientOptions.timeout: |-
+  @since 1.14.0
+
+  每次 DNS 查询的默认超时时间。
+
+  默认使用 `10s`。
+
+  可被 `rules.[].timeout`（DNS 规则动作）或 `domain_resolver.timeout` 覆盖。
+
+DNSEvaluateActionOptions.server: |-
+  @required
+
+  目标 DNS 服务器的标签。
+
+DNSEvaluateActionOptions.speculative: |-
+  @since 1.14.0
+
+  没有前序竞态规则时无效果。
+
+  默认情况下，查询决不与未判定的竞态规则并行发出：已匹配的 `evaluate` 动作扣住其查询，规则匹配在此处停止，直到所有竞态规则均未匹配。
+
+  启用 `speculative` 后，查询在规则匹配时立即发出、与未判定的竞态规则并行，规则匹配继续进行而不等待竞态规则。
+
+DNSEvaluateActionOptions.tag: |-
+  已评估响应的标签。
+
+  带标签的响应仅能通过 [`match_response`](/zh/configuration/dns/rule/#match_response) 以标签引用；
+  `match_response: true` 引用最近一条无 `tag` 的 `evaluate` 动作的响应。
+
+DNSRouteActionOptions.server: |-
+  @required
+
+  目标 DNS 服务器的标签。
+
+DNSRouteActionOptions.speculative: |-
+  @since 1.14.0
+
+  与 `race` 冲突。没有前序竞态规则时无效果。
+
+  默认情况下，查询决不与未判定的竞态规则并行发出：已匹配的 `route` 动作扣住其查询，直到所有竞态规则均未匹配后才发送。
+
+  启用 `speculative` 后，查询在规则匹配时立即发出、与未判定的竞态规则并行；其响应仅在所有竞态规则均未匹配后才被使用。
+
+DNSRouteActionOptions.strategy: |-
+  @since 1.12.0
+
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      `strategy` 已在 sing-box 1.14.0 废弃，且将在 sing-box 1.16.0 中被移除。
+
+  为此查询设置域名策略。
+
+  可选项：`prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`。
+
+DNSRouteActionPredefined.answer: |-
+  用于作为回答响应的文本 DNS 记录列表。
+
+  例子:
+
+  | 记录类型   | 例子                            |
+  |--------|-------------------------------|
+  | `A`    | `localhost. IN A 127.0.0.1`   |
+  | `AAAA` | `localhost. IN AAAA ::1`      |
+  | `TXT`  | `localhost. IN TXT \"Hello\"` |
+
+DNSRouteActionPredefined.extra: 用于作为额外记录响应的文本 DNS 记录列表。
+
+DNSRouteActionPredefined.ns: 用于作为名称服务器响应的文本 DNS 记录列表。
+
+DNSRouteActionPredefined.rcode: |-
+  响应码。
+
+  | 值          | 旧 rcode DNS 服务器中的值 | 描述              |
+  |------------|--------------------|-----------------|
+  | `NOERROR`  | `success`          | Ok              |
+  | `FORMERR`  | `format_error`     | Bad request     |
+  | `SERVFAIL` | `server_failure`   | Server failure  |
+  | `NXDOMAIN` | `name_error`       | Not found       |
+  | `NOTIMP`   | `not_implemented`  | Not implemented |
+  | `REFUSED`  | `refused`          | Refused         |
+
+  默认使用 `NOERROR`。
+
+DNSServerAddressOptions.server: |-
+  @required
+
+  DNS 服务器的地址。
+
+  如果使用域名，还必须设置 `domain_resolver` 来解析 IP 地址。
+
+FakeIPDNSServerOptions.enabled: 启用 FakeIP 服务。
+
+FakeIPDNSServerOptions.inet4_range: 用于 FakeIP 的 IPv4 地址范围。
+
+FakeIPDNSServerOptions.inet6_range: 用于 FakeIP 的 IPv6 地址范围。
+
+HostsDNSServerOptions.path: |-
+  hosts 文件路径列表。
+
+  默认使用 `/etc/hosts`。
+
+  在 Windows 上默认使用 `C:\Windows\System32\Drivers\etc\hosts`。
+
+  示例：
+
+  ```json
+  {
+    // "path": "/etc/hosts"
+
+    "path": [
+      "/etc/hosts",
+      "$HOME/.hosts"
+    ]
+  }
+  ```
+
+HostsDNSServerOptions.predefined: |-
+  预定义的 hosts。
+
+  示例：
+
+  ```json
+  {
+    "predefined": {
+      "www.google.com": "127.0.0.1",
+      "localhost": [
+        "127.0.0.1",
+        "::1"
+      ]
+    }
+  }
+  ```
+
+LocalDNSServerOptions.neighbor_domain: |-
+  @since 1.14.0
+
+  用于从[邻居解析器](/zh/configuration/shared/neighbor/)而非上游回答 A/AAAA 查询的域后缀列表。
+
+  每一项必须以 `.` 开头。仅匹配后缀之前的主机名部分不包含点的查询；
+  `.` 匹配任意单标签名称，例如 `nas`。
+
+  示例：`[".", ".lan"]`。
+
+LocalDNSServerOptions.prefer_go: |-
+  @since 1.13.0
+
+  启用后，`local` DNS 服务器将尽可能通过拨号自身来解析 DNS。
+
+  具体来说，它禁用了在 sing-box 1.13.0 中作为功能添加的以下行为：
+
+  1. 在 Apple 平台上：尝试在 NetworkExtension 中使用 `getaddrinfo` 解析 A/AAAA 请求。
+  2. 在 Linux 上：当可用时通过 `systemd-resolvd` 的 DBus 接口进行解析。
+
+  作为唯一的例外，它无法禁用以下行为：
+
+  1. 在 Android 图形客户端中，
+  `local` 将始终通过平台接口解析 DNS，
+  因为没有其他方法来获取上游 DNS 服务器；
+  在运行 Android 10 以下版本的设备上，此接口只能解析 A/AAAA 请求。
+
+  2. 在 macOS 上，`local` 会在 Network Extension 中首先尝试 DHCP，由于 DHCP 遵循拨号字段，
+  它不会被 `prefer_go` 禁用。
+
+MDNSDNSServerOptions.interface: |-
+  用于发送 mDNS 查询的网络接口名称列表。
+
+  留空时，将使用所有处于 up 状态、支持多播且非环回的接口。
+
+OpenConnectDNSServerOptions.accept_default_resolvers: |-
+  接受 VPN 服务器推送的通用解析器，用于未匹配的查询。
+
+  启用时，仅当服务器要求所有 DNS 通过隧道，或未提供分流 DNS 规则及后缀时，通用解析器才会作为默认解析器。否则，未匹配的查询将返回 `NXDOMAIN`。
+
+OpenConnectDNSServerOptions.accept_search_domain: |-
+  启用且存在推送的搜索域时，单标签查询（例如 `intranet`）会依次附加各个搜索域进行重试，直到其中一个解析成功。
+
+  如果所有搜索域扩展均返回 `NXDOMAIN`，原始未限定名称将按普通默认解析器行为处理。
+
+OpenConnectDNSServerOptions.endpoint: |-
+  @required
+
+  [OpenConnect 端点](/zh/configuration/endpoint/openconnect) 的标签。
+
+  DNS 查询会通过 OpenConnect 端点发送到 VPN 服务器推送的解析器。
+
+OpenVPNDNSServerOptions.accept_default_resolvers: |-
+  对未匹配推送的 `resolve-domains`、`DOMAIN-ROUTE` 或搜索域后缀的查询使用推送解析器。
+
+  禁用时，未匹配查询返回 `NXDOMAIN`。
+
+OpenVPNDNSServerOptions.accept_search_domain: |-
+  启用且存在推送的搜索域时，单标签查询（例如 `intranet`）会依次附加各个搜索域重试，直到其中一个解析成功。
+
+  不存在搜索域时，原始单标签查询按普通默认解析器规则处理。
+
+OpenVPNDNSServerOptions.endpoint: |-
+  @required
+
+  [OpenVPN 客户端端点](/zh/configuration/endpoint/openvpn-client) 的标签。
+
+  DNS 查询会通过该端点发送到 OpenVPN 服务器推送的解析器。
+
+  支持现代 `dns` 选项，以及传统的 `dhcp-option DNS`/`DNS6` 和 `DOMAIN-ROUTE` 选项。不支持 `dnssec yes`。
+
+OutboundTLSOptionsContainer.tls: TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+RawDNSOptions.final: |-
+  默认 DNS 服务器的标签。
+
+  默认使用第一个服务器。
+
+RawDNSOptions.reverse_mapping: |-
+  在响应 DNS 查询后存储 IP 地址的反向映射以为路由目的提供域名。
+
+  由于此过程依赖于应用程序在发出请求之前解析域名的行为，因此在 macOS 等 DNS 由系统代理和缓存的环境中可能会出现问题。
+
+RawDefaultDNSRule.action: |-
+  @required
+
+  参阅 [规则动作](../rule_action/)。
+
+RawDefaultDNSRule.auth_user: 认证用户名，参阅入站设置。
+
+RawDefaultDNSRule.clash_mode: 匹配 Clash 模式。
+
+RawDefaultDNSRule.client_subnet: |-
+  @failure: 已在 sing-box 1.11.0 废弃
+
+      已移动到 [DNS 规则动作](../rule_action#route).
+
+RawDefaultDNSRule.default_interface_address: |-
+  @since 1.13.0
+
+  @quote:
+
+      仅支持 Linux、Windows 和 macOS.
+
+  匹配默认接口地址。
+
+RawDefaultDNSRule.disable_cache: |-
+  @failure: 已在 sing-box 1.11.0 废弃
+
+      已移动到 [DNS 规则动作](../rule_action#route).
+
+RawDefaultDNSRule.dns_search_domain: |-
+  @since 1.15.0
+
+  匹配指定 DNS 服务器的搜索域。
+
+  | 类型            | 匹配                            |
+  |---------------|-------------------------------|
+  | `local`       | 匹配系统搜索域                       |
+  | `dhcp`        | 匹配通过 DHCP 获取的搜索域              |
+  | `resolved`    | 匹配 systemd-resolved 链路中的搜索域    |
+  | `tailscale`   | 匹配 tailnet 的搜索域                |
+  | `openvpn`     | 匹配 VPN 服务器推送的搜索域              |
+  | `openconnect` | 匹配 VPN 服务器推送的搜索域              |
+
+RawDefaultDNSRule.dns_server_address: |-
+  @since 1.15.0
+
+  匹配指定 DNS 服务器的服务器地址。
+
+  | 类型            | 匹配                               |
+  |---------------|----------------------------------|
+  | `local`       | 匹配系统 DNS 服务器                     |
+  | `dhcp`        | 匹配通过 DHCP 获取的 DNS 服务器             |
+  | `resolved`    | 匹配 systemd-resolved 链路中的 DNS 服务器  |
+  | `tailscale`   | 匹配 tailnet 的 DNS 解析器              |
+  | `openvpn`     | 匹配 VPN 服务器推送的 DNS 服务器             |
+  | `openconnect` | 匹配 VPN 服务器推送的 DNS 服务器             |
+
+RawDefaultDNSRule.domain: 匹配完整域名。
+
+RawDefaultDNSRule.domain_keyword: 匹配域名关键字。
+
+RawDefaultDNSRule.domain_regex: 匹配域名正则表达式。
+
+RawDefaultDNSRule.domain_suffix: 匹配域名后缀。
+
+RawDefaultDNSRule.geoip: |-
+  @failure: 已在 sing-box 1.12.0 中被移除
+
+      GeoIP 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
+
+
+  与查询响应匹配 GeoIP。
+
+RawDefaultDNSRule.geosite: |-
+  @failure: 已在 sing-box 1.12.0 中被移除
+
+      GeoSite 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geosite-到规则集)。
+
+  匹配 Geosite。
+
+RawDefaultDNSRule.inbound: '[入站](/zh/configuration/inbound/) 标签.'
+
+RawDefaultDNSRule.interface_address: |-
+  @since 1.13.0
+
+  @quote:
+
+      仅支持 Linux、Windows 和 macOS.
+
+  匹配接口地址。
+
+RawDefaultDNSRule.invert: 反选匹配结果。
+
+RawDefaultDNSRule.ip_accept_any: |-
+  @since 1.12.0
+
+  当 DNS 查询响应包含至少一个地址时匹配。
+
+RawDefaultDNSRule.ip_cidr: |-
+  @since 1.9.0
+
+  与查询响应匹配 IP CIDR。
+
+  作为旧版地址筛选字段已废弃。请改为配合 `match_response` 使用，
+  参阅[迁移指南](/zh/migration/#迁移地址筛选字段到响应匹配)。
+
+RawDefaultDNSRule.ip_is_private: |-
+  @since 1.9.0
+
+  与查询响应匹配非公开 IP。
+
+  作为旧版地址筛选字段已废弃。请改为配合 `match_response` 使用，
+  参阅[迁移指南](/zh/migration/#迁移地址筛选字段到响应匹配)。
+
+RawDefaultDNSRule.ip_version: |-
+  @quote: sing-box 1.14.0 中的更改
+
+      此字段现在也会在 DNS 规则被未指定具体 DNS 服务器的内部域名解析匹配时生效，
+      例如未设置 `server` 的 [`resolve`](../../route/rule_action/#resolve) 路由规则动作。参阅
+      [迁移指南](/zh/migration/#dns-规则中的-ip_version-和-query_type-行为更改)。
+
+      在 DNS 规则中设置此字段后，该 DNS 规则在同一 DNS 配置中不能与
+      旧版地址筛选字段 (DNS 规则)、旧版 DNS 规则动作 `strategy` 选项，
+      或旧版 `rule_set_ip_cidr_accept_empty` DNS 规则项共存。如需与
+      基于地址的筛选组合，请使用 [`evaluate`](../rule_action/#evaluate) 动作和
+      [`match_response`](#match_response)。
+
+  4 (A DNS 查询) 或 6 (AAAA DNS 查询)。
+
+  默认不限制。
+
+RawDefaultDNSRule.match_response: |-
+  @since 1.14.0
+
+  启用响应匹配。启用后，此规则将匹配已评估的响应（由前序 [`evaluate`](/zh/configuration/dns/rule_action/#evaluate) 动作设置），而不仅是匹配原始查询。
+
+  可以为 `true` 或 `evaluate` 动作的 `tag`：`true` 匹配最近一条无 `tag` 的 `evaluate` 动作的响应；标签则匹配对应 `evaluate` 动作的响应。
+
+  该已评估的响应也可以被后续的 [`respond`](/zh/configuration/dns/rule_action/#respond) 动作直接返回；在带 `match_response` 标签的规则中，`respond` 返回该标签的响应。
+
+  响应匹配字段（`response_rcode`、`response_answer`、`response_ns`、`response_extra`）需要此选项。
+  当与 `evaluate` 或响应匹配字段一起使用时，`ip_cidr`、`ip_is_private` 和 `ip_accept_any` 也需要此选项。
+
+RawDefaultDNSRule.network: '`tcp` 或 `udp`。'
+
+RawDefaultDNSRule.network_interface_address: |-
+  @since 1.13.0
+
+  @quote:
+
+      仅在 Android 与 Apple 平台图形客户端中支持。
+
+  匹配网络接口（可用值同 `network_type`）地址。
+
+RawDefaultDNSRule.network_is_constrained: |-
+  @since 1.11.0
+
+  @quote:
+
+      仅在 Apple 平台图形客户端中支持。
+
+  匹配如果网络在低数据模式下。
+
+RawDefaultDNSRule.network_is_expensive: |-
+  @since 1.11.0
+
+  @quote:
+
+      仅在 Android 与 Apple 平台图形客户端中支持。
+
+  匹配如果网络被视为计费 (在 Android) 或被视为昂贵，
+  像蜂窝网络或个人热点 (在 Apple 平台)。
+
+RawDefaultDNSRule.network_type: |-
+  @since 1.11.0
+
+  @quote:
+
+      仅在 Android 与 Apple 平台图形客户端中支持。
+
+  匹配网络类型。
+
+  Available values: `wifi`, `cellular`, `ethernet` and `other`.
+
+RawDefaultDNSRule.outbound: |-
+  @failure: 已在 sing-box 1.12.0 废弃
+
+      `outbound` 规则项已废弃且将在 sing-box 1.14.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-outbound-dns-规则项到域解析选项)。
+
+  匹配出站。
+
+  `any` 可作为值用于匹配任意出站。
+
+RawDefaultDNSRule.package_name: 匹配 Android 应用包名。
+
+RawDefaultDNSRule.package_name_regex: |-
+  @since 1.14.0
+
+  使用正则表达式匹配 Android 应用包名。
+
+RawDefaultDNSRule.port: 匹配端口。
+
+RawDefaultDNSRule.port_range: 匹配端口范围。
+
+RawDefaultDNSRule.preferred_by: |-
+  @since 1.14.0
+
+  匹配指定 DNS 服务器的首选域名。
+
+  | 类型            | 匹配                                                          |
+  |---------------|-------------------------------------------------------------|
+  | `hosts`       | 匹配预定义条目和 hosts 文件中的条目                                       |
+  | `local`       | 匹配 hosts 中的条目、邻居解析得到的主机名以及 mDNS 本地域名                         |
+  | `mdns`        | 匹配 mDNS 本地域名（`*.local.` 以及 IPv4/IPv6 链路本地反向区域）              |
+  | `tailscale`   | 匹配 MagicDNS 主机和 DNS 路由后缀                                    |
+  | `openconnect` | 匹配 VPN 服务器推送的分流 DNS 和搜索域                                  |
+  | `resolved`    | 匹配 systemd-resolved 链路中的分流域名和搜索域                            |
+
+RawDefaultDNSRule.process_name: |-
+  @quote:
+
+      仅支持 Linux、Windows 和 macOS.
+
+  匹配进程名称。
+
+RawDefaultDNSRule.process_path: |-
+  @quote:
+
+      仅支持 Linux、Windows 和 macOS.
+
+  匹配进程路径。
+
+RawDefaultDNSRule.process_path_regex: |-
+  @since 1.10.0
+
+  @quote:
+
+      仅支持 Linux、Windows 和 macOS.
+
+  使用正则表达式匹配进程路径。
+
+RawDefaultDNSRule.protocol: 探测到的协议, 参阅 [协议探测](/zh/configuration/route/sniff/)。
+
+RawDefaultDNSRule.query_client_subnet: |-
+  @since 1.14.0
+
+  匹配查询中的 `edns0-subnet` OPT 附加记录（EDNS 客户端子网）。
+
+  列出的前缀在不比收到的客户端子网更具体、且包含其地址时匹配。
+
+  如果值是 IP 地址而不是前缀，则会自动附加 `/32` 或 `/128`。
+
+RawDefaultDNSRule.query_dnssec: |-
+  @since 1.14.0
+
+  匹配设置了 DNSSEC OK (`DO`) 位的查询。
+
+RawDefaultDNSRule.query_type: |-
+  @quote: sing-box 1.14.0 中的更改
+
+      此字段现在也会在 DNS 规则被未指定具体 DNS 服务器的内部域名解析匹配时生效，
+      例如未设置 `server` 的 [`resolve`](../../route/rule_action/#resolve) 路由规则动作。参阅
+      [迁移指南](/zh/migration/#dns-规则中的-ip_version-和-query_type-行为更改)。
+
+      在 DNS 规则中设置此字段后，该 DNS 规则在同一 DNS 配置中不能与
+      旧版地址筛选字段 (DNS 规则)、旧版 DNS 规则动作 `strategy` 选项，
+      或旧版 `rule_set_ip_cidr_accept_empty` DNS 规则项共存。如需与
+      基于地址的筛选组合，请使用 [`evaluate`](../rule_action/#evaluate) 动作和
+      [`match_response`](#match_response)。
+
+  DNS 查询类型。值可以为整数或者类型名称字符串。
+
+RawDefaultDNSRule.response_answer: |-
+  匹配 DNS 应答记录。
+
+  记录格式与 [predefined 动作 answer](/zh/configuration/dns/rule_action/#answer) 中相同。
+
+RawDefaultDNSRule.response_extra: |-
+  匹配 DNS 额外记录。
+
+  记录格式与 [predefined 动作 extra](/zh/configuration/dns/rule_action/#extra) 中相同。
+
+RawDefaultDNSRule.response_ns: |-
+  匹配 DNS 名称服务器记录。
+
+  记录格式与 [predefined 动作 ns](/zh/configuration/dns/rule_action/#ns) 中相同。
+
+RawDefaultDNSRule.response_rcode: |-
+  匹配 DNS 响应码。
+
+  接受的值与 [predefined 动作 rcode](/zh/configuration/dns/rule_action/#rcode) 中相同。
+
+RawDefaultDNSRule.rewrite_ttl: |-
+  @failure: 已在 sing-box 1.11.0 废弃
+
+      已移动到 [DNS 规则动作](../rule_action#route).
+
+RawDefaultDNSRule.rule_set: |-
+  @since 1.8.0
+
+  匹配[规则集](/zh/configuration/route/#rule_set)。
+
+RawDefaultDNSRule.rule_set_ip_cidr_accept_empty: |-
+  @since 1.10.0
+
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      `rule_set_ip_cidr_accept_empty` 已废弃且将在 sing-box 1.16.0 中被移除，
+      参阅[迁移指南](/zh/migration/#迁移地址筛选字段到响应匹配)。
+
+  使规则集中的 `ip_cidr` 规则接受空查询响应。
+
+RawDefaultDNSRule.rule_set_ip_cidr_match_source: |-
+  @since 1.10.0
+
+  使规则集中的 `ip_cidr` 规则匹配源 IP。
+
+RawDefaultDNSRule.rule_set_ipcidr_match_source: |-
+  @since 1.9.0
+
+  @failure: 已在 sing-box 1.10.0 废弃
+
+      `rule_set_ipcidr_match_source` 已重命名为 `rule_set_ip_cidr_match_source` 且将在 sing-box 1.11.0 中被移除。
+
+  使规则集中的 `ip_cidr` 规则匹配源 IP。
+
+RawDefaultDNSRule.server: |-
+  @failure: 已在 sing-box 1.11.0 废弃
+
+      已移动到 [DNS 规则动作](../rule_action#route).
+
+RawDefaultDNSRule.source_geoip: |-
+  @failure: 已在 sing-box 1.12.0 中被移除
+
+      GeoIP 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
+
+  匹配源 GeoIP。
+
+RawDefaultDNSRule.source_hostname: |-
+  @since 1.14.0
+
+  @quote:
+
+      仅支持 Linux、macOS，或在 Android 和 macOS 图形客户端中支持。参阅 [邻居解析](/configuration/shared/neighbor/) 了解设置方法。
+
+  匹配源设备从 DHCP 租约获取的主机名。
+
+RawDefaultDNSRule.source_ip_cidr: 匹配源 IP CIDR。
+
+RawDefaultDNSRule.source_ip_is_private: |-
+  @since 1.8.0
+
+  匹配非公开源 IP。
+
+RawDefaultDNSRule.source_mac_address: |-
+  @since 1.14.0
+
+  @quote:
+
+      仅支持 Linux、macOS，或在 Android 和 macOS 图形客户端中支持。参阅 [邻居解析](/configuration/shared/neighbor/) 了解设置方法。
+
+  匹配源设备 MAC 地址。
+
+RawDefaultDNSRule.source_port: 匹配源端口。
+
+RawDefaultDNSRule.source_port_range: 匹配源端口范围。
+
+RawDefaultDNSRule.user: |-
+  @quote:
+
+      仅支持 Linux。
+
+  匹配用户名。
+
+RawDefaultDNSRule.user_id: |-
+  @quote:
+
+      仅支持 Linux。
+
+  匹配用户 ID。
+
+RawDefaultDNSRule.wifi_bssid: |-
+  @quote:
+
+      仅在 Android 与 Apple 平台图形客户端和 Linux 中支持。
+
+  匹配 WiFi BSSID。
+
+RawDefaultDNSRule.wifi_ssid: |-
+  @quote:
+
+      仅在 Android 与 Apple 平台图形客户端和 Linux 中支持。
+
+  匹配 WiFi SSID。
+
+RawLogicalDNSRule.mode: |-
+  @required
+
+  `and` 或 `or`
+
+RawLogicalDNSRule.rules: |-
+  @required
+
+  包括的规则。
+
+RawLogicalDNSRule.type: '`logical`'
+
+RemoteDNSServerOptions.server_port: |-
+  DNS 服务器的端口。
+
+  默认使用 `53`。
+
+RemoteHTTPSDNSServerOptions.headers: 发送到 DNS 服务器的额外标头。
+
+RemoteHTTPSDNSServerOptions.path: |-
+  DNS 服务器的路径。
+
+  默认使用 `/dns-query`。
+
+RemoteHTTPSDNSServerOptions.server_port: |-
+  DNS 服务器的端口。
+
+  默认使用 `443`。
+
+RemoteTLSDNSServerOptions.server_port: |-
+  DNS 服务器的端口。
+
+  默认使用 `853`。
+
+ResolvedDNSServerOptions.accept_default_resolvers: |-
+  指示是否除了匹配域名外，还应接受默认 DNS 解析器以进行回退查询。
+
+  具体来说，默认 DNS 解析器是设置了 `SetLinkDefaultRoute` 或 `SetLinkDomains ~.` 的 DNS 服务器。
+
+  如果未启用，对于不匹配搜索域或匹配域的请求，将返回 `NXDOMAIN`。
+
+ResolvedDNSServerOptions.service: |-
+  @required
+
+  [Resolved 服务](/zh/configuration/service/resolved) 的标签。
+
+TailscaleDNSServerOptions.accept_default_resolvers: |-
+  指示是否除了 MagicDNS 外，还应接受默认 DNS 解析器以进行回退查询。
+
+  如果未启用，对于非 Tailscale 域名查询将返回 `NXDOMAIN`。
+
+TailscaleDNSServerOptions.accept_search_domain: |-
+  @since 1.14.0
+
+  启用后，单标签查询（例如 `my-device`）将依次附加 Tailscale 搜索域进行重试，直到其中一个解析成功。
+
+TailscaleDNSServerOptions.endpoint: |-
+  @required
+
+  [Tailscale 端点](/zh/configuration/endpoint/tailscale) 的标签。
+
+_DNSRuleAction.action: 要执行的动作。默认使用 `route`。
+
+_DNSRuleAction.race: |-
+  @since 1.14.0
+
+  仅可用于 `route`、`respond`、`reject` 和 `predefined` 动作。
+
+  需要 [`match_response`](/zh/configuration/dns/rule/#match_response)（对 logical 规则，位于子规则中）。
+  与 `speculative` 冲突。
+
+  默认情况下，规则逐条按顺序匹配：带 `match_response` 的规则等待其引用的响应，在它被判定之前不会匹配任何后续规则。
+
+  启用 `race` 的规则成为竞态规则，不再保持这一顺序：其引用的响应尚未到达时，规则匹配会越过它继续进行，因此竞态规则的匹配相互并行、也与后续规则并行。每条竞态规则在其引用的响应可用时被判定，首个匹配的竞态规则立即终止规则评估，其余查询将被取消。
+
+  未启用 `race` 的规则仍严格按顺序生效：只要前面还有未判定的竞态规则，其他已匹配规则的动作就被扣住，直到所有竞态规则均未匹配。
+
+dns.index.fakeip: '[FakeIP](./fakeip/) 设置。'

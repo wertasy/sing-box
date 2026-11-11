@@ -1,0 +1,61 @@
+defaults:
+  heading: '### Fields'
+  omit_origins:
+  - DialerOptions
+  - AbstractDialerOptions
+
+pages:
+
+- file: endpoint/wireguard.md
+  defs:
+  - name: wireguard
+    omit_keys:
+    - tag
+    - udp_timeout
+    - udp_mapping
+    - udp_filtering
+    - udp_nat_max
+  expand:
+  - peers
+
+- file: endpoint/tailscale.md
+  defs:
+  - name: tailscale
+    registry: Endpoint
+  expand:
+  - ssh_server
+
+- file: network-namespace/default.md
+  defs:
+  - name: default
+    registry: NetworkNamespace
+    root: DefaultNetworkNamespaceOptions
+    omit_origins: []
+
+- file: network-namespace/unshare.md
+  defs:
+  - name: unshare
+    root: UnshareNetworkNamespaceOptions
+    omit_origins: []
+
+- file: log/index.md
+  defs:
+  - name: LogOptions
+    root: LogOptions
+    omit_origins: []
+
+- file: ntp/index.md
+  defs:
+  - name: NTPOptions
+    root: NTPOptions
+  overrides:
+    server:
+      prose: |-
+        @required
+
+        NTP server address.
+    server_port:
+      prose: |-
+        NTP server port.
+
+        123 is used by default.

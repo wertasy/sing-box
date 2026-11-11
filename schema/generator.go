@@ -253,6 +253,11 @@ func (g *generator) FlattenStruct(node *Node, structType reflect.Type) error {
 		if err != nil {
 			return err
 		}
+		if commentSource, isCommentSource := CommentSourceFromContext(g.ctx); isCommentSource {
+			if comment, found := commentSource.StructFieldComment(structType.Name(), tagName); found {
+				applyFieldComment(fieldNode, comment)
+			}
+		}
 		node.Properties.Put(tagName, fieldNode)
 	}
 	return nil

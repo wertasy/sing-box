@@ -1,0 +1,412 @@
+defaults:
+  heading: '### Fields'
+pages:
+
+- defs:
+
+  - name: DNS
+    omit_keys:
+    - servers
+    - rules
+    root: RawDNSOptions
+  file: dns/index.md
+
+- defs:
+
+  - name: fakeip
+  extras:
+    enabled:
+      locale_key: FakeIPDNSServerOptions.enabled
+      prose: Enable FakeIP service.
+  file: dns/fakeip.md
+
+- file: dns/rule.md
+  sections:
+
+  - defs:
+
+    - name: default
+      omit_keys:
+      - response_rcode
+      - response_answer
+      - response_ns
+      - response_extra
+      registry: DNSRule
+      root: RawDefaultDNSRule
+    extras:
+      action:
+        locale_key: RawDefaultDNSRule.action
+        prose: |-
+          @required
+
+          See [DNS Rule Actions](../rule_action/) for details.
+      client_subnet:
+        locale_key: RawDefaultDNSRule.client_subnet
+        prose: |-
+          @failure: Deprecated in sing-box 1.11.0
+
+              Moved to [DNS Rule Action](../rule_action#route).
+      disable_cache:
+        locale_key: RawDefaultDNSRule.disable_cache
+        prose: |-
+          @failure: Deprecated in sing-box 1.11.0
+
+              Moved to [DNS Rule Action](../rule_action#route).
+      rewrite_ttl:
+        locale_key: RawDefaultDNSRule.rewrite_ttl
+        prose: |-
+          @failure: Deprecated in sing-box 1.11.0
+
+              Moved to [DNS Rule Action](../rule_action#route).
+      server:
+        locale_key: RawDefaultDNSRule.server
+        prose: |-
+          @failure: Deprecated in sing-box 1.11.0
+
+              Moved to [DNS Rule Action](../rule_action#route).
+    heading: '### Default Fields'
+
+  - defs:
+
+    - name: default
+      omit_keys:
+      - inbound
+      - ip_version
+      - query_type
+      - query_client_subnet
+      - query_dnssec
+      - network
+      - auth_user
+      - protocol
+      - domain
+      - domain_suffix
+      - domain_keyword
+      - domain_regex
+      - source_ip_cidr
+      - source_ip_is_private
+      - source_port
+      - source_port_range
+      - port
+      - port_range
+      - process_name
+      - process_path
+      - process_path_regex
+      - package_name
+      - package_name_regex
+      - user
+      - user_id
+      - clash_mode
+      - network_type
+      - network_is_expensive
+      - network_is_constrained
+      - wifi_ssid
+      - wifi_bssid
+      - interface_address
+      - network_interface_address
+      - default_interface_address
+      - source_mac_address
+      - source_hostname
+      - preferred_by
+      - dns_server_address
+      - dns_search_domain
+      - rule_set
+      - rule_set_ip_cidr_match_source
+      - match_response
+      - ip_accept_any
+      - response_rcode
+      - response_answer
+      - response_ns
+      - response_extra
+      - invert
+      registry: DNSRule
+      root: RawDefaultDNSRule
+    heading: '### Legacy Address Filter Fields'
+
+  - defs:
+
+    - name: default
+      omit_keys:
+      - inbound
+      - ip_version
+      - query_type
+      - query_client_subnet
+      - query_dnssec
+      - network
+      - auth_user
+      - protocol
+      - domain
+      - domain_suffix
+      - domain_keyword
+      - domain_regex
+      - source_ip_cidr
+      - source_ip_is_private
+      - source_port
+      - source_port_range
+      - port
+      - port_range
+      - process_name
+      - process_path
+      - process_path_regex
+      - package_name
+      - package_name_regex
+      - user
+      - user_id
+      - clash_mode
+      - network_type
+      - network_is_expensive
+      - network_is_constrained
+      - wifi_ssid
+      - wifi_bssid
+      - interface_address
+      - network_interface_address
+      - default_interface_address
+      - source_mac_address
+      - source_hostname
+      - preferred_by
+      - dns_server_address
+      - dns_search_domain
+      - rule_set
+      - rule_set_ip_cidr_match_source
+      - match_response
+      - ip_cidr
+      - ip_is_private
+      - ip_accept_any
+      - invert
+      registry: DNSRule
+      root: RawDefaultDNSRule
+    heading: '### Response Match Fields'
+
+  - defs:
+
+    - name: logical
+      omit_keys:
+      - invert
+      registry: DNSRule
+      root: RawLogicalDNSRule
+    extras:
+      type:
+        locale_key: RawLogicalDNSRule.type
+        prose: '`logical`'
+    heading: '### Logical Fields'
+
+- file: dns/rule_action.md
+  sections:
+
+  - defs:
+
+    - name: route
+      omit_keys:
+      - server
+      - speculative
+      - timeout
+      - disable_cache
+      - disable_optimistic_cache
+      - rewrite_ttl
+      - client_subnet
+      - remove_client_subnet
+      registry: DNSRuleAction
+      root: _DNSRuleAction
+    heading: '### Structure'
+
+  - defs:
+
+    - name: route
+      omit_keys:
+      - action
+      - race
+      registry: DNSRuleAction
+      root: DNSRouteActionOptions
+    heading: '### route'
+
+  - defs:
+
+    - name: evaluate
+      omit_keys:
+      - action
+      - race
+      root: DNSEvaluateActionOptions
+    heading: '### evaluate'
+
+  - defs:
+
+    - name: reject
+      omit_keys:
+      - action
+      - race
+      registry: DNSRuleAction
+      root: _RejectActionOptions
+    heading: '### reject'
+    overrides:
+      method:
+        prose: |-
+          - `default`: Reply with REFUSED.
+          - `drop`: Drop the request.
+
+          `default` will be used by default.
+
+  - defs:
+
+    - name: predefined
+      omit_keys:
+      - action
+      - race
+      root: DNSRouteActionPredefined
+    heading: '### predefined'
+
+- defs:
+
+  - name: udp
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions
+  file: dns/server/udp.md
+
+- defs:
+
+  - name: tcp
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions
+  file: dns/server/tcp.md
+
+- defs:
+
+  - name: tls
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions
+  file: dns/server/tls.md
+  overrides:
+    server_port:
+      prose: |-
+        The port of the DNS server.
+
+        `853` will be used by default.
+
+- defs:
+
+  - name: quic
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions
+    registry: DNSServer
+  file: dns/server/quic.md
+  overrides:
+    server_port:
+      prose: |-
+        The port of the DNS server.
+
+        `853` will be used by default.
+
+- defs:
+
+  - name: https
+    omit_keys:
+    - tag
+    - method
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions
+  file: dns/server/https.md
+  overrides:
+    server_port:
+      prose: |-
+        The port of the DNS server.
+
+        `443` will be used by default.
+
+- defs:
+
+  - name: h3
+    omit_keys:
+    - tag
+    - method
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions
+  file: dns/server/http3.md
+  overrides:
+    server_port:
+      prose: |-
+        The port of the DNS server.
+
+        `443` will be used by default.
+
+- defs:
+
+  - name: hosts
+  file: dns/server/hosts.md
+
+- defs:
+
+  - name: local
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions
+    registry: DNSServer
+  file: dns/server/local.md
+
+- defs:
+
+  - name: dhcp
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions
+    - LocalDNSServerOptions
+  file: dns/server/dhcp.md
+
+- defs:
+
+  - name: mdns
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions
+    - LocalDNSServerOptions
+  file: dns/server/mdns.md
+
+- defs:
+
+  - name: fakeip
+  file: dns/server/fakeip.md
+
+- defs:
+
+  - name: resolved
+    registry: DNSServer
+  file: dns/server/resolved.md
+
+- defs:
+
+  - name: tailscale
+    registry: DNSServer
+  file: dns/server/tailscale.md
+
+- defs:
+
+  - name: openconnect
+    registry: DNSServer
+  file: dns/server/openconnect.md
+
+- defs:
+
+  - name: openvpn
+  file: dns/server/openvpn.md
+
+- file: dns/index.zh.md
+  patches:
+    '### Fields':
+      extras:
+        'fakeip :material-note-remove:':
+          locale_key: dns.index.fakeip
+          prose: ''
+
+- file: dns/rule_action.zh.md
+  patches:
+    '### reject':
+      overrides:
+        method:
+          prose: |-
+            - `default`: 返回 REFUSED。
+            - `drop`: 丢弃请求。
+
+            默认使用 `default`。

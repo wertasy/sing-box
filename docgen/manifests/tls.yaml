@@ -1,0 +1,61 @@
+defaults:
+  heading: '### Fields'
+
+pages:
+
+- file: shared/tls.md
+  sections:
+  - defs:
+    - name: InboundTLSOptions
+      omit_keys:
+      - ech
+      - reality
+      - acme
+      root: InboundTLSOptions
+    - name: OutboundTLSOptions
+      omit_keys:
+      - ech
+      - reality
+      - fragment
+      - fragment_fallback_delay
+      - record_fragment
+      - spoof
+      - spoof_method
+      - acme
+      root: OutboundTLSOptions
+  - defs:
+    - name: InboundECHOptions
+      omit_keys:
+      - enabled
+      root: InboundECHOptions
+    - name: OutboundECHOptions
+      omit_keys:
+      - enabled
+      root: OutboundECHOptions
+    - include_keys:
+      - fragment
+      - fragment_fallback_delay
+      - record_fragment
+      - spoof
+      - spoof_method
+      root: OutboundTLSOptions
+    heading: '### ECH Fields'
+  - defs:
+    - root: InboundACMEOptions
+    expand:
+    - external_account
+    heading: '### ACME Fields'
+  - defs:
+    - name: InboundRealityOptions
+      omit_keys:
+      - enabled
+      root: InboundRealityOptions
+    - name: OutboundRealityOptions
+      omit_keys:
+      - enabled
+      root: OutboundRealityOptions
+    heading: '### Reality Fields'
+
+- file: shared/tls.zh.md
+  patches:
+    '### ECH Fields': {}

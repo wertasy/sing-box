@@ -1,0 +1,82 @@
+defaults:
+  heading: '### Fields'
+  omit_origins:
+  - DialerOptions
+  - AbstractDialerOptions
+pages:
+
+- file: outbound/anytls.md
+  defs:
+
+  - name: anytls
+    registry: Outbound
+  overrides:
+    tls:
+      prose: |-
+        @required
+
+        TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
+
+- file: outbound/http.md
+  defs:
+
+  - name: http
+    registry: Outbound
+    omit_keys:
+    - tag
+    - idle_timeout
+    - keep_alive_period
+    - stream_receive_window
+    - connection_receive_window
+    - max_concurrent_streams
+    - initial_packet_size
+    - disable_path_mtu_discovery
+
+- file: outbound/socks.md
+  defs:
+
+  - name: socks
+    registry: Outbound
+
+- file: outbound/direct.md
+  extras:
+    override_address:
+      prose: |-
+        @failure: Deprecated in sing-box 1.11.0
+
+            Destination override fields are deprecated in sing-box 1.11.0 and will be removed in sing-box 1.13.0, see [Migration](/migration/#migrate-destination-override-fields-to-route-options).
+
+        Override the connection destination address.
+      locale_key: DirectOutboundOptions.override_address
+    override_port:
+      prose: |-
+        @failure: Deprecated in sing-box 1.11.0
+
+            Destination override fields are deprecated in sing-box 1.11.0 and will be removed in sing-box 1.13.0, see [Migration](/migration/#migrate-destination-override-fields-to-route-options).
+
+        Override the connection destination port.
+
+        Protocol value can be `1` or `2`.
+      locale_key: DirectOutboundOptions.override_port
+
+- file: outbound/bridge.md
+  defs:
+
+  - name: bridge
+    omit_origins: []
+
+- file: outbound/naive.md
+  defs:
+
+  - name: naive
+    registry: Outbound
+  overrides:
+    tls:
+      prose: |-
+        @required
+
+        TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
+
+        Only `server_name`, `certificate`, `certificate_path` and `ech` are supported.
+
+        Self-signed certificates change traffic behavior significantly, which defeats the purpose of NaiveProxy's design to resist traffic analysis, and should not be used in production.

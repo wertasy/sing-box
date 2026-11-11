@@ -14,7 +14,7 @@ PREFIX ?= $(shell go env GOPATH)
 SING_FFI ?= sing-ffi
 LIBBOX_FFI_CONFIG ?= ./experimental/libbox/ffi.json
 
-.PHONY: test release docs build schema
+.PHONY: test release docs build schema generate_docs check_docs
 
 build:
 	export GOTOOLCHAIN=local && \
@@ -32,8 +32,13 @@ ci_build:
 generate_completions:
 	go run -v --tags "$(TAGS),generate,generate_completions" $(MAIN)
 
-schema:
-	go run -ldflags "$(LDFLAGS_SHARED)" --tags "$(TAGS)" $(MAIN) schema -o docs/schema.json
+generate_docs:
+	go run ./cmd/internal/generate_docs
+
+check_docs:
+	go run ./cmd/internal/generate_docs -check
+
+schema: generate_docs
 
 install:
 	go build -o $(PREFIX)/bin/$(NAME) $(MAIN_PARAMS) $(MAIN)
@@ -273,10 +278,10 @@ lib_install:
 	go install -v github.com/sagernet/gomobile/cmd/gomobile@v0.1.13
 	go install -v github.com/sagernet/gomobile/cmd/gobind@v0.1.13
 
-docs:
+docs: generate_docs
 	venv/bin/mkdocs serve
 
-publish_docs:
+publish_docs: generate_docs
 	venv/bin/mkdocs gh-deploy -m "Update" --force --ignore-version --no-history
 
 docs_install:

@@ -1,0 +1,276 @@
+AnyTLSInboundOptions.padding_scheme: |-
+  AnyTLS 填充方案行数组。
+
+  默认填充方案:
+
+  ```json
+  [
+    "stop=8",
+    "0=30-30",
+    "1=100-400",
+    "2=400-500,c,500-1000,c,500-1000,c,500-1000,c,500-1000",
+    "3=9-9,500-1000",
+    "4=500-1000",
+    "5=500-1000",
+    "6=500-1000",
+    "7=500-1000"
+  ]
+  ```
+
+AnyTLSInboundOptions.users: |-
+  @required
+
+  AnyTLS 用户。
+
+Hysteria2InboundOptions.bbr_profile: |-
+  @since 1.14.0
+
+  BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
+
+  默认使用 `standard`。
+
+Hysteria2InboundOptions.brutal_debug: 启用 Hysteria Brutal CC 的调试信息日志记录。
+
+Hysteria2InboundOptions.ignore_client_bandwidth: |-
+  *当 `up_mbps` 和 `down_mbps` 未设定时*:
+
+  命令客户端使用 BBR 拥塞控制算法而不是 Hysteria CC。
+
+  *当 `up_mbps` 和 `down_mbps` 已设定时*:
+
+  禁止客户端使用 BBR 拥塞控制算法。
+
+Hysteria2InboundOptions.masquerade: |-
+  HTTP3 服务器认证失败时的行为 （URL 字符串配置）。
+
+  | Scheme       | 示例                      | 描述      |
+  |--------------|-------------------------|---------|
+  | `file`       | `file:///var/www`       | 作为文件服务器 |
+  | `http/https` | `http://127.0.0.1:8080` | 作为反向代理  |
+
+  如果 masquerade 未配置，则返回 404 页。
+
+  与 `masquerade.type` 冲突。
+
+Hysteria2InboundOptions.masquerade.content: 固定响应内容。
+
+Hysteria2InboundOptions.masquerade.directory: 文件服务器根目录。
+
+Hysteria2InboundOptions.masquerade.headers: 固定响应头。
+
+Hysteria2InboundOptions.masquerade.rewrite_host: 重写请求头中的 Host 字段到目标 URL。
+
+Hysteria2InboundOptions.masquerade.status_code: 固定响应状态码。
+
+Hysteria2InboundOptions.masquerade.type: |-
+  HTTP3 服务器认证失败时的行为 （对象配置）。
+
+  | Type     | 描述      | 字段                                  |
+  |----------|---------|-------------------------------------|
+  | `file`   | 作为文件服务器 | `directory`                         |
+  | `proxy`  | 作为反向代理  | `url`, `rewrite_host`               |
+  | `string` | 返回固定响应  | `status_code`, `headers`, `content` |
+
+  如果 masquerade 未配置，则返回 404 页。
+
+  与 `masquerade` 冲突。
+
+Hysteria2InboundOptions.masquerade.url: 反向代理目标 URL。
+
+Hysteria2InboundOptions.obfs.max_packet_size: |-
+  @since 1.14.0
+
+  最大线上数据包大小（字节）。仅限 Gecko。
+
+  默认使用 `1200`。
+
+Hysteria2InboundOptions.obfs.min_packet_size: |-
+  @since 1.14.0
+
+  最小线上数据包大小（字节）。仅限 Gecko。
+
+  默认使用 `512`。
+
+Hysteria2InboundOptions.obfs.password: QUIC 流量混淆器密码。
+
+Hysteria2InboundOptions.obfs.type: |-
+  QUIC 流量混淆器类型，可选 `salamander` `gecko`。
+
+  如果为空则禁用。
+
+Hysteria2InboundOptions.realm: |-
+  @since 1.14.0
+
+  将此入站注册到 Hysteria Realm 会合服务，以启用 NAT 穿透。
+
+  会合服务参阅 [Hysteria Realm](/zh/configuration/service/hysteria-realm/)。
+
+Hysteria2InboundOptions.realm.http_client: |-
+  与 realm 通信使用的 HTTP 客户端。
+
+  参阅 [HTTP 客户端](/zh/configuration/shared/http-client/) 了解详情。
+
+Hysteria2InboundOptions.realm.ip_version: |-
+  将 realm 连接（STUN、打洞与最终的 QUIC 路径）限制为单一 IP 版本。
+
+  `4` 或 `6`。默认使用两者。
+
+  `listen` 地址必须与所选版本兼容。
+
+Hysteria2InboundOptions.realm.port_mapping: |-
+  通过 UPnP 或 NAT-PMP 在本地网关上维护 UDP 端口映射。
+
+  可在支持的网关后提升打洞成功率。
+
+  需要 IPv4：与 `"ip_version": 6` 冲突。
+
+Hysteria2InboundOptions.realm.port_mapping.enabled: 启用端口映射。
+
+Hysteria2InboundOptions.realm.port_mapping.lifetime: |-
+  映射的租约时长。
+
+  默认使用 `10m`。
+
+Hysteria2InboundOptions.realm.port_mapping.timeout: |-
+  网关发现与映射操作的超时。
+
+  默认使用 `10s`。
+
+Hysteria2InboundOptions.realm.realm_id: |-
+  @required
+
+  Realm 上的槽位标识符。
+
+  1–64 字符，需匹配 `^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$`。
+
+  出站需使用相同的 `realm_id` 才能找到本服务器。
+
+Hysteria2InboundOptions.realm.server_url: |-
+  @required
+
+  Realm 会合服务 URL。
+
+Hysteria2InboundOptions.realm.stun_domain_resolver: |-
+  用于解析 STUN 服务器域名的域名解析器。
+
+  此选项的格式与 [路由 DNS 规则动作](/zh/configuration/dns/rule_action/#route) 相同，但不包含 `action` 字段。
+
+  若直接将此选项设置为字符串，则等同于设置该选项的 `server` 字段。
+
+  如果为空，则使用默认域名解析器。
+
+Hysteria2InboundOptions.realm.stun_servers: |-
+  @required
+
+  用于发现公网地址的 STUN 服务器列表（`host` 或 `host:port`）。
+
+Hysteria2InboundOptions.realm.token: Realm 的 Bearer 令牌，需与 realm 上配置的 `users[].token` 之一匹配。
+
+Hysteria2InboundOptions.tls: |-
+  @required
+
+  TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+
+Hysteria2InboundOptions.up_down_mbps: |-
+  支持的速率，默认不限制。
+
+  与 `ignore_client_bandwidth` 冲突。
+
+Hysteria2InboundOptions.users: Hysteria 用户
+
+Hysteria2InboundOptions.users.password: 认证密码。
+
+HysteriaInboundOptions.disable_mtu_discovery: |-
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      请使用 QUIC 字段 `disable_path_mtu_discovery` 代替。
+
+HysteriaInboundOptions.max_conn_client: |-
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      请使用 QUIC 字段 `max_concurrent_streams` 代替。
+
+HysteriaInboundOptions.obfs: 混淆密码。
+
+HysteriaInboundOptions.recv_window_client: |-
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      请使用 QUIC 字段 `connection_receive_window` 代替。
+
+HysteriaInboundOptions.recv_window_conn: |-
+  @failure: 已在 sing-box 1.14.0 废弃
+
+      请使用 QUIC 字段 `stream_receive_window` 代替。
+
+HysteriaInboundOptions.tls: |-
+  @required
+
+  TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+
+HysteriaInboundOptions.up_down: |-
+  @required
+
+  格式: `[Integer] [Unit]` 例如： `100 Mbps, 640 KBps, 2 Gbps`
+
+  支持的单位 (大小写敏感, b = bits, B = bytes, 8b=1B)：
+
+      bps (bits per second)
+      Bps (bytes per second)
+      Kbps (kilobits per second)
+      KBps (kilobytes per second)
+      Mbps (megabits per second)
+      MBps (megabytes per second)
+      Gbps (gigabits per second)
+      GBps (gigabytes per second)
+      Tbps (terabits per second)
+      TBps (terabytes per second)
+
+HysteriaInboundOptions.up_down_mbps: |-
+  @required
+
+  以 Mbps 为单位的 `up, down`。
+
+HysteriaInboundOptions.users: Hysteria 用户
+
+HysteriaInboundOptions.users.auth: base64 编码的认证密码。
+
+HysteriaInboundOptions.users.auth_str: 认证密码。
+
+TUICInboundOptions.auth_timeout: |-
+  服务器等待客户端发送认证命令的时间
+
+  默认使用 `3s`。
+
+TUICInboundOptions.congestion_control: |-
+  QUIC 拥塞控制算法
+
+  可选值: `cubic`, `new_reno`, `bbr`
+
+  默认使用 `cubic`。
+
+TUICInboundOptions.heartbeat: |-
+  发送心跳包以保持连接存活的时间间隔
+
+  默认使用 `10s`。
+
+TUICInboundOptions.tls: |-
+  @required
+
+  TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+
+TUICInboundOptions.users: TUIC 用户
+
+TUICInboundOptions.users.password: TUIC 用户密码
+
+TUICInboundOptions.users.uuid: |-
+  @required
+
+  TUIC 用户 UUID
+
+TUICInboundOptions.zero_rtt_handshake: |-
+  在客户端启用 0-RTT QUIC 连接握手
+  这对性能影响不大，因为协议是完全复用的
+
+  @warning:
+  强烈建议禁用此功能，因为它容易受到重放攻击。
+  请参阅 [Attack of the clones](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/#attack-of-the-clones)

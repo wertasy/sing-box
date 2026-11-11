@@ -1,0 +1,247 @@
+DefaultNetworkNamespaceOptions.path: |-
+  @required
+
+  网络命名空间的名称或路径，例如 `sing` 或 `/run/netns/sing`。
+
+LogOptions.disabled: 禁用日志，启动后不输出日志。
+
+LogOptions.level: 日志等级，可选值：`trace` `debug` `info` `warn` `error` `fatal` `panic`。
+
+LogOptions.output: 输出文件路径，启动后将不输出到控制台。
+
+LogOptions.timestamp: 添加时间到每行。
+
+NTPOptions.enabled: 启用 NTP 服务。
+
+NTPOptions.interval: |-
+  时间同步间隔。
+
+  默认使用 30 分钟。
+
+NTPOptions.server: |-
+  @required
+
+  NTP 服务器地址。
+
+NTPOptions.server_port: |-
+  NTP 服务器端口。
+
+  默认使用 123。
+
+TailscaleEndpointOptions.accept_routes: 指示节点是否应接受其他节点通告的路由。
+
+TailscaleEndpointOptions.advertise_exit_node: 指示节点是否应将自己通告为出口节点。
+
+TailscaleEndpointOptions.advertise_routes: |-
+  通告到 Tailscale 网络的 CIDR 前缀，作为可通过当前节点访问的路由。
+
+  示例：`["192.168.1.1/24"]`
+
+TailscaleEndpointOptions.advertise_tags: |-
+  @since 1.13.0
+
+  为此节点通告的标签，用于 ACL 执行。
+
+  示例：`["tag:server"]`
+
+TailscaleEndpointOptions.auth_key: |-
+  @note
+
+      认证密钥不是必需的。默认情况下，sing-box 将记录登录 URL。
+
+  用于创建节点的认证密钥。如果节点已经创建（从之前存储的状态），则不使用此字段。
+
+TailscaleEndpointOptions.control_url: |-
+  协调服务器 URL。
+
+  默认使用 `https://controlplane.tailscale.com`。
+
+TailscaleEndpointOptions.ephemeral: 指示实例是否应注册为临时节点 (https://tailscale.com/s/ephemeral-nodes)。
+
+TailscaleEndpointOptions.exit_node: 要使用的出口节点名称或 IP 地址。
+
+TailscaleEndpointOptions.exit_node_allow_lan_access: |-
+  @note
+
+      当出口节点没有相应的通告路由时，即使设置了 `exit_node_allow_lan_access`，私有流量也无法路由到出口节点。
+
+  指示本地可访问的子网应该直接路由还是通过出口节点路由。
+
+TailscaleEndpointOptions.hostname: |-
+  节点的主机名。
+
+  默认使用系统主机名。
+
+  @since 1.14.0
+
+      在 iOS、tvOS 和 Android 上，默认使用设备名称。
+
+  示例：`localhost`
+
+TailscaleEndpointOptions.listen_port: |-
+  @since 1.14.0
+
+  监听 WireGuard 和点对点流量的 UDP 端口。
+
+  默认自动选择端口。
+
+TailscaleEndpointOptions.on_demand: |-
+  @since 1.15.0
+
+  允许该 endpoint 在需要时断开连接。
+
+TailscaleEndpointOptions.relay_server_port: |-
+  @since 1.13.0
+
+  监听来自其他 Tailscale 节点的中继连接的端口。
+
+TailscaleEndpointOptions.relay_server_static_endpoints: |-
+  @since 1.13.0
+
+  为中继服务器通告的静态端点。
+
+TailscaleEndpointOptions.ssh_server: |-
+  @since 1.14.0
+
+  在 tailnet 的 TCP 22 端口上运行 Tailscale SSH 服务器。
+
+  访问控制由 Tailscale 管理控制台中的 SSH ACL 决定，它将每个连接映射到一个本地用户。该用户如何解析、以及允许哪些用户，取决于平台：
+
+  - **Linux** 和 **macOS**：要切换到 sing-box 运行身份以外的用户需要以 root 运行。
+  - **Windows**：在命令行客户端中，映射到 sing-box 运行身份以外的本地账户的会话将被拒绝。在图形客户端中没有此限制。
+  - **Android**：`root` 即超级用户（UID 0），`shell` 为 ADB shell 用户（UID 2000）；其他名称均作为已安装应用的包名解析，以该应用的 UID 运行，并使用其数据目录作为主目录。`termux` 是 `com.termux` 的快捷方式，`sing-box` 是应用自身包名的快捷方式；当 Termux 已安装时，`root` 和 `termux` 用户将加载 Termux 环境。以 sing-box 应用自身身份运行无需 root，其他用户则需要已授予的 root 权限。
+  - **macOS**：SSH 服务器仅在独立版本中可用，且需要辅助服务；App Store 版本不支持。
+  - **iOS**：SSH 服务器仅在越狱版本中可用；App Store 和 TestFlight 版本不支持。
+  - **tvOS**：暂不支持。
+
+  对象格式：
+
+  ```json
+  {
+    "enabled": true,
+    "disable_pty": false,
+    "disable_sftp": false,
+    "disable_forwarding": false
+  }
+  ```
+
+  将 `ssh_server` 值设置为 `true` 等同于 `{ "enabled": true }`。
+
+TailscaleEndpointOptions.state_directory: |-
+  存储 Tailscale 状态的目录。
+
+  默认使用 `tailscale`。
+
+  示例：`$HOME/.tailscale`
+
+TailscaleEndpointOptions.system_interface: |-
+  @since 1.13.0
+
+  为 Tailscale 创建系统 TUN 接口。
+
+TailscaleEndpointOptions.system_interface_mtu: |-
+  @since 1.13.0
+
+  覆盖 TUN 的 MTU。默认使用 Tailscale 自己的 MTU。
+
+TailscaleEndpointOptions.system_interface_name: |-
+  @since 1.13.0
+
+  自定义 TUN 接口名。默认使用 `tailscale`（macOS 上为 `utun`）。
+
+TailscaleEndpointOptions.taildrop_directory: |-
+  @since 1.14.0
+
+  存储从 tailnet 对等节点接收到的文件的目录。
+
+  相对路径基于工作目录解析，与 [state_directory](#state_directory) 相同。
+
+  默认使用 `Taildrop`。
+
+TailscaleEndpointOptions.udp_timeout: |-
+  UDP NAT 过期时间。
+
+  默认使用 `5m`。
+
+TailscaleSSHServerOptions.ssh_server.disable_forwarding: 拒绝本地和远程的 TCP 与 Unix 套接字转发，包括 SSH agent 转发。
+
+TailscaleSSHServerOptions.ssh_server.disable_pty: 拒绝 PTY 分配请求。
+
+TailscaleSSHServerOptions.ssh_server.disable_sftp: 拒绝 SFTP 子系统。
+
+TailscaleSSHServerOptions.ssh_server.enabled: 启用 SSH 服务器。
+
+UnshareNetworkNamespaceOptions.pid_file: |-
+  如果设置，持有该命名空间的进程 PID 将写入此路径。
+
+  当 sing-box 以 root 运行时，可通过 `nsenter -t <pid> -n` 进入该命名空间，
+  否则使用 `nsenter -t <pid> -U --preserve-credentials -n`。
+
+WireGuardEndpointOptions.address: |-
+  @required
+
+  接口的 IPv4/IPv6 地址或地址段的列表。
+
+  要分配给接口的 IP（v4 或 v6）地址段列表。
+
+WireGuardEndpointOptions.mtu: |-
+  WireGuard MTU。
+
+  默认使用 1408。
+
+WireGuardEndpointOptions.name: 为系统接口自定义设备名称。
+
+WireGuardEndpointOptions.on_demand: |-
+  @since 1.15.0
+
+  允许该 endpoint 在需要时断开连接。
+
+WireGuardEndpointOptions.peers: |-
+  @required
+
+  WireGuard 对等方的列表。
+
+WireGuardEndpointOptions.private_key: |-
+  @required
+
+  WireGuard 需要 base64 编码的公钥和私钥。 这些可以使用 wg(8) 实用程序生成：
+
+  ```shell
+  wg genkey
+  echo "private key" || wg pubkey
+  ```
+
+  或 `sing-box generate wg-keypair`.
+
+WireGuardEndpointOptions.system: |-
+  使用系统设备。
+
+  需要特权且不能与已有系统接口冲突。
+
+WireGuardEndpointOptions.workers: |-
+  WireGuard worker 数量。
+
+  默认使用 CPU 数量。
+
+WireGuardPeer.peers.address: 对等方的 IP 地址。
+
+WireGuardPeer.peers.allowed_ips: |-
+  @required
+
+  对等方的允许 IP 地址。
+
+WireGuardPeer.peers.persistent_keepalive_interval: |-
+  对等方的持久性保持活动间隔，以秒为单位。
+
+  默认禁用。
+
+WireGuardPeer.peers.port: 对等方的 WireGuard 端口。
+
+WireGuardPeer.peers.pre_shared_key: 对等方的预共享密钥。
+
+WireGuardPeer.peers.public_key: |-
+  @required
+
+  对等方的 WireGuard 公钥。
+
+WireGuardPeer.peers.reserved: 对等方的保留字段字节。

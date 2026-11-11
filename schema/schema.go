@@ -8,8 +8,10 @@ type Node struct {
 	SchemaURI             string                           `json:"$schema,omitempty"`
 	ID                    string                           `json:"$id,omitempty"`
 	Ref                   string                           `json:"$ref,omitempty"`
+	Description           string                           `json:"description,omitempty"`
 	Type                  any                              `json:"type,omitempty"`
 	Const                 any                              `json:"const,omitempty"`
+	Default               any                              `json:"default,omitempty"`
 	Enum                  []any                            `json:"enum,omitempty"`
 	Pattern               string                           `json:"pattern,omitempty"`
 	Minimum               *int64                           `json:"minimum,omitempty"`

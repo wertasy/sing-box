@@ -1,0 +1,151 @@
+BrutalOptions.enabled: 启用 TCP Brutal 拥塞控制算法。
+
+BrutalOptions.up_down_mbps: |-
+  @required
+
+  上传和下载带宽，以 Mbps 为单位。
+
+InboundMultiplexOptions.brutal: 参阅 [TCP Brutal](/zh/configuration/shared/tcp-brutal/)。
+
+InboundMultiplexOptions.enabled: 启用多路复用支持。
+
+InboundMultiplexOptions.padding: 如果启用，将拒绝非填充连接。
+
+OutboundMultiplexOptions.brutal: 参阅 [TCP Brutal](/zh/configuration/shared/tcp-brutal/)。
+
+OutboundMultiplexOptions.enabled: 启用多路复用。
+
+OutboundMultiplexOptions.max_connections: |-
+  最大连接数量。
+
+  与 `max_streams` 冲突。
+
+OutboundMultiplexOptions.max_streams: |-
+  在打开新连接之前，连接中的最大多路复用流数量。
+
+  与 `max_connections` 和 `min_streams` 冲突。
+
+OutboundMultiplexOptions.min_streams: |-
+  在打开新连接之前，连接中的最小多路复用流数量。
+
+  与 `max_streams` 冲突。
+
+OutboundMultiplexOptions.padding: |-
+  @info
+
+      需要 sing-box 服务器版本 1.3-beta9 或更高。
+
+  启用填充。
+
+OutboundMultiplexOptions.protocol: |-
+  多路复用协议
+
+  | 协议    | 描述                                 |
+  |-------|------------------------------------|
+  | smux  | https://github.com/xtaci/smux      |
+  | yamux | https://github.com/hashicorp/yamux |
+  | h2mux | https://golang.org/x/net/http2     |
+
+  默认使用 h2mux。
+
+V2RayGRPCOptions.idle_timeout: |-
+  在标准 gRPC 服务器/客户端：
+
+  如果传输在此时间段后没有看到任何活动，它会向客户端发送 ping 请求以检查连接是否仍然活动。
+
+  在默认 gRPC 服务器/客户端：
+
+  它的行为与 HTTP 传输层中的相应设置相同。
+
+V2RayGRPCOptions.permit_without_stream: |-
+  在标准 gRPC 客户端：
+
+  如果启用，客户端传输即使没有活动连接也会发送 keepalive ping。如果禁用，则在没有活动连接时，将忽略 `idle_timeout` 和 `ping_timeout`，并且不会发送 keepalive ping。
+
+  默认禁用。
+
+V2RayGRPCOptions.ping_timeout: |-
+  在标准 gRPC 服务器/客户端：
+
+  经过一段时间之后，客户端将执行 keepalive 检查并等待活动。如果没有检测到任何活动，则会关闭连接。
+
+  在默认 gRPC 服务器/客户端：
+
+  它的行为与 HTTP 传输层中的相应设置相同。
+
+V2RayGRPCOptions.service_name: gRPC 服务名称。
+
+V2RayHTTPOptions.headers: |-
+  HTTP 请求的额外标头
+
+  如果设置，服务器将写入响应。
+
+V2RayHTTPOptions.host: |-
+  主机域名列表。
+
+  如果设置，客户端将随机选择，服务器将验证。
+
+V2RayHTTPOptions.idle_timeout: |-
+  在 HTTP2 服务器中：
+
+  指定闲置客户端应在多长时间内使用 GOAWAY 帧关闭。PING 帧不被视为活动。
+
+  在 HTTP2 客户端中：
+
+  如果连接上没有收到任何帧，指定一段时间后将使用 PING 帧执行健康检查。需要注意的是，PING 响应被视为已接收的帧，因此如果连接上没有其他流量，则健康检查将在每个间隔执行一次。如果值为零，则不会执行健康检查。
+
+  默认使用零。
+
+V2RayHTTPOptions.method: |-
+  HTTP 请求方法
+
+  如果设置，服务器将验证。
+
+V2RayHTTPOptions.path: |-
+  @warning
+
+      V2Ray 文档称服务端和客户端的路径必须一致，但实际代码允许客户端向路径添加任何后缀。
+      sing-box 使用与 V2Ray 相同的行为，但请注意，该行为在 `WebSocket` 和 `HTTPUpgrade` 传输层中不存在。
+
+  HTTP 请求路径
+
+  服务器将验证。
+
+V2RayHTTPOptions.ping_timeout: |-
+  在 HTTP2 客户端中：
+
+  指定发送 PING 帧后，在指定的超时时间内必须接收到响应。如果在指定的超时时间内没有收到 PING 帧的响应，则连接将关闭。默认超时持续时间为 15 秒。
+
+V2RayHTTPUpgradeOptions.headers: |-
+  HTTP 请求的额外标头。
+
+  如果设置，服务器将写入响应。
+
+V2RayHTTPUpgradeOptions.host: |-
+  主机域名。
+
+  服务器将验证。
+
+V2RayHTTPUpgradeOptions.path: |-
+  HTTP 请求路径
+
+  服务器将验证。
+
+V2RayWebsocketOptions.early_data_header_name: |-
+  默认情况下，早期数据在路径而不是标头中发送。
+
+  要与 Xray-core 兼容，请将其设置为 `Sec-WebSocket-Protocol`。
+
+  它需要与服务器保持一致。
+
+V2RayWebsocketOptions.headers: |-
+  HTTP 请求的额外标头
+
+  如果设置，服务器将写入响应。
+
+V2RayWebsocketOptions.max_early_data: 请求中允许的最大有效负载大小。默认启用。
+
+V2RayWebsocketOptions.path: |-
+  HTTP 请求路径
+
+  服务器将验证。

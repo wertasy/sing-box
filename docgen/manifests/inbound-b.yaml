@@ -1,0 +1,271 @@
+defaults:
+  heading: '### Fields'
+  omit_origins:
+  - InboundOptions
+  - ListenOptions
+pages:
+
+- file: inbound/hysteria.md
+  sections:
+
+  - defs:
+
+    - name: hysteria
+      registry: Inbound
+      omit_keys:
+      - tag
+      - up
+      - down
+      - up_mbps
+      - down_mbps
+      - bind_interface
+      - detour
+      - disable_tcp_keep_alive
+      - listen
+      - listen_port
+      - netns
+      - reuse_addr
+      - routing_mark
+      - tcp_fast_open
+      - tcp_keep_alive
+      - tcp_keep_alive_interval
+      - tcp_multi_path
+      - udp_fragment
+      - udp_timeout
+      - stream_receive_window
+      - connection_receive_window
+      - idle_timeout
+      - keep_alive_period
+      - max_concurrent_streams
+      - initial_packet_size
+      - disable_path_mtu_discovery
+    expand:
+    - users
+    extras:
+      up, down:
+        prose: |-
+          @required
+
+          Format: `[Integer] [Unit]` e.g. `100 Mbps, 640 KBps, 2 Gbps`
+
+          Supported units (case sensitive, b = bits, B = bytes, 8b=1B):
+
+              bps (bits per second)
+              Bps (bytes per second)
+              Kbps (kilobits per second)
+              KBps (kilobytes per second)
+              Mbps (megabits per second)
+              MBps (megabytes per second)
+              Gbps (gigabits per second)
+              GBps (gigabytes per second)
+              Tbps (terabits per second)
+              TBps (terabytes per second)
+        locale_key: HysteriaInboundOptions.up_down
+      up_mbps, down_mbps:
+        prose: |-
+          @required
+
+          `up, down` in Mbps.
+        locale_key: HysteriaInboundOptions.up_down_mbps
+    overrides:
+      tls:
+        prose: |-
+          @required
+
+          TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
+
+  - heading: '### Deprecated Fields'
+    extras:
+      recv_window_conn:
+        prose: |-
+          @failure: Deprecated in sing-box 1.14.0
+
+              Use QUIC fields `stream_receive_window` instead.
+        locale_key: HysteriaInboundOptions.recv_window_conn
+      recv_window_client:
+        prose: |-
+          @failure: Deprecated in sing-box 1.14.0
+
+              Use QUIC fields `connection_receive_window` instead.
+        locale_key: HysteriaInboundOptions.recv_window_client
+      max_conn_client:
+        prose: |-
+          @failure: Deprecated in sing-box 1.14.0
+
+              Use QUIC fields `max_concurrent_streams` instead.
+        locale_key: HysteriaInboundOptions.max_conn_client
+      disable_mtu_discovery:
+        prose: |-
+          @failure: Deprecated in sing-box 1.14.0
+
+              Use QUIC fields `disable_path_mtu_discovery` instead.
+        locale_key: HysteriaInboundOptions.disable_mtu_discovery
+
+- file: inbound/hysteria2.md
+  sections:
+
+  - defs:
+
+    - name: hysteria2
+      registry: Inbound
+      omit_keys:
+      - tag
+      - up_mbps
+      - down_mbps
+      - obfs
+      - masquerade
+      - realm
+      - bbr_profile
+      - brutal_debug
+      - bind_interface
+      - detour
+      - disable_tcp_keep_alive
+      - listen
+      - listen_port
+      - netns
+      - reuse_addr
+      - routing_mark
+      - tcp_fast_open
+      - tcp_keep_alive
+      - tcp_keep_alive_interval
+      - tcp_multi_path
+      - udp_fragment
+      - udp_timeout
+      - stream_receive_window
+      - connection_receive_window
+      - idle_timeout
+      - keep_alive_period
+      - max_concurrent_streams
+      - initial_packet_size
+      - disable_path_mtu_discovery
+    expand:
+    - users
+    - obfs
+    extras:
+      up_mbps, down_mbps:
+        prose: |-
+          Max bandwidth, in Mbps.
+
+          Not limited if empty.
+
+          Conflict with `ignore_client_bandwidth`.
+        locale_key: Hysteria2InboundOptions.up_down_mbps
+    overrides:
+      tls:
+        prose: |-
+          @required
+
+          TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
+
+  - heading: '### QUIC Fields'
+    defs:
+
+    - name: hysteria2
+      registry: Inbound
+      include_keys:
+      - masquerade
+      - masquerade.type
+      - bbr_profile
+      - brutal_debug
+      - realm
+      - realm.server_url
+      - realm.token
+      - realm.realm_id
+      - realm.stun_servers
+      - realm.stun_domain_resolver
+      - realm.ip_version
+      - realm.port_mapping
+      - realm.port_mapping.enabled
+      - realm.port_mapping.timeout
+      - realm.port_mapping.lifetime
+      - realm.http_client
+      - masquerade.directory
+      - masquerade.url
+      - masquerade.rewrite_host
+      - masquerade.status_code
+      - masquerade.headers
+      - masquerade.content
+    expand:
+    - realm
+    - masquerade
+    overrides:
+      realm.realm_id:
+        prose: |-
+          @required
+
+          Slot identifier on the realm.
+
+          1–64 characters, must match `^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$`.
+
+          Outbounds must use the same `realm_id` to find this server.
+      realm.stun_servers:
+        prose: |-
+          @required
+
+          List of STUN servers (`host` or `host:port`) used to discover public addresses.
+      realm.ip_version:
+        prose: |-
+          Restrict realm connections (STUN, hole punching, and the resulting QUIC path) to a single IP version.
+
+          `4` or `6`. Both are used if empty.
+
+          The `listen` address must be compatible with the selected version.
+
+- file: inbound/tuic.md
+  defs:
+
+  - name: tuic
+    registry: Inbound
+    omit_keys:
+    - tag
+    - bind_interface
+    - detour
+    - disable_tcp_keep_alive
+    - listen
+    - listen_port
+    - netns
+    - reuse_addr
+    - routing_mark
+    - tcp_fast_open
+    - tcp_keep_alive
+    - tcp_keep_alive_interval
+    - tcp_multi_path
+    - udp_fragment
+    - udp_timeout
+    - stream_receive_window
+    - connection_receive_window
+    - idle_timeout
+    - keep_alive_period
+    - max_concurrent_streams
+    - initial_packet_size
+    - disable_path_mtu_discovery
+  expand:
+  - users
+  overrides:
+    tls:
+      prose: |-
+        @required
+
+        TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
+
+- file: inbound/anytls.md
+  defs:
+
+  - name: anytls
+    registry: Inbound
+    omit_keys:
+    - tag
+    - bind_interface
+    - detour
+    - disable_tcp_keep_alive
+    - listen
+    - listen_port
+    - netns
+    - reuse_addr
+    - routing_mark
+    - tcp_fast_open
+    - tcp_keep_alive
+    - tcp_keep_alive_interval
+    - tcp_multi_path
+    - udp_fragment
+    - udp_timeout

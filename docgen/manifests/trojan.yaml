@@ -1,0 +1,12 @@
+defaults:
+  heading: '### Fields'
+
+pages:
+
+- file: outbound/trojan.md
+  defs:
+  - name: trojan
+    registry: Outbound
+    omit_origins:
+    - DialerOptions
+    - AbstractDialerOptions

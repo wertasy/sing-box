@@ -1,0 +1,23 @@
+defaults:
+  heading: '### Fields'
+
+pages:
+
+- defs:
+  - name: DialerOptions
+    omit_keys:
+    - protect_path
+    root: DialerOptions
+  file: shared/dial.md
+
+- defs:
+  - name: redirect
+  file: shared/listen.md
+
+- file: shared/dial.zh.md
+  patches:
+    '### Fields': {}
+
+- file: shared/listen.zh.md
+  patches:
+    '### Fields': {}
