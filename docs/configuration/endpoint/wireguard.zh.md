@@ -12,11 +12,11 @@
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "wireguard",
   "tag": "wg-ep",
-
   "system": false,
   "name": "",
   "mtu": 1408,
@@ -34,15 +34,17 @@
       "reserved": [0, 0, 0]
     }
   ],
-
-  ... // UDP NAT 字段
-
+  "udp_timeout": "",
+  "udp_mapping": "",
+  "udp_filtering": "",
+  "udp_nat_max": 0,
   "workers": 0,
-  "on_demand": false,
+  "on_demand": false
 
   ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! note ""
 
@@ -67,7 +69,7 @@
 
 WireGuard MTU。
 
-默认使用 1408。
+- 默认值：`1408`
 
 #### address
 
@@ -154,4 +156,6 @@ Listen port for incoming connections.
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

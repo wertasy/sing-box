@@ -1,20 +1,21 @@
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tor",
   "tag": "tor-out",
-  
   "executable_path": "/usr/bin/tor",
   "extra_args": [],
   "data_directory": "$HOME/.cache/tor",
   "torrc": {
     "ClientOnly": 1
-  },
+  }
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! info ""
 
@@ -53,4 +54,6 @@ See [tor(1)](https://linux.die.net/man/1/tor) for details.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

@@ -1,29 +1,31 @@
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "http",
   "tag": "http-in",
-  
-  ... // Listen Fields
-  
-  "version": [],
   "users": [
     {
       "username": "admin",
       "password": "admin"
     }
   ],
-  "tls": {},
   "set_system_proxy": false,
+  "version": [],
+  "tls": {}
 
+  ... // Listen Fields
   ... // HTTP2 Fields / QUIC Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

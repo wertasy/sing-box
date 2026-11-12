@@ -6,23 +6,24 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "anytls",
   "tag": "anytls-out",
-
   "server": "127.0.0.1",
   "server_port": 1080,
+  "tls": {},
   "password": "8JCsPssfgS8tiRwiMlhARg==",
   "idle_session_check_interval": "30s",
   "idle_session_timeout": "30s",
   "min_idle_session": 5,
-  "client_metadata": "",
-  "tls": {},
+  "client_metadata": ""
 
   ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -75,4 +76,6 @@ AnyTLS 密码。
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

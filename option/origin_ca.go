@@ -10,9 +10,9 @@ import (
 )
 
 type CloudflareOriginCACertificateProviderOptions struct {
-	// @required
-	//
 	// List of domain names or wildcard domain names to include in the certificate.
+	//
+	// @Required
 	Domain badoption.Listable[string] `json:"domain,omitempty"`
 	// Root directory used to store the issued certificate, private key, and metadata.
 	//

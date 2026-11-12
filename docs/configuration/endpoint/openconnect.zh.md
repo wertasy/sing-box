@@ -8,18 +8,15 @@
 
 ==仅客户端==
 
-## 结构
+### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "openconnect",
   "tag": "oc-client",
-
   "system": false,
   "name": "",
-
-  ... // UDP NAT 字段
-
   "server": "vpn.example.com",
   "flavor": "anyconnect",
   "username": "",
@@ -111,19 +108,24 @@
       "promote": false
     }
   ],
-  "on_demand": false,
+  "on_demand": false
 
   ... // 拨号字段
+  ... // UDP NAT 字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! note ""
 
     当内容只有一项时，可以忽略 JSON 数组 [] 标签。
 
-## 字段
+### 字段
 
-### system
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
+#### system
 
 使用系统接口。
 
@@ -131,13 +133,13 @@
 
 禁用时，sing-box 使用内部网络栈。
 
-### name
+#### name
 
 系统接口的自定义接口名称。
 
 默认使用自动生成的 `oc` 接口名称。
 
-### server
+#### server
 
 ==必填==
 
@@ -145,25 +147,25 @@ OpenConnect VPN 服务器 HTTPS URL。
 
 省略协议时会添加 `https://`。不支持 URL 用户信息、查询和片段。
 
-### flavor
+#### flavor
 
 OpenConnect 协议 flavor，可选值为 `anyconnect`、`gp`、`fortinet`、`f5`、`pulse` 或 `nc`。
 
-默认使用 `anyconnect`。
+- 默认值：`anyconnect`
 
-### username
+#### username
 
 用于填充匹配认证表单字段的用户名。
 
-### password
+#### password
 
 用于填充匹配认证表单字段的密码。
 
-### auth_group
+#### auth_group
 
 认证组，用于在所选 flavor 支持时预选匹配的组、realm、domain 或 gateway 选项。
 
-### cookie
+#### cookie
 
 用于跳过凭据提示并直接连接的现有认证会话。
 
@@ -178,60 +180,13 @@ OpenConnect 协议 flavor，可选值为 `anyconnect`、`gp`、`fortinet`、`f5`
 
 如果服务器拒绝提供的会话，将尝试正常认证。
 
-### token
+#### token
 
 用于自动回答匹配 token 字段或进行 HTTP Bearer 认证的 token 配置。
 
 必须设置 `token.secret` 或 `token.secret_path` 之一。
 
-### token.mode
-
-==必填==
-
-Token 模式，可选值为：
-
-- `totp`：基于时间的一次性密码。
-- `hotp`：基于 HMAC 的一次性密码。
-- `stoken`：RSA SecurID 软件 token。
-- `oidc`：用于 HTTP Bearer 认证的 OIDC access token。
-
-### token.secret
-
-软件 token 密钥。
-
-对于 `totp` 和 `hotp`，可以是 Base32 密钥、带 `base32:` 前缀的密钥或类型匹配的 `otpauth://` URI。
-
-对于 `stoken`，这是编码后的 RSA SecurID CTF token 内容。
-
-对于 `oidc`，这是 access token 值。
-
-与 `token.secret_path` 冲突。
-
-### token.secret_path
-
-软件 token 密钥或 OIDC access token 的路径。
-
-与 `token.secret` 冲突。
-
-### token.pin
-
-`stoken` 模式的 RSA SecurID PIN。
-
-### token.password
-
-`stoken` 模式下用于解密受密码保护的 RSA SecurID token 的密码。
-
-### token.device_id
-
-`stoken` 模式下用于解密设备绑定 RSA SecurID token 的设备 ID。
-
-### token.counter
-
-`hotp` 模式的初始计数器。
-
-为零时，如果 `otpauth://` URI 中存在计数器，则使用该计数器；否则从零开始。
-
-### reported_os
+#### reported_os
 
 所选 flavor 支持时向 VPN 服务器报告的操作系统标识。
 
@@ -239,119 +194,47 @@ Token 模式，可选值为：
 
 默认值根据系统平台选择：Windows 使用 `win`，macOS 使用 `mac-intel`，Android 使用 `android`，iOS 使用 `apple-ios`，其他 64 位或 32 位系统使用 `linux-64` 或 `linux`。
 
-### user_agent
+#### user_agent
 
 所选 flavor 支持时向 VPN 服务器报告的 User-Agent。
 
 默认值由 flavor 决定。AnyConnect、Network Connect、Pulse 和 F5 使用 `AnyConnect-compatible OpenConnect VPN Agent v9.21`；GlobalProtect 使用 `PAN GlobalProtect`；Fortinet 使用 `Mozilla/5.0 SV1`。
 
-### version
+#### version
 
 所选 flavor 支持时，与 `user_agent` 分开报告的客户端版本。
 
-默认使用 `v9.21`。
+- 默认值：`v9.21`
 
-### local_hostname
+#### local_hostname
 
 所选 flavor 支持时向 VPN 服务器报告的本地主机名。
 
 默认使用系统主机名；无法获取时使用 `localhost`。
 
-### mobile
+#### mobile
 
 AnyConnect 移动客户端身份。配置时三个字段均为必填。
 
-### mobile.platform_version
-
-向 AnyConnect 服务器报告的移动操作系统版本。
-
-### mobile.device_type
-
-向 AnyConnect 服务器报告的移动设备型号或类型。
-
-### mobile.device_unique_id
-
-向 AnyConnect 服务器报告的移动设备标识符。
-
-### csd
+#### csd
 
 AnyConnect CSD/host scan 合规性选项。
 
 服务器请求 CSD 时，默认使用内置 CSD 处理。
 
-### csd.wrapper_path
-
-外部 AnyConnect CSD wrapper 可执行文件的路径。
-
-为空时使用内置 CSD 处理。
-
-### hip
+#### hip
 
 GlobalProtect HIP 检查和报告选项。
 
 服务器请求 HIP 时，默认使用内置 HIP 报告。
 
-### hip.wrapper_path
-
-外部 GlobalProtect HIP report wrapper 可执行文件的路径。
-
-为空时使用内置 HIP 报告。
-
-### tncc
+#### tncc
 
 Network Connect TNCC 合规性选项。
 
 服务器请求 TNCC 时，默认使用内置 TNCC 处理。
 
-### tncc.wrapper_path
-
-外部 Network Connect TNCC wrapper 可执行文件的路径。
-
-为空时使用内置 TNCC 处理。
-
-与 `tncc.device_id`、`tncc.user_agent`、`tncc.machine_identification_enabled` 和 `tncc.certificates` 冲突。
-
-### tncc.device_id
-
-内置 TNCC 处理程序报告的设备 ID。
-
-与 `tncc.wrapper_path` 冲突。
-
-### tncc.user_agent
-
-内置 TNCC 处理程序使用的 User-Agent。
-
-默认使用 `Neoteris HC Http`。
-
-与 `tncc.wrapper_path` 冲突。
-
-### tncc.machine_identification_enabled
-
-启用内置 TNCC 机器标识，包括平台、主机名和观测到的 MAC 地址。
-
-与 `tncc.wrapper_path` 冲突。
-
-### tncc.certificates
-
-内置 TNCC 处理程序用于回答证书请求的机器证书。
-
-需要启用 `tncc.machine_identification_enabled`。
-
-与 `tncc.wrapper_path` 冲突。
-
-### tncc.certificates.certificate
-
-PEM 格式的 TNCC 机器证书内容。
-
-与 `tncc.certificates.certificate_path` 冲突。
-
-### tncc.certificates.certificate_path
-
-PEM 格式的 TNCC 机器证书路径。
-
-与 `tncc.certificates.certificate` 冲突。
-
-### fortinet_host_check
+#### fortinet_host_check
 
 Fortinet hostcheck 结果覆盖选项，在服务器要求时提交。
 
@@ -359,29 +242,17 @@ Fortinet hostcheck 结果覆盖选项，在服务器要求时提交。
 
 部分 Fortinet 服务器只会要求可识别的 FortiClient User-Agent 执行 hostcheck。服务器策略有要求时请配置 `user_agent`。
 
-### fortinet_host_check.hostcheck
-
-Fortinet hostcheck 结果字符串。
-
-通常格式为 `<security-status>,<os-version>`，例如 `0100,10.0.19042`。`security-status` 包含四个 `0` 或 `1` 字符，依次表示第三方防火墙、第三方杀毒软件、FortiClient 防火墙和 FortiClient 杀毒软件。
-
-### fortinet_host_check.check_virtual_desktop
-
-Fortinet virtual desktop 检查结果字符串。
-
-FortiClient 通常发送以冒号分隔的 MAC 地址，多个地址使用 `|` 连接，例如 `74:78:27:4d:81:93|84:1b:77:3a:95:84`。
-
-### no_udp
+#### no_udp
 
 禁用 DTLS 或 ESP 辅助数据通道，仅使用 TLS 数据通道。
 
-### dtls_local_port
+#### dtls_local_port
 
 直连 DTLS 或 ESP 辅助数据通道使用的本地 UDP 端口。
 
 默认自动选择临时端口。
 
-### compression_disabled
+#### compression_disabled
 
 禁用 AnyConnect 压缩协商。
 
@@ -389,36 +260,36 @@ FortiClient 通常发送以冒号分隔的 MAC 地址，多个地址使用 `|` �
 
 与设置为 `all` 的 `compression_mode` 冲突。
 
-### compression_mode
+#### compression_mode
 
 AnyConnect 压缩模式，可选值为：
 
 - `stateless`：声明支持无状态 `oc-lz4` 和 `lzs` 压缩。
 - `all`：额外声明支持 CSTP 有状态 `deflate` 压缩。
 
-默认使用 `stateless`。
+- 默认值：`stateless`
 
-### ipv6_disabled
+#### ipv6_disabled
 
 禁用请求和使用 IPv6 隧道配置。
 
-### http_keepalive_disabled
+#### http_keepalive_disabled
 
 在认证和配置请求中禁用 HTTP 连接复用。
 
-### xml_post_disabled
+#### xml_post_disabled
 
 禁用 AnyConnect XML POST 认证，并直接使用旧版 GET 流程开始认证。
 
-### external_auth_disabled
+#### external_auth_disabled
 
 禁用 AnyConnect、GlobalProtect 和 Fortinet 的 SSO、SAML 等外部浏览器认证。
 
-### password_authentication_disabled
+#### password_authentication_disabled
 
 如果服务器返回非成功的认证表单，则中止 AnyConnect 认证，与 OpenConnect `--no-passwd` 行为一致。
 
-### tcp_keep_alive_enabled
+#### tcp_keep_alive_enabled
 
 为直接 VPN 服务器连接启用 TCP keep alive。
 
@@ -426,11 +297,11 @@ AnyConnect 压缩模式，可选值为：
 
 与 `disable_tcp_keep_alive` 冲突。
 
-### pfs
+#### pfs
 
 要求 TLS 1.2 及更早版本使用具有前向保密性的 TLS 密码套件。
 
-### mtu
+#### mtu
 
 首选隧道 MTU。
 
@@ -438,15 +309,15 @@ AnyConnect 压缩模式，可选值为：
 
 非零值小于 `576` 时按 `576` 处理。最大值为 `65535`。
 
-### base_mtu
+#### base_mtu
 
 扣除外层 IP、传输和协议开销后，用于计算 AnyConnect、GlobalProtect、F5 和 Fortinet 隧道 MTU 的基础路径 MTU。
 
-默认使用 `1406`。
-
 这些 flavor 会将小于 `1280` 的值按 `1280` 处理。最大值为 `65535`。
 
-### dpd_interval
+- 默认值：`1406`
+
+#### dpd_interval
 
 覆盖 Dead Peer Detection 间隔。
 
@@ -454,15 +325,15 @@ AnyConnect 压缩模式，可选值为：
 
 大于零且小于 `2s` 的值按 `2s` 处理。值不得为负数。
 
-### reconnect_timeout
+#### reconnect_timeout
 
 重连尝试失败后允许累计使用的最大退避时间。
 
-默认使用 `300s`。
-
 值不得为负数。
 
-### trojan_interval
+- 默认值：`300s`
+
+#### trojan_interval
 
 覆盖 GlobalProtect HIP report 或 Network Connect TNCC check 的执行间隔。
 
@@ -470,174 +341,45 @@ AnyConnect 压缩模式，可选值为：
 
 值不得为负数。
 
-### queue_length
+#### queue_length
 
 VPN transport 与隧道接口之间的入站和出站数据包队列长度。
 
-默认使用 `32`。
+- 默认值：`32`
 
-### allow_insecure_crypto
+#### allow_insecure_crypto
 
 启用旧版 VPN 服务器所需的弱 TLS 和 DTLS 密码套件及 TLS 1.0 兼容性。
 
 默认禁用；未启用时会拒绝低于 TLS 1.2 的版本。
 
-### tls
+#### tls
 
 OpenConnect TLS 配置。
 
-### tls.insecure
-
-禁用 VPN 服务器证书和主机名验证。
-
-默认禁用。应尽可能使用 `tls.certificate_authority` 或 `tls.peer_fingerprint`。
-
-### tls.server_name
-
-用于 TLS SNI 和证书主机名验证的服务器名称。
-
-默认使用 `server` 中的主机名。
-
-### tls.peer_fingerprint
-
-允许的服务器证书指纹。可以指定单个字符串或列表。
-
-支持的格式：
-
-- 与 OpenConnect `--servercert` 兼容的无前缀 SHA-1 证书指纹。
-- `sha1:<hex>`：SHA-1 SPKI 指纹。
-- `sha256:<hex>`：SHA-256 SPKI 指纹。
-- `pin-sha256:<base64>`：Base64 编码的 SHA-256 SPKI pin。
-
-每种格式的编码指纹均可缩写为至少四个字符的前缀。配置后，对端证书必须匹配其中一个指纹；匹配的指纹可以授权未通过其他方式信任的证书。
-
-### tls.system_trust_disabled
-
-禁用系统 CA 证书池。
-
-启用时，使用 `tls.certificate_authority` 或 `tls.peer_fingerprint` 建立信任。
-
-### tls.certificate_authority
-
-PEM 格式的附加受信任 CA 证书内容。
-
-这些证书会添加到系统证书池。
-
-与 `tls.certificate_authority_path` 冲突。
-
-### tls.certificate_authority_path
-
-PEM 格式的附加受信任 CA 证书路径。
-
-这些证书会添加到系统证书池。
-
-与 `tls.certificate_authority` 冲突。
-
-### tls.client_certificate
-
-PEM 格式的客户端证书链内容。
-
-与 `tls.client_certificate_path` 冲突。
-
-### tls.client_certificate_path
-
-PEM 格式的客户端证书链路径。
-
-与 `tls.client_certificate` 冲突。
-
-### tls.client_key
-
-PEM 格式的客户端私钥内容。
-
-与 `tls.client_key_path` 冲突。
-
-### tls.client_key_path
-
-PEM 格式的客户端私钥路径。
-
-与 `tls.client_key` 冲突。
-
-客户端证书和私钥必须同时设置或同时为空。
-
-### tls.client_key_password
-
-加密客户端私钥的密码。
-
-### tls.mca_certificate
-
-PEM 格式的 AnyConnect 多证书认证（MCA）证书链内容。
-
-与 `tls.mca_certificate_path` 冲突。
-
-### tls.mca_certificate_path
-
-PEM 格式的 AnyConnect 多证书认证（MCA）证书链路径。
-
-与 `tls.mca_certificate` 冲突。
-
-### tls.mca_key
-
-PEM 格式的 AnyConnect 多证书认证（MCA）私钥内容。
-
-与 `tls.mca_key_path` 冲突。
-
-### tls.mca_key_path
-
-PEM 格式的 AnyConnect 多证书认证（MCA）私钥路径。
-
-与 `tls.mca_key` 冲突。
-
-MCA 证书和私钥必须同时设置或同时为空。
-
-### tls.mca_key_password
-
-加密 MCA 私钥的密码。
-
-### form_entries
+#### form_entries
 
 认证表单字段覆盖。
 
 设置 `submission_key` 时按该字段匹配，否则按 `form_id` 和 `name` 的组合匹配。后面的匹配项优先。
 
-### form_entries.form_id
-
-`form_entries.submission_key` 为空时，与 `form_entries.name` 一起使用的认证表单标识符。
-
-### form_entries.submission_key
-
-认证字段提交键。
-
-`form_entries.submission_key` 或 `form_entries.form_id` 与 `form_entries.name` 的组合之一必填。
-
-### form_entries.name
-
-`form_entries.submission_key` 为空时，与 `form_entries.form_id` 一起使用的认证字段名称。
-
-### form_entries.value
-
-自动提供给匹配认证字段的值。
-
-与 `form_entries.promote` 冲突。
-
-### form_entries.promote
-
-交互询问匹配的认证字段，而不是自动提供值。
-
-与 `form_entries.value` 冲突。
-
-### on_demand
+#### on_demand
 
 !!! question "自 sing-box 1.15.0 起"
 
 允许该 endpoint 在需要时断开连接。
 
-## UDP NAT 字段
+<!-- AUTO-GENERATED-CONFIG-END -->
+
+### UDP NAT 字段
 
 参阅 [UDP NAT 字段](/zh/configuration/shared/udp-nat/)。
 
-## 拨号字段
+### 拨号字段
 
-参阅[拨号字段](/zh/configuration/shared/dial/)了解详情。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ## 交互式认证
 

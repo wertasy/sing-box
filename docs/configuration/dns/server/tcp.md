@@ -48,10 +48,12 @@ If domain name is used, `domain_resolver` must also be set to resolve IP address
 
 The port of the DNS server.
 
-`53` will be used by default.
+- Default: `53`
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

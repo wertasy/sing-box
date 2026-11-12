@@ -4,28 +4,31 @@
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
-"type": "naive",
-"tag": "naive-in",
-"network": "udp",
+  "type": "naive",
+  "tag": "naive-in",
+  "users": [
+    {
+      "username": "sekai",
+      "password": "password"
+    }
+  ],
+  "network": "udp",
+  "quic_congestion_control": "",
+  "tls": {}
 
-... // 监听字段
-
-"users": [
-{
-"username": "sekai",
-"password": "password"
-}
-],
-"quic_congestion_control": "",
-"tls": {}
+  ... // 监听字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 监听字段
 
-参阅 [监听字段](/zh/configuration/shared/listen/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 
@@ -56,7 +59,7 @@ QUIC 拥塞控制算法。
 | `cubic`        | CUBIC              |
 | `reno`         | New Reno           |
 
-默认使用 `bbr`。
+- 默认值：`bbr`
 
 #### tls
 

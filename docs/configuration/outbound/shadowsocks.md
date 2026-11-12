@@ -1,10 +1,10 @@
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "shadowsocks",
   "tag": "ss-out",
-  
   "server": "127.0.0.1",
   "server_port": 1080,
   "method": "2022-blake3-aes-128-gcm",
@@ -13,11 +13,12 @@
   "plugin_opts": "",
   "network": "udp",
   "udp_over_tcp": false | {},
-  "multiplex": {},
+  "multiplex": {}
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -104,4 +105,6 @@ See [Multiplex](/configuration/shared/multiplex#outbound) for details.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

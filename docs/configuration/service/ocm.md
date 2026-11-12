@@ -12,24 +12,27 @@ It handles OAuth authentication with OpenAI's API on your local machine while al
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "ocm",
-
-  ... // Listen Fields
-
+  "detour": "",
+  "tls": {},
   "credential_path": "",
-  "usages_path": "",
   "users": [],
   "headers": {},
-  "detour": "",
-  "tls": {}
+  "usages_path": ""
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

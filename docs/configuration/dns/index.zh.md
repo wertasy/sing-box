@@ -117,7 +117,7 @@ LRU 缓存容量。
 
 过期缓存条目可被乐观提供的最长时间。
 
-默认使用 `3d`。
+- 默认值：`3d`
 
 #### timeout
 
@@ -125,9 +125,9 @@ LRU 缓存容量。
 
 每次 DNS 查询的默认超时时间。
 
-默认使用 `10s`。
-
 可被 `rules.[].timeout`（DNS 规则动作）或 `domain_resolver.timeout` 覆盖。
+
+- 默认值：`10s`
 
 #### reverse_mapping
 

@@ -75,16 +75,18 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tun",
   "tag": "tun-in",
   "interface_name": "tun0",
+  "netns": "",
+  "mtu": 9000,
   "address": [
     "172.18.0.1/30",
     "fdfe:dcba:9876::1/126"
   ],
-  "mtu": 9000,
   "dns_mode": "hijack",
   "dns_address": [
     "172.18.0.2",
@@ -111,22 +113,16 @@ icon: material/new-box
     "::/1",
     "8000::/1"
   ],
-
+  "route_address_set": [
+    "geoip-cloudflare"
+  ],
   "route_exclude_address": [
     "192.168.0.0/16",
     "fc00::/7"
   ],
-  "route_address_set": [
-    "geoip-cloudflare"
-  ],
   "route_exclude_address_set": [
     "geoip-cn"
   ],
-  "endpoint_independent_nat": false,
-
-  ... // UDP NAT 字段
-
-  "multi_queue": false,
   "include_interface": [
     "lan0"
   ],
@@ -161,6 +157,7 @@ icon: material/new-box
   "exclude_mac_address": [
     "66:77:88:99:aa:bb"
   ],
+  "multi_queue": false,
   "platform": {
     "http_proxy": {
       "enabled": false,
@@ -170,9 +167,11 @@ icon: material/new-box
       "match_domain": []
     }
   },
-
-  // 已弃用
   "stack": "system",
+
+  ... // UDP NAT 字段
+
+  // Deprecated
   "gso": false,
   "inet4_address": [
     "172.19.0.1/30"
@@ -194,10 +193,10 @@ icon: material/new-box
   "inet6_route_exclude_address": [
     "fc00::/7"
   ],
-  
-  ... // 监听字段
+  "endpoint_independent_nat": false
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! note ""
 
@@ -318,8 +317,6 @@ TUN 接口上 DNS 的处理方式。
 
 #### auto_route
 
-设置到 Tun 的默认路由。
-
 !!! quote ""
 
     为避免流量环回，请设置 `route.auto_detect_interface` 或 `route.default_interface` 或 `outbound.bind_interface`。
@@ -332,13 +329,15 @@ TUN 接口上 DNS 的处理方式。
 
   在 Linux 上始终推荐使用 `auto_redirect`，它提供更好的路由， 更高的性能（优于 tproxy）， 并避免 TUN 与 Docker 桥接网络冲突。
 
+设置到 Tun 的默认路由。
+
 #### iproute2_table_index
 
 !!! question "自 sing-box 1.10.0 起"
 
 `auto_route` 生成的 iproute2 路由表索引。
 
-默认使用 `2022`。
+- 默认值：`2022`
 
 #### iproute2_rule_index
 
@@ -346,7 +345,7 @@ TUN 接口上 DNS 的处理方式。
 
 `auto_route` 生成的 iproute2 规则起始索引。
 
-默认使用 `9000`。
+- 默认值：`9000`
 
 #### auto_redirect
 
@@ -406,7 +405,7 @@ TUN 接口上 DNS 的处理方式。
 
 `auto_redirect` 预匹配使用的 NFQueue 编号。
 
-默认使用 `100`。
+- 默认值：`100`
 
 #### auto_redirect_iproute2_fallback_rule_index
 
@@ -417,7 +416,7 @@ TUN 接口上 DNS 的处理方式。
 此规则在系统默认规则（32766: main，32767: default）之后检查，
 仅当系统路由表中未找到路由时才将流量路由到 sing-box 路由表。
 
-默认使用 `32768`。
+- 默认值：`32768`
 
 #### exclude_mptcp
 
@@ -730,58 +729,6 @@ TCP/IP 栈。
     仅在 Apple 平台图形客户端中支持。
 
 代理的主机名列表。
-
-#### sniff
-
-!!! failure "已在 sing-box 1.11.0 废弃"
-
-    入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
-
-启用协议探测。
-
-参阅 [协议探测](/zh/configuration/route/sniff/)
-
-#### sniff_override_destination
-
-!!! failure "已在 sing-box 1.11.0 废弃"
-
-    入站字段已废弃且将在 sing-box 1.12.0 中被移除。
-
-用探测出的域名覆盖连接目标地址。
-
-如果域名无效（如 Tor），将不生效。
-
-#### sniff_timeout
-
-!!! failure "已在 sing-box 1.11.0 废弃"
-
-    入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
-
-探测超时时间。
-
-默认使用 300ms。
-
-#### domain_strategy
-
-!!! failure "已在 sing-box 1.11.0 废弃"
-
-    入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
-
-可选值： `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`。
-
-如果设置，请求的域名将在路由之前解析为 IP。
-
-如果 `sniff_override_destination` 生效，它的值将作为后备。
-
-#### udp_disable_domain_unmapping
-
-!!! failure "已在 sing-box 1.11.0 废弃"
-
-    入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
-
-如果启用，对于地址为域的 UDP 代理请求，将在响应中发送原始包地址而不是映射的域。
-
-此选项用于兼容不支持接收带有域地址的 UDP 包的客户端，如 Surge。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

@@ -1,10 +1,10 @@
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "selector",
   "tag": "select",
-
   "outbounds": [
     "proxy-a",
     "proxy-b",
@@ -14,6 +14,7 @@
   "interrupt_exist_connections": false
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! quote ""
 

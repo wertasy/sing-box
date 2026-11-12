@@ -6,11 +6,11 @@
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "ssh",
   "tag": "ssh-out",
-  
   "server": "127.0.0.1",
   "server_port": 22,
   "user": "root",
@@ -25,11 +25,12 @@
   "client_version": "SSH-2.0-OpenSSH_7.4p1",
   "cipher": [],
   "mac": [],
-  "kex_algorithm": [],
+  "kex_algorithm": []
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -100,4 +101,6 @@ Allowed key exchange algorithms. Default values are used if empty.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

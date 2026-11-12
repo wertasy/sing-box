@@ -214,7 +214,6 @@ TLS 版本值：
 
 #### insecure
 
-
 ==仅客户端==
 
 接受任何服务器证书。
@@ -251,7 +250,6 @@ TLS 版本值：
 
 #### curve_preferences
 
-
 !!! question "自 sing-box 1.13.0 起"
 
 支持的密钥交换机制集合。列表的顺序被忽略，密钥交换机制通过 Golang 的内部偏好顺序从此列表中选择。
@@ -271,7 +269,6 @@ TLS 版本值：
 
 #### certificate_path
 
-
 !!! note ""
 
     文件更改时将自动重新加载。
@@ -279,7 +276,6 @@ TLS 版本值：
 服务器证书链路径，PEM 格式。
 
 #### client_authentication
-
 
 !!! question "自 sing-box 1.13.0 起"
 
@@ -300,13 +296,9 @@ TLS 版本值：
 
 #### client_certificate
 
-
 !!! question "自 sing-box 1.13.0 起"
 
 ==仅客户端==
-
-客户端证书链行数组，PEM 格式。
-
 
 !!! question "自 sing-box 1.13.0 起"
 
@@ -314,15 +306,13 @@ TLS 版本值：
 
 客户端证书链行数组，PEM 格式。
 
-#### client_certificate_path
+客户端证书链行数组，PEM 格式。
 
+#### client_certificate_path
 
 !!! question "自 sing-box 1.13.0 起"
 
 ==仅客户端==
-
-客户端证书链路径，PEM 格式。
-
 
 !!! question "自 sing-box 1.13.0 起"
 
@@ -332,10 +322,11 @@ TLS 版本值：
 
     文件更改时将自动重新加载。
 
+客户端证书链路径，PEM 格式。
+
 客户端证书链路径列表，PEM 格式。
 
 #### client_certificate_sha256
-
 
 !!! question "自 sing-box 1.15.0 起"
 
@@ -346,7 +337,6 @@ TLS 版本值：
 哈希基于整个 DER 编码的证书计算，参阅 [certificate_sha256](#certificate_sha256)。
 
 #### client_certificate_public_key_sha256
-
 
 !!! question "自 sing-box 1.13.0 起"
 
@@ -366,7 +356,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 #### key
 
-
 ==仅服务器==
 
 !!! note ""
@@ -377,7 +366,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 #### key_path
 
-
 ==仅服务器==
 
 !!! note ""
@@ -387,7 +375,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 服务器私钥路径，PEM 格式。
 
 #### kernel_tx
-
 
 !!! question "自 sing-box 1.13.0 起"
 
@@ -407,7 +394,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 #### kernel_rx
 
-
 !!! question "自 sing-box 1.13.0 起"
 
 !!! quote ""
@@ -426,19 +412,21 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 #### handshake_timeout
 
-
 !!! question "自 sing-box 1.14.0 起"
 
 TLS 握手超时，采用 golang 的 Duration 格式。
 
-默认使用 `15s`。
+- 默认值：`15s`
 
 #### certificate_provider
-
 
 !!! question "自 sing-box 1.14.0 起"
 
 ==仅服务器==
+
+!!! info "QUIC 支持"
+
+    只有 ECH 在 QUIC 中被支持.
 
 字符串或对象。
 
@@ -448,16 +436,19 @@ TLS 握手超时，采用 golang 的 Duration 格式。
 
 ## 自定义 TLS 支持
 
-!!! info "QUIC 支持"
-
-    只有 ECH 在 QUIC 中被支持.
-
 #### engine
-
 
 !!! question "自 sing-box 1.14.0 起"
 
 ==仅客户端==
+
+!!! note ""
+
+    `windows` 通过 SSPI 使用 Schannel，仅在 Windows build 17763 及以上可用，包括 Windows 10 版本 1809、Windows Server 2019 及后续版本。
+
+!!! note ""
+
+    TLS 1.3 仅在 Windows 11 或 Windows Server 2022 及后续版本上协商。
 
 要使用的 TLS 引擎。
 
@@ -491,25 +482,15 @@ TLS 握手超时，采用 golang 的 Duration 格式。
 * `utls`
 * `reality`
 
-!!! note ""
-
-    `windows` 通过 SSPI 使用 Schannel，仅在 Windows build 17763 及以上可用，包括 Windows 10 版本 1809、Windows Server 2019 及后续版本。
-
-!!! note ""
-
-    TLS 1.3 仅在 Windows 11 或 Windows Server 2022 及后续版本上协商。
-
 默认版本范围为 TLS 1.2 到 TLS 1.3，与 `go` 引擎一致。
 
 #### disable_sni
-
 
 ==仅客户端==
 
 不要在 ClientHello 中发送服务器名称.
 
 #### certificate_sha256
-
 
 !!! question "自 sing-box 1.15.0 起"
 
@@ -531,7 +512,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 #### certificate_public_key_sha256
 
-
 !!! question "自 sing-box 1.13.0 起"
 
 ==仅客户端==
@@ -550,7 +530,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 #### client_key
 
-
 !!! question "自 sing-box 1.13.0 起"
 
 ==仅客户端==
@@ -559,7 +538,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 #### client_key_path
 
-
 !!! question "自 sing-box 1.13.0 起"
 
 ==仅客户端==
@@ -567,7 +545,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 客户端私钥路径，PEM 格式。
 
 #### utls
-
 
 ==仅客户端==
 
@@ -582,10 +559,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
     如需 TLS 指纹抵抗，请改用 [NaiveProxy](/zh/configuration/inbound/naive/)。
 
-uTLS 是 "crypto/tls" 的一个分支，它提供了 ClientHello 指纹识别阻力。
-
-可用的指纹值：
-
 !!! warning "已在 sing-box 1.10.0 移除"
 
     一些旧 chrome 指纹已被删除，并将会退到 chrome：
@@ -595,6 +568,10 @@ uTLS 是 "crypto/tls" 的一个分支，它提供了 ClientHello 指纹识别阻
     :material-close: chrome_padding_psk_shuffle  
     :material-close: chrome_pq  
     :material-close: chrome_pq_psk
+
+uTLS 是 "crypto/tls" 的一个分支，它提供了 ClientHello 指纹识别阻力。
+
+可用的指纹值：
 
 * chrome
 * firefox
@@ -622,13 +599,11 @@ ECH 密钥和配置可以通过 `sing-box generate ech-keypair` 生成。
 
 #### key
 
-
 ==仅服务器==
 
 ECH 密钥行数组，PEM 格式。
 
 #### key_path
-
 
 ==仅服务器==
 
@@ -640,7 +615,6 @@ ECH 密钥路径，PEM 格式。
 
 #### config
 
-
 ==仅客户端==
 
 ECH 配置行数组，PEM 格式。
@@ -649,7 +623,6 @@ ECH 配置行数组，PEM 格式。
 
 #### config_path
 
-
 ==仅客户端==
 
 ECH 配置路径，PEM 格式。
@@ -657,7 +630,6 @@ ECH 配置路径，PEM 格式。
 如果为空，将尝试从 DNS 加载。
 
 #### query_server_name
-
 
 !!! question "自 sing-box 1.13.0 起"
 
@@ -668,7 +640,6 @@ ECH 配置路径，PEM 格式。
 如果为空，使用 `server_name` 查询。
 
 #### dynamic_record_sizing_disabled
-
 
 !!! failure "已在 sing-box 1.12.0 废弃"
 
@@ -682,7 +653,6 @@ ECH 配置路径，PEM 格式。
 - 已废弃。
 
 #### fragment
-
 
 !!! question "自 sing-box 1.12.0 起"
 
@@ -703,17 +673,15 @@ ECH 配置路径，PEM 格式。
 
 #### fragment_fallback_delay
 
-
 !!! question "自 sing-box 1.12.0 起"
 
 ==仅客户端==
 
 当 TLS 分段无法自动确定等待时间时使用的回退值。
 
-默认使用 `500ms`。
+- 默认值：`500ms`
 
 #### pq_signature_schemes_enabled
-
 
 !!! failure "已在 sing-box 1.12.0 废弃"
 
@@ -725,7 +693,6 @@ ECH 配置路径，PEM 格式。
 
 #### record_fragment
 
-
 !!! question "自 sing-box 1.12.0 起"
 
 ==仅客户端==
@@ -733,7 +700,6 @@ ECH 配置路径，PEM 格式。
 将 TLS 握手分段为多个 TLS 记录以绕过防火墙。
 
 #### spoof
-
 
 !!! question "自 sing-box 1.14.0 起"
 
@@ -750,7 +716,6 @@ Linux 上需要 `CAP_NET_RAW` 和 `CAP_NET_ADMIN`，macOS 上需要 root，Windo
 不支持 Windows ARM64。
 
 #### spoof_method
-
 
 !!! question "自 sing-box 1.14.0 起"
 
@@ -860,7 +825,6 @@ MAC 密钥。
 
 #### profile
 
-
 !!! question "自 sing-box 1.14.0 起"
 
 用于证书签发的 ACME 配置文件。
@@ -876,7 +840,6 @@ MAC 密钥。
 
 #### handshake
 
-
 ==仅服务器==
 
 ==必填==
@@ -884,7 +847,6 @@ MAC 密钥。
 握手服务器地址和 [拨号参数](/zh/configuration/shared/dial/)。
 
 #### private_key
-
 
 ==仅服务器==
 
@@ -894,13 +856,11 @@ MAC 密钥。
 
 #### short_id
 
-
 ==必填==
 
 一个零到八位的十六进制字符串。
 
 #### max_time_difference
-
 
 ==仅服务器==
 
@@ -909,7 +869,6 @@ MAC 密钥。
 如果为空则禁用检查。
 
 #### public_key
-
 
 ==仅客户端==
 

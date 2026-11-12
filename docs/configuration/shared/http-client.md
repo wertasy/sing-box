@@ -12,20 +12,20 @@ When string, the tag of a shared [HTTP Client](/configuration/shared/http-client
 
 When object:
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "engine": "",
   "version": 0,
   "disable_version_fallback": false,
   "headers": {},
-
-  ... // HTTP2 Fields
-
-  "tls": {},
+  "tls": {}
 
   ... // Dial Fields
+  ... // HTTP2 Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -33,6 +33,10 @@ When object:
 <!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### engine
+
+!!! warning ""
+
+    Experimental only: do not use in hot paths on iOS and tvOS.
 
 HTTP engine to use.
 
@@ -42,10 +46,6 @@ Values:
 * `apple`
 
 `apple` uses NSURLSession, only available on Apple platforms.
-
-!!! warning ""
-
-    Experimental only: do not use in hot paths on iOS and tvOS.
 
 Supported fields:
 
@@ -82,9 +82,9 @@ HTTP version.
 
 Available values: `1`, `2`, `3`.
 
-`2` is used by default.
-
 When `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).
+
+- Default: `2`
 
 #### disable_version_fallback
 
@@ -95,6 +95,9 @@ Disable automatic fallback to lower HTTP version.
 Custom HTTP headers.
 
 `Host` header is used as request host.
+
+#### tag
+
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -116,4 +119,6 @@ See [TLS](/configuration/shared/tls/#outbound) for details.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

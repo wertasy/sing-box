@@ -12,21 +12,24 @@ See https://github.com/Shadowsocks-NET/shadowsocks-specs/blob/main/2023-1-shadow
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "ssm-api",
-  
-  ... // Listen Fields
-  
   "servers": {},
   "cache_path": "",
   "tls": {}
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

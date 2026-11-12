@@ -23,7 +23,9 @@ See also: [Resolved DNS Server](/configuration/dns/server/resolved/)
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

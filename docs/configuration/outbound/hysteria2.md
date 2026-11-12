@@ -107,7 +107,7 @@ Conflicts with `server_port` and `realm`.
 
 Port hopping interval.
 
-`30s` is used by default.
+- Default: `30s`
 
 #### hop_interval_max
 
@@ -139,7 +139,7 @@ QUIC traffic obfuscator password.
 
 Minimum on-wire packet size in bytes. Gecko only.
 
-`512` is used by default.
+- Default: `512`
 
 #### obfs.max_packet_size
 
@@ -147,7 +147,7 @@ Minimum on-wire packet size in bytes. Gecko only.
 
 Maximum on-wire packet size in bytes. Gecko only.
 
-`1200` is used by default.
+- Default: `1200`
 
 #### password
 
@@ -182,7 +182,7 @@ See [QUIC Fields](/configuration/shared/quic/) for details.
 
 BBR congestion control algorithm profile, one of `conservative` `standard` `aggressive`.
 
-`standard` is used by default.
+- Default: `standard`
 
 #### brutal_debug
 
@@ -191,6 +191,11 @@ Enable debug information logging for Hysteria Brutal CC.
 #### disable_chrome_parrot
 
 !!! question "Since sing-box 1.14.0"
+
+!!! warning ""
+
+    Chrome does not declare support for Ed25519, so a server using an Ed25519 certificate will fail the
+    handshake. Use an ECDSA or RSA certificate instead.
 
 Disable Chrome QUIC fingerprint parroting.
 
@@ -201,11 +206,6 @@ To match Chrome, the client uses Chrome's own QUIC parameters, which override so
 `idle_timeout` is fixed at 30 seconds, `max_concurrent_streams` and `initial_packet_size` are replaced by
 Chrome's values, and the receive windows start at Chrome's initial values before growing to the configured
 maximums.
-
-!!! warning ""
-
-    Chrome does not declare support for Ed25519, so a server using an Ed25519 certificate will fail the
-    handshake. Use an ECDSA or RSA certificate instead.
 
 #### realm
 
@@ -265,13 +265,13 @@ Enable port mapping.
 
 Timeout for gateway discovery and mapping operations.
 
-`10s` is used by default.
+- Default: `10s`
 
 #### realm.port_mapping.lifetime
 
 Lease lifetime of the mapping.
 
-`10m` is used by default.
+- Default: `10m`
 
 #### realm.http_client
 
@@ -283,4 +283,6 @@ See [HTTP Client](/configuration/shared/http-client/) for details.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

@@ -1,12 +1,10 @@
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tuic",
   "tag": "tuic-in",
-  
-  ... // Listen Fields
-
   "users": [
     {
       "name": "sekai",
@@ -18,15 +16,19 @@
   "auth_timeout": "3s",
   "zero_rtt_handshake": false,
   "heartbeat": "10s",
-  "tls": {},
+  "tls": {}
 
+  ... // Listen Fields
   ... // QUIC Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 
@@ -53,28 +55,28 @@ QUIC congestion control algorithm
 
 One of: `cubic`, `new_reno`, `bbr`
 
-`cubic` is used by default.
+- Default: `cubic`
 
 #### auth_timeout
 
 How long the server should wait for the client to send the authentication command
 
-`3s` is used by default.
+- Default: `3s`
 
 #### zero_rtt_handshake
-
-Enable 0-RTT QUIC connection handshake on the client side
-This is not impacting much on the performance, as the protocol is fully multiplexed
 
 !!! warning ""
     Disabling this is highly recommended, as it is vulnerable to replay attacks.
     See [Attack of the clones](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/#attack-of-the-clones)
 
+Enable 0-RTT QUIC connection handshake on the client side
+This is not impacting much on the performance, as the protocol is fully multiplexed
+
 #### heartbeat
 
 Interval for sending heartbeat packets for keeping the connection alive
 
-`10s` is used by default.
+- Default: `10s`
 
 #### tls
 

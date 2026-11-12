@@ -2,12 +2,22 @@ package option
 
 import "github.com/sagernet/sing/common/json/badoption"
 
+// @Tag select
 type SelectorOutboundOptions struct {
-	// @required
-	//
 	// List of outbound tags to select.
+	//
+	// @Example:
+	//    [
+	//      "proxy-a",
+	//      "proxy-b",
+	//      "proxy-c"
+	//    ]
+	//
+	// @Required
 	Outbounds []string `json:"outbounds" reference:"outbound"`
 	// The default outbound tag. The first outbound will be used if empty.
+	//
+	// @Example: "proxy-c"
 	Default string `json:"default,omitempty" reference:"outbound"`
 	// Interrupt existing connections when the selected outbound has changed.
 	//
@@ -15,10 +25,18 @@ type SelectorOutboundOptions struct {
 	InterruptExistConnections bool `json:"interrupt_exist_connections,omitempty"`
 }
 
+// @Tag auto
 type URLTestOutboundOptions struct {
-	// @required
-	//
 	// List of outbound tags to test.
+	//
+	// @Example:
+	//    [
+	//      "proxy-a",
+	//      "proxy-b",
+	//      "proxy-c"
+	//    ]
+	//
+	// @Required
 	Outbounds []string `json:"outbounds" reference:"outbound"`
 	// The URL to test. `https://www.gstatic.com/generate_204` will be used if empty.
 	URL string `json:"url,omitempty"`

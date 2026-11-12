@@ -1,13 +1,12 @@
 package option
 
+// @Tag ss-in
 type ShadowsocksInboundOptions struct {
 	ListenOptions
 	// Listen network, one of `tcp` `udp`.
 	//
 	// Both if empty.
 	Network NetworkList `json:"network,omitempty"`
-	// @required
-	//
 	// | Method                        | Key Length |
 	// |-------------------------------|------------|
 	// | 2022-blake3-aes-128-gcm       | 16         |
@@ -19,16 +18,24 @@ type ShadowsocksInboundOptions struct {
 	// | aes-256-gcm                   | /          |
 	// | chacha20-ietf-poly1305        | /          |
 	// | xchacha20-ietf-poly1305       | /          |
-	Method string `json:"method" enum:"none,aes-128-gcm,aes-192-gcm,aes-256-gcm,chacha20-ietf-poly1305,xchacha20-ietf-poly1305,2022-blake3-aes-128-gcm,2022-blake3-aes-256-gcm,2022-blake3-chacha20-poly1305"`
-	// @required
 	//
+	// @Example: "2022-blake3-aes-128-gcm"
+	//
+	// @Required
+	Method string `json:"method" enum:"none,aes-128-gcm,aes-192-gcm,aes-256-gcm,chacha20-ietf-poly1305,xchacha20-ietf-poly1305,2022-blake3-aes-128-gcm,2022-blake3-aes-256-gcm,2022-blake3-chacha20-poly1305"`
 	// | Method        | Password Format                                |
 	// |---------------|------------------------------------------------|
 	// | none          | /                                              |
 	// | 2022 methods  | `sing-box generate rand --base64 <Key Length>` |
 	// | other methods | any string                                     |
-	Password     string                   `json:"password,omitempty"`
-	Users        []ShadowsocksUser        `json:"users,omitempty"`
+	//
+	// @Example: "8JCsPssfgS8tiRwiMlhARg=="
+	//
+	// @Required
+	Password string `json:"password,omitempty"`
+	// @Omit
+	Users []ShadowsocksUser `json:"users,omitempty"`
+	// @Omit
 	Destinations []ShadowsocksDestination `json:"destinations,omitempty"`
 	// See [Multiplex](/configuration/shared/multiplex#inbound) for details.
 	Multiplex *InboundMultiplexOptions `json:"multiplex,omitempty"`
@@ -47,11 +54,10 @@ type ShadowsocksDestination struct {
 	ServerOptions
 }
 
+// @Tag ss-out
 type ShadowsocksOutboundOptions struct {
 	DialerOptions
 	ServerOptions
-	// @required
-	//
 	// Encryption methods:
 	//
 	// * `2022-blake3-aes-128-gcm`
@@ -75,10 +81,16 @@ type ShadowsocksOutboundOptions struct {
 	// * `rc4-md5`
 	// * `chacha20-ietf`
 	// * `xchacha20`
-	Method string `json:"method" enum:"none,aes-128-gcm,aes-192-gcm,aes-256-gcm,chacha20-ietf-poly1305,xchacha20-ietf-poly1305,2022-blake3-aes-128-gcm,2022-blake3-aes-256-gcm,2022-blake3-chacha20-poly1305,aes-128-ctr,aes-192-ctr,aes-256-ctr,aes-128-cfb,aes-192-cfb,aes-256-cfb,rc4-md5,chacha20-ietf,xchacha20"`
-	// @required
 	//
+	// @Example: "2022-blake3-aes-128-gcm"
+	//
+	// @Required
+	Method string `json:"method" enum:"none,aes-128-gcm,aes-192-gcm,aes-256-gcm,chacha20-ietf-poly1305,xchacha20-ietf-poly1305,2022-blake3-aes-128-gcm,2022-blake3-aes-256-gcm,2022-blake3-chacha20-poly1305,aes-128-ctr,aes-192-ctr,aes-256-ctr,aes-128-cfb,aes-192-cfb,aes-256-cfb,rc4-md5,chacha20-ietf,xchacha20"`
 	// The shadowsocks password.
+	//
+	// @Example: "8JCsPssfgS8tiRwiMlhARg=="
+	//
+	// @Required
 	Password string `json:"password,omitempty"`
 	// Shadowsocks SIP003 plugin, implemented in internal.
 	//
@@ -91,12 +103,16 @@ type ShadowsocksOutboundOptions struct {
 	// One of `tcp` `udp`.
 	//
 	// Both is enabled by default.
+	//
+	// @Example: "udp"
 	Network NetworkList `json:"network,omitempty"`
 	// UDP over TCP configuration.
 	//
 	// See [UDP Over TCP](/configuration/shared/udp-over-tcp/) for details.
 	//
 	// Conflict with `multiplex`.
+	//
+	// @Example: false | {}
 	UDPOverTCP *UDPOverTCPOptions `json:"udp_over_tcp,omitempty"`
 	// See [Multiplex](/configuration/shared/multiplex#outbound) for details.
 	Multiplex *OutboundMultiplexOptions `json:"multiplex,omitempty"`

@@ -8,20 +8,21 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "cloudflare-origin-ca",
   "tag": "",
-
   "domain": [],
   "data_directory": "",
   "api_token": "",
   "origin_ca_key": "",
   "request_type": "",
   "requested_validity": 0,
-  "http_client": "" // 或 {}
+  "http_client": ""
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 

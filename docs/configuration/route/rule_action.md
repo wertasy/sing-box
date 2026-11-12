@@ -262,7 +262,7 @@ because the target is considered to be local or behind a transparent proxy.
 
 The fallback value used when TLS segmentation cannot automatically determine the wait time.
 
-`500ms` is used by default.
+- Default: `500ms`
 
 #### tls_record_fragment
 
@@ -323,7 +323,7 @@ Available protocol values an be found on in [Protocol Sniff](../sniff/)
 
 Timeout for sniffing.
 
-`300ms` is used by default.
+- Default: `300ms`
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -355,7 +355,7 @@ Specifies DNS server tag to use instead of selecting through DNS routing.
 
 DNS resolution strategy, available values are: `prefer_ipv4`, `prefer_ipv6`, `ipv4_only`, `ipv6_only`.
 
-`dns.strategy` will be used by default.
+- Default: `dns.strategy`
 
 #### disable_cache
 

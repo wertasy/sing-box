@@ -2,22 +2,25 @@
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "direct",
   "tag": "direct-in",
-  
-  ... // Listen Fields
-
   "network": "udp",
   "override_address": "1.0.0.1",
   "override_port": 53
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

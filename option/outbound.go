@@ -77,6 +77,7 @@ type DialerOptionsWrapper interface {
 	ReplaceDialerOptions(options DialerOptions)
 }
 
+// @Shared dial
 type DialerOptions struct {
 	// The tag of the upstream outbound.
 	//
@@ -92,37 +93,37 @@ type AbstractDialerOptions struct {
 	Inet4BindAddress *badoption.Addr `json:"inet4_bind_address,omitempty"`
 	// The IPv6 address to bind to.
 	Inet6BindAddress *badoption.Addr `json:"inet6_bind_address,omitempty"`
-	// @since 1.13.0
-	//
-	// @quote:
-	//
-	//     Only supported on Linux.
-	//
 	// Do not reserve a port when binding to a source address.
 	//
 	// This allows reusing the same source port for multiple connections if the full 4-tuple (source IP, source port, destination IP, destination port) remains unique.
-	BindAddressNoPort bool   `json:"bind_address_no_port,omitempty"`
-	ProtectPath       string `json:"protect_path,omitempty"`
-	// @quote:
+	//
+	// @Since 1.13.0
+	//
+	// @Quote:
 	//
 	//     Only supported on Linux.
-	//
+	BindAddressNoPort bool   `json:"bind_address_no_port,omitempty"`
+	ProtectPath       string `json:"protect_path,omitempty"`
 	// Set netfilter routing mark.
 	//
 	// Integers (e.g. `1234`) and string hexadecimals (e.g. `"0x1234"`) are supported.
+	//
+	// @Quote:
+	//
+	//     Only supported on Linux.
 	RoutingMark FwMark `json:"routing_mark,omitempty"`
 	// Reuse listener address.
 	ReuseAddr bool `json:"reuse_addr,omitempty"`
-	// @since 1.12.0
-	//
-	// @quote:
-	//
-	//     Only supported on Linux.
-	//
 	// Set network namespace, name or path.
 	//
 	// Since sing-box 1.14.0, the tag of a [network namespace](/configuration/network-namespace/) can also be used.
 	// Referencing an `unshare` network namespace should be avoided.
+	//
+	// @Since 1.12.0
+	//
+	// @Quote:
+	//
+	//     Only supported on Linux.
 	NetNs string `json:"netns,omitempty" reference:"network_namespace"`
 	// Connect timeout, in golang's Duration format.
 	//
@@ -133,43 +134,35 @@ type AbstractDialerOptions struct {
 	ConnectTimeout badoption.Duration `json:"connect_timeout,omitempty"`
 	// Enable TCP Fast Open.
 	TCPFastOpen bool `json:"tcp_fast_open,omitempty"`
-	// @warning:
+	// Enable TCP Multi Path.
+	//
+	// @Warning:
 	//
 	//     Go 1.21 required.
-	//
-	// Enable TCP Multi Path.
 	TCPMultiPath bool `json:"tcp_multi_path,omitempty"`
-	// @since 1.13.0
-	//
 	// Disable TCP keep alive.
+	//
+	// @Since 1.13.0
 	DisableTCPKeepAlive bool `json:"disable_tcp_keep_alive,omitempty"`
-	// @since 1.13.0
-	//
-	//     Default value changed from `10m` to `5m`.
-	//
 	// TCP keep alive initial period.
 	//
-	// `5m` will be used by default.
-	TCPKeepAlive badoption.Duration `json:"tcp_keep_alive,omitempty"`
-	// @since 1.13.0
+	// @Default: 5m
 	//
+	// @Since 1.13.0
+	//
+	//     Default value changed from `10m` to `5m`.
+	TCPKeepAlive badoption.Duration `json:"tcp_keep_alive,omitempty"`
 	// TCP keep alive interval.
 	//
-	// `75s` will be used by default.
+	// @Default: 75s
+	//
+	// @Since 1.13.0
 	TCPKeepAliveInterval       badoption.Duration `json:"tcp_keep_alive_interval,omitempty"`
 	TCPKeepAliveSystemDefaults bool               `json:"-"`
 	UDPBindPort                uint16             `json:"-"`
 	// Enable UDP fragmentation.
 	UDPFragment        *bool `json:"udp_fragment,omitempty"`
 	UDPFragmentDefault bool  `json:"-"`
-	// @warning:
-	//
-	//     `outbound` DNS rule items are deprecated and will be removed in sing-box 1.14.0, so this item will be required for outbound/endpoints using domain name in server address since sing-box 1.14.0.
-	//
-	// @info:
-	//
-	//     `domain_resolver` or `route.default_domain_resolver` is optional when only one DNS server is configured.
-	//
 	// Set domain resolver to use for resolving domain names.
 	//
 	// This option uses the same format as the [route DNS rule action](/configuration/dns/rule_action/#route) without the `action` field.
@@ -180,13 +173,15 @@ type AbstractDialerOptions struct {
 	// |--------------------|--------------------------|
 	// | `direct`           | Domain in request        |
 	// | others             | Domain in server address |
+	//
+	// @Info:
+	//
+	//     `domain_resolver` or `route.default_domain_resolver` is optional when only one DNS server is configured.
+	//
+	// @Warning:
+	//
+	//     `outbound` DNS rule items are deprecated and will be removed in sing-box 1.14.0, so this item will be required for outbound/endpoints using domain name in server address since sing-box 1.14.0.
 	DomainResolver *DomainResolveOptions `json:"domain_resolver,omitempty"`
-	// @since 1.11.0
-	//
-	// @quote:
-	//
-	//     Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
-	//
 	// Strategy for selecting network interfaces.
 	//
 	// Available values:
@@ -200,36 +195,36 @@ type AbstractDialerOptions struct {
 	// and exit immediately if preferred networks recover.
 	//
 	// Conflicts with `bind_interface`, `inet4_bind_address` and `inet6_bind_address`.
-	NetworkStrategy *NetworkStrategy `json:"network_strategy,omitempty"`
-	// @since 1.11.0
 	//
-	// @quote:
+	// @Since 1.11.0
+	//
+	// @Quote:
 	//
 	//     Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
-	//
+	NetworkStrategy *NetworkStrategy `json:"network_strategy,omitempty"`
 	// Network types to use when using `default` or `hybrid` network strategy or
 	// preferred network types to use when using `fallback` network strategy.
 	//
 	// Available values: `wifi`, `cellular`, `ethernet`, `other`.
 	//
 	// Device's default network is used by default.
-	NetworkType badoption.Listable[InterfaceType] `json:"network_type,omitempty"`
-	// @since 1.11.0
 	//
-	// @quote:
+	// @Since 1.11.0
+	//
+	// @Quote:
 	//
 	//     Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
-	//
+	NetworkType badoption.Listable[InterfaceType] `json:"network_type,omitempty"`
 	// Fallback network types when preferred networks are unavailable or timeout when using `fallback` network strategy.
 	//
 	// All other networks expect preferred are used by default.
-	FallbackNetworkType badoption.Listable[InterfaceType] `json:"fallback_network_type,omitempty"`
-	// @since 1.11.0
 	//
-	// @quote:
+	// @Since 1.11.0
+	//
+	// @Quote:
 	//
 	//     Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
-	//
+	FallbackNetworkType badoption.Listable[InterfaceType] `json:"fallback_network_type,omitempty"`
 	// The length of time to wait before spawning a RFC 6555 Fast Fallback connection.
 	//
 	// For `domain_strategy`, is the amount of time to wait for connection to succeed before assuming
@@ -240,14 +235,15 @@ type AbstractDialerOptions struct {
 	//
 	// Only take effect when `domain_strategy` or `network_strategy` is set.
 	//
-	// `300ms` is used by default.
+	// @Default: 300ms
+	//
+	// @Since 1.11.0
+	//
+	// @Quote:
+	//
+	//     Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
 	FallbackDelay badoption.Duration `json:"fallback_delay,omitempty"`
 
-	// Deprecated: migrated to domain resolver
-	// @failure: Deprecated in sing-box 1.12.0
-	//
-	//     `domain_strategy` is deprecated and will be removed in sing-box 1.14.0, check [Migration](/migration/#migrate-outbound-domain-strategy-option-to-domain-resolver).
-	//
 	// Available values: `prefer_ipv4`, `prefer_ipv6`, `ipv4_only`, `ipv6_only`.
 	//
 	// If set, the requested domain name will be resolved to IP before connect.
@@ -256,6 +252,12 @@ type AbstractDialerOptions struct {
 	// |----------|--------------------------|-------------------------------------------|
 	// | `direct` | Domain in request        | Take `inbound.domain_strategy` if not set |
 	// | others   | Domain in server address | /                                         |
+	//
+	// @Failure: Deprecated in sing-box 1.12.0
+	//
+	//     `domain_strategy` is deprecated and will be removed in sing-box 1.14.0, check [Migration](/migration/#migrate-outbound-domain-strategy-option-to-domain-resolver).
+	//
+	// @Deprecated: migrated to domain resolver
 	DomainStrategy DomainStrategy `json:"domain_strategy,omitempty" schema:"omit"`
 }
 
@@ -329,13 +331,13 @@ type ServerOptionsWrapper interface {
 }
 
 type ServerOptions struct {
-	// @required
-	//
 	// The server address.
-	Server string `json:"server"`
-	// @required
 	//
+	// @Required
+	Server string `json:"server"`
 	// The server port.
+	//
+	// @Required
 	ServerPort uint16 `json:"server_port"`
 }
 

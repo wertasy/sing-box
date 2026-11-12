@@ -254,7 +254,7 @@ UDP 连接超时时间。
 
 当 TLS 分片功能无法自动判定等待时间时使用的回退值。
 
-默认使用 `500ms`。
+- 默认值：`500ms`
 
 #### tls_record_fragment
 
@@ -313,7 +313,7 @@ UDP 连接超时时间。
 
 探测超时时间。
 
-默认使用 300ms。
+- 默认值：`300ms`
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -345,7 +345,7 @@ UDP 连接超时时间。
 
 DNS 解析策略，可用值有：`prefer_ipv4`、`prefer_ipv6`、`ipv4_only`、`ipv6_only`。
 
-默认使用 `dns.strategy`。
+- 默认值：`dns.strategy`
 
 #### disable_cache
 

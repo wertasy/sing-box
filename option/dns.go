@@ -16,8 +16,10 @@ import (
 )
 
 type RawDNSOptions struct {
+	// @Omit
 	Servers []DNSServerOptions `json:"servers,omitempty"`
-	Rules   []DNSRule          `json:"rules,omitempty"`
+	// @Omit
+	Rules []DNSRule `json:"rules,omitempty"`
 	// Default dns server tag.
 	//
 	// The first server will be used if empty.
@@ -71,13 +73,13 @@ type DNSClientOptions struct {
 	//
 	// One of `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`.
 	Strategy DomainStrategy `json:"strategy,omitempty"`
-	// @since 1.14.0
-	//
 	// Default timeout for each DNS query.
 	//
-	// `10s` is used by default.
-	//
 	// Can be overridden by `rules.[].timeout` (DNS rule action) or `domain_resolver.timeout`.
+	//
+	// @Default: 10s
+	//
+	// @Since 1.14.0
 	Timeout badoption.Duration `json:"timeout,omitempty"`
 	// Disable dns cache.
 	//
@@ -87,20 +89,18 @@ type DNSClientOptions struct {
 	//
 	// Conflict with `optimistic`.
 	DisableExpire bool `json:"disable_expire,omitempty"`
-	// @failure: Deprecated in sing-box 1.14.0
+	// Make each DNS server's cache independent for special purposes. If enabled, will slightly degrade performance.
+	//
+	// @Failure: Deprecated in sing-box 1.14.0
 	//
 	//     `independent_cache` is deprecated and will be removed in sing-box 1.16.0, check [Migration](/migration/#migrate-independent-dns-cache).
-	//
-	// Make each DNS server's cache independent for special purposes. If enabled, will slightly degrade performance.
 	IndependentCache bool `json:"independent_cache,omitempty" schema:"omit"`
-	// @since 1.11.0
-	//
 	// LRU cache capacity.
 	//
 	// Value less than 1024 will be ignored.
-	CacheCapacity uint32 `json:"cache_capacity,omitempty"`
-	// @since 1.14.0
 	//
+	// @Since 1.11.0
+	CacheCapacity uint32 `json:"cache_capacity,omitempty"`
 	// Enable optimistic DNS caching. When a cached DNS entry has expired but is still within the timeout window,
 	// the stale response is returned immediately while a background refresh is triggered.
 	//
@@ -123,15 +123,17 @@ type DNSClientOptions struct {
 	//
 	// The maximum time an expired cache entry can be served optimistically.
 	//
-	// `3d` is used by default.
-	Optimistic *OptimisticDNSOptions `json:"optimistic,omitempty"`
-	// @since 1.9.0
+	// @Default: 3d
 	//
+	// @Since 1.14.0
+	Optimistic *OptimisticDNSOptions `json:"optimistic,omitempty"`
 	// Append a `edns0-subnet` OPT extra record with the specified IP prefix to every query by default.
 	//
 	// If value is an IP address instead of prefix, `/32` or `/128` will be appended automatically.
 	//
 	// Can be overridden by `servers.[].client_subnet` or `rules.[].client_subnet`.
+	//
+	// @Since 1.9.0
 	ClientSubnet *badoption.Prefixable `json:"client_subnet,omitempty"`
 }
 
@@ -221,15 +223,15 @@ func (o DNSServerOptions) DescribeSchema(builder schema.Builder) (*schema.Node, 
 }
 
 type DNSServerAddressOptions struct {
-	// @required
-	//
 	// The address of the DNS server.
 	//
 	// If domain name is used, `domain_resolver` must also be set to resolve IP address.
+	//
+	// @Required
 	Server string `json:"server"`
 	// The port of the DNS server.
 	//
-	// `53` will be used by default.
+	// @Default: 53
 	ServerPort uint16 `json:"server_port,omitempty"`
 }
 
@@ -293,8 +295,6 @@ type RawLocalDNSServerOptions struct {
 
 type LocalDNSServerOptions struct {
 	RawLocalDNSServerOptions
-	// @since 1.13.0
-	//
 	// When enabled, `local` DNS server will resolve DNS by dialing itself whenever possible.
 	//
 	// Specifically, it disables following behaviors which was added as features in sing-box 1.13.0:
@@ -311,9 +311,9 @@ type LocalDNSServerOptions struct {
 	//
 	// 2. On macOS, `local` will try DHCP first in Network Extension, since DHCP respects DIal Fields,
 	// it will not be disabled by `prefer_go`.
-	PreferGo bool `json:"prefer_go,omitempty"`
-	// @since 1.14.0
 	//
+	// @Since 1.13.0
+	PreferGo bool `json:"prefer_go,omitempty"`
 	// A list of domain suffixes for which A/AAAA queries are answered from the
 	// [neighbor resolver](/configuration/shared/neighbor/) instead of the upstream.
 	//
@@ -322,6 +322,8 @@ type LocalDNSServerOptions struct {
 	// single-label name such as `nas`.
 	//
 	// Example: `[".", ".lan"]`.
+	//
+	// @Since 1.14.0
 	NeighborDomain badoption.Listable[string] `json:"neighbor_domain,omitempty"`
 }
 
@@ -340,7 +342,8 @@ type RemoteHTTPSDNSServerOptions struct {
 	// The path of the DNS server.
 	//
 	// `/dns-query` will be used by default.
-	Path   string `json:"path,omitempty"`
+	Path string `json:"path,omitempty"`
+	// @Omit
 	Method string `json:"method,omitempty"`
 	// Additional headers to be sent to the DNS server.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`

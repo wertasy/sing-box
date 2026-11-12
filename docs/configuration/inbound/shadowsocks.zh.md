@@ -1,18 +1,19 @@
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "shadowsocks",
   "tag": "ss-in",
-
-  ... // 监听字段
-
   "method": "2022-blake3-aes-128-gcm",
   "password": "8JCsPssfgS8tiRwiMlhARg==",
-  "managed": false,
-  "multiplex": {}
+  "multiplex": {},
+  "managed": false
+
+  ... // 监听字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 多用户结构
 
@@ -51,7 +52,9 @@
 
 ### 监听字段
 
-参阅 [监听字段](/zh/configuration/shared/listen/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 

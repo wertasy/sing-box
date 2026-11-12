@@ -8,6 +8,7 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tailscale",
@@ -15,6 +16,7 @@ icon: material/new-box
   "endpoint": "ts-ep"
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 

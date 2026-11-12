@@ -6,12 +6,14 @@ The UDP over TCP protocol is used to transmit UDP packets in TCP.
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "enabled": true,
   "version": 2
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! info ""
 
@@ -30,7 +32,7 @@ Enable the UDP over TCP protocol.
 
 The protocol version, `1` or `2`.
 
-2 is used by default.
+- Default: `2`
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

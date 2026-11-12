@@ -28,17 +28,18 @@ cannot be routed.
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "bridge",
   "tag": "bridge-out",
-
   "interface": "",
   "bridge_name": "",
   "iproute2_table_index": 0,
   "iproute2_rule_index": 0
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -75,6 +76,6 @@ Linux iproute2 table index.
 
 Linux iproute2 rule start index.
 
-`100` is used by default.
+- Default: `100`
 
 <!-- AUTO-GENERATED-CONFIG-END -->

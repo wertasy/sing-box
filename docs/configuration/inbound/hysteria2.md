@@ -68,7 +68,9 @@ icon: material/alert-decagram
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 
@@ -99,7 +101,7 @@ QUIC traffic obfuscator password.
 
 Minimum on-wire packet size in bytes. Gecko only.
 
-`512` is used by default.
+- Default: `512`
 
 #### obfs.max_packet_size
 
@@ -107,7 +109,7 @@ Minimum on-wire packet size in bytes. Gecko only.
 
 Maximum on-wire packet size in bytes. Gecko only.
 
-`1200` is used by default.
+- Default: `1200`
 
 #### users
 
@@ -202,7 +204,7 @@ Fixed response content.
 
 BBR congestion control algorithm profile, one of `conservative` `standard` `aggressive`.
 
-`standard` is used by default.
+- Default: `standard`
 
 #### brutal_debug
 
@@ -276,13 +278,13 @@ Enable port mapping.
 
 Timeout for gateway discovery and mapping operations.
 
-`10s` is used by default.
+- Default: `10s`
 
 #### realm.port_mapping.lifetime
 
 Lease lifetime of the mapping.
 
-`10m` is used by default.
+- Default: `10m`
 
 #### realm.http_client
 

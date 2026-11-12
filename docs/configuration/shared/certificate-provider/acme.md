@@ -17,11 +17,11 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "acme",
   "tag": "",
-
   "domain": [],
   "data_directory": "",
   "default_server_name": "",
@@ -39,9 +39,10 @@ icon: material/new-box
   "dns01_challenge": {},
   "key_type": "",
   "profile": "",
-  "http_client": "" // or {}
+  "http_client": ""
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 

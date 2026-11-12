@@ -12,20 +12,20 @@ icon: material/new-box
 
 当为对象时：
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "engine": "",
   "version": 0,
   "disable_version_fallback": false,
   "headers": {},
-
-  ... // HTTP2 字段
-
-  "tls": {},
+  "tls": {}
 
   ... // 拨号字段
+  ... // HTTP2 字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -33,6 +33,10 @@ icon: material/new-box
 <!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### engine
+
+!!! warning ""
+
+    仅供实验用途：不应在 iOS 和 tvOS 的热路径中使用。
 
 要使用的 HTTP 引擎。
 
@@ -42,10 +46,6 @@ icon: material/new-box
 * `apple`
 
 `apple` 使用 NSURLSession，仅在 Apple 平台可用。
-
-!!! warning ""
-
-    仅供实验用途：不应在 iOS 和 tvOS 的热路径中使用。
 
 支持的字段：
 
@@ -82,9 +82,9 @@ HTTP 版本。
 
 可用值：`1`、`2`、`3`。
 
-默认使用 `2`。
-
 当为 `3` 时，[HTTP2 字段](#http2-字段) 替换为 [QUIC 字段](#quic-字段)。
+
+- 默认值：`2`
 
 #### disable_version_fallback
 
@@ -95,6 +95,9 @@ HTTP 版本。
 自定义 HTTP 标头。
 
 `Host` 标头用作请求主机。
+
+#### tag
+
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -116,4 +119,6 @@ HTTP 版本。
 
 ### 拨号字段
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

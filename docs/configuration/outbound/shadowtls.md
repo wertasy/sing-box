@@ -1,19 +1,20 @@
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "shadowtls",
   "tag": "st-out",
-  
   "server": "127.0.0.1",
   "server_port": 1080,
   "version": 3,
   "password": "fuck me till the daylight",
-  "tls": {},
+  "tls": {}
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -58,4 +59,6 @@ TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

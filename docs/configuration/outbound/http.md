@@ -2,25 +2,26 @@
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "http",
   "tag": "http-out",
-  
   "server": "127.0.0.1",
   "server_port": 1080,
   "username": "sekai",
   "password": "admin",
+  "tls": {},
   "path": "",
   "headers": {},
   "version": 0,
-  "disable_version_fallback": false,
-  "tls": {},
+  "disable_version_fallback": false
 
-  ... // HTTP2 Fields / QUIC Fields
   ... // Dial Fields
+  ... // HTTP2 Fields / QUIC Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -99,4 +100,6 @@ See [QUIC Fields](/configuration/shared/quic/) for details.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

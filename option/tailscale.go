@@ -12,24 +12,25 @@ import (
 	M "github.com/sagernet/sing/common/metadata"
 )
 
+// @Tag ts-ep
 type TailscaleEndpointOptions struct {
 	DialerOptions
 	// The directory where the Tailscale state is stored.
 	//
-	// `tailscale` is used by default.
-	//
 	// Example: `$HOME/.tailscale`
+	//
+	// @Default: tailscale
 	StateDirectory string `json:"state_directory,omitempty"`
-	// @note
-	//
-	//     Auth key is not required. By default, sing-box will log the login URL.
-	//
 	// The auth key to create the node. If the node is already created (from state previously stored), then this field is not
 	// used.
+	//
+	// @Note
+	//
+	//     Auth key is not required. By default, sing-box will log the login URL.
 	AuthKey string `json:"auth_key,omitempty"`
 	// The coordination server URL.
 	//
-	// `https://controlplane.tailscale.com` is used by default.
+	// @Default: https://controlplane.tailscale.com
 	ControlURL string `json:"control_url,omitempty"`
 	// Indicates whether the instance should register as an Ephemeral node (https://tailscale.com/s/ephemeral-nodes).
 	Ephemeral bool `json:"ephemeral,omitempty"`
@@ -37,21 +38,21 @@ type TailscaleEndpointOptions struct {
 	//
 	// System hostname is used by default.
 	//
-	// @since 1.14.0
+	// Example: `localhost`
+	//
+	// @Since 1.14.0
 	//
 	//     On iOS, tvOS and Android, the device name is used by default.
-	//
-	// Example: `localhost`
 	Hostname string `json:"hostname,omitempty"`
 	// Indicates whether the node should accept routes advertised by other nodes.
 	AcceptRoutes bool `json:"accept_routes,omitempty"`
 	// The exit node name or IP address to use.
 	ExitNode string `json:"exit_node,omitempty"`
-	// @note
+	// Indicates whether locally accessible subnets should be routed directly or via the exit node.
+	//
+	// @Note
 	//
 	//     When the exit node does not have a corresponding advertised route, private traffics cannot be routed to the exit node even if `exit_node_allow_lan_access is` set.
-	//
-	// Indicates whether locally accessible subnets should be routed directly or via the exit node.
 	ExitNodeAllowLANAccess bool `json:"exit_node_allow_lan_access,omitempty"`
 	// CIDR prefixes to advertise into the Tailscale network as reachable through the current node.
 	//
@@ -59,44 +60,44 @@ type TailscaleEndpointOptions struct {
 	AdvertiseRoutes []netip.Prefix `json:"advertise_routes,omitempty"`
 	// Indicates whether the node should advertise itself as an exit node.
 	AdvertiseExitNode bool `json:"advertise_exit_node,omitempty"`
-	// @since 1.13.0
-	//
 	// Tags to advertise for this node, for ACL enforcement purposes.
 	//
 	// Example: `["tag:server"]`
-	AdvertiseTags LegacyListable[string] `json:"advertise_tags,omitempty"`
-	// @since 1.14.0
 	//
+	// @Since 1.13.0
+	AdvertiseTags LegacyListable[string] `json:"advertise_tags,omitempty"`
 	// The UDP port to listen on for WireGuard and peer-to-peer traffic.
 	//
 	// A port is automatically selected by default.
+	//
+	// @Since 1.14.0
 	ListenPort uint16 `json:"listen_port,omitempty"`
-	// @since 1.13.0
-	//
 	// The port to listen on for incoming relay connections from other Tailscale nodes.
+	//
+	// @Since 1.13.0
 	RelayServerPort *uint16 `json:"relay_server_port,omitempty"`
-	// @since 1.13.0
-	//
 	// Static endpoints to advertise for the relay server.
+	//
+	// @Since 1.13.0
 	RelayServerStaticEndpoints []netip.AddrPort `json:"relay_server_static_endpoints,omitempty"`
-	// @since 1.13.0
-	//
 	// Create a system TUN interface for Tailscale.
+	//
+	// @Since 1.13.0
 	SystemInterface bool `json:"system_interface,omitempty"`
-	// @since 1.13.0
-	//
 	// Custom TUN interface name. By default, `tailscale` (or `utun` on macOS) will be used.
-	SystemInterfaceName string `json:"system_interface_name,omitempty"`
-	// @since 1.13.0
 	//
+	// @Since 1.13.0
+	SystemInterfaceName string `json:"system_interface_name,omitempty"`
 	// Override the TUN MTU. By default, Tailscale's own MTU is used.
+	//
+	// @Since 1.13.0
 	SystemInterfaceMTU uint32 `json:"system_interface_mtu,omitempty"`
 	// UDP NAT expiration time.
 	//
-	// `5m` will be used by default.
-	UDPTimeout UDPTimeoutCompat `json:"udp_timeout,omitempty"`
-	// @since 1.14.0
+	// @Default: 5m
 	//
+	// @Example: "5m"
+	UDPTimeout UDPTimeoutCompat `json:"udp_timeout,omitempty"`
 	// Run a Tailscale SSH server on tailnet port 22.
 	//
 	// Access is controlled by the SSH ACL in the Tailscale admin console, which maps each connection to a local user. How that user is resolved, and which users are allowed, depends on the platform:
@@ -120,19 +121,21 @@ type TailscaleEndpointOptions struct {
 	// ```
 	//
 	// Setting `ssh_server` value to `true` is equivalent to `{ "enabled": true }`.
-	SSHServer *TailscaleSSHServerOptions `json:"ssh_server,omitempty"`
-	// @since 1.14.0
 	//
+	// @Since 1.14.0
+	SSHServer *TailscaleSSHServerOptions `json:"ssh_server,omitempty"`
 	// The directory where files received from tailnet peers are stored.
 	//
 	// Relative paths are resolved against the working directory, as [state_directory](#state_directory)
 	// is.
 	//
-	// `Taildrop` is used by default.
-	TaildropDirectory string `json:"taildrop_directory,omitempty"`
-	// @since 1.15.0
+	// @Default: Taildrop
 	//
+	// @Since 1.14.0
+	TaildropDirectory string `json:"taildrop_directory,omitempty"`
 	// Allow the endpoint to be disconnected when necessary.
+	//
+	// @Since 1.15.0
 	OnDemand bool `json:"on_demand,omitempty"`
 }
 
@@ -174,37 +177,40 @@ func (o TailscaleSSHServerOptions) DescribeSchema(builder schema.Builder) (*sche
 }
 
 type TailscaleDNSServerOptions struct {
-	// @required
-	//
 	// The tag of the [Tailscale Endpoint](/configuration/endpoint/tailscale).
+	//
+	// @Required
 	Endpoint string `json:"endpoint,omitempty"`
 	// Indicates whether default DNS resolvers should be accepted for fallback queries in addition to MagicDNS。
 	//
 	// if not enabled, `NXDOMAIN` will be returned for non-Tailscale domain queries.
 	AcceptDefaultResolvers bool `json:"accept_default_resolvers,omitempty"`
-	// @since 1.14.0
-	//
 	// When enabled, single-label queries (e.g. `my-device`) are retried against each Tailscale search domain until one resolves.
+	//
+	// @Since 1.14.0
 	AcceptSearchDomain bool `json:"accept_search_domain,omitempty"`
 }
 
+// @Tag ts-cert
 type TailscaleCertificateProviderOptions struct {
-	// @required
-	//
 	// The tag of the [Tailscale endpoint](/configuration/endpoint/tailscale/) to reuse.
 	//
 	// [MagicDNS and HTTPS](https://tailscale.com/kb/1153/enabling-https) must be enabled in the Tailscale admin console.
+	//
+	// @Example: "ts-ep"
+	//
+	// @Required
 	Endpoint string `json:"endpoint,omitempty"`
 }
 
 type DERPServiceOptions struct {
 	ListenOptions
 	InboundTLSOptionsContainer
-	// @required
-	//
 	// Derper configuration file path.
 	//
 	// Example: `derper.key`
+	//
+	// @Required
 	ConfigPath string `json:"config_path,omitempty"`
 	// Tailscale endpoints tags to verify clients.
 	VerifyClientEndpoint badoption.Listable[string] `json:"verify_client_endpoint,omitempty"`
@@ -226,13 +232,13 @@ type DERPServiceOptions struct {
 	// { "url": __URL__ }
 	// ```
 	VerifyClientURL badoption.Listable[*DERPVerifyClientURLOptions] `json:"verify_client_url,omitempty"`
-	// @since 1.15.0
-	//
 	// Tailcat inbound tags to verify clients.
-	VerifyClientInbound badoption.Listable[string] `json:"verify_client_inbound,omitempty"`
-	// @since 1.15.0
 	//
+	// @Since 1.15.0
+	VerifyClientInbound badoption.Listable[string] `json:"verify_client_inbound,omitempty"`
 	// Tailcat public keys to verify clients.
+	//
+	// @Since 1.15.0
 	VerifyClientKey badoption.Listable[string] `json:"verify_client_key,omitempty"`
 	// What to serve at the root path. It may be left empty (the default, for a default homepage), `blank` for a blank page, or a URL to redirect to
 	Home string `json:"home,omitempty"`
@@ -287,6 +293,8 @@ type DERPServiceOptions struct {
 	// ```json
 	// { "enabled": true, "listen_port": __PORT__ }
 	// ```
+	//
+	// @Example: {}
 	STUN *DERPSTUNListenOptions `json:"stun,omitempty"`
 }
 

@@ -7,6 +7,7 @@
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "enabled": true,
@@ -14,6 +15,7 @@
   "down_mbps": 100
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 

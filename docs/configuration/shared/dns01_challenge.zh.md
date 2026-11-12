@@ -99,6 +99,8 @@ DNS 质询临时 TXT 记录的 TTL。
 
 #### Alibaba Cloud DNS
 
+!!! question "自 sing-box 1.13.0 起"
+
 ```json
 {
   "provider": "alidns",
@@ -111,11 +113,11 @@ DNS 质询临时 TXT 记录的 TTL。
 
 ##### security_token
 
-!!! question "自 sing-box 1.13.0 起"
-
 用于 STS 临时凭证的安全令牌。
 
 #### Cloudflare
+
+!!! question "自 sing-box 1.13.0 起"
 
 ```json
 {
@@ -126,8 +128,6 @@ DNS 质询临时 TXT 记录的 TTL。
 ```
 
 ##### zone_token
-
-!!! question "自 sing-box 1.13.0 起"
 
 具有 `Zone:Read` 权限的可选 API 令牌。
 

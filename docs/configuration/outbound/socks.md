@@ -2,22 +2,23 @@
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "socks",
   "tag": "socks-out",
-  
   "server": "127.0.0.1",
   "server_port": 1080,
   "version": "5",
   "username": "sekai",
   "password": "admin",
   "network": "udp",
-  "udp_over_tcp": false | {},
+  "udp_over_tcp": false | {}
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -68,4 +69,6 @@ See [UDP Over TCP](/configuration/shared/udp-over-tcp/) for details.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

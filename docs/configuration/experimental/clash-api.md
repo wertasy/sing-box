@@ -86,7 +86,7 @@ serve it at `http://{{external-controller}}/ui`.
 
 ZIP download URL for the external UI, will be used if the specified `external_ui` directory is empty.
 
-`https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip` will be used if empty.
+- Default: `https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip`
 
 #### external_ui_download_detour
 

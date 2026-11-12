@@ -6,14 +6,16 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "initial_packet_size": 0,
-  "disable_path_mtu_discovery": false,
+  "disable_path_mtu_discovery": false
 
   ... // HTTP2 字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 

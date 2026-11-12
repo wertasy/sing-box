@@ -14,17 +14,18 @@ USB/IP Client 服务通过 [USB/IP](https://usbip.sourceforge.net/) 导入由 [U
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "usbip-client",
-
-  ... // 拨号字段
-
   "server": "",
   "server_port": 0,
   "devices": []
+
+  ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 拨号字段
 

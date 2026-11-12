@@ -10,17 +10,26 @@ type TunPlatformOptions struct {
 type HTTPProxyOptions struct {
 	// Enable system HTTP proxy.
 	Enabled bool `json:"enabled,omitempty"`
+	// @Override server:
+	//    @Required
+	//
+	//    HTTP proxy server address.
+	//
+	// @Override server_port:
+	//    @Required
+	//
+	//    HTTP proxy server port.
 	ServerOptions
-	// @note:
+	// Hostnames that bypass the HTTP proxy.
+	//
+	// @Note:
 	//
 	//     On Apple platforms, `bypass_domain` items matches hostname **suffixes**.
-	//
-	// Hostnames that bypass the HTTP proxy.
 	BypassDomain badoption.Listable[string] `json:"bypass_domain,omitempty"`
-	// @quote:
+	// Hostnames that use the HTTP proxy.
+	//
+	// @Quote:
 	//
 	//     Only supported in graphical clients on Apple platforms.
-	//
-	// Hostnames that use the HTTP proxy.
 	MatchDomain badoption.Listable[string] `json:"match_domain,omitempty"`
 }

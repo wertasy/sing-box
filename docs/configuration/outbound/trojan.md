@@ -1,21 +1,22 @@
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "trojan",
   "tag": "trojan-out",
-
   "server": "127.0.0.1",
   "server_port": 1080,
   "password": "8JCsPssfgS8tiRwiMlhARg==",
   "network": "tcp",
   "tls": {},
   "multiplex": {},
-  "transport": {},
+  "transport": {}
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -64,4 +65,6 @@ V2Ray Transport configuration, see [V2Ray Transport](/configuration/shared/v2ray
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

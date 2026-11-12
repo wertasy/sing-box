@@ -29,6 +29,7 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "detour": "",
@@ -36,6 +37,7 @@ icon: material/new-box
   "inet4_bind_address": "",
   "inet6_bind_address": "",
   "bind_address_no_port": false,
+  "protect_path": "",
   "routing_mark": 0,
   "reuse_addr": false,
   "netns": "",
@@ -46,18 +48,17 @@ icon: material/new-box
   "tcp_keep_alive": "",
   "tcp_keep_alive_interval": "",
   "udp_fragment": false,
-
   "domain_resolver": "", // 或 {}
   "network_strategy": "",
   "network_type": [],
   "fallback_network_type": [],
   "fallback_delay": "",
-  
-  // 废弃的
 
+  // Deprecated
   "domain_strategy": ""
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! note ""
 
@@ -158,7 +159,7 @@ icon: material/new-box
 
 TCP keep alive 初始周期。
 
-默认使用 `5m`。
+- 默认值：`5m`
 
 #### tcp_keep_alive_interval
 
@@ -166,7 +167,7 @@ TCP keep alive 初始周期。
 
 TCP keep alive 间隔。
 
-默认使用 `75s`。
+- 默认值：`75s`
 
 #### udp_fragment
 
@@ -251,7 +252,7 @@ TCP keep alive 间隔。
 
 仅当 `domain_strategy` 或 `network_strategy` 已设置时生效。
 
-默认使用 `300ms`。
+- 默认值：`300ms`
 
 #### domain_strategy
 

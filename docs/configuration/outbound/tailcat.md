@@ -6,11 +6,11 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tailcat",
   "tag": "tailcat-out",
-
   "private_key": "",
   "server_public_key": "",
   "server_disco_key": "",
@@ -18,11 +18,12 @@ icon: material/new-box
   "derp_map_url": "",
   "derp_region": 0,
   "derp_servers": [],
-  "http_client": {},
+  "http_client": {}
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -58,7 +59,7 @@ Pre-shared key.
 
 URL of the [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap).
 
-`https://tailcat.dev/derpmap.json` is used by default.
+- Default: `https://tailcat.dev/derpmap.json`
 
 #### derp_region
 

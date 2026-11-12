@@ -20,7 +20,7 @@ type OutboundMultiplexOptions struct {
 	// | yamux    | https://github.com/hashicorp/yamux |
 	// | h2mux    | https://golang.org/x/net/http2     |
 	//
-	// h2mux is used by default.
+	// @Default: h2mux
 	Protocol string `json:"protocol,omitempty" enum:"h2mux,smux,yamux"`
 	// Maximum connections.
 	//
@@ -34,11 +34,11 @@ type OutboundMultiplexOptions struct {
 	//
 	// Conflict with `max_connections` and `min_streams`.
 	MaxStreams int `json:"max_streams,omitempty"`
-	// @info
+	// Enable padding.
+	//
+	// @Info
 	//
 	//     Requires sing-box server version 1.3-beta9 or later.
-	//
-	// Enable padding.
 	Padding bool `json:"padding,omitempty"`
 	// See [TCP Brutal](/configuration/shared/tcp-brutal/) for details.
 	Brutal *BrutalOptions `json:"brutal,omitempty"`
@@ -46,7 +46,13 @@ type OutboundMultiplexOptions struct {
 
 type BrutalOptions struct {
 	// Enable TCP Brutal congestion control algorithm。
-	Enabled  bool `json:"enabled,omitempty"`
-	UpMbps   int  `json:"up_mbps,omitempty"`
-	DownMbps int  `json:"down_mbps,omitempty"`
+	//
+	// @Example: true
+	Enabled bool `json:"enabled,omitempty"`
+	// @Example: 100
+	// @Omit
+	UpMbps int `json:"up_mbps,omitempty"`
+	// @Example: 100
+	// @Omit
+	DownMbps int `json:"down_mbps,omitempty"`
 }

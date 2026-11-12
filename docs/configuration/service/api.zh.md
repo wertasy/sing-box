@@ -14,12 +14,10 @@ sing-box API 服务是用于观察与控制正在运行的 sing-box 实例的 gR
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "api",
-  
-  ... // 监听字段
-  
   "secret": "",
   "access_control_allow_origin": [],
   "access_control_allow_private_network": false,
@@ -27,16 +25,21 @@ sing-box API 服务是用于观察与控制正在运行的 sing-box 实例的 gR
     "enabled": true,
     "path": "",
     "download_url": "",
-    "http_client": "", // 或 {}
+    "http_client": "", // or {}
     "update_interval": ""
   },
   "tls": {}
+
+  ... // 监听字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 监听字段
 
-参阅 [监听字段](/zh/configuration/shared/listen/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 
@@ -61,12 +64,12 @@ API 密钥。
 
 #### dashboard
 
-下载并通过 API 监听器在 `/dashboard/` 提供的 Web 仪表板；其他浏览器请求将被重定向到该路径。
-
 !!! info ""
 
     该对象可以替换为布尔值（等同于 `{ "enabled": <bool> }`），
     或字符串路径（等同于 `{ "enabled": true, "path": "<string>" }`）。
+
+下载并通过 API 监听器在 `/dashboard/` 提供的 Web 仪表板；其他浏览器请求将被重定向到该路径。
 
 ##### enabled
 
@@ -96,7 +99,7 @@ API 密钥。
 
 仪表板的更新间隔。
 
-默认使用 `1d`。
+- 默认值：`1d`
 
 #### tls
 

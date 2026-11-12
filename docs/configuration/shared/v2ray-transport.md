@@ -91,7 +91,7 @@ received on the connection.Please note that a ping response is considered a rece
 traffic on the connection, the health check will be executed every interval. If the value is zero, no health check will
 be performed.
 
-Zero is used by default.
+- Default: `Zero`
 
 #### ping_timeout
 

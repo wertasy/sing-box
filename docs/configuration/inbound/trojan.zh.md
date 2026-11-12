@@ -1,12 +1,10 @@
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "trojan",
   "tag": "trojan-in",
-
-  ... // 监听字段
-
   "users": [
     {
       "name": "sekai",
@@ -26,12 +24,17 @@
   },
   "multiplex": {},
   "transport": {}
+
+  ... // 监听字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 监听字段
 
-参阅 [监听字段](/zh/configuration/shared/listen/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 

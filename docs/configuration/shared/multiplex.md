@@ -61,7 +61,7 @@ Multiplex protocol.
 | yamux    | https://github.com/hashicorp/yamux |
 | h2mux    | https://golang.org/x/net/http2     |
 
-h2mux is used by default.
+- Default: `h2mux`
 
 #### max_connections
 

@@ -27,14 +27,20 @@ type HTTP2Options struct {
 	// Accepts memory size format, e.g. `"64 MB"`.
 	ConnectionReceiveWindow *byteformats.MemoryBytes `json:"connection_receive_window,omitempty"`
 	// Maximum concurrent streams per connection.
+	//
+	// @Example: 0
 	MaxConcurrentStreams int `json:"max_concurrent_streams,omitempty"`
 }
 
 type QUICOptions struct {
 	HTTP2Options
 	// Initial QUIC packet size.
+	//
+	// @Example: 0
 	InitialPacketSize int `json:"initial_packet_size,omitempty"`
 	// Disable QUIC path MTU discovery.
+	//
+	// @Example: false
 	DisablePathMTUDiscovery bool `json:"disable_path_mtu_discovery,omitempty"`
 }
 
@@ -48,10 +54,6 @@ type HTTPClientOptions struct {
 	// * `apple`
 	//
 	// `apple` uses NSURLSession, only available on Apple platforms.
-	//
-	// @warning:
-	//
-	//     Experimental only: do not use in hot paths on iOS and tvOS.
 	//
 	// Supported fields:
 	//
@@ -81,14 +83,18 @@ type HTTPClientOptions struct {
 	// * `tls.ech`
 	// * `tls.utls`
 	// * `tls.reality`
+	//
+	// @Warning:
+	//
+	//     Experimental only: do not use in hot paths on iOS and tvOS.
 	Engine string `json:"engine,omitempty" enum:"go,apple"`
 	// HTTP version.
 	//
 	// Available values: `1`, `2`, `3`.
 	//
-	// `2` is used by default.
-	//
 	// When `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).
+	//
+	// @Default: 2
 	Version int `json:"version,omitempty" enum:"0,1,2,3"`
 	// Disable automatic fallback to lower HTTP version.
 	DisableVersionFallback bool `json:"disable_version_fallback,omitempty"`

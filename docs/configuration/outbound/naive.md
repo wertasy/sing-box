@@ -6,11 +6,11 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "naive",
   "tag": "naive-out",
-
   "server": "127.0.0.1",
   "server_port": 443,
   "username": "sekai",
@@ -22,11 +22,12 @@ icon: material/new-box
   "quic": false,
   "quic_congestion_control": "",
   "quic_session_receive_window": "",
-  "tls": {},
+  "tls": {}
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! warning "Platform Support"
 
@@ -122,7 +123,7 @@ QUIC congestion control algorithm.
 
 The initial QUIC session receive window.
 
-`15 MB` is used by default.
+- Default: `15 MB`
 
 #### tls
 
@@ -138,4 +139,6 @@ Self-signed certificates change traffic behavior significantly, which defeats th
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

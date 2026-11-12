@@ -547,11 +547,11 @@ Match [rule-set](/configuration/route/#rule_set).
 
 #### rule_set_ipcidr_match_source
 
-!!! question "Since sing-box 1.8.0"
-
 !!! failure "Deprecated in sing-box 1.10.0"
 
     `rule_set_ipcidr_match_source` is renamed to `rule_set_ip_cidr_match_source` and will be remove in sing-box 1.11.0.
+
+!!! question "Since sing-box 1.8.0"
 
 Make `ip_cidr` in rule-sets match the source IP.
 

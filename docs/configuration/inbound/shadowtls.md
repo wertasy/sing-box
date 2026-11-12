@@ -8,13 +8,11 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "shadowtls",
   "tag": "st-in",
-
-  ... // Listen Fields
-
   "version": 3,
   "password": "fuck me till the daylight",
   "users": [
@@ -26,25 +24,28 @@ icon: material/new-box
   "handshake": {
     "server": "google.com",
     "server_port": 443,
-    
     ... // Dial Fields
   },
   "handshake_for_server_name": {
     "example.com": {
       "server": "example.com",
       "server_port": 443,
-
       ... // Dial Fields
     }
   },
   "strict_mode": false,
   "wildcard_sni": ""
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

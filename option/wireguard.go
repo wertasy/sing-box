@@ -6,6 +6,7 @@ import (
 	"github.com/sagernet/sing/common/json/badoption"
 )
 
+// @Tag wg-ep
 type WireGuardEndpointOptions struct {
 	// Use system interface.
 	//
@@ -15,14 +16,14 @@ type WireGuardEndpointOptions struct {
 	Name string `json:"name,omitempty"`
 	// WireGuard MTU.
 	//
-	// `1408` will be used by default.
+	// @Default: 1408
+	//
+	// @Example: 1408
 	MTU uint32 `json:"mtu,omitempty"`
-	// @required
-	//
 	// List of IP (v4 or v6) address prefixes to be assigned to the interface.
-	Address badoption.Listable[netip.Prefix] `json:"address"`
-	// @required
 	//
+	// @Required
+	Address badoption.Listable[netip.Prefix] `json:"address"`
 	// WireGuard requires base64-encoded public and private keys. These can be generated using the wg(8) utility:
 	//
 	// ```shell
@@ -31,24 +32,45 @@ type WireGuardEndpointOptions struct {
 	// ```
 	//
 	// or `sing-box generate wg-keypair`.
+	//
+	// @Required
 	PrivateKey string `json:"private_key"`
 	// Listen port for incoming connections.
-	ListenPort uint16 `json:"listen_port,omitempty"`
-	// @required
 	//
+	// @Example: 10000
+	ListenPort uint16 `json:"listen_port,omitempty"`
 	// List of WireGuard peers.
-	Peers        []WireGuardPeer    `json:"peers,omitempty"`
-	UDPTimeout   badoption.Duration `json:"udp_timeout,omitempty"`
-	UDPMapping   UDPNATBehavior     `json:"udp_mapping,omitempty"`
-	UDPFiltering UDPNATBehavior     `json:"udp_filtering,omitempty"`
-	UDPNATMax    uint32             `json:"udp_nat_max,omitempty"`
+	//
+	// @Example:
+	//    [
+	//      {
+	//        "address": "127.0.0.1",
+	//        "port": 10001,
+	//        "public_key": "",
+	//        "pre_shared_key": "",
+	//        "allowed_ips": [],
+	//        "persistent_keepalive_interval": 0,
+	//        "reserved": [0, 0, 0]
+	//      }
+	//    ]
+	//
+	// @Required
+	Peers []WireGuardPeer `json:"peers,omitempty"`
+	// @Omit
+	UDPTimeout badoption.Duration `json:"udp_timeout,omitempty"`
+	// @Omit
+	UDPMapping UDPNATBehavior `json:"udp_mapping,omitempty"`
+	// @Omit
+	UDPFiltering UDPNATBehavior `json:"udp_filtering,omitempty"`
+	// @Omit
+	UDPNATMax uint32 `json:"udp_nat_max,omitempty"`
 	// WireGuard worker count.
 	//
 	// CPU count is used by default.
 	Workers int `json:"workers,omitempty"`
-	// @since 1.15.0
-	//
 	// Allow the endpoint to be disconnected when necessary.
+	//
+	// @Since 1.15.0
 	OnDemand bool `json:"on_demand,omitempty"`
 	DialerOptions
 }
@@ -58,15 +80,15 @@ type WireGuardPeer struct {
 	Address string `json:"address,omitempty"`
 	// WireGuard peer port.
 	Port uint16 `json:"port,omitempty"`
-	// @required
-	//
 	// WireGuard peer public key.
+	//
+	// @Required
 	PublicKey string `json:"public_key,omitempty"`
 	// WireGuard peer pre-shared key.
 	PreSharedKey string `json:"pre_shared_key,omitempty"`
-	// @required
-	//
 	// WireGuard allowed IPs.
+	//
+	// @Required
 	AllowedIPs LegacyListable[netip.Prefix] `json:"allowed_ips,omitempty"`
 	// WireGuard persistent keepalive interval, in seconds.
 	//

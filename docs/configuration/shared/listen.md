@@ -120,13 +120,13 @@ Disable TCP keep alive.
 
 TCP keep alive initial period.
 
-`5m` will be used by default.
+- Default: `5m`
 
 #### tcp_keep_alive_interval
 
 TCP keep alive interval.
 
-`75s` will be used by default.
+- Default: `75s`
 
 #### tcp_fast_open
 
@@ -148,7 +148,7 @@ Enable UDP fragmentation.
 
 UDP NAT expiration time.
 
-`5m` will be used by default.
+- Default: `5m`
 
 #### detour
 
@@ -196,7 +196,7 @@ If the domain name is invalid (like tor), this will not work.
 
 Timeout for sniffing.
 
-`300ms` is used by default.
+- Default: `300ms`
 
 #### udp_disable_domain_unmapping
 

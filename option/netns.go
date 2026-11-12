@@ -65,9 +65,9 @@ func (o NetworkNamespace) DescribeSchema(builder schema.Builder) (*schema.Node, 
 }
 
 type DefaultNetworkNamespaceOptions struct {
-	// @required
-	//
 	// Name or path of the network namespace, for example `sing` or `/run/netns/sing`.
+	//
+	// @Required
 	Path string `json:"path"`
 }
 

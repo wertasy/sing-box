@@ -6,6 +6,7 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "idle_timeout": "",
@@ -15,6 +16,7 @@ icon: material/new-box
   "max_concurrent_streams": 0
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 

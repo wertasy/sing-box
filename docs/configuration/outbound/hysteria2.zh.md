@@ -105,7 +105,7 @@
 
 端口跳跃间隔。
 
-默认使用 `30s`。
+- 默认值：`30s`
 
 #### hop_interval_max
 
@@ -139,6 +139,8 @@ QUIC 流量混淆器密码。
 
 默认使用 `512`。
 
+- 默认值：`512`
+
 #### obfs.max_packet_size
 
 !!! question "自 sing-box 1.14.0 起"
@@ -146,6 +148,8 @@ QUIC 流量混淆器密码。
 最大线上数据包大小（字节）。仅限 Gecko。
 
 默认使用 `1200`。
+
+- 默认值：`1200`
 
 #### password
 
@@ -180,7 +184,7 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
 BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 
-默认使用 `standard`。
+- 默认值：`standard`
 
 #### brutal_debug
 
@@ -190,6 +194,11 @@ BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 
 !!! question "自 sing-box 1.14.0 起"
 
+!!! warning ""
+
+    Chrome 不声明支持 Ed25519，因此使用 Ed25519 证书的服务端将无法完成握手。
+    请改用 ECDSA 或 RSA 证书。
+
 禁用 Chrome QUIC 指纹模仿。
 
 如果没有禁用，客户端的 QUIC 握手将被构造为模仿 Chrome，使 Hysteria 流量更难通过握手指纹识别。
@@ -197,11 +206,6 @@ BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 为了与 Chrome 一致，客户端使用 Chrome 自己的 QUIC 参数，其覆盖部分设置：
 `idle_timeout` 固定为 30 秒，`max_concurrent_streams` 与 `initial_packet_size` 被替换为 Chrome 的值，
 接收窗口从 Chrome 的初始值开始，再增长到配置的最大值。
-
-!!! warning ""
-
-    Chrome 不声明支持 Ed25519，因此使用 Ed25519 证书的服务端将无法完成握手。
-    请改用 ECDSA 或 RSA 证书。
 
 #### realm
 
@@ -263,11 +267,15 @@ Realm 的 Bearer 令牌，需与 realm 上配置的 `users[].token` 之一匹配
 
 默认使用 `10s`。
 
+- 默认值：`10s`
+
 #### realm.port_mapping.lifetime
 
 映射的租约时长。
 
 默认使用 `10m`。
+
+- 默认值：`10m`
 
 #### realm.http_client
 
@@ -279,4 +287,6 @@ Realm 的 Bearer 令牌，需与 realm 上配置的 `users[].token` 之一匹配
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

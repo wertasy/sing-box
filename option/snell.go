@@ -10,14 +10,14 @@ import (
 )
 
 type _SnellInboundOptions struct {
-	// @required
-	//
 	// The Snell protocol version, one of `5` `6`.
 	//
 	// Version `5` supports HTTP obfuscation (`obfs_mode`); version `6` replaces it
 	// with traffic shaping (`mode`) and requires a `psk` of 12 to 255 bytes.
 	//
-	// @note
+	// @Required
+	//
+	// @Note
 	//
 	//     Since we intentionally do not support the QUIC proxy mode of Snell v5, the v5 wire protocol
 	//     is effectively identical to v4, so no separate v4 server or v5 client is provided.
@@ -29,9 +29,9 @@ type _SnellInboundOptions struct {
 
 type AbstractSnellInboundOptions struct {
 	ListenOptions
-	// @required
-	//
 	// The pre-shared key.
+	//
+	// @Required
 	PSK string `json:"psk"`
 	// Snell users.
 	//
@@ -86,15 +86,15 @@ func (o SnellInboundOptions) DescribeSchema(builder schema.Builder) (*schema.Nod
 }
 
 type _SnellOutboundOptions struct {
-	// @required
-	//
 	// The Snell protocol version, one of `4` `6`.
 	//
 	// Version `4` supports HTTP obfuscation (`obfs_mode` / `obfs_host`); version `6`
 	// replaces it with traffic shaping (`mode`) and requires a `psk` of 12 to 255
 	// bytes.
 	//
-	// @note
+	// @Required
+	//
+	// @Note
 	//
 	//     Since we intentionally do not support the QUIC proxy mode of Snell v5, the v5 wire protocol
 	//     is effectively identical to v4, so no separate v4 server or v5 client is provided.
@@ -107,9 +107,9 @@ type _SnellOutboundOptions struct {
 type AbstractSnellOutboundOptions struct {
 	DialerOptions
 	ServerOptions
-	// @required
-	//
 	// The pre-shared key.
+	//
+	// @Required
 	PSK string `json:"psk"`
 	// The user key, used to authenticate against a multi-user server.
 	UserKey string `json:"userkey,omitempty"`
@@ -169,11 +169,11 @@ func (o SnellOutboundOptions) DescribeSchema(builder schema.Builder) (*schema.No
 }
 
 type SnellObfsServerOptions struct {
-	// @indicator: Version 5 only
-	//
 	// HTTP obfuscation mode, one of `none` `http`.
 	//
-	// `none` is used by default.
+	// @Default: none
+	//
+	// @Indicator: Version 5 only
 	ObfsMode string `json:"obfs_mode,omitempty" enum:"none,http,tls"`
 }
 
@@ -183,25 +183,25 @@ type SnellUser struct {
 }
 
 type SnellObfsClientOptions struct {
-	// @indicator: Version 4 only
-	//
 	// HTTP obfuscation mode, one of `none` `http`.
 	//
-	// `none` is used by default.
-	ObfsMode string `json:"obfs_mode,omitempty" enum:"none,http,tls"`
-	// @indicator: Version 4 only
+	// @Default: none
 	//
+	// @Indicator: Version 4 only
+	ObfsMode string `json:"obfs_mode,omitempty" enum:"none,http,tls"`
 	// The HTTP `Host` header sent when `obfs_mode` is `http`.
 	//
-	// `bing.com` is used by default.
+	// @Default: bing.com
+	//
+	// @Indicator: Version 4 only
 	ObfsHost string `json:"obfs_host,omitempty"`
 }
 
 type SnellV6Options struct {
-	// @indicator: Version 6 only
-	//
 	// Traffic shaping mode, one of `default` `unshaped` `unsafe-raw`.
 	//
-	// `default` is used by default.
+	// @Default: default
+	//
+	// @Indicator: Version 6 only
 	Mode string `json:"mode,omitempty" enum:"default,unshaped,unsafe-raw"`
 }

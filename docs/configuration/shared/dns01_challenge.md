@@ -99,6 +99,8 @@ See [ACME-DNS](https://github.com/joohoi/acme-dns) for details.
 
 #### Alibaba Cloud DNS
 
+!!! question "Since sing-box 1.13.0"
+
 ```json
 {
   "provider": "alidns",
@@ -111,11 +113,11 @@ See [ACME-DNS](https://github.com/joohoi/acme-dns) for details.
 
 ##### security_token
 
-!!! question "Since sing-box 1.13.0"
-
 The Security Token for STS temporary credentials.
 
 #### Cloudflare
+
+!!! question "Since sing-box 1.13.0"
 
 ```json
 {
@@ -126,8 +128,6 @@ The Security Token for STS temporary credentials.
 ```
 
 ##### zone_token
-
-!!! question "Since sing-box 1.13.0"
 
 Optional API token with `Zone:Read` permission.
 

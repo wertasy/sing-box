@@ -24,7 +24,7 @@ type _USBIPServerServiceOptions struct {
 	//   [macOS](/clients/apple/) and [Android](/clients/android/), and Chromium-based browsers with
 	//   [sing-box Dashboard](https://github.com/SagerNet/sing-box-dashboard).
 	//
-	// @quote:
+	// @Quote:
 	//
 	//     The `default` provider is only supported when running directly via the CLI on Linux, Windows,
 	//     and macOS, and requires elevated privileges.
@@ -75,6 +75,17 @@ func (o USBIPServerServiceOptions) DescribeSchema(builder schema.Builder) (*sche
 
 type USBIPClientServiceOptions struct {
 	DialerOptions
+	// @Override server:
+	//    @Required
+	//
+	//    The remote `usbip-server` address.
+	//
+	//    @Example: ""
+	//
+	// @Override server_port:
+	//    The remote `usbip-server` port. Defaults to `3240`.
+	//
+	//    @Example: 0
 	ServerOptions
 	// List of device matches selecting which remote devices to import. If empty, all exported devices
 	// are imported.
@@ -110,6 +121,30 @@ type USBIPDeviceMatch struct {
 }
 
 type USBIPDefaultProviderOptions struct {
+	// List of device matches selecting which local USB devices to export.
+	//
+	// Object format:
+	//
+	// ```json
+	// {
+	//   "bus_id": "",
+	//   "vendor_id": 0,
+	//   "product_id": 0,
+	//   "serial": ""
+	// }
+	// ```
+	//
+	// Object fields:
+	//
+	// - `bus_id`: USB bus ID, e.g. `1-2`.
+	// - `vendor_id`: USB vendor ID, as a number.
+	// - `product_id`: USB product ID, as a number.
+	// - `serial`: Device serial number.
+	//
+	// Within one object, all specified fields must match; multiple objects are combined as a union. At
+	// least one field is required.
+	//
+	// @Required: with the `default` provider.
 	Devices []USBIPDeviceMatch `json:"devices,omitempty"`
 }
 

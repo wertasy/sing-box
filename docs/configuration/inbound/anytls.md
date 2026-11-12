@@ -6,27 +6,30 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "anytls",
   "tag": "anytls-in",
-
-  ... // Listen Fields
-
+  "tls": {},
   "users": [
     {
       "name": "sekai",
       "password": "8JCsPssfgS8tiRwiMlhARg=="
     }
   ],
-  "padding_scheme": [],
-  "tls": {}
+  "padding_scheme": []
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

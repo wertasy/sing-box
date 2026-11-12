@@ -1,19 +1,20 @@
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "shadowtls",
   "tag": "st-out",
-  
   "server": "127.0.0.1",
   "server_port": 1080,
   "version": 3,
   "password": "fuck me till the daylight",
-  "tls": {},
+  "tls": {}
 
   ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -58,4 +59,6 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

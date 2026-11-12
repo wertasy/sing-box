@@ -25,6 +25,7 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tailscale",
@@ -49,11 +50,12 @@ icon: material/new-box
   "udp_timeout": "5m",
   "ssh_server": false,
   "taildrop_directory": "",
-  "on_demand": false,
+  "on_demand": false
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -64,9 +66,9 @@ icon: material/new-box
 
 The directory where the Tailscale state is stored.
 
-`tailscale` is used by default.
-
 Example: `$HOME/.tailscale`
+
+- Default: `tailscale`
 
 #### auth_key
 
@@ -81,7 +83,7 @@ used.
 
 The coordination server URL.
 
-`https://controlplane.tailscale.com` is used by default.
+- Default: `https://controlplane.tailscale.com`
 
 #### ephemeral
 
@@ -89,13 +91,13 @@ Indicates whether the instance should register as an Ephemeral node (https://tai
 
 #### hostname
 
-The hostname of the node.
-
-System hostname is used by default.
-
 !!! question "Since sing-box 1.14.0"
 
     On iOS, tvOS and Android, the device name is used by default.
+
+The hostname of the node.
+
+System hostname is used by default.
 
 Example: `localhost`
 
@@ -175,7 +177,7 @@ Override the TUN MTU. By default, Tailscale's own MTU is used.
 
 UDP NAT expiration time.
 
-`5m` will be used by default.
+- Default: `5m`
 
 #### ssh_server
 
@@ -230,7 +232,7 @@ The directory where files received from tailnet peers are stored.
 Relative paths are resolved against the working directory, as [state_directory](#state_directory)
 is.
 
-`Taildrop` is used by default.
+- Default: `Taildrop`
 
 #### on_demand
 

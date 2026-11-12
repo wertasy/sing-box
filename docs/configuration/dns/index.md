@@ -118,7 +118,7 @@ Enable optimistic DNS caching.
 
 The maximum time an expired cache entry can be served optimistically.
 
-`3d` is used by default.
+- Default: `3d`
 
 #### timeout
 
@@ -126,9 +126,9 @@ The maximum time an expired cache entry can be served optimistically.
 
 Default timeout for each DNS query.
 
-`10s` is used by default.
-
 Can be overridden by `rules.[].timeout` (DNS rule action) or `domain_resolver.timeout`.
+
+- Default: `10s`
 
 #### reverse_mapping
 

@@ -1,12 +1,10 @@
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "vless",
   "tag": "vless-in",
-
-  ... // Listen Fields
-
   "users": [
     {
       "name": "sekai",
@@ -17,12 +15,17 @@
   "tls": {},
   "multiplex": {},
   "transport": {}
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

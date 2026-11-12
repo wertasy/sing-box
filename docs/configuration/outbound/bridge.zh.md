@@ -23,17 +23,18 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "bridge",
   "tag": "bridge-out",
-
   "interface": "",
   "bridge_name": "",
   "iproute2_table_index": 0,
   "iproute2_rule_index": 0
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -70,6 +71,6 @@ Linux iproute2 路由表索引。
 
 Linux iproute2 规则起始索引。
 
-默认使用 `100`。
+- 默认值：`100`
 
 <!-- AUTO-GENERATED-CONFIG-END -->

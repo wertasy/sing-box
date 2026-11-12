@@ -6,11 +6,11 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tailcat",
   "tag": "tailcat-out",
-
   "private_key": "",
   "server_public_key": "",
   "server_disco_key": "",
@@ -18,11 +18,12 @@ icon: material/new-box
   "derp_map_url": "",
   "derp_region": 0,
   "derp_servers": [],
-  "http_client": {},
+  "http_client": {}
 
   ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -58,7 +59,7 @@ icon: material/new-box
 
 [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap) 的 URL。
 
-默认使用 `https://tailcat.dev/derpmap.json`。
+- 默认值：`https://tailcat.dev/derpmap.json`
 
 #### derp_region
 

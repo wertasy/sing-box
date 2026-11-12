@@ -18,19 +18,23 @@
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "enabled": true,
   "path": "",
   "cache_id": "",
   "store_fakeip": false,
-  "store_rdrc": false,
-  "rdrc_timeout": "",
   "store_dns": false,
   "buffer_size": "",
-  "flush_interval": ""
+  "flush_interval": "",
+
+  // Deprecated
+  "store_rdrc": false,
+  "rdrc_timeout": ""
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -44,6 +48,8 @@
 #### path
 
 缓存文件路径，默认使用`cache.db`。
+
+- 默认值：`cache.db`
 
 #### cache_id
 
@@ -75,8 +81,7 @@
 
 拒绝的 DNS 响应缓存超时。
 
-默认使用 `7d`。
-
+- 默认值：`7d`
 - 已废弃。
 
 #### store_dns
@@ -91,7 +96,7 @@
 
 写缓存的大小。
 
-默认使用 `1MB`。
+- 默认值：`1MB`
 
 #### flush_interval
 

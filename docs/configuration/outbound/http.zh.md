@@ -2,25 +2,26 @@
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "http",
   "tag": "http-out",
-  
   "server": "127.0.0.1",
   "server_port": 1080,
   "username": "sekai",
   "password": "admin",
+  "tls": {},
   "path": "",
   "headers": {},
   "version": 0,
-  "disable_version_fallback": false,
-  "tls": {},
+  "disable_version_fallback": false
 
-  ... // HTTP2 字段 / QUIC 字段
   ... // 拨号字段
+  ... // HTTP2 字段 / QUIC 字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -99,4 +100,6 @@ HTTP 版本。
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

@@ -144,23 +144,23 @@ type RawDefaultRule struct {
 	//
 	// Not limited if empty.
 	IPVersion int `json:"ip_version,omitempty" enum:"4,6"`
-	// @quote: Changes in sing-box 1.13.0
+	// Match network type.
+	//
+	// `tcp`, `udp` or `icmp`.
+	//
+	// @Quote: Changes in sing-box 1.13.0
 	//
 	//     Since sing-box 1.13.0, you can match ICMP echo (ping) requests via the new `icmp` network.
 	//
 	//     Such traffic originates from `TUN`, `WireGuard`, and `Tailscale` inbounds and can be routed to `Direct`, `WireGuard`, and `Tailscale` outbounds.
-	//
-	// Match network type.
-	//
-	// `tcp`, `udp` or `icmp`.
 	Network badoption.Listable[string] `json:"network,omitempty" enum:"tcp,udp,icmp"`
 	// Username, see each inbound for details.
 	AuthUser badoption.Listable[string] `json:"auth_user,omitempty"`
 	// Sniffed protocol, see [Protocol Sniff](/configuration/route/sniff/) for details.
 	Protocol badoption.Listable[string] `json:"protocol,omitempty" enum:"tls,http,quic,dns,stun,bittorrent,dtls,ssh,rdp,ntp"`
-	// @since 1.10.0
-	//
 	// Sniffed client type, see [Protocol Sniff](/configuration/route/sniff/) for details.
+	//
+	// @Since 1.10.0
 	Client badoption.Listable[string] `json:"client,omitempty"`
 	// Match full domain.
 	Domain badoption.Listable[string] `json:"domain,omitempty"`
@@ -170,35 +170,35 @@ type RawDefaultRule struct {
 	DomainKeyword badoption.Listable[string] `json:"domain_keyword,omitempty"`
 	// Match domain using regular expression.
 	DomainRegex badoption.Listable[string] `json:"domain_regex,omitempty"`
-	// @failure: Deprecated in sing-box 1.8.0
+	// Match geosite.
+	//
+	// @Failure: Deprecated in sing-box 1.8.0
 	//
 	//     Geosite is deprecated and will be removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geosite-to-rule-sets).
-	//
-	// Match geosite.
 	Geosite badoption.Listable[string] `json:"geosite,omitempty" schema:"omit"`
-	// @failure: Deprecated in sing-box 1.8.0
-	//
-	//     GeoIP is deprecated and will be removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geoip-to-rule-sets).
-	//
 	// Match source geoip.
-	SourceGeoIP badoption.Listable[string] `json:"source_geoip,omitempty" schema:"omit"`
-	// @failure: Deprecated in sing-box 1.8.0
+	//
+	// @Failure: Deprecated in sing-box 1.8.0
 	//
 	//     GeoIP is deprecated and will be removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geoip-to-rule-sets).
-	//
+	SourceGeoIP badoption.Listable[string] `json:"source_geoip,omitempty" schema:"omit"`
 	// Match geoip.
+	//
+	// @Failure: Deprecated in sing-box 1.8.0
+	//
+	//     GeoIP is deprecated and will be removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geoip-to-rule-sets).
 	GeoIP badoption.Listable[string] `json:"geoip,omitempty" schema:"omit"`
 	// Match source IP CIDR.
 	SourceIPCIDR badoption.Listable[*badoption.Prefixable] `json:"source_ip_cidr,omitempty"`
-	// @since 1.8.0
-	//
 	// Match non-public source IP.
+	//
+	// @Since 1.8.0
 	SourceIPIsPrivate bool `json:"source_ip_is_private,omitempty"`
 	// Match IP CIDR.
 	IPCIDR badoption.Listable[*badoption.Prefixable] `json:"ip_cidr,omitempty"`
-	// @since 1.8.0
-	//
 	// Match non-public IP.
+	//
+	// @Since 1.8.0
 	IPIsPrivate bool `json:"ip_is_private,omitempty"`
 	// Match source port.
 	SourcePort badoption.Listable[uint16] `json:"source_port,omitempty"`
@@ -208,72 +208,72 @@ type RawDefaultRule struct {
 	Port badoption.Listable[uint16] `json:"port,omitempty"`
 	// Match port range.
 	PortRange badoption.Listable[string] `json:"port_range,omitempty"`
-	// @quote:
-	//
-	//     Only supported on Linux, Windows, and macOS.
-	//
 	// Match process name.
+	//
+	// @Quote:
+	//
+	//     Only supported on Linux, Windows, and macOS.
 	ProcessName badoption.Listable[string] `json:"process_name,omitempty"`
-	// @quote:
-	//
-	//     Only supported on Linux, Windows, and macOS.
-	//
 	// Match process path.
-	ProcessPath badoption.Listable[string] `json:"process_path,omitempty"`
-	// @since 1.10.0
 	//
-	// @quote:
+	// @Quote:
 	//
 	//     Only supported on Linux, Windows, and macOS.
-	//
+	ProcessPath badoption.Listable[string] `json:"process_path,omitempty"`
 	// Match process path using regular expression.
+	//
+	// @Since 1.10.0
+	//
+	// @Quote:
+	//
+	//     Only supported on Linux, Windows, and macOS.
 	ProcessPathRegex badoption.Listable[string] `json:"process_path_regex,omitempty"`
 	// Match android package name.
 	PackageName badoption.Listable[string] `json:"package_name,omitempty"`
-	// @since 1.14.0
-	//
 	// Match android package name using regular expression.
+	//
+	// @Since 1.14.0
 	PackageNameRegex badoption.Listable[string] `json:"package_name_regex,omitempty"`
-	// @quote:
-	//
-	//     Only supported on Linux.
-	//
 	// Match user name.
-	User badoption.Listable[string] `json:"user,omitempty"`
-	// @quote:
+	//
+	// @Quote:
 	//
 	//     Only supported on Linux.
-	//
+	User badoption.Listable[string] `json:"user,omitempty"`
 	// Match user id.
+	//
+	// @Quote:
+	//
+	//     Only supported on Linux.
 	UserID badoption.Listable[int32] `json:"user_id,omitempty"`
 	// Match Clash mode.
 	ClashMode string `json:"clash_mode,omitempty"`
-	// @since 1.11.0
-	//
-	// @quote:
-	//
-	//     Only supported in graphical clients on Android and Apple platforms.
-	//
 	// Match network type.
 	//
 	// Available values: `wifi`, `cellular`, `ethernet` and `other`.
-	NetworkType badoption.Listable[InterfaceType] `json:"network_type,omitempty"`
-	// @since 1.11.0
 	//
-	// @quote:
+	// @Since 1.11.0
+	//
+	// @Quote:
 	//
 	//     Only supported in graphical clients on Android and Apple platforms.
-	//
+	NetworkType badoption.Listable[InterfaceType] `json:"network_type,omitempty"`
 	// Match if network is considered Metered (on Android) or considered expensive,
 	// such as Cellular or a Personal Hotspot (on Apple platforms).
-	NetworkIsExpensive bool `json:"network_is_expensive,omitempty"`
-	// @since 1.11.0
 	//
-	// @quote:
+	// @Since 1.11.0
+	//
+	// @Quote:
+	//
+	//     Only supported in graphical clients on Android and Apple platforms.
+	NetworkIsExpensive bool `json:"network_is_expensive,omitempty"`
+	// Match if network is in Low Data Mode.
+	//
+	// @Since 1.11.0
+	//
+	// @Quote:
 	//
 	//     Only supported in graphical clients on Apple platforms.
-	//
-	// Match if network is in Low Data Mode.
 	NetworkIsConstrained bool `json:"network_is_constrained,omitempty"`
 	// Match WiFi SSID.
 	//
@@ -283,48 +283,46 @@ type RawDefaultRule struct {
 	//
 	// See [Wi-Fi State](/configuration/shared/wifi-state/) for details.
 	WIFIBSSID badoption.Listable[string] `json:"wifi_bssid,omitempty"`
-	// @since 1.13.0
+	// Match interface address.
 	//
-	// @quote:
+	// @Since 1.13.0
+	//
+	// @Quote:
 	//
 	//     Only supported on Linux, Windows, and macOS.
-	//
-	// Match interface address.
 	InterfaceAddress *badjson.TypedMap[string, badoption.Listable[*badoption.Prefixable]] `json:"interface_address,omitempty"`
-	// @since 1.13.0
+	// Matches network interface (same values as `network_type`) address.
 	//
-	// @quote:
+	// @Since 1.13.0
+	//
+	// @Quote:
 	//
 	//     Only supported in graphical clients on Android and Apple platforms.
-	//
-	// Matches network interface (same values as `network_type`) address.
 	NetworkInterfaceAddress *badjson.TypedMap[InterfaceType, badoption.Listable[*badoption.Prefixable]] `json:"network_interface_address,omitempty"`
-	// @since 1.13.0
+	// Match default interface address.
 	//
-	// @quote:
+	// @Since 1.13.0
+	//
+	// @Quote:
 	//
 	//     Only supported on Linux, Windows, and macOS.
-	//
-	// Match default interface address.
 	DefaultInterfaceAddress badoption.Listable[*badoption.Prefixable] `json:"default_interface_address,omitempty"`
-	// @since 1.14.0
-	//
-	// @quote:
-	//
-	//     Only supported on Linux, macOS, or in graphical clients on Android and macOS. See [Neighbor Resolution](/configuration/shared/neighbor/) for setup.
-	//
 	// Match source device MAC address.
-	SourceMACAddress badoption.Listable[string] `json:"source_mac_address,omitempty"`
-	// @since 1.14.0
 	//
-	// @quote:
+	// @Since 1.14.0
+	//
+	// @Quote:
 	//
 	//     Only supported on Linux, macOS, or in graphical clients on Android and macOS. See [Neighbor Resolution](/configuration/shared/neighbor/) for setup.
-	//
+	SourceMACAddress badoption.Listable[string] `json:"source_mac_address,omitempty"`
 	// Match source device hostname from DHCP leases.
-	SourceHostname badoption.Listable[string] `json:"source_hostname,omitempty"`
-	// @since 1.13.0
 	//
+	// @Since 1.14.0
+	//
+	// @Quote:
+	//
+	//     Only supported on Linux, macOS, or in graphical clients on Android and macOS. See [Neighbor Resolution](/configuration/shared/neighbor/) for setup.
+	SourceHostname badoption.Listable[string] `json:"source_hostname,omitempty"`
 	// Match specified outbounds' preferred routes.
 	//
 	// | Type        | Match                                              |
@@ -332,9 +330,9 @@ type RawDefaultRule struct {
 	// | `tailscale` | Match MagicDNS domains and peers' allowed IPs      |
 	// | `wireguard` | Match peers's allowed IPs                          |
 	// | `bridge`    | Match all addresses except local addresses of the machine, only in [pre-match](/configuration/shared/pre-match/) |
-	PreferredBy badoption.Listable[string] `json:"preferred_by,omitempty"`
-	// @since 1.15.0
 	//
+	// @Since 1.13.0
+	PreferredBy badoption.Listable[string] `json:"preferred_by,omitempty"`
 	// Match specified DNS servers' server addresses.
 	//
 	// | Type          | Match                                         |
@@ -345,9 +343,9 @@ type RawDefaultRule struct {
 	// | `tailscale`   | Match DNS resolvers of the tailnet            |
 	// | `openvpn`     | Match DNS servers pushed by the VPN server    |
 	// | `openconnect` | Match DNS servers pushed by the VPN server    |
-	DNSServerAddress *badjson.TypedMap[string, badoption.Listable[*badoption.Prefixable]] `json:"dns_server_address,omitempty"`
-	// @since 1.15.0
 	//
+	// @Since 1.15.0
+	DNSServerAddress *badjson.TypedMap[string, badoption.Listable[*badoption.Prefixable]] `json:"dns_server_address,omitempty"`
 	// Match specified DNS servers' search domains.
 	//
 	// | Type          | Match                                            |
@@ -358,26 +356,29 @@ type RawDefaultRule struct {
 	// | `tailscale`   | Match search domains of the tailnet              |
 	// | `openvpn`     | Match search domains pushed by the VPN server    |
 	// | `openconnect` | Match search domains pushed by the VPN server    |
+	//
+	// @Since 1.15.0
 	DNSSearchDomain *badjson.TypedMap[string, badoption.Listable[string]] `json:"dns_search_domain,omitempty"`
-	// @since 1.8.0
-	//
 	// Match [rule-set](/configuration/route/#rule_set).
-	RuleSet badoption.Listable[string] `json:"rule_set,omitempty" reference:"rule_set"`
-	// @since 1.10.0
 	//
+	// @Since 1.8.0
+	RuleSet badoption.Listable[string] `json:"rule_set,omitempty" reference:"rule_set"`
 	// Make `ip_cidr` in rule-sets match the source IP.
+	//
+	// @Since 1.10.0
 	RuleSetIPCIDRMatchSource bool `json:"rule_set_ip_cidr_match_source,omitempty"`
 	// Invert match result.
 	Invert bool `json:"invert,omitempty"`
 
-	// Deprecated: renamed to rule_set_ip_cidr_match_source
-	// @since 1.8.0
+	// Make `ip_cidr` in rule-sets match the source IP.
 	//
-	// @failure: Deprecated in sing-box 1.10.0
+	// @Failure: Deprecated in sing-box 1.10.0
 	//
 	//     `rule_set_ipcidr_match_source` is renamed to `rule_set_ip_cidr_match_source` and will be remove in sing-box 1.11.0.
 	//
-	// Make `ip_cidr` in rule-sets match the source IP.
+	// @Deprecated: renamed to rule_set_ip_cidr_match_source
+	//
+	// @Since 1.8.0
 	Deprecated_RulesetIPCIDRMatchSource bool `json:"rule_set_ipcidr_match_source,omitempty" schema:"omit"`
 }
 
@@ -405,13 +406,13 @@ func (r DefaultRule) IsValid() bool {
 }
 
 type RawLogicalRule struct {
-	// @required
-	//
 	// `and` or `or`
-	Mode string `json:"mode" enum:"and,or"`
-	// @required
 	//
+	// @Required
+	Mode string `json:"mode" enum:"and,or"`
 	// Included rules.
+	//
+	// @Required
 	Rules []Rule `json:"rules,omitempty"`
 	// Invert match result.
 	Invert bool `json:"invert,omitempty"`

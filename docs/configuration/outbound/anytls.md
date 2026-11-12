@@ -6,23 +6,24 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "anytls",
   "tag": "anytls-out",
-
   "server": "127.0.0.1",
   "server_port": 1080,
+  "tls": {},
   "password": "8JCsPssfgS8tiRwiMlhARg==",
   "idle_session_check_interval": "30s",
   "idle_session_timeout": "30s",
   "min_idle_session": 5,
-  "client_metadata": "",
-  "tls": {},
+  "client_metadata": ""
 
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -75,4 +76,6 @@ In the check, at least the first `n` idle sessions are kept open. Default value:
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

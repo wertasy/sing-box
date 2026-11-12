@@ -1,10 +1,10 @@
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "urltest",
   "tag": "auto",
-  
   "outbounds": [
     "proxy-a",
     "proxy-b",
@@ -17,6 +17,7 @@
   "interrupt_exist_connections": false
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 

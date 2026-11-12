@@ -296,11 +296,11 @@ if this option is set to `verify-if-given`, or `require-and-verify`.
 
 ==Client only==
 
-Client certificate chain line array, in PEM format.
-
 !!! question "Since sing-box 1.13.0"
 
 ==Server only==
+
+Client certificate chain line array, in PEM format.
 
 Client certificate chain line array, in PEM format.
 
@@ -310,8 +310,6 @@ Client certificate chain line array, in PEM format.
 
 ==Client only==
 
-The path to client certificate chain, in PEM format.
-
 !!! question "Since sing-box 1.13.0"
 
 ==Server only==
@@ -319,6 +317,8 @@ The path to client certificate chain, in PEM format.
 !!! note ""
 
     Will be automatically reloaded if file modified.
+
+The path to client certificate chain, in PEM format.
 
 List of path to client certificate chain, in PEM format.
 
@@ -386,6 +386,10 @@ Enable kernel TLS transmit support.
 
 #### kernel_rx
 
+!!! failure ""
+
+    kTLS RX will definitely degrade performance even if `splice(2)` is in use, so enabling it is not recommended.
+
 !!! question "Since sing-box 1.13.0"
 
 !!! quote ""
@@ -396,10 +400,6 @@ Enable kernel TLS transmit support.
 
     Only TLS 1.3 is supported.
 
-!!! failure ""
-
-    kTLS RX will definitely degrade performance even if `splice(2)` is in use, so enabling it is not recommended.
-
 Enable kernel TLS receive support.
 
 #### handshake_timeout
@@ -408,9 +408,13 @@ Enable kernel TLS receive support.
 
 TLS handshake timeout, in golang's Duration format.
 
-`15s` is used by default.
+- Default: `15s`
 
 #### certificate_provider
+
+!!! info "QUIC support"
+
+    Only ECH is supported in QUIC.
 
 !!! question "Since sing-box 1.14.0"
 
@@ -424,15 +428,19 @@ When object, an inline certificate provider. See [Certificate Provider](/configu
 
 ## Custom TLS support
 
-!!! info "QUIC support"
-
-    Only ECH is supported in QUIC.
-
 #### engine
 
 !!! question "Since sing-box 1.14.0"
 
 ==Client only==
+
+!!! note ""
+
+    `windows` uses Schannel via SSPI. Only available on Windows build 17763 or later (Windows 10 version 1809, Windows Server 2019, or newer).
+
+!!! note ""
+
+    TLS 1.3 is only negotiated on Windows 11 or Windows Server 2022 and newer.
 
 TLS engine to use.
 
@@ -465,14 +473,6 @@ Unsupported fields:
 * `ech`
 * `utls`
 * `reality`
-
-!!! note ""
-
-    `windows` uses Schannel via SSPI. Only available on Windows build 17763 or later (Windows 10 version 1809, Windows Server 2019, or newer).
-
-!!! note ""
-
-    TLS 1.3 is only negotiated on Windows 11 or Windows Server 2022 and newer.
 
 The default version range is TLS 1.2 to TLS 1.3, matching the `go` engine.
 
@@ -538,8 +538,6 @@ The path to client private key, in PEM format.
 
 #### utls
 
-==Client only==
-
 !!! failure "Not Recommended"
 
     uTLS has had repeated fingerprinting vulnerabilities discovered by researchers.
@@ -553,9 +551,7 @@ The path to client private key, in PEM format.
 
     For TLS fingerprint resistance, use [NaiveProxy](/configuration/inbound/naive/) instead.
 
-uTLS is a fork of "crypto/tls", which provides ClientHello fingerprinting resistance.
-
-Available fingerprint values:
+==Client only==
 
 !!! warning "Removed since sing-box 1.10.0"
 
@@ -566,6 +562,10 @@ Available fingerprint values:
     :material-close: chrome_padding_psk_shuffle
     :material-close: chrome_pq
     :material-close: chrome_pq_psk
+
+uTLS is a fork of "crypto/tls", which provides ClientHello fingerprinting resistance.
+
+Available fingerprint values:
 
 * chrome
 * firefox
@@ -674,7 +674,7 @@ because the target is considered to be local or behind a transparent proxy.
 
 The fallback value used when TLS segmentation cannot automatically determine the wait time.
 
-`500ms` is used by default.
+- Default: `500ms`
 
 #### pq_signature_schemes_enabled
 

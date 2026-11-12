@@ -12,16 +12,11 @@ Hysteria2 servers behind NAT register on the realm via the [`realm`](/configurat
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "hysteria-realm",
-
-  ... // Listen Fields
-
   "tls": {},
-
-  ... // HTTP2 Fields
-
   "users": [
     {
       "name": "",
@@ -29,12 +24,18 @@ Hysteria2 servers behind NAT register on the realm via the [`realm`](/configurat
       "max_realms": 0
     }
   ]
+
+  ... // Listen Fields
+  ... // HTTP2 Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### HTTP2 Fields
 
@@ -46,6 +47,8 @@ See [HTTP2 Fields](/configuration/shared/http2/) for details.
 <!-- 此区域由脚本自动生成，切勿手动修改 -->
 
 #### tls
+
+==Required==
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
 

@@ -340,7 +340,7 @@ icon: material/new-box
 | `NOTIMP`   | `not_implemented`  | Not implemented |
 | `REFUSED`  | `refused`          | Refused         |
 
-默认使用 `NOERROR`。
+- 默认值：`NOERROR`
 
 #### answer
 

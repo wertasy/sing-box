@@ -44,4 +44,6 @@ icon: material/new-box
 
 ### 拨号字段
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

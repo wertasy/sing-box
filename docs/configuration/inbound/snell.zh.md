@@ -48,7 +48,9 @@ icon: material/new-box
 
 ### 监听字段
 
-参阅 [监听字段](/zh/configuration/shared/listen/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 
@@ -59,15 +61,15 @@ icon: material/new-box
 
 ==必填==
 
-Snell 协议版本，`5` `6` 之一。
-
-版本 `5` 支持 HTTP 混淆（`obfs_mode`）；版本 `6` 以流量整形（`mode`）取而代之，并要求
-`psk` 长度为 12 到 255 字节。
-
 !!! note
 
     由于我们有意不支持 Snell v5 的 QUIC 代理模式，v5 的线路协议实际上与 v4 没有区别，
     因此不提供独立的 v4 服务器和 v5 客户端。
+
+Snell 协议版本，`5` `6` 之一。
+
+版本 `5` 支持 HTTP 混淆（`obfs_mode`）；版本 `6` 以流量整形（`mode`）取而代之，并要求
+`psk` 长度为 12 到 255 字节。
 
 #### psk
 
@@ -90,6 +92,8 @@ HTTP 混淆模式，`none` `http` 之一。
 
 默认为 `none`。
 
+- 默认值：`none`
+
 #### mode
 
 ==仅版本 6==
@@ -97,5 +101,7 @@ HTTP 混淆模式，`none` `http` 之一。
 流量整形模式，`default` `unshaped` `unsafe-raw` 之一。
 
 默认为 `default`。
+
+- 默认值：`default`
 
 <!-- AUTO-GENERATED-CONFIG-END -->

@@ -66,16 +66,16 @@ The server port.
 
 ==Required==
 
+!!! note
+
+    Since we intentionally do not support the QUIC proxy mode of Snell v5, the v5 wire protocol
+    is effectively identical to v4, so no separate v4 server or v5 client is provided.
+
 The Snell protocol version, one of `4` `6`.
 
 Version `4` supports HTTP obfuscation (`obfs_mode` / `obfs_host`); version `6`
 replaces it with traffic shaping (`mode`) and requires a `psk` of 12 to 255
 bytes.
-
-!!! note
-
-    Since we intentionally do not support the QUIC proxy mode of Snell v5, the v5 wire protocol
-    is effectively identical to v4, so no separate v4 server or v5 client is provided.
 
 #### psk
 
@@ -105,7 +105,7 @@ Both is enabled by default.
 
 HTTP obfuscation mode, one of `none` `http`.
 
-`none` is used by default.
+- Default: `none`
 
 #### obfs_host
 
@@ -113,7 +113,7 @@ HTTP obfuscation mode, one of `none` `http`.
 
 The HTTP `Host` header sent when `obfs_mode` is `http`.
 
-`bing.com` is used by default.
+- Default: `bing.com`
 
 #### mode
 
@@ -121,10 +121,12 @@ The HTTP `Host` header sent when `obfs_mode` is `http`.
 
 Traffic shaping mode, one of `default` `unshaped` `unsafe-raw`.
 
-`default` is used by default.
+- Default: `default`
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

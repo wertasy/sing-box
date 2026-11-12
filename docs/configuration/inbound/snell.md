@@ -48,7 +48,9 @@ icon: material/new-box
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 
@@ -59,15 +61,15 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ==Required==
 
-The Snell protocol version, one of `5` `6`.
-
-Version `5` supports HTTP obfuscation (`obfs_mode`); version `6` replaces it
-with traffic shaping (`mode`) and requires a `psk` of 12 to 255 bytes.
-
 !!! note
 
     Since we intentionally do not support the QUIC proxy mode of Snell v5, the v5 wire protocol
     is effectively identical to v4, so no separate v4 server or v5 client is provided.
+
+The Snell protocol version, one of `5` `6`.
+
+Version `5` supports HTTP obfuscation (`obfs_mode`); version `6` replaces it
+with traffic shaping (`mode`) and requires a `psk` of 12 to 255 bytes.
 
 #### psk
 
@@ -88,7 +90,7 @@ logs) and a `userkey` (the user's key).
 
 HTTP obfuscation mode, one of `none` `http`.
 
-`none` is used by default.
+- Default: `none`
 
 #### mode
 
@@ -96,6 +98,6 @@ HTTP obfuscation mode, one of `none` `http`.
 
 Traffic shaping mode, one of `default` `unshaped` `unsafe-raw`.
 
-`default` is used by default.
+- Default: `default`
 
 <!-- AUTO-GENERATED-CONFIG-END -->

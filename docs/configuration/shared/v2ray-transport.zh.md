@@ -88,6 +88,8 @@ HTTP 请求的额外标头
 
 默认使用零。
 
+- 默认值：`Zero`
+
 #### ping_timeout
 
 在 HTTP2 客户端中：

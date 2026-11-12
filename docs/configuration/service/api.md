@@ -16,12 +16,10 @@ The server also accepts [gRPC-Web](https://github.com/grpc/grpc/blob/master/doc/
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "api",
-  
-  ... // Listen Fields
-  
   "secret": "",
   "access_control_allow_origin": [],
   "access_control_allow_private_network": false,
@@ -33,12 +31,17 @@ The server also accepts [gRPC-Web](https://github.com/grpc/grpc/blob/master/doc/
     "update_interval": ""
   },
   "tls": {}
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 
@@ -63,13 +66,13 @@ Allow access from private network.
 
 #### dashboard
 
-Web dashboard downloaded and served over the API listener at `/dashboard/`; other browser
-requests are redirected to it.
-
 !!! info ""
 
     The object can be replaced with a boolean value (equivalent to `{ "enabled": <bool> }`),
     or with a string path (equivalent to `{ "enabled": true, "path": "<string>" }`).
+
+Web dashboard downloaded and served over the API listener at `/dashboard/`; other browser
+requests are redirected to it.
 
 ##### enabled
 
@@ -87,8 +90,6 @@ If the directory contains files not downloaded by sing-box, they are served as-i
 
 Download URL of the dashboard archive (zip).
 
-`https://github.com/SagerNet/sing-box-dashboard/archive/refs/heads/gh-pages.zip` will be used by default.
-
 ##### http_client
 
 HTTP client used to download the dashboard.
@@ -99,7 +100,7 @@ See [HTTP Client Fields](/configuration/shared/http-client/) for details.
 
 Update interval of the dashboard.
 
-`1d` will be used by default.
+- Default: `1d`
 
 #### tls
 

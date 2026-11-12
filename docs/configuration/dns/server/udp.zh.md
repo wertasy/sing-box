@@ -48,10 +48,12 @@ DNS 服务器的地址。
 
 DNS 服务器的端口。
 
-默认使用 `53`。
+- 默认值：`53`
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

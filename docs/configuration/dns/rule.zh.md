@@ -706,7 +706,6 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 
     GeoIP 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
 
-
 与查询响应匹配 GeoIP。
 
 #### rule_set_ip_cidr_accept_empty
@@ -749,7 +748,6 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 !!! failure "已在 sing-box 1.12.0 中被移除"
 
     GeoIP 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
-
 
 与查询响应匹配 GeoIP。
 
@@ -895,7 +893,6 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 !!! failure "已在 sing-box 1.12.0 中被移除"
 
     GeoIP 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
-
 
 与查询响应匹配 GeoIP。
 

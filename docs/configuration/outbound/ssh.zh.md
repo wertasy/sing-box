@@ -6,11 +6,11 @@
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "ssh",
   "tag": "ssh-out",
-
   "server": "127.0.0.1",
   "server_port": 22,
   "user": "root",
@@ -25,11 +25,12 @@
   "client_version": "SSH-2.0-OpenSSH_7.4p1",
   "cipher": [],
   "mac": [],
-  "kex_algorithm": [],
+  "kex_algorithm": []
 
   ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -100,4 +101,6 @@ SSH 用户, 默认使用 root。
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

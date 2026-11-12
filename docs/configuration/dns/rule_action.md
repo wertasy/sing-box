@@ -104,11 +104,11 @@ the pending race rules; its response is used only after none of the race rules m
 
 #### strategy
 
-!!! question "Since sing-box 1.12.0"
-
 !!! failure "Deprecated in sing-box 1.14.0"
 
     `strategy` is deprecated in sing-box 1.14.0 and will be removed in sing-box 1.16.0.
+
+!!! question "Since sing-box 1.12.0"
 
 Set domain strategy for this query.
 
@@ -249,11 +249,11 @@ Conflict with `client_subnet`.
 
 #### strategy
 
-!!! question "Since sing-box 1.12.0"
-
 !!! failure "Deprecated in sing-box 1.14.0"
 
     `strategy` is deprecated in sing-box 1.14.0 and will be removed in sing-box 1.16.0.
+
+!!! question "Since sing-box 1.12.0"
 
 Set domain strategy for this query.
 
@@ -353,7 +353,7 @@ The response code.
 | `NOTIMP`   | `not_implemented`                | Not implemented |
 | `REFUSED`  | `refused`                        | Refused         |
 
-`NOERROR` will be used by default.
+- Default: `NOERROR`
 
 #### answer
 

@@ -25,6 +25,7 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tailscale",
@@ -49,11 +50,12 @@ icon: material/new-box
   "udp_timeout": "5m",
   "ssh_server": false,
   "taildrop_directory": "",
-  "on_demand": false,
+  "on_demand": false
 
   ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -64,9 +66,9 @@ icon: material/new-box
 
 存储 Tailscale 状态的目录。
 
-默认使用 `tailscale`。
-
 示例：`$HOME/.tailscale`
+
+- 默认值：`tailscale`
 
 #### auth_key
 
@@ -80,7 +82,7 @@ icon: material/new-box
 
 协调服务器 URL。
 
-默认使用 `https://controlplane.tailscale.com`。
+- 默认值：`https://controlplane.tailscale.com`
 
 #### ephemeral
 
@@ -88,13 +90,13 @@ icon: material/new-box
 
 #### hostname
 
-节点的主机名。
-
-默认使用系统主机名。
-
 !!! question "自 sing-box 1.14.0 起"
 
     在 iOS、tvOS 和 Android 上，默认使用设备名称。
+
+节点的主机名。
+
+默认使用系统主机名。
 
 示例：`localhost`
 
@@ -174,7 +176,7 @@ icon: material/new-box
 
 UDP NAT 过期时间。
 
-默认使用 `5m`。
+- 默认值：`5m`
 
 #### ssh_server
 
@@ -228,7 +230,7 @@ UDP NAT 过期时间。
 
 相对路径基于工作目录解析，与 [state_directory](#state_directory) 相同。
 
-默认使用 `Taildrop`。
+- 默认值：`Taildrop`
 
 #### on_demand
 

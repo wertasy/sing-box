@@ -2,13 +2,11 @@
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "mixed",
   "tag": "mixed-in",
-
-  ... // Listen Fields
-
   "users": [
     {
       "username": "admin",
@@ -16,12 +14,17 @@
     }
   ],
   "set_system_proxy": false
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

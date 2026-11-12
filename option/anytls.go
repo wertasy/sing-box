@@ -5,9 +5,17 @@ import "github.com/sagernet/sing/common/json/badoption"
 type AnyTLSInboundOptions struct {
 	ListenOptions
 	InboundTLSOptionsContainer
-	// @required
-	//
 	// AnyTLS users.
+	//
+	// @Example:
+	//    [
+	//      {
+	//        "name": "sekai",
+	//        "password": "8JCsPssfgS8tiRwiMlhARg=="
+	//      }
+	//    ]
+	//
+	// @Required
 	Users []AnyTLSUser `json:"users,omitempty"`
 	// AnyTLS padding scheme line array.
 	//
@@ -37,18 +45,30 @@ type AnyTLSUser struct {
 type AnyTLSOutboundOptions struct {
 	DialerOptions
 	ServerOptions
-	OutboundTLSOptionsContainer
-	// @required
+	// @Override:
+	//    @Required
 	//
+	//    TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
+	OutboundTLSOptionsContainer
 	// The AnyTLS password.
+	//
+	// @Example: "8JCsPssfgS8tiRwiMlhARg=="
+	//
+	// @Required
 	Password string `json:"password,omitempty"`
 	// Interval checking for idle sessions. Default: 30s.
+	//
+	// @Example: "30s"
 	IdleSessionCheckInterval badoption.Duration `json:"idle_session_check_interval,omitempty"`
 	// In the check, close sessions that have been idle for longer than this. Default: 30s.
+	//
+	// @Example: "30s"
 	IdleSessionTimeout badoption.Duration `json:"idle_session_timeout,omitempty"`
 	// In the check, at least the first `n` idle sessions are kept open. Default value: `n`=0
+	//
+	// @Example: 5
 	MinIdleSession int `json:"min_idle_session,omitempty"`
-	// @since 1.13.16
+	// @Since 1.13.16
 	//
 	//     Check [AnyTLS client metadata](/manual/misc/anytls-client-metadata/).
 	ClientMetadata string `json:"client_metadata,omitempty"`

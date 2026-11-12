@@ -16,26 +16,45 @@ type SocksInboundOptions struct {
 	// SOCKS users.
 	//
 	// No authentication required if empty.
-	Users          []auth.User           `json:"users,omitempty"`
+	//
+	// @Example:
+	//    [
+	//      {
+	//        "username": "admin",
+	//        "password": "admin"
+	//      }
+	//    ]
+	Users []auth.User `json:"users,omitempty"`
+	// @Omit
 	DomainResolver *DomainResolveOptions `json:"domain_resolver,omitempty"`
 }
 
+// @Tag mixed-in
 type HTTPMixedInboundOptions struct {
 	ListenOptions
 	// SOCKS and HTTP users.
 	//
 	// No authentication required if empty.
-	Users          []auth.User           `json:"users,omitempty"`
+	//
+	// @Example:
+	//    [
+	//      {
+	//        "username": "admin",
+	//        "password": "admin"
+	//      }
+	//    ]
+	Users []auth.User `json:"users,omitempty"`
+	// @Omit
 	DomainResolver *DomainResolveOptions `json:"domain_resolver,omitempty"`
-	// @quote:
+	// Automatically set system proxy configuration when start and clean up when stop.
+	//
+	// @Quote:
 	//
 	//     Only supported on Linux, Android, Windows, and macOS.
 	//
-	// @warning:
+	// @Warning:
 	//
 	//     To work on Android and Apple platforms without privileges, use tun.platform.http_proxy instead.
-	//
-	// Automatically set system proxy configuration when start and clean up when stop.
 	SetSystemProxy bool `json:"set_system_proxy,omitempty"`
 	InboundTLSOptionsContainer
 }
@@ -45,20 +64,27 @@ type _HTTPInboundOptions struct {
 	// HTTP users.
 	//
 	// No authentication required if empty.
-	Users          []auth.User           `json:"users,omitempty"`
+	//
+	// @Example:
+	//    [
+	//      {
+	//        "username": "admin",
+	//        "password": "admin"
+	//      }
+	//    ]
+	Users []auth.User `json:"users,omitempty"`
+	// @Omit
 	DomainResolver *DomainResolveOptions `json:"domain_resolver,omitempty"`
-	// @quote:
+	// Automatically set system proxy configuration when start and clean up when stop.
+	//
+	// @Quote:
 	//
 	//     Only supported on Linux, Android, Windows, and macOS.
 	//
-	// @warning:
+	// @Warning:
 	//
 	//     To work on Android and Apple platforms without privileges, use tun.platform.http_proxy instead.
-	//
-	// Automatically set system proxy configuration when start and clean up when stop.
 	SetSystemProxy bool `json:"set_system_proxy,omitempty"`
-	// @since 1.15.0
-	//
 	// List of HTTP versions to serve.
 	//
 	// Available values: `1`, `2`, `3`.
@@ -66,6 +92,8 @@ type _HTTPInboundOptions struct {
 	// `1` and `2` are used by default.
 	//
 	// TLS is required for `3`.
+	//
+	// @Since 1.15.0
 	Version badoption.Listable[int] `json:"version,omitempty" enum:"1,2,3"`
 	InboundTLSOptionsContainer
 	HTTP2Options HTTP2Options `json:"-"`
@@ -112,37 +140,54 @@ type SOCKSOutboundOptions struct {
 	// The SOCKS version, one of `4` `4a` `5`.
 	//
 	// SOCKS5 used by default.
+	//
+	// @Example: "5"
 	Version string `json:"version,omitempty" enum:"4,4a,5"`
 	// SOCKS username.
+	//
+	// @Example: "sekai"
 	Username string `json:"username,omitempty"`
 	// SOCKS5 password.
+	//
+	// @Example: "admin"
 	Password string `json:"password,omitempty"`
 	// Enabled network
 	//
 	// One of `tcp` `udp`.
 	//
 	// Both is enabled by default.
+	//
+	// @Example: "udp"
 	Network NetworkList `json:"network,omitempty"`
 	// UDP over TCP protocol settings.
 	//
 	// See [UDP Over TCP](/configuration/shared/udp-over-tcp/) for details.
+	//
+	// @Example: false | {}
 	UDPOverTCP *UDPOverTCPOptions `json:"udp_over_tcp,omitempty"`
 }
 
 type _HTTPOutboundOptions struct {
 	DialerOptions
+	// @Override server:
+	//    @Example: "127.0.0.1"
+	//
+	// @Override server_port:
+	//    @Example: 1080
 	ServerOptions
 	// Basic authorization username.
+	//
+	// @Example: "sekai"
 	Username string `json:"username,omitempty"`
 	// Basic authorization password.
+	//
+	// @Example: "admin"
 	Password string `json:"password,omitempty"`
 	OutboundTLSOptionsContainer
 	// Path of HTTP request.
 	Path string `json:"path,omitempty"`
 	// Extra headers of HTTP request.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`
-	// @since 1.15.0
-	//
 	// HTTP version.
 	//
 	// Available values: `1`, `2`, `3`.
@@ -152,10 +197,12 @@ type _HTTPOutboundOptions struct {
 	// `path` and the `Host` header are only available for `1`.
 	//
 	// When `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).
-	Version int `json:"version,omitempty" enum:"0,1,2,3"`
-	// @since 1.15.0
 	//
+	// @Since 1.15.0
+	Version int `json:"version,omitempty" enum:"0,1,2,3"`
 	// Disable automatic fallback to lower HTTP version.
+	//
+	// @Since 1.15.0
 	DisableVersionFallback bool         `json:"disable_version_fallback,omitempty"`
 	HTTP2Options           HTTP2Options `json:"-"`
 	HTTP3Options           QUICOptions  `json:"-"`

@@ -12,24 +12,27 @@ CCM（Claude Code 多路复用器）服务是一个多路复用服务，允许�
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "ccm",
-
-  ... // 监听字段
-
+  "detour": "",
+  "tls": {},
   "credential_path": "",
-  "usages_path": "",
   "users": [],
   "headers": {},
-  "detour": "",
-  "tls": {}
+  "usages_path": ""
+
+  ... // 监听字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 监听字段
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 

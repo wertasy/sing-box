@@ -55,6 +55,8 @@ The port of the DNS server.
 
 `443` will be used by default.
 
+- Default: `53`
+
 #### path
 
 The path of the DNS server.
@@ -73,4 +75,6 @@ TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

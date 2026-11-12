@@ -7,6 +7,7 @@ See [tcp-brutal](https://github.com/apernet/tcp-brutal) for details.
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "enabled": true,
@@ -14,6 +15,7 @@ See [tcp-brutal](https://github.com/apernet/tcp-brutal) for details.
   "down_mbps": 100
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 

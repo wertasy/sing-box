@@ -1,29 +1,31 @@
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "http",
   "tag": "http-in",
-
-  ... // 监听字段
-
-  "version": [],
   "users": [
     {
       "username": "admin",
       "password": "admin"
     }
   ],
-  "tls": {},
   "set_system_proxy": false,
+  "version": [],
+  "tls": {}
 
+  ... // 监听字段
   ... // HTTP2 字段 / QUIC 字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 监听字段
 
-参阅 [监听字段](/zh/configuration/shared/listen/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 

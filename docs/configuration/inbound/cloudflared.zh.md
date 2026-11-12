@@ -9,11 +9,11 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "cloudflared",
   "tag": "",
-
   "token": "",
   "ha_connections": 0,
   "protocol": "",
@@ -23,13 +23,14 @@ icon: material/new-box
   "grace_period": "",
   "region": "",
   "control_dialer": {
-    ... // 拨号字段
+    ... // Dial Fields
   },
   "tunnel_dialer": {
-    ... // 拨号字段
+    ... // Dial Fields
   }
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 

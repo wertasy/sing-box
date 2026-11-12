@@ -13,9 +13,9 @@ import (
 )
 
 type ACMECertificateProviderOptions struct {
-	// @required
-	//
 	// List of domains.
+	//
+	// @Required
 	Domain badoption.Listable[string] `json:"domain,omitempty"`
 	// The directory to store ACME data.
 	//
@@ -37,9 +37,9 @@ type ACMECertificateProviderOptions struct {
 	//
 	// When `provider` is `zerossl`, at least one of `external_account`, `email`, or `account_key` is required.
 	Provider string `json:"provider,omitempty"`
-	// @since 1.14.0
-	//
 	// The PEM-encoded private key of an existing ACME account.
+	//
+	// @Since 1.14.0
 	AccountKey string `json:"account_key,omitempty"`
 	// Disable all HTTP challenges.
 	DisableHTTPChallenge bool `json:"disable_http_challenge,omitempty"`
@@ -54,13 +54,17 @@ type ACMECertificateProviderOptions struct {
 	// External account bindings are used to associate an ACME account with an existing account in a non-ACME system, such as a CA customer database.
 	//
 	// To enable ACME account binding, the CA operating the ACME server needs to provide the ACME client with a MAC key and a key identifier, using some mechanism outside of ACME. §7.3.4
+	//
+	// @Example:
+	//    {
+	//      "key_id": "",
+	//      "mac_key": ""
+	//    }
 	ExternalAccount *ACMEExternalAccountOptions `json:"external_account,omitempty"`
 	// ACME DNS01 challenge field. If configured, other challenge methods will be disabled.
 	//
 	// See [DNS01 Challenge Fields](/configuration/shared/dns01_challenge/) for details.
 	DNS01Challenge *ACMEProviderDNS01ChallengeOptions `json:"dns01_challenge,omitempty"`
-	// @since 1.14.0
-	//
 	// The private key type to generate for new certificates.
 	//
 	// | Value      | Type    |
@@ -70,18 +74,20 @@ type ACMECertificateProviderOptions struct {
 	// | `p384`     | P-384   |
 	// | `rsa2048`  | RSA     |
 	// | `rsa4096`  | RSA     |
-	KeyType ACMEKeyType `json:"key_type,omitempty" enum:"ed25519,p256,p384,rsa2048,rsa4096"`
-	// @since 1.14.0
 	//
+	// @Since 1.14.0
+	KeyType ACMEKeyType `json:"key_type,omitempty" enum:"ed25519,p256,p384,rsa2048,rsa4096"`
 	// The ACME profile to use for certificate issuance.
 	//
 	// When empty and `provider` is Let's Encrypt, `shortlived` will be used automatically if any domain is an IP address.
-	Profile string `json:"profile,omitempty"`
-	// @since 1.14.0
 	//
+	// @Since 1.14.0
+	Profile string `json:"profile,omitempty"`
 	// HTTP Client for all provider HTTP requests.
 	//
 	// See [HTTP Client Fields](/configuration/shared/http-client/) for details.
+	//
+	// @Since 1.14.0
 	HTTPClient *HTTPClientOptions `json:"http_client,omitempty"`
 }
 

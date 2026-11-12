@@ -45,7 +45,7 @@ NTP 服务器端口。
 
 时间同步间隔。
 
-默认使用 30 分钟。
+- 默认值：`30 minutes`
 
 #### write_to_system
 
@@ -55,4 +55,6 @@ Update system time after synchronization.
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

@@ -10,12 +10,10 @@ DERP service is a Tailscale DERP server, similar to [derper](https://pkg.go.dev/
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "derp",
-  
-  ... // Listen Fields
-
   "tls": {},
   "config_path": "",
   "verify_client_endpoint": [],
@@ -27,12 +25,17 @@ DERP service is a Tailscale DERP server, similar to [derper](https://pkg.go.dev/
   "mesh_psk": "",
   "mesh_psk_file": "",
   "stun": {}
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 

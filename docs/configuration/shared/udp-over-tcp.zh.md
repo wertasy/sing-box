@@ -6,12 +6,14 @@ UDP over TCP 协议用于在 TCP 中传输 UDP 数据包。
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "enabled": true,
   "version": 2
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! info ""
 
@@ -31,6 +33,8 @@ UDP over TCP 协议用于在 TCP 中传输 UDP 数据包。
 协议版本，`1` 或 `2`。
 
 默认使用 2。
+
+- 默认值：`2`
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

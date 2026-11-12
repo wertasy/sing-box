@@ -23,7 +23,9 @@ Resolved 服务是一个伪造的 systemd-resolved DBUS 服务，用于从其他
 
 ### 监听字段
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 

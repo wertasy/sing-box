@@ -12,11 +12,11 @@
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "wireguard",
   "tag": "wg-ep",
-  
   "system": false,
   "name": "",
   "mtu": 1408,
@@ -34,15 +34,17 @@
       "reserved": [0, 0, 0]
     }
   ],
-
-  ... // UDP NAT Fields
-
+  "udp_timeout": "",
+  "udp_mapping": "",
+  "udp_filtering": "",
+  "udp_nat_max": 0,
   "workers": 0,
-  "on_demand": false,
- 
+  "on_demand": false
+
   ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! note ""
 
@@ -67,7 +69,7 @@ Custom interface name for system interface.
 
 WireGuard MTU.
 
-`1408` will be used by default.
+- Default: `1408`
 
 #### address
 
@@ -152,4 +154,6 @@ See [UDP NAT Fields](/configuration/shared/udp-nat/) for details.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

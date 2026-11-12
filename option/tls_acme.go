@@ -50,11 +50,11 @@ type InboundACMEOptions struct {
 	//
 	// See [DNS01 Challenge Fields](/configuration/shared/dns01_challenge/) for details.
 	DNS01Challenge *ACMEDNS01ChallengeOptions `json:"dns01_challenge,omitempty"`
-	// @since 1.14.0
-	//
 	// The ACME profile to use for certificate issuance.
 	//
 	// When empty and `provider` is Let's Encrypt, `shortlived` will be used automatically if any domain is an IP address.
+	//
+	// @Since 1.14.0
 	Profile string `json:"profile,omitempty"`
 }
 

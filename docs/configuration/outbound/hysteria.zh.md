@@ -9,11 +9,11 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "hysteria",
   "tag": "hysteria-out",
-  
   "server": "127.0.0.1",
   "server_port": 1080,
   "server_ports": [
@@ -30,17 +30,16 @@ icon: material/new-box
   "network": "",
   "tls": {},
 
+  ... // 拨号字段
   ... // QUIC 字段
 
-  ... // 拨号字段
-
-  // 废弃的
-
+  // Deprecated
   "recv_window_conn": 0,
   "recv_window": 0,
   "disable_mtu_discovery": false
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -73,7 +72,7 @@ icon: material/new-box
 
 端口跳跃间隔。
 
-默认使用 `30s`。
+- 默认值：`30s`
 
 #### up, down
 
@@ -158,7 +157,9 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 废弃字段
 

@@ -46,7 +46,7 @@ NTP server port.
 
 Time synchronization interval.
 
-30 minutes is used by default.
+- Default: `30 minutes`
 
 #### write_to_system
 
@@ -56,4 +56,6 @@ Update system time after synchronization.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->

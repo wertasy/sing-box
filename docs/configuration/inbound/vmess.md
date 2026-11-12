@@ -1,12 +1,10 @@
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "vmess",
   "tag": "vmess-in",
-
-  ... // Listen Fields
-
   "users": [
     {
       "name": "sekai",
@@ -17,12 +15,17 @@
   "tls": {},
   "multiplex": {},
   "transport": {}
+
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 
@@ -33,16 +36,16 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 ==Required==
 
+!!! warning ""
+
+    Legacy protocol support (VMess MD5 Authentication) is provided for compatibility purposes only, use of alterId > 1 is not recommended.
+
 VMess users.
 
 | Alter ID | Description             |
 |----------|-------------------------|
 | 0        | Disable legacy protocol |
 | > 0      | Enable legacy protocol  |
-
-!!! warning ""
-
-    Legacy protocol support (VMess MD5 Authentication) is provided for compatibility purposes only, use of alterId > 1 is not recommended.
 
 #### tls
 

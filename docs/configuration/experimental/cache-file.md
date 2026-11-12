@@ -18,19 +18,23 @@
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "enabled": true,
   "path": "",
   "cache_id": "",
   "store_fakeip": false,
-  "store_rdrc": false,
-  "rdrc_timeout": "",
   "store_dns": false,
   "buffer_size": "",
-  "flush_interval": ""
+  "flush_interval": "",
+
+  // Deprecated
+  "store_rdrc": false,
+  "rdrc_timeout": ""
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -45,7 +49,7 @@ Enable cache file.
 
 Path to the cache file.
 
-`cache.db` will be used if empty.
+- Default: `cache.db`
 
 #### cache_id
 
@@ -78,8 +82,7 @@ will be cached until expiration.
 
 Timeout of rejected DNS response cache.
 
-`7d` is used by default.
-
+- Default: `7d`
 - Deprecated.
 
 #### store_dns
@@ -94,7 +97,7 @@ Store DNS cache in the cache file.
 
 Size of the write buffer.
 
-`1MB` is used by default.
+- Default: `1MB`
 
 #### flush_interval
 

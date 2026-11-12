@@ -120,13 +120,13 @@ icon: material/new-box
 
 TCP keep alive 初始周期。
 
-默认使用 `5m`。
+- 默认值：`5m`
 
 #### tcp_keep_alive_interval
 
 TCP keep alive 间隔。
 
-默认使用 `75s`。
+- 默认值：`75s`
 
 #### tcp_fast_open
 
@@ -148,7 +148,7 @@ TCP keep alive 间隔。
 
 UDP NAT 过期时间。
 
-默认使用 `5m`。
+- 默认值：`5m`
 
 #### detour
 
@@ -196,7 +196,7 @@ UDP NAT 过期时间。
 
 探测超时时间。
 
-默认使用 300ms。
+- 默认值：`300ms`
 
 #### udp_disable_domain_unmapping
 

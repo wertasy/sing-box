@@ -2,22 +2,23 @@
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "socks",
   "tag": "socks-out",
-  
   "server": "127.0.0.1",
   "server_port": 1080,
   "version": "5",
   "username": "sekai",
   "password": "admin",
   "network": "udp",
-  "udp_over_tcp": false | {},
+  "udp_over_tcp": false | {}
 
   ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 
@@ -68,4 +69,6 @@ UDP over TCP 配置。
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

@@ -15,17 +15,18 @@ The server must be a sing-box (or sing-usbip) server.
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "usbip-client",
-
-  ... // Dial Fields
-
   "server": "",
   "server_port": 0,
   "devices": []
+
+  ... // Dial Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Dial Fields
 

@@ -10,12 +10,10 @@ DERP 服务是一个 Tailscale DERP 服务器，类似于 [derper](https://pkg.g
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "derp",
-
-  ... // 监听字段
-
   "tls": {},
   "config_path": "",
   "verify_client_endpoint": [],
@@ -27,12 +25,17 @@ DERP 服务是一个 Tailscale DERP 服务器，类似于 [derper](https://pkg.g
   "mesh_psk": "",
   "mesh_psk_file": "",
   "stun": {}
+
+  ... // 监听字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 监听字段
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 

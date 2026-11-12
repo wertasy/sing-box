@@ -55,6 +55,8 @@ DNS 服务器的端口。
 
 默认使用 `443`。
 
+- 默认值：`53`
+
 #### path
 
 DNS 服务器的路径。
@@ -73,4 +75,6 @@ TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
 ### 拨号字段
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

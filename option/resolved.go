@@ -12,6 +12,19 @@ import (
 )
 
 type _ResolvedServiceOptions struct {
+	// @Override listen:
+	//    @Required
+	//
+	//    Listen address.
+	//
+	//    `127.0.0.53` will be used by default.
+	//
+	// @Override listen_port:
+	//    @Required
+	//
+	//    Listen port.
+	//
+	//    `53` will be used by default.
 	ListenOptions
 }
 
@@ -51,9 +64,9 @@ func (r ResolvedServiceOptions) DescribeSchema(builder schema.Builder) (*schema.
 }
 
 type ResolvedDNSServerOptions struct {
-	// @required
-	//
 	// The tag of the [Resolved Service](/configuration/service/resolved).
+	//
+	// @Required
 	Service string `json:"service"`
 	// Indicates whether the default DNS resolvers should be accepted for fallback queries in addition to matching domains.
 	//

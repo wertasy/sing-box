@@ -2,15 +2,13 @@
 
 !!! question "Since sing-box 1.14.0"
 
-## Structure
+### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "openvpn-server",
   "tag": "ovpn-server",
-
-  ... // Listen Fields
-
   "system": false,
   "name": "",
   "mtu": 1500,
@@ -89,23 +87,28 @@
   "renegotiate_disabled": false,
   "renegotiate_bytes": 0,
   "renegotiate_packets": 0,
-  "handshake_window": "1m",
+  "handshake_window": "1m"
 
+  ... // Listen Fields
   ... // UDP NAT Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! note ""
 
     You can ignore the JSON Array [] tag when the content is only one item
 
-## Listen Fields
+### Listen Fields
 
 See [Listen Fields](/configuration/shared/listen/) for details. `udp_timeout` is part of the [UDP NAT Fields](#udp-nat-fields) below.
 
-## Fields
+### Fields
 
-### system
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
+#### system
 
 Use system interface.
 
@@ -113,48 +116,48 @@ Requires privilege and cannot conflict with existing system interfaces.
 
 If disabled, sing-box uses the internal network stack.
 
-### name
+#### name
 
 Custom interface name for system interface.
 
 An automatically generated `ovpn` interface name is used by default.
 
-### mtu
+#### mtu
 
 OpenVPN interface MTU.
 
 `1500` will be used by default.
 
-### mode
+#### mode
 
 OpenVPN session mode, one of `tls` or `static_key`.
 
-`tls` is used by default.
-
 `static_key` serves one peer without a TLS control channel or forward secrecy.
 
-### network
+- Default: `tls`
+
+#### network
 
 OpenVPN transport network, one of `udp` or `tcp`.
-
-`udp` will be used by default.
 
 Only one transport network is served per endpoint; to serve both TCP and UDP,
 configure two endpoints with separate `address` subnets.
 
-### remote
+- Default: `udp`
+
+#### remote
 
 Fixed remote peer address for a UDP `static_key` server.
 
 Required with `remote_port` in UDP `static_key` mode.
 
-### remote_port
+#### remote_port
 
 Fixed remote peer port for a UDP `static_key` server.
 
 Required with `remote` in UDP `static_key` mode.
 
-### max_clients
+#### max_clients
 
 Maximum number of established and pending TLS client sessions.
 
@@ -162,7 +165,7 @@ Maximum number of established and pending TLS client sessions.
 
 Must be `0` or `1` in `static_key` mode.
 
-### address
+#### address
 
 ==Required==
 
@@ -176,26 +179,26 @@ The first IPv4 and IPv6 prefix addresses are used as the endpoint's local addres
 
 In `static_key` mode these are the local tunnel prefixes rather than address pools.
 
-### peer_address
+#### peer_address
 
 IPv4 tunnel peer address.
 
 Required when an IPv4 `address` is configured in `static_key` mode.
 
-### peer_address_ipv6
+#### peer_address_ipv6
 
 IPv6 tunnel peer address.
 
 Required when an IPv6 `address` is configured in `static_key` mode.
 
-### topology
+#### topology
 
 OpenVPN topology pushed to clients, one of `subnet`, `p2p` or `net30`.
 
 `subnet` is used by default in TLS mode. `p2p` is used by default in
 `static_key` mode.
 
-### duplicate_cn
+#### duplicate_cn
 
 Allow multiple active clients with the same authenticated certificate common name or username.
 
@@ -205,7 +208,7 @@ Disabled by default.
 
 Only available in TLS mode.
 
-### users
+#### users
 
 List of OpenVPN username/password users.
 
@@ -213,15 +216,15 @@ If set, clients must pass username/password authentication in addition to any ce
 
 Only available in TLS mode.
 
-### users.username
+#### users.username
 
 Username.
 
-### users.password
+#### users.password
 
 Password.
 
-### static_key
+#### static_key
 
 OpenVPN static key content.
 
@@ -229,7 +232,7 @@ Required in `static_key` mode.
 
 Conflict with `static_key_path`.
 
-### static_key_path
+#### static_key_path
 
 OpenVPN static key path.
 
@@ -237,7 +240,7 @@ Required in `static_key` mode when `static_key` is not set.
 
 Conflict with `static_key`.
 
-### key_direction
+#### key_direction
 
 Static key direction, one of `server` or `client`.
 
@@ -246,13 +249,13 @@ The key is used bidirectionally if empty. Conventionally the server uses
 
 Only available in `static_key` mode.
 
-### tls
+#### tls
 
 Required in TLS mode.
 
 OpenVPN control channel TLS configuration.
 
-### tls.certificate
+#### tls.certificate
 
 TLS server certificate content.
 
@@ -260,7 +263,7 @@ Either `tls.certificate` or `tls.certificate_path` is required.
 
 Conflict with `tls.certificate_path`.
 
-### tls.certificate_path
+#### tls.certificate_path
 
 TLS server certificate path.
 
@@ -268,7 +271,7 @@ Either `tls.certificate` or `tls.certificate_path` is required.
 
 Conflict with `tls.certificate`.
 
-### tls.key
+#### tls.key
 
 TLS server private key content.
 
@@ -276,7 +279,7 @@ Either `tls.key` or `tls.key_path` is required.
 
 Conflict with `tls.key_path`.
 
-### tls.key_path
+#### tls.key_path
 
 TLS server private key path.
 
@@ -284,7 +287,7 @@ Either `tls.key` or `tls.key_path` is required.
 
 Conflict with `tls.key`.
 
-### tls.client_certificate
+#### tls.client_certificate
 
 TLS CA certificate content, used to verify client certificates.
 
@@ -292,7 +295,7 @@ One of `tls.client_certificate`, `tls.client_certificate_path`, or `tls.peer_fin
 
 Conflict with `tls.client_certificate_path`.
 
-### tls.client_certificate_path
+#### tls.client_certificate_path
 
 TLS CA certificate path, used to verify client certificates.
 
@@ -300,51 +303,49 @@ One of `tls.client_certificate`, `tls.client_certificate_path`, or `tls.peer_fin
 
 Conflict with `tls.client_certificate`.
 
-### tls.verify_client_certificate
+#### tls.verify_client_certificate
 
 OpenVPN client certificate policy, one of `require`, `optional` or `none`.
-
-`require` will be used by default.
 
 If set to `optional`, a client certificate is verified when provided, but clients without a certificate are allowed.
 
 If set to `none`, client certificates are not requested.
 
-### tls.client_name
+- Default: `require`
+
+#### tls.client_name
 
 Expected client certificate name. Disabled when empty.
 
-### tls.client_name_type
+#### tls.client_name_type
 
 Certificate field matched by `tls.client_name`, one of `subject`, `name`, or `name-prefix`.
 
 `name` is used by default when `tls.client_name` is configured.
 
-### tls.peer_fingerprint
+#### tls.peer_fingerprint
 
 Allowed SHA-256 fingerprints of client leaf certificates. Fingerprint-only verification can be used without a client CA.
 
-### tls.crl_path
+#### tls.crl_path
 
 Path to a certificate revocation list used to reject revoked client certificates.
 
-### tls.remote_certificate_ku
+#### tls.remote_certificate_ku
 
 Required client certificate key usage masks in OpenVPN `remote-cert-ku` format.
 
-### tls.remote_certificate_eku
+#### tls.remote_certificate_eku
 
 Required client certificate extended key usage. Conflict with an explicitly configured `tls.remote_certificate_tls`.
 
-### tls.remote_certificate_tls
+#### tls.remote_certificate_tls
 
 Client certificate purpose check, one of `server`, `client`, or `none`. `client` is used by default.
 
-### tls.certificate_profile
+#### tls.certificate_profile
 
 Certificate profile, one of `insecure`, `legacy`, `preferred`, or `suiteb`.
-
-`legacy` is used by default.
 
 `insecure` accepts MD5- and SHA-1-signed certificate chains and smaller legacy
 keys for compatibility with immutable peers. Use it only when the peer cannot
@@ -353,25 +354,27 @@ requires stronger signatures and keys.
 
 When `suiteb` is selected, the TLS 1.2 cipher list defaults to the Suite B ECDHE-ECDSA AES-GCM suites when `tls.cipher` is empty, and the TLS groups default to `secp256r1` and `secp384r1` when `tls.groups` is empty.
 
-### tls.ns_certificate_type
+- Default: `legacy`
+
+#### tls.ns_certificate_type
 
 Deprecated Netscape certificate type check, one of `server` or `client`.
 
-### tls.version_min
+#### tls.version_min
 
 Minimum TLS version. `1.2` is used by default.
 
-### tls.version_max
+#### tls.version_max
 
 Maximum TLS version. The maximum supported version is used by default.
 
-### tls.cipher
+#### tls.cipher
 
 Colon-separated OpenSSL or IANA cipher suite names allowed for TLS 1.2 and earlier, such as `ECDHE-ECDSA-AES256-GCM-SHA384` or `TLS-ECDHE-ECDSA-WITH-AES-256-GCM-SHA384`. The order of the list is ignored.
 
 The default TLS cipher suites are used when empty.
 
-### tls.groups
+#### tls.groups
 
 Colon-separated TLS key exchange groups. The order of the list is ignored.
 
@@ -379,7 +382,7 @@ Supported groups are `X25519`, `X25519MLKEM768`, `secp256r1`, `secp384r1`, and `
 
 The default TLS groups are used when empty.
 
-### tls.control_wrap
+#### tls.control_wrap
 
 OpenVPN control channel wrapping.
 
@@ -387,7 +390,7 @@ Equivalent to OpenVPN `tls-auth`, `tls-crypt` and `tls-crypt-v2`.
 
 Disabled by default.
 
-### tls.control_wrap.type
+#### tls.control_wrap.type
 
 ==Required==
 
@@ -395,7 +398,7 @@ Control channel wrapping type, one of `tls_auth`, `tls_crypt` or `tls_crypt_v2`.
 
 For `tls_crypt_v2`, the key is the server key.
 
-### tls.control_wrap.key
+#### tls.control_wrap.key
 
 Control channel wrapping key content.
 
@@ -403,7 +406,7 @@ Either `tls.control_wrap.key` or `tls.control_wrap.key_path` is required.
 
 Conflict with `tls.control_wrap.key_path`.
 
-### tls.control_wrap.key_path
+#### tls.control_wrap.key_path
 
 Control channel wrapping key path.
 
@@ -411,7 +414,7 @@ Either `tls.control_wrap.key` or `tls.control_wrap.key_path` is required.
 
 Conflict with `tls.control_wrap.key`.
 
-### tls.control_wrap.direction
+#### tls.control_wrap.direction
 
 OpenVPN `tls-auth` key direction, one of `server` or `client`.
 
@@ -421,7 +424,7 @@ Only available when `tls.control_wrap.type` is `tls_auth`.
 
 If empty, the key is used bidirectionally, matching an omitted `key-direction` on both peers.
 
-### tls.control_wrap.force_cookie
+#### tls.control_wrap.force_cookie
 
 Require `tls-crypt-v2` clients over UDP to support stateless session cookies.
 
@@ -430,7 +433,7 @@ clients without cookie support are accepted using the upstream `allow-noncookie`
 
 Disabled by default.
 
-### cipher
+#### cipher
 
 Data-channel cipher used in `static_key` mode.
 
@@ -440,7 +443,7 @@ Blowfish-CBC, CAST5-CBC families, `SEED-CBC`, `SM4-CBC`, and `NONE`.
 
 Only available in `static_key` mode.
 
-### data_ciphers
+#### data_ciphers
 
 Allowed OpenVPN data channel ciphers.
 
@@ -453,7 +456,7 @@ in TLS mode.
 
 Only available in TLS mode.
 
-### data_ciphers_fallback
+#### data_ciphers_fallback
 
 OpenVPN data channel cipher for legacy clients that do not support cipher negotiation.
 
@@ -463,81 +466,81 @@ Disabled by default.
 
 Only available in TLS mode.
 
-### auth
+#### auth
 
 OpenVPN data channel authentication digest.
 
 `SHA1` will be used by default. It only applies to non-AEAD data ciphers and `tls_auth`.
 
-### mss_fix
+#### mss_fix
 
 Maximum encapsulated packet size used to clamp TCP MSS. The upstream default calculation uses `1492` with the default MTU.
 
-### mss_fix_disabled
+#### mss_fix_disabled
 
 Disable MSS clamping, including the default clamp.
 
-### mss_fix_mode
+#### mss_fix_mode
 
 Calculation mode for an explicit `mss_fix`, one of `mtu` or `fixed`. Requires `mss_fix`.
 
-### replay_window
+#### replay_window
 
 UDP data-channel replay window size. `64` is used by default.
 
-### replay_window_time
+#### replay_window_time
 
 UDP replay window duration. `15s` is used by default. The value must use whole seconds.
 
-### push
+#### push
 
 Options pushed to clients.
 
-### push.routes
+#### push.routes
 
 Routes to push to clients.
 
 IPv4 and IPv6 prefixes can be mixed.
 
-### push.dns
+#### push.dns
 
 DNS server addresses to push to clients.
 
 Uses legacy `dhcp-option DNS`/`DNS6`. A pushed modern DNS server group overrides these addresses on compatible clients.
 
-### push.dns_servers
+#### push.dns_servers
 
 Modern OpenVPN DNS server groups to push. Each entry contains `priority`, `addresses`, optional `resolve_domains`, `dnssec`, `transport`, and `sni`.
 
 Addresses accept an IP address or `IP:port` (IPv6 ports use `[IPv6]:port`). `transport` is one of `plain`, `dot`, or `doh`; `dnssec` is one of `yes`, `optional`, or `no`. OpenVPN clients apply only the group with the lowest priority number.
 
-### push.search_domains
+#### push.search_domains
 
 Modern OpenVPN search domains to push.
 
-### push.dhcp_options
+#### push.dhcp_options
 
 Additional legacy `dhcp-option` values to push, without the `dhcp-option` prefix.
 
-### push.redirect_gateway
+#### push.redirect_gateway
 
 Push `redirect-gateway` to clients, which routes client traffic through the VPN according to `push.redirect_gateway_flags`.
 
 When `push.redirect_gateway_flags` is empty, `def1` is used by default.
 
-### push.redirect_gateway_flags
+#### push.redirect_gateway_flags
 
 OpenVPN `redirect-gateway` flags to push to clients.
 
 Only available when `push.redirect_gateway` is enabled.
 
-`def1` is used by default.
+- Default: `def1`
 
-### push.block_outside_dns
+#### push.block_outside_dns
 
 Push `block-outside-dns` to clients, which blocks DNS queries outside the VPN on Windows clients.
 
-### push.ping_interval
+#### push.ping_interval
 
 OpenVPN `ping` interval pushed to clients.
 
@@ -547,7 +550,7 @@ The value must use whole seconds.
 
 Disabled by default.
 
-### push.ping_restart
+#### push.ping_restart
 
 OpenVPN `ping-restart` timeout pushed to clients.
 
@@ -557,7 +560,7 @@ The value must use whole seconds.
 
 Disabled by default.
 
-### ping_interval
+#### ping_interval
 
 Interval after which the server sends a data-channel ping when no packet has been sent to a client.
 
@@ -567,7 +570,7 @@ The value must use whole seconds.
 
 Disabled by default.
 
-### ping_restart
+#### ping_restart
 
 Time without receiving a packet after which the server closes the client session.
 
@@ -577,7 +580,7 @@ The value must use whole seconds.
 
 Disabled by default.
 
-### renegotiate_interval
+#### renegotiate_interval
 
 OpenVPN TLS renegotiation interval.
 
@@ -585,33 +588,35 @@ When empty, the OpenVPN default `1h` is used.
 
 Only available in TLS mode.
 
-### renegotiate_disabled
+#### renegotiate_disabled
 
 Disable time-based TLS renegotiation, including the default interval.
 
 Only available in TLS mode.
 
-### renegotiate_bytes
+#### renegotiate_bytes
 
 Renegotiate data-channel keys after this many bytes. `0` uses the cipher-dependent OpenVPN default.
 
 Only available in TLS mode.
 
-### renegotiate_packets
+#### renegotiate_packets
 
 Renegotiate data-channel keys after this many packets. `0` uses the cipher-dependent OpenVPN default.
 
 Only available in TLS mode.
 
-### handshake_window
+#### handshake_window
 
 Maximum time allowed for the initial TLS handshake and each TLS renegotiation.
 
-`1m` is used by default.
-
 Only available in TLS mode.
 
-## UDP NAT Fields
+- Default: `1m`
+
+<!-- AUTO-GENERATED-CONFIG-END -->
+
+### UDP NAT Fields
 
 These fields configure UDP sessions for traffic through the OpenVPN interface.
 

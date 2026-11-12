@@ -12,20 +12,26 @@ type DirectInboundOptions struct {
 	// Listen network, one of `tcp` `udp`.
 	//
 	// Both if empty.
+	//
+	// @Example: "udp"
 	Network NetworkList `json:"network,omitempty"`
 	// Override the connection destination address.
+	//
+	// @Example: "1.0.0.1"
 	OverrideAddress string `json:"override_address,omitempty"`
 	// Override the connection destination port.
+	//
+	// @Example: 53
 	OverridePort uint16 `json:"override_port,omitempty"`
 }
 
 type _DirectOutboundOptions struct {
 	DialerOptions
-	// Deprecated: Use Route Action instead
+	// @Deprecated: Use Route Action instead
 	OverrideAddress string `json:"override_address,omitempty" schema:"omit"`
-	// Deprecated: Use Route Action instead
+	// @Deprecated: Use Route Action instead
 	OverridePort uint16 `json:"override_port,omitempty" schema:"omit"`
-	// Deprecated: removed
+	// @Deprecated: removed
 	ProxyProtocol uint8 `json:"proxy_protocol,omitempty" schema:"omit"`
 }
 

@@ -6,27 +6,30 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "anytls",
   "tag": "anytls-in",
-
-  ... // 监听字段
-
+  "tls": {},
   "users": [
     {
       "name": "sekai",
       "password": "8JCsPssfgS8tiRwiMlhARg=="
     }
   ],
-  "padding_scheme": [],
-  "tls": {}
+  "padding_scheme": []
+
+  ... // 监听字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 监听字段
 
-参阅 [监听字段](/zh/configuration/shared/listen/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 

@@ -4,28 +4,31 @@
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
-"type": "naive",
-"tag": "naive-in",
-"network": "udp",
-...
-// Listen Fields
+  "type": "naive",
+  "tag": "naive-in",
+  "users": [
+    {
+      "username": "sekai",
+      "password": "password"
+    }
+  ],
+  "network": "udp",
+  "quic_congestion_control": "",
+  "tls": {}
 
-"users": [
-{
-"username": "sekai",
-"password": "password"
-}
-],
-"quic_congestion_control": "",
-"tls": {}
+  ... // Listen Fields
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Listen Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Listen Fields](/configuration/shared/listen/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Fields
 
@@ -56,7 +59,7 @@ QUIC congestion control algorithm.
 | `cubic`        | CUBIC                           |
 | `reno`         | New Reno                        |
 
-`bbr` is used by default.
+- Default: `bbr`
 
 #### tls
 

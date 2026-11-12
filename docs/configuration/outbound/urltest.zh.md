@@ -1,10 +1,10 @@
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "urltest",
   "tag": "auto",
-  
   "outbounds": [
     "proxy-a",
     "proxy-b",
@@ -12,11 +12,12 @@
   ],
   "url": "",
   "interval": "",
-  "tolerance": 50,
+  "tolerance": 0,
   "idle_timeout": "",
   "interrupt_exist_connections": false
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 

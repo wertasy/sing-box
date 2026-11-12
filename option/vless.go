@@ -2,9 +2,18 @@ package option
 
 type VLESSInboundOptions struct {
 	ListenOptions
-	// @required
-	//
 	// VLESS users.
+	//
+	// @Example:
+	//    [
+	//      {
+	//        "name": "sekai",
+	//        "uuid": "bf000d23-0752-40b4-affe-68f7707a9661",
+	//        "flow": ""
+	//      }
+	//    ]
+	//
+	// @Required
 	Users []VLESSUser `json:"users,omitempty"`
 	InboundTLSOptionsContainer
 	// See [Multiplex](/configuration/shared/multiplex#inbound) for details.
@@ -15,9 +24,9 @@ type VLESSInboundOptions struct {
 
 type VLESSUser struct {
 	Name string `json:"name,omitempty"`
-	// @required
-	//
 	// VLESS user id.
+	//
+	// @Required
 	UUID string `json:"uuid"`
 	// VLESS Sub-protocol.
 	//
@@ -30,21 +39,27 @@ type VLESSUser struct {
 type VLESSOutboundOptions struct {
 	DialerOptions
 	ServerOptions
-	// @required
-	//
 	// VLESS user id.
+	//
+	// @Example: "bf000d23-0752-40b4-affe-68f7707a9661"
+	//
+	// @Required
 	UUID string `json:"uuid"`
 	// VLESS Sub-protocol.
 	//
 	// Available values:
 	//
 	// * `xtls-rprx-vision`
+	//
+	// @Example: "xtls-rprx-vision"
 	Flow string `json:"flow,omitempty"`
 	// Enabled network
 	//
 	// One of `tcp` `udp`.
 	//
 	// Both is enabled by default.
+	//
+	// @Example: "tcp"
 	Network NetworkList `json:"network,omitempty"`
 	OutboundTLSOptionsContainer
 	// See [Multiplex](/configuration/shared/multiplex#outbound) for details.

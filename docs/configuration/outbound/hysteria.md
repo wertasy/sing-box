@@ -9,11 +9,11 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "hysteria",
   "tag": "hysteria-out",
-  
   "server": "127.0.0.1",
   "server_port": 1080,
   "server_ports": [
@@ -30,17 +30,16 @@ icon: material/new-box
   "network": "",
   "tls": {},
 
+  ... // Dial Fields
   ... // QUIC Fields
 
-  ... // Dial Fields
-
   // Deprecated
-
   "recv_window_conn": 0,
   "recv_window": 0,
   "disable_mtu_discovery": false
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -73,7 +72,7 @@ Conflicts with `server_port`.
 
 Port hopping interval.
 
-`30s` is used by default.
+- Default: `30s`
 
 #### up, down
 
@@ -149,7 +148,9 @@ See [QUIC Fields](/configuration/shared/quic/) for details.
 
 ### Dial Fields
 
+<!-- AUTO-GENERATED-ORIGIN-START -->
 See [Dial Fields](/configuration/shared/dial/) for details.
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### Deprecated Fields
 

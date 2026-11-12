@@ -4,6 +4,7 @@
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "listen": "127.0.0.1:8080",
@@ -22,6 +23,7 @@
   }
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### 字段
 

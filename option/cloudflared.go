@@ -3,10 +3,10 @@ package option
 import "github.com/sagernet/sing/common/json/badoption"
 
 type CloudflaredInboundOptions struct {
-	// @required
-	//
 	// Base64-encoded tunnel token from the Cloudflare Zero Trust dashboard
 	// (`Networks → Tunnels → Install connector`).
+	//
+	// @Required
 	Token string `json:"token,omitempty"`
 	// Number of high-availability connections to the Cloudflare edge.
 	//
@@ -34,8 +34,18 @@ type CloudflaredInboundOptions struct {
 	Region string `json:"region,omitempty"`
 	// [Dial Fields](/configuration/shared/dial/) used when the tunnel client dials the
 	// Cloudflare control plane.
+	//
+	// @Example:
+	//    {
+	//      ... // Dial Fields
+	//    }
 	ControlDialer DialerOptions `json:"control_dialer,omitempty"`
 	// [Dial Fields](/configuration/shared/dial/) used when the tunnel client dials the
 	// Cloudflare edge data plane.
+	//
+	// @Example:
+	//    {
+	//      ... // Dial Fields
+	//    }
 	TunnelDialer DialerOptions `json:"tunnel_dialer,omitempty"`
 }

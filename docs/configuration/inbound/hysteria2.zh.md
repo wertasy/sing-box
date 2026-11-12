@@ -67,7 +67,9 @@ icon: material/alert-decagram
 
 ### 监听字段
 
-参阅 [监听字段](/zh/configuration/shared/listen/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [监听字段](/zh/configuration/shared/listen/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->
 
 ### 字段
 
@@ -98,6 +100,8 @@ QUIC 流量混淆器密码。
 
 默认使用 `512`。
 
+- 默认值：`512`
+
 #### obfs.max_packet_size
 
 !!! question "自 sing-box 1.14.0 起"
@@ -105,6 +109,8 @@ QUIC 流量混淆器密码。
 最大线上数据包大小（字节）。仅限 Gecko。
 
 默认使用 `1200`。
+
+- 默认值：`1200`
 
 #### users
 
@@ -199,7 +205,7 @@ HTTP3 服务器认证失败时的行为 （对象配置）。
 
 BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 
-默认使用 `standard`。
+- 默认值：`standard`
 
 #### brutal_debug
 
@@ -275,11 +281,15 @@ Realm 上的槽位标识符。
 
 默认使用 `10s`。
 
+- 默认值：`10s`
+
 #### realm.port_mapping.lifetime
 
 映射的租约时长。
 
 默认使用 `10m`。
+
+- 默认值：`10m`
 
 #### realm.http_client
 

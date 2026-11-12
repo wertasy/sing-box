@@ -23,11 +23,6 @@ type APIServiceOptions struct {
 	// Web dashboard downloaded and served over the API listener at `/dashboard/`; other browser
 	// requests are redirected to it.
 	//
-	// @info:
-	//
-	//     The object can be replaced with a boolean value (equivalent to `{ "enabled": <bool> }`),
-	//     or with a string path (equivalent to `{ "enabled": true, "path": "<string>" }`).
-	//
 	// ##### enabled
 	//
 	// Enable the dashboard.
@@ -44,8 +39,6 @@ type APIServiceOptions struct {
 	//
 	// Download URL of the dashboard archive (zip).
 	//
-	// `https://github.com/SagerNet/sing-box-dashboard/archive/refs/heads/gh-pages.zip` will be used by default.
-	//
 	// ##### http_client
 	//
 	// HTTP client used to download the dashboard.
@@ -56,7 +49,21 @@ type APIServiceOptions struct {
 	//
 	// Update interval of the dashboard.
 	//
-	// `1d` will be used by default.
+	// @Info:
+	//
+	//     The object can be replaced with a boolean value (equivalent to `{ "enabled": <bool> }`),
+	//     or with a string path (equivalent to `{ "enabled": true, "path": "<string>" }`).
+	//
+	// @Default: 1d
+	//
+	// @Example:
+	//    {
+	//      "enabled": true,
+	//      "path": "",
+	//      "download_url": "",
+	//      "http_client": "", // or {}
+	//      "update_interval": ""
+	//    }
 	Dashboard *APIDashboardOptions `json:"dashboard,omitempty"`
 	InboundTLSOptionsContainer
 }

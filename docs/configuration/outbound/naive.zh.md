@@ -6,11 +6,11 @@ icon: material/new-box
 
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "naive",
   "tag": "naive-out",
-
   "server": "127.0.0.1",
   "server_port": 443,
   "username": "sekai",
@@ -22,11 +22,12 @@ icon: material/new-box
   "quic": false,
   "quic_congestion_control": "",
   "quic_session_receive_window": "",
-  "tls": {},
+  "tls": {}
 
   ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! warning "平台支持"
 
@@ -122,7 +123,7 @@ QUIC 拥塞控制算法。
 
 QUIC 初始会话接收窗口。
 
-默认使用 `15 MB`。
+- 默认值：`15 MB`
 
 #### tls
 
@@ -138,4 +139,6 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

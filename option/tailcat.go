@@ -10,7 +10,7 @@ import (
 type TailcatDERPOptions struct {
 	// URL of the [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap).
 	//
-	// `https://tailcat.dev/derpmap.json` is used by default.
+	// @Default: https://tailcat.dev/derpmap.json
 	DERPMapURL string `json:"derp_map_url,omitempty"`
 	// DERP region ID in the DERP map.
 	//
@@ -19,10 +19,13 @@ type TailcatDERPOptions struct {
 	// Custom DERP servers, see [derp_servers](/configuration/inbound/tailcat/#derp_servers) in Tailcat inbound.
 	//
 	// Conflicts with `derp_map_url` and `derp_region`.
+	//
 	DERPServers []TailcatDERPServer `json:"derp_servers,omitempty"`
 	// HTTP client used to fetch the DERP map.
 	//
 	// See [HTTP Client](/configuration/shared/http-client/) for details.
+	//
+	// @Example: {}
 	HTTPClient *HTTPClientOptions `json:"http_client,omitempty"`
 }
 
@@ -65,18 +68,18 @@ func (s TailcatDERPServer) DescribeSchema(builder schema.Builder) (*schema.Node,
 
 type TailcatUser struct {
 	Name string `json:"name,omitempty"`
-	// @required
-	//
 	// Client public key.
+	//
+	// @Required
 	PublicKey string `json:"public_key"`
 }
 
 type TailcatInboundOptions struct {
-	// @required
-	//
 	// Private key.
 	//
 	// Generate with `sing-box generate tailcat-keypair`.
+	//
+	// @Required
 	PrivateKey string `json:"private_key"`
 	// Pre-shared key.
 	PreSharedKey string `json:"pre_shared_key,omitempty"`
@@ -87,7 +90,26 @@ type TailcatInboundOptions struct {
 	// To use a DERP server with client verification, set `verify_client_inbound` or `verify_client_key` in
 	// [DERP service](/configuration/service/derp/#verify_client_inbound), and clients must use fixed
 	// private keys.
+	//
+	// @Example:
+	//    [
+	//      {
+	//        "name": "",
+	//        "public_key": ""
+	//      }
+	//    ]
 	Users []TailcatUser `json:"users,omitempty"`
+	// @Override derp_servers:
+	//    Custom DERP servers in [DERPNode](https://pkg.go.dev/tailscale.com/tailcfg#DERPNode) format, with
+	//    snake_case field names.
+	//
+	//    Conflicts with `derp_map_url` and `derp_region`.
+	//
+	//    Setting Array value to a string `__HOST__` is equivalent to configuring:
+	//
+	//    ```json
+	//    { "host": __HOST__ }
+	//    ```
 	TailcatDERPOptions
 	DialerOptions
 }
@@ -100,13 +122,13 @@ type TailcatOutboundOptions struct {
 	// Required when the server verifies clients with `users`, or the DERP server verifies clients with
 	// `verify_client_inbound` or `verify_client_key`.
 	PrivateKey string `json:"private_key,omitempty"`
-	// @required
-	//
 	// Server public key.
-	ServerPublicKey string `json:"server_public_key"`
-	// @required
 	//
+	// @Required
+	ServerPublicKey string `json:"server_public_key"`
 	// Server disco public key.
+	//
+	// @Required
 	ServerDiscoKey string `json:"server_disco_key"`
 	// Pre-shared key.
 	PreSharedKey string `json:"pre_shared_key,omitempty"`

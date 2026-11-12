@@ -66,15 +66,15 @@ icon: material/new-box
 
 ==必填==
 
-Snell 协议版本，`4` `6` 之一。
-
-版本 `4` 支持 HTTP 混淆（`obfs_mode` / `obfs_host`）；版本 `6` 以流量整形（`mode`）
-取而代之，并要求 `psk` 长度为 12 到 255 字节。
-
 !!! note
 
     由于我们有意不支持 Snell v5 的 QUIC 代理模式，v5 的线路协议实际上与 v4 没有区别，
     因此不提供独立的 v4 服务器和 v5 客户端。
+
+Snell 协议版本，`4` `6` 之一。
+
+版本 `4` 支持 HTTP 混淆（`obfs_mode` / `obfs_host`）；版本 `6` 以流量整形（`mode`）
+取而代之，并要求 `psk` 长度为 12 到 255 字节。
 
 #### psk
 
@@ -106,6 +106,8 @@ HTTP 混淆模式，`none` `http` 之一。
 
 默认为 `none`。
 
+- 默认值：`none`
+
 #### obfs_host
 
 ==仅版本 4==
@@ -113,6 +115,8 @@ HTTP 混淆模式，`none` `http` 之一。
 `obfs_mode` 为 `http` 时发送的 HTTP `Host` 头。
 
 默认为 `bing.com`。
+
+- 默认值：`bing.com`
 
 #### mode
 
@@ -122,8 +126,12 @@ HTTP 混淆模式，`none` `http` 之一。
 
 默认为 `default`。
 
+- 默认值：`default`
+
 <!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

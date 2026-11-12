@@ -9,11 +9,11 @@ incoming tunnel traffic (TCP, UDP, ICMP) through sing-box's routing engine.
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "cloudflared",
   "tag": "",
-
   "token": "",
   "ha_connections": 0,
   "protocol": "",
@@ -30,6 +30,7 @@ incoming tunnel traffic (TCP, UDP, ICMP) through sing-box's routing engine.
   }
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 

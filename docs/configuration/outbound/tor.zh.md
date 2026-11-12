@@ -1,20 +1,21 @@
 ### 结构
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tor",
   "tag": "tor-out",
-
   "executable_path": "/usr/bin/tor",
   "extra_args": [],
   "data_directory": "$HOME/.cache/tor",
   "torrc": {
     "ClientOnly": 1
-  },
+  }
 
   ... // 拨号字段
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 !!! info ""
 
@@ -53,4 +54,6 @@ torrc 参数表。
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

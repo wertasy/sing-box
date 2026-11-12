@@ -2,8 +2,6 @@ package option
 
 type VMessInboundOptions struct {
 	ListenOptions
-	// @required
-	//
 	// VMess users.
 	//
 	// | Alter ID | Description             |
@@ -11,7 +9,18 @@ type VMessInboundOptions struct {
 	// | 0        | Disable legacy protocol |
 	// | > 0      | Enable legacy protocol  |
 	//
-	// @warning:
+	// @Example:
+	//    [
+	//      {
+	//        "name": "sekai",
+	//        "uuid": "bf000d23-0752-40b4-affe-68f7707a9661",
+	//        "alterId": 0
+	//      }
+	//    ]
+	//
+	// @Required
+	//
+	// @Warning:
 	//
 	//     Legacy protocol support (VMess MD5 Authentication) is provided for compatibility purposes only, use of alterId > 1 is not recommended.
 	Users []VMessUser `json:"users,omitempty"`
@@ -31,9 +40,11 @@ type VMessUser struct {
 type VMessOutboundOptions struct {
 	DialerOptions
 	ServerOptions
-	// @required
-	//
 	// The VMess user id.
+	//
+	// @Example: "bf000d23-0752-40b4-affe-68f7707a9661"
+	//
+	// @Required
 	UUID string `json:"uuid"`
 	// Encryption methods:
 	//
@@ -46,6 +57,8 @@ type VMessOutboundOptions struct {
 	// Legacy encryption methods:
 	//
 	// * `aes-128-ctr`
+	//
+	// @Example: "auto"
 	Security string `json:"security,omitempty" enum:"auto,none,zero,aes-128-cfb,aes-128-gcm,chacha20-poly1305"`
 	// | Alter ID | Description         |
 	// |----------|---------------------|
@@ -56,12 +69,16 @@ type VMessOutboundOptions struct {
 	// Protocol parameter. Will waste traffic randomly if enabled (enabled by default in v2ray and cannot be disabled).
 	GlobalPadding bool `json:"global_padding,omitempty"`
 	// Protocol parameter. Enable length block encryption.
+	//
+	// @Example: true
 	AuthenticatedLength bool `json:"authenticated_length,omitempty"`
 	// Enabled network
 	//
 	// One of `tcp` `udp`.
 	//
 	// Both is enabled by default.
+	//
+	// @Example: "tcp"
 	Network NetworkList `json:"network,omitempty"`
 	OutboundTLSOptionsContainer
 	// UDP packet encoding.

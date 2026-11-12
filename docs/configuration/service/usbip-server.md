@@ -39,6 +39,11 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 #### provider
 
+!!! quote ""
+
+    The `default` provider is only supported when running directly via the CLI on Linux, Windows,
+    and macOS, and requires elevated privileges.
+
 The device source provider.
 
 - `default`: Exports the local devices matched by `devices`. The default value.
@@ -47,14 +52,7 @@ The device source provider.
   [macOS](/clients/apple/) and [Android](/clients/android/), and Chromium-based browsers with
   [sing-box Dashboard](https://github.com/SagerNet/sing-box-dashboard).
 
-!!! quote ""
-
-    The `default` provider is only supported when running directly via the CLI on Linux, Windows,
-    and macOS, and requires elevated privileges.
-
 #### devices
-
-==Required== with the `default` provider.
 
 List of device matches selecting which local USB devices to export.
 
@@ -78,5 +76,7 @@ Object fields:
 
 Within one object, all specified fields must match; multiple objects are combined as a union. At
 least one field is required.
+
+==Required== with the `default` provider.
 
 <!-- AUTO-GENERATED-CONFIG-END -->

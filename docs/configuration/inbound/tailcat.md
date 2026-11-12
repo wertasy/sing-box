@@ -6,11 +6,11 @@ icon: material/new-box
 
 ### Structure
 
+<!-- AUTO-GENERATED-EXAMPLE-START -->
 ```json
 {
   "type": "tailcat",
   "tag": "tailcat-in",
-
   "private_key": "",
   "pre_shared_key": "",
   "users": [
@@ -23,10 +23,32 @@ icon: material/new-box
   "derp_region": 0,
   "derp_servers": [],
   "http_client": {},
+  "bind_interface": "",
+  "inet4_bind_address": "",
+  "inet6_bind_address": "",
+  "bind_address_no_port": false,
+  "protect_path": "",
+  "routing_mark": 0,
+  "reuse_addr": false,
+  "netns": "",
+  "connect_timeout": "",
+  "tcp_fast_open": false,
+  "tcp_multi_path": false,
+  "disable_tcp_keep_alive": false,
+  "tcp_keep_alive": "",
+  "tcp_keep_alive_interval": "",
+  "udp_fragment": false,
+  "domain_resolver": "",
+  "network_strategy": "",
+  "network_type": [],
+  "fallback_network_type": [],
+  "fallback_delay": "",
 
-  ... // Dial Fields
+  // Deprecated
+  "domain_strategy": ""
 }
 ```
+<!-- AUTO-GENERATED-EXAMPLE-END -->
 
 ### Fields
 
@@ -65,7 +87,7 @@ Client public key.
 
 URL of the [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap).
 
-`https://tailcat.dev/derpmap.json` is used by default.
+- Default: `https://tailcat.dev/derpmap.json`
 
 #### derp_region
 
@@ -181,7 +203,7 @@ Disable TCP keep alive.
 
 TCP keep alive initial period.
 
-`5m` will be used by default.
+- Default: `5m`
 
 #### tcp_keep_alive_interval
 
@@ -189,7 +211,7 @@ TCP keep alive initial period.
 
 TCP keep alive interval.
 
-`75s` will be used by default.
+- Default: `75s`
 
 #### udp_fragment
 
@@ -197,13 +219,13 @@ Enable UDP fragmentation.
 
 #### domain_resolver
 
-!!! warning ""
-
-    `outbound` DNS rule items are deprecated and will be removed in sing-box 1.14.0, so this item will be required for outbound/endpoints using domain name in server address since sing-box 1.14.0.
-
 !!! info ""
 
     `domain_resolver` or `route.default_domain_resolver` is optional when only one DNS server is configured.
+
+!!! warning ""
+
+    `outbound` DNS rule items are deprecated and will be removed in sing-box 1.14.0, so this item will be required for outbound/endpoints using domain name in server address since sing-box 1.14.0.
 
 Set domain resolver to use for resolving domain names.
 
@@ -283,7 +305,7 @@ back to other interfaces.
 
 Only take effect when `domain_strategy` or `network_strategy` is set.
 
-`300ms` is used by default.
+- Default: `300ms`
 
 #### domain_strategy
 
