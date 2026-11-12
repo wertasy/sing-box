@@ -1,7 +1,7 @@
 DefaultNetworkNamespaceOptions.path: |-
-  @required
-
   网络命名空间的名称或路径，例如 `sing` 或 `/run/netns/sing`。
+
+  @Required
 
 LogOptions.disabled: 禁用日志，启动后不输出日志。
 
@@ -16,12 +16,10 @@ NTPOptions.enabled: 启用 NTP 服务。
 NTPOptions.interval: |-
   时间同步间隔。
 
-  默认使用 30 分钟。
-
 NTPOptions.server: |-
-  @required
-
   NTP 服务器地址。
+
+  @Required
 
 NTPOptions.server_port: |-
   NTP 服务器端口。
@@ -38,71 +36,67 @@ TailscaleEndpointOptions.advertise_routes: |-
   示例：`["192.168.1.1/24"]`
 
 TailscaleEndpointOptions.advertise_tags: |-
-  @since 1.13.0
-
   为此节点通告的标签，用于 ACL 执行。
 
   示例：`["tag:server"]`
 
+  @Since 1.13.0
+
 TailscaleEndpointOptions.auth_key: |-
-  @note
+  用于创建节点的认证密钥。如果节点已经创建（从之前存储的状态），则不使用此字段。
+
+  @Note
 
       认证密钥不是必需的。默认情况下，sing-box 将记录登录 URL。
 
-  用于创建节点的认证密钥。如果节点已经创建（从之前存储的状态），则不使用此字段。
-
 TailscaleEndpointOptions.control_url: |-
   协调服务器 URL。
-
-  默认使用 `https://controlplane.tailscale.com`。
 
 TailscaleEndpointOptions.ephemeral: 指示实例是否应注册为临时节点 (https://tailscale.com/s/ephemeral-nodes)。
 
 TailscaleEndpointOptions.exit_node: 要使用的出口节点名称或 IP 地址。
 
 TailscaleEndpointOptions.exit_node_allow_lan_access: |-
-  @note
+  指示本地可访问的子网应该直接路由还是通过出口节点路由。
+
+  @Note
 
       当出口节点没有相应的通告路由时，即使设置了 `exit_node_allow_lan_access`，私有流量也无法路由到出口节点。
-
-  指示本地可访问的子网应该直接路由还是通过出口节点路由。
 
 TailscaleEndpointOptions.hostname: |-
   节点的主机名。
 
   默认使用系统主机名。
 
-  @since 1.14.0
+  示例：`localhost`
+
+  @Since 1.14.0
 
       在 iOS、tvOS 和 Android 上，默认使用设备名称。
 
-  示例：`localhost`
-
 TailscaleEndpointOptions.listen_port: |-
-  @since 1.14.0
-
   监听 WireGuard 和点对点流量的 UDP 端口。
 
   默认自动选择端口。
 
-TailscaleEndpointOptions.on_demand: |-
-  @since 1.15.0
+  @Since 1.14.0
 
+TailscaleEndpointOptions.on_demand: |-
   允许该 endpoint 在需要时断开连接。
 
-TailscaleEndpointOptions.relay_server_port: |-
-  @since 1.13.0
+  @Since 1.15.0
 
+TailscaleEndpointOptions.relay_server_port: |-
   监听来自其他 Tailscale 节点的中继连接的端口。
 
-TailscaleEndpointOptions.relay_server_static_endpoints: |-
-  @since 1.13.0
+  @Since 1.13.0
 
+TailscaleEndpointOptions.relay_server_static_endpoints: |-
   为中继服务器通告的静态端点。
 
-TailscaleEndpointOptions.ssh_server: |-
-  @since 1.14.0
+  @Since 1.13.0
 
+TailscaleEndpointOptions.ssh_server: |-
   在 tailnet 的 TCP 22 端口上运行 Tailscale SSH 服务器。
 
   访问控制由 Tailscale 管理控制台中的 SSH ACL 决定，它将每个连接映射到一个本地用户。该用户如何解析、以及允许哪些用户，取决于平台：
@@ -127,41 +121,37 @@ TailscaleEndpointOptions.ssh_server: |-
 
   将 `ssh_server` 值设置为 `true` 等同于 `{ "enabled": true }`。
 
+  @Since 1.14.0
+
 TailscaleEndpointOptions.state_directory: |-
   存储 Tailscale 状态的目录。
-
-  默认使用 `tailscale`。
 
   示例：`$HOME/.tailscale`
 
 TailscaleEndpointOptions.system_interface: |-
-  @since 1.13.0
-
   为 Tailscale 创建系统 TUN 接口。
 
-TailscaleEndpointOptions.system_interface_mtu: |-
-  @since 1.13.0
+  @Since 1.13.0
 
+TailscaleEndpointOptions.system_interface_mtu: |-
   覆盖 TUN 的 MTU。默认使用 Tailscale 自己的 MTU。
 
-TailscaleEndpointOptions.system_interface_name: |-
-  @since 1.13.0
+  @Since 1.13.0
 
+TailscaleEndpointOptions.system_interface_name: |-
   自定义 TUN 接口名。默认使用 `tailscale`（macOS 上为 `utun`）。
 
-TailscaleEndpointOptions.taildrop_directory: |-
-  @since 1.14.0
+  @Since 1.13.0
 
+TailscaleEndpointOptions.taildrop_directory: |-
   存储从 tailnet 对等节点接收到的文件的目录。
 
   相对路径基于工作目录解析，与 [state_directory](#state_directory) 相同。
 
-  默认使用 `Taildrop`。
+  @Since 1.14.0
 
 TailscaleEndpointOptions.udp_timeout: |-
   UDP NAT 过期时间。
-
-  默认使用 `5m`。
 
 TailscaleSSHServerOptions.ssh_server.disable_forwarding: 拒绝本地和远程的 TCP 与 Unix 套接字转发，包括 SSH agent 转发。
 
@@ -178,32 +168,28 @@ UnshareNetworkNamespaceOptions.pid_file: |-
   否则使用 `nsenter -t <pid> -U --preserve-credentials -n`。
 
 WireGuardEndpointOptions.address: |-
-  @required
-
   接口的 IPv4/IPv6 地址或地址段的列表。
 
   要分配给接口的 IP（v4 或 v6）地址段列表。
 
+  @Required
+
 WireGuardEndpointOptions.mtu: |-
   WireGuard MTU。
-
-  默认使用 1408。
 
 WireGuardEndpointOptions.name: 为系统接口自定义设备名称。
 
 WireGuardEndpointOptions.on_demand: |-
-  @since 1.15.0
-
   允许该 endpoint 在需要时断开连接。
 
-WireGuardEndpointOptions.peers: |-
-  @required
+  @Since 1.15.0
 
+WireGuardEndpointOptions.peers: |-
   WireGuard 对等方的列表。
 
-WireGuardEndpointOptions.private_key: |-
-  @required
+  @Required
 
+WireGuardEndpointOptions.private_key: |-
   WireGuard 需要 base64 编码的公钥和私钥。 这些可以使用 wg(8) 实用程序生成：
 
   ```shell
@@ -212,6 +198,8 @@ WireGuardEndpointOptions.private_key: |-
   ```
 
   或 `sing-box generate wg-keypair`.
+
+  @Required
 
 WireGuardEndpointOptions.system: |-
   使用系统设备。
@@ -226,9 +214,9 @@ WireGuardEndpointOptions.workers: |-
 WireGuardPeer.peers.address: 对等方的 IP 地址。
 
 WireGuardPeer.peers.allowed_ips: |-
-  @required
-
   对等方的允许 IP 地址。
+
+  @Required
 
 WireGuardPeer.peers.persistent_keepalive_interval: |-
   对等方的持久性保持活动间隔，以秒为单位。
@@ -240,8 +228,93 @@ WireGuardPeer.peers.port: 对等方的 WireGuard 端口。
 WireGuardPeer.peers.pre_shared_key: 对等方的预共享密钥。
 
 WireGuardPeer.peers.public_key: |-
-  @required
-
   对等方的 WireGuard 公钥。
 
+  @Required
+
 WireGuardPeer.peers.reserved: 对等方的保留字段字节。
+MASQUEEndpointOptions.system: |-
+  使用系统接口。
+
+  需要特权且不能与已有系统接口冲突。
+
+  如果禁用，sing-box 将使用内部网络栈。
+
+MASQUEEndpointOptions.name: |-
+  系统接口的自定义接口名称。
+
+  默认使用自动生成的 `masque` 接口名称。
+
+MASQUEEndpointOptions.mtu: |-
+  隧道 MTU。
+
+MASQUEClientEndpointOptions.username: Basic 认证用户名。
+
+MASQUEClientEndpointOptions.password: Basic 认证密码。
+
+MASQUEClientEndpointOptions.path: |-
+  IP 代理资源的 URI 模板路径，可以包含 `target` 和 `ipproto` 变量。
+
+  默认使用 `/.well-known/masque/ip/{target}/{ipproto}/`。
+
+MASQUEClientEndpointOptions.headers: HTTP 请求的额外标头。
+
+MASQUEClientEndpointOptions.version: |-
+  HTTP 版本。
+
+  可用值：`1`、`2`、`3`。
+
+  默认使用 `3`。
+
+  当为 `2` 时，[QUIC 字段](#quic-字段) 替换为 [HTTP2 字段](#http2-字段)。
+
+MASQUEClientEndpointOptions.disable_version_fallback: 禁用自动回退到更低的 HTTP 版本。
+
+MASQUEClientEndpointOptions.advertise_routes: |-
+  向服务器声明的 IP 前缀列表。
+
+  服务器会把发往这些前缀的流量路由到此 endpoint，并在此作为入站流量处理。
+
+MASQUEClientEndpointOptions.on_demand: 允许该 endpoint 在需要时断开连接。
+
+MASQUEServerEndpointOptions.version: |-
+  提供的 HTTP 版本列表。
+
+  可用值：`1`、`2`、`3`。
+
+  默认提供全部版本。
+
+  `3` 需要 TLS。
+
+MASQUEServerEndpointOptions.users: |-
+  HTTP 用户，通过 `Authorization` 标头验证。
+
+  如果为空则不需要验证。
+
+MASQUEServerEndpointOptions.path: |-
+  IP 代理资源的 URI 模板路径，可以包含 `target` 和 `ipproto` 变量。
+
+  默认使用 `/.well-known/masque/ip/{target}/{ipproto}/`。
+
+MASQUEServerEndpointOptions.address: |-
+  隧道网络的 IP 前缀列表，每个 IP 版本最多一个。
+
+  前缀中的地址由服务器自己使用，前缀内的其他地址分配给客户端。
+
+  @Required
+
+MASQUEServerEndpointOptions.advertise_routes: |-
+  除隧道网络外，向客户端声明的 IP 前缀列表。
+
+  客户端发往其他目的地址的流量会被拒绝。
+
+  默认声明全部地址。
+MASQUEClientEndpointOptions.tls: |-
+  TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#outbound)。
+
+  HTTP/3 需要 TLS。
+
+MASQUEServerEndpointOptions.tls: |-
+  TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#inbound)。
+
+  IP 代理必须运行在 TLS 或 QUIC 之上。仅当服务器位于终止 TLS 的 HTTP 中间层之后时才可以不启用。

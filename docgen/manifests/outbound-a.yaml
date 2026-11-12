@@ -1,8 +1,5 @@
 defaults:
   heading: '### Fields'
-  omit_origins:
-  - DialerOptions
-  - AbstractDialerOptions
 pages:
 
 - file: outbound/anytls.md
@@ -10,20 +7,15 @@ pages:
 
   - name: anytls
     registry: Outbound
-  overrides:
-    tls:
-      prose: |-
-        @required
-
-        TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
-
 - file: outbound/http.md
+  example:
+    groups:
+      - HTTP2 Fields / QUIC Fields
   defs:
 
   - name: http
     registry: Outbound
     omit_keys:
-    - tag
     - idle_timeout
     - keep_alive_period
     - stream_receive_window
@@ -42,7 +34,7 @@ pages:
   extras:
     override_address:
       prose: |-
-        @failure: Deprecated in sing-box 1.11.0
+        @Failure: Deprecated in sing-box 1.11.0
 
             Destination override fields are deprecated in sing-box 1.11.0 and will be removed in sing-box 1.13.0, see [Migration](/migration/#migrate-destination-override-fields-to-route-options).
 
@@ -50,7 +42,7 @@ pages:
       locale_key: DirectOutboundOptions.override_address
     override_port:
       prose: |-
-        @failure: Deprecated in sing-box 1.11.0
+        @Failure: Deprecated in sing-box 1.11.0
 
             Destination override fields are deprecated in sing-box 1.11.0 and will be removed in sing-box 1.13.0, see [Migration](/migration/#migrate-destination-override-fields-to-route-options).
 
@@ -63,20 +55,9 @@ pages:
   defs:
 
   - name: bridge
-    omit_origins: []
 
 - file: outbound/naive.md
   defs:
 
   - name: naive
     registry: Outbound
-  overrides:
-    tls:
-      prose: |-
-        @required
-
-        TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
-
-        Only `server_name`, `certificate`, `certificate_path` and `ech` are supported.
-
-        Self-signed certificates change traffic behavior significantly, which defeats the purpose of NaiveProxy's design to resist traffic analysis, and should not be used in production.

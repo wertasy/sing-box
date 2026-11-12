@@ -104,6 +104,10 @@ func extractOldSection(lines []string, heading string, format string) (*oldSecti
 
 // auditSectionCompare verifies that every baseline key and prose line is
 // present in the regenerated section.
+// defaultSentencePattern matches prose describing a field default value,
+// which is generated from the @default marker instead of the description.
+var defaultSentencePattern = regexp.MustCompile(`(?i)(\bis|\bwill be) used by default|used if empty|Defaults to |默认使用|默认为`)
+
 func auditSectionCompare(file string, heading string, old *oldSection, newKeys map[string][]string, lang string) []error {
 	var issues []error
 	if len(old.keys) == 0 && old.anyLine {
@@ -124,6 +128,11 @@ func auditSectionCompare(file string, heading string, old *oldSection, newKeys m
 		for _, line := range old.prose[key] {
 			normalized := normalizeLine(line)
 			if normalized == "" {
+				continue
+			}
+			// Default-value sentences migrate into @default markers and are
+			// rendered as tag lines instead of prose.
+			if defaultSentencePattern.MatchString(line) {
 				continue
 			}
 			if !strings.Contains(newBlock, normalized) {

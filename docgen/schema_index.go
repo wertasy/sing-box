@@ -282,12 +282,13 @@ func (s *SchemaIndex) ResolveDef(def DefRef) (DefRef, *SchemaNode, error) {
 	}
 	// The type discriminator is never documented; the tag key is omitted by
 	// default. An explicit omit_keys list replaces the default set.
+	// The type discriminator is never documented; the wrapper tag is omitted
+	// too unless the definition declares a real tag field via docs_tag.
 	omitKeys := []string{"type"}
-	if def.OmitKeys == nil {
+	if !def.DocsTag {
 		omitKeys = append(omitKeys, "tag")
-	} else {
-		omitKeys = append(omitKeys, def.OmitKeys...)
 	}
+	omitKeys = append(omitKeys, def.OmitKeys...)
 	def.OmitKeys = omitKeys
 	if def.Root == "" {
 		root, err := registryRootName(def.Registry, def.Name)

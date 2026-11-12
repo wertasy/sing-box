@@ -18,16 +18,14 @@ AnyTLSInboundOptions.padding_scheme: |-
   ```
 
 AnyTLSInboundOptions.users: |-
-  @required
-
   AnyTLS 用户。
 
-Hysteria2InboundOptions.bbr_profile: |-
-  @since 1.14.0
+  @Required
 
+Hysteria2InboundOptions.bbr_profile: |-
   BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 
-  默认使用 `standard`。
+  @Since 1.14.0
 
 Hysteria2InboundOptions.brutal_debug: 启用 Hysteria Brutal CC 的调试信息日志记录。
 
@@ -78,18 +76,18 @@ Hysteria2InboundOptions.masquerade.type: |-
 Hysteria2InboundOptions.masquerade.url: 反向代理目标 URL。
 
 Hysteria2InboundOptions.obfs.max_packet_size: |-
-  @since 1.14.0
-
   最大线上数据包大小（字节）。仅限 Gecko。
 
   默认使用 `1200`。
 
-Hysteria2InboundOptions.obfs.min_packet_size: |-
-  @since 1.14.0
+  @Since 1.14.0
 
+Hysteria2InboundOptions.obfs.min_packet_size: |-
   最小线上数据包大小（字节）。仅限 Gecko。
 
   默认使用 `512`。
+
+  @Since 1.14.0
 
 Hysteria2InboundOptions.obfs.password: QUIC 流量混淆器密码。
 
@@ -99,11 +97,11 @@ Hysteria2InboundOptions.obfs.type: |-
   如果为空则禁用。
 
 Hysteria2InboundOptions.realm: |-
-  @since 1.14.0
-
   将此入站注册到 Hysteria Realm 会合服务，以启用 NAT 穿透。
 
   会合服务参阅 [Hysteria Realm](/zh/configuration/service/hysteria-realm/)。
+
+  @Since 1.14.0
 
 Hysteria2InboundOptions.realm.http_client: |-
   与 realm 通信使用的 HTTP 客户端。
@@ -137,18 +135,18 @@ Hysteria2InboundOptions.realm.port_mapping.timeout: |-
   默认使用 `10s`。
 
 Hysteria2InboundOptions.realm.realm_id: |-
-  @required
-
   Realm 上的槽位标识符。
 
   1–64 字符，需匹配 `^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$`。
 
   出站需使用相同的 `realm_id` 才能找到本服务器。
 
-Hysteria2InboundOptions.realm.server_url: |-
-  @required
+  @Required
 
+Hysteria2InboundOptions.realm.server_url: |-
   Realm 会合服务 URL。
+
+  @Required
 
 Hysteria2InboundOptions.realm.stun_domain_resolver: |-
   用于解析 STUN 服务器域名的域名解析器。
@@ -160,16 +158,16 @@ Hysteria2InboundOptions.realm.stun_domain_resolver: |-
   如果为空，则使用默认域名解析器。
 
 Hysteria2InboundOptions.realm.stun_servers: |-
-  @required
-
   用于发现公网地址的 STUN 服务器列表（`host` 或 `host:port`）。
+
+  @Required
 
 Hysteria2InboundOptions.realm.token: Realm 的 Bearer 令牌，需与 realm 上配置的 `users[].token` 之一匹配。
 
 Hysteria2InboundOptions.tls: |-
-  @required
-
   TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+
+  @Required
 
 Hysteria2InboundOptions.up_down_mbps: |-
   支持的速率，默认不限制。
@@ -181,35 +179,33 @@ Hysteria2InboundOptions.users: Hysteria 用户
 Hysteria2InboundOptions.users.password: 认证密码。
 
 HysteriaInboundOptions.disable_mtu_discovery: |-
-  @failure: 已在 sing-box 1.14.0 废弃
+  @Failure: 已在 sing-box 1.14.0 废弃
 
       请使用 QUIC 字段 `disable_path_mtu_discovery` 代替。
 
 HysteriaInboundOptions.max_conn_client: |-
-  @failure: 已在 sing-box 1.14.0 废弃
+  @Failure: 已在 sing-box 1.14.0 废弃
 
       请使用 QUIC 字段 `max_concurrent_streams` 代替。
 
 HysteriaInboundOptions.obfs: 混淆密码。
 
 HysteriaInboundOptions.recv_window_client: |-
-  @failure: 已在 sing-box 1.14.0 废弃
+  @Failure: 已在 sing-box 1.14.0 废弃
 
       请使用 QUIC 字段 `connection_receive_window` 代替。
 
 HysteriaInboundOptions.recv_window_conn: |-
-  @failure: 已在 sing-box 1.14.0 废弃
+  @Failure: 已在 sing-box 1.14.0 废弃
 
       请使用 QUIC 字段 `stream_receive_window` 代替。
 
 HysteriaInboundOptions.tls: |-
-  @required
-
   TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
 
-HysteriaInboundOptions.up_down: |-
-  @required
+  @Required
 
+HysteriaInboundOptions.up_down: |-
   格式: `[Integer] [Unit]` 例如： `100 Mbps, 640 KBps, 2 Gbps`
 
   支持的单位 (大小写敏感, b = bits, B = bytes, 8b=1B)：
@@ -225,10 +221,12 @@ HysteriaInboundOptions.up_down: |-
       Tbps (terabits per second)
       TBps (terabytes per second)
 
-HysteriaInboundOptions.up_down_mbps: |-
-  @required
+  @Required
 
+HysteriaInboundOptions.up_down_mbps: |-
   以 Mbps 为单位的 `up, down`。
+
+  @Required
 
 HysteriaInboundOptions.users: Hysteria 用户
 
@@ -239,38 +237,32 @@ HysteriaInboundOptions.users.auth_str: 认证密码。
 TUICInboundOptions.auth_timeout: |-
   服务器等待客户端发送认证命令的时间
 
-  默认使用 `3s`。
-
 TUICInboundOptions.congestion_control: |-
   QUIC 拥塞控制算法
 
   可选值: `cubic`, `new_reno`, `bbr`
 
-  默认使用 `cubic`。
-
 TUICInboundOptions.heartbeat: |-
   发送心跳包以保持连接存活的时间间隔
 
-  默认使用 `10s`。
-
 TUICInboundOptions.tls: |-
-  @required
-
   TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+
+  @Required
 
 TUICInboundOptions.users: TUIC 用户
 
 TUICInboundOptions.users.password: TUIC 用户密码
 
 TUICInboundOptions.users.uuid: |-
-  @required
-
   TUIC 用户 UUID
+
+  @Required
 
 TUICInboundOptions.zero_rtt_handshake: |-
   在客户端启用 0-RTT QUIC 连接握手
   这对性能影响不大，因为协议是完全复用的
 
-  @warning:
-  强烈建议禁用此功能，因为它容易受到重放攻击。
-  请参阅 [Attack of the clones](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/#attack-of-the-clones)
+  @Warning:
+    强烈建议禁用此功能，因为它容易受到重放攻击。
+    请参阅 [Attack of the clones](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/#attack-of-the-clones)

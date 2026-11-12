@@ -5,9 +5,6 @@ pages:
 - defs:
 
   - name: DNS
-    omit_keys:
-    - servers
-    - rules
     root: RawDNSOptions
   file: dns/index.md
 
@@ -37,31 +34,31 @@ pages:
       action:
         locale_key: RawDefaultDNSRule.action
         prose: |-
-          @required
+          @Required
 
           See [DNS Rule Actions](../rule_action/) for details.
       client_subnet:
         locale_key: RawDefaultDNSRule.client_subnet
         prose: |-
-          @failure: Deprecated in sing-box 1.11.0
+          @Failure: Deprecated in sing-box 1.11.0
 
               Moved to [DNS Rule Action](../rule_action#route).
       disable_cache:
         locale_key: RawDefaultDNSRule.disable_cache
         prose: |-
-          @failure: Deprecated in sing-box 1.11.0
+          @Failure: Deprecated in sing-box 1.11.0
 
               Moved to [DNS Rule Action](../rule_action#route).
       rewrite_ttl:
         locale_key: RawDefaultDNSRule.rewrite_ttl
         prose: |-
-          @failure: Deprecated in sing-box 1.11.0
+          @Failure: Deprecated in sing-box 1.11.0
 
               Moved to [DNS Rule Action](../rule_action#route).
       server:
         locale_key: RawDefaultDNSRule.server
         prose: |-
-          @failure: Deprecated in sing-box 1.11.0
+          @Failure: Deprecated in sing-box 1.11.0
 
               Moved to [DNS Rule Action](../rule_action#route).
     heading: '### Default Fields'
@@ -179,8 +176,6 @@ pages:
   - defs:
 
     - name: logical
-      omit_keys:
-      - invert
       registry: DNSRule
       root: RawLogicalDNSRule
     extras:
@@ -221,6 +216,7 @@ pages:
   - defs:
 
     - name: evaluate
+      docs_tag: true
       omit_keys:
       - action
       - race
@@ -256,25 +252,16 @@ pages:
 - defs:
 
   - name: udp
-    omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions
   file: dns/server/udp.md
 
 - defs:
 
   - name: tcp
-    omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions
   file: dns/server/tcp.md
 
 - defs:
 
   - name: tls
-    omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions
   file: dns/server/tls.md
   overrides:
     server_port:
@@ -286,9 +273,6 @@ pages:
 - defs:
 
   - name: quic
-    omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions
     registry: DNSServer
   file: dns/server/quic.md
   overrides:
@@ -301,12 +285,6 @@ pages:
 - defs:
 
   - name: https
-    omit_keys:
-    - tag
-    - method
-    omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions
   file: dns/server/https.md
   overrides:
     server_port:
@@ -318,12 +296,6 @@ pages:
 - defs:
 
   - name: h3
-    omit_keys:
-    - tag
-    - method
-    omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions
   file: dns/server/http3.md
   overrides:
     server_port:
@@ -340,9 +312,6 @@ pages:
 - defs:
 
   - name: local
-    omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions
     registry: DNSServer
   file: dns/server/local.md
 
@@ -350,8 +319,6 @@ pages:
 
   - name: dhcp
     omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions
     - LocalDNSServerOptions
   file: dns/server/dhcp.md
 
@@ -359,8 +326,6 @@ pages:
 
   - name: mdns
     omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions
     - LocalDNSServerOptions
   file: dns/server/mdns.md
 

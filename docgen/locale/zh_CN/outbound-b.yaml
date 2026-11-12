@@ -10,17 +10,13 @@ AbstractSnellOutboundOptions.reuse: 启用连接复用（Snell v2 `CONNECT` 命�
 AbstractSnellOutboundOptions.userkey: 用户密钥，用于向多用户服务器进行认证。
 
 Hysteria2OutboundOptions.bbr_profile: |-
-  @since 1.14.0
-
   BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 
-  默认使用 `standard`。
+  @Since 1.14.0
 
 Hysteria2OutboundOptions.brutal_debug: 启用 Hysteria Brutal CC 的调试信息日志记录。
 
 Hysteria2OutboundOptions.disable_chrome_parrot: |-
-  @since 1.14.0
-
   禁用 Chrome QUIC 指纹模仿。
 
   如果没有禁用，客户端的 QUIC 握手将被构造为模仿 Chrome，使 Hysteria 流量更难通过握手指纹识别。
@@ -29,24 +25,24 @@ Hysteria2OutboundOptions.disable_chrome_parrot: |-
   `idle_timeout` 固定为 30 秒，`max_concurrent_streams` 与 `initial_packet_size` 被替换为 Chrome 的值，
   接收窗口从 Chrome 的初始值开始，再增长到配置的最大值。
 
-  @warning:
+  @Since 1.14.0
+
+  @Warning:
 
       Chrome 不声明支持 Ed25519，因此使用 Ed25519 证书的服务端将无法完成握手。
       请改用 ECDSA 或 RSA 证书。
 
 Hysteria2OutboundOptions.hop_interval: |-
-  @since 1.11.0
-
   端口跳跃间隔。
 
-  默认使用 `30s`。
+  @Since 1.11.0
 
 Hysteria2OutboundOptions.hop_interval_max: |-
-  @since 1.14.0
-
   最大端口跳跃间隔，用于随机化。
 
   如果设置，实际跳跃间隔将在 `hop_interval` 和 `hop_interval_max` 之间随机选择。
+
+  @Since 1.14.0
 
 Hysteria2OutboundOptions.network: |-
   启用的网络协议。
@@ -56,18 +52,18 @@ Hysteria2OutboundOptions.network: |-
   默认所有。
 
 Hysteria2OutboundOptions.obfs.max_packet_size: |-
-  @since 1.14.0
-
   最大线上数据包大小（字节）。仅限 Gecko。
 
   默认使用 `1200`。
 
-Hysteria2OutboundOptions.obfs.min_packet_size: |-
-  @since 1.14.0
+  @Since 1.14.0
 
+Hysteria2OutboundOptions.obfs.min_packet_size: |-
   最小线上数据包大小（字节）。仅限 Gecko。
 
   默认使用 `512`。
+
+  @Since 1.14.0
 
 Hysteria2OutboundOptions.obfs.password: QUIC 流量混淆器密码。
 
@@ -79,8 +75,6 @@ Hysteria2OutboundOptions.obfs.type: |-
 Hysteria2OutboundOptions.password: 认证密码。
 
 Hysteria2OutboundOptions.realm: |-
-  @since 1.14.0
-
   通过 Hysteria Realm 会合服务连接 Hysteria2 服务器。
 
   与 `server`、`server_port` 和 `server_ports` 冲突。
@@ -88,6 +82,8 @@ Hysteria2OutboundOptions.realm: |-
   TLS SNI 默认使用 `server_url` 中的主机名。需设置 `tls.server_name` 以匹配 Hysteria2 服务器证书覆盖的名字。
 
   会合服务参阅 [Hysteria Realm](/zh/configuration/service/hysteria-realm/)。
+
+  @Since 1.14.0
 
 Hysteria2OutboundOptions.realm.http_client: |-
   与 realm 通信使用的 HTTP 客户端。
@@ -119,51 +115,51 @@ Hysteria2OutboundOptions.realm.port_mapping.timeout: |-
   默认使用 `10s`。
 
 Hysteria2OutboundOptions.realm.realm_id: |-
-  @required
-
   目标 Hysteria2 服务器注册时使用的相同槽位标识符。
 
-Hysteria2OutboundOptions.realm.server_url: |-
-  @required
+  @Required
 
+Hysteria2OutboundOptions.realm.server_url: |-
   Realm 会合服务 URL。
 
-Hysteria2OutboundOptions.realm.stun_servers: |-
-  @required
+  @Required
 
+Hysteria2OutboundOptions.realm.stun_servers: |-
   用于发现本客户端公网地址的 STUN 服务器列表（`host` 或 `host:port`）。
 
   域名通过 [拨号字段](/zh/configuration/shared/dial/) 中的 [`domain_resolver`](/zh/configuration/shared/dial/#domain_resolver) 解析。
 
+  @Required
+
 Hysteria2OutboundOptions.realm.token: Realm 的 Bearer 令牌，需与 realm 上配置的 `users[].token` 之一匹配。
 
 Hysteria2OutboundOptions.server: |-
-  @required
-
   服务器地址。
 
   与 `realm` 冲突。
 
-Hysteria2OutboundOptions.server_port: |-
-  @required
+  @Required
 
+Hysteria2OutboundOptions.server_port: |-
   服务器端口。
 
   如果设置了 `server_ports`，则忽略此项。
 
   与 `realm` 冲突。
 
-Hysteria2OutboundOptions.server_ports: |-
-  @since 1.11.0
+  @Required
 
+Hysteria2OutboundOptions.server_ports: |-
   服务器端口范围列表。
 
   与 `server_port` 和 `realm` 冲突。
 
-Hysteria2OutboundOptions.tls: |-
-  @required
+  @Since 1.11.0
 
+Hysteria2OutboundOptions.tls: |-
   TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+  @Required
 
 Hysteria2OutboundOptions.up_down_mbps: |-
   最大带宽。
@@ -175,16 +171,14 @@ HysteriaOutboundOptions.auth: base64 编码的认证密码。
 HysteriaOutboundOptions.auth_str: 认证密码。
 
 HysteriaOutboundOptions.disable_mtu_discovery: |-
-  @failure: 已在 sing-box 1.14.0 废弃
+  @Failure: 已在 sing-box 1.14.0 废弃
 
       请使用 QUIC 字段 `disable_path_mtu_discovery` 代替。
 
 HysteriaOutboundOptions.hop_interval: |-
-  @since 1.12.0
-
   端口跳跃间隔。
 
-  默认使用 `30s`。
+  @Since 1.12.0
 
 HysteriaOutboundOptions.network: |-
   启用的网络协议。
@@ -196,30 +190,28 @@ HysteriaOutboundOptions.network: |-
 HysteriaOutboundOptions.obfs: 混淆密码。
 
 HysteriaOutboundOptions.recv_window: |-
-  @failure: 已在 sing-box 1.14.0 废弃
+  @Failure: 已在 sing-box 1.14.0 废弃
 
       请使用 QUIC 字段 `connection_receive_window` 代替。
 
 HysteriaOutboundOptions.recv_window_conn: |-
-  @failure: 已在 sing-box 1.14.0 废弃
+  @Failure: 已在 sing-box 1.14.0 废弃
 
       请使用 QUIC 字段 `stream_receive_window` 代替。
 
 HysteriaOutboundOptions.server_ports: |-
-  @since 1.12.0
-
   服务器端口范围列表。
 
   与 `server_port` 冲突。
 
-HysteriaOutboundOptions.tls: |-
-  @required
+  @Since 1.12.0
 
+HysteriaOutboundOptions.tls: |-
   TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
-HysteriaOutboundOptions.up_down: |-
-  @required
+  @Required
 
+HysteriaOutboundOptions.up_down: |-
   格式： `[Integer] [Unit]` 例如： `100 Mbps, 640 KBps, 2 Gbps`
 
   支持的单位 (大小写敏感, b = bits, B = bytes, 8b=1B)：
@@ -235,14 +227,14 @@ HysteriaOutboundOptions.up_down: |-
       Tbps (terabits per second)
       TBps (terabytes per second)
 
-HysteriaOutboundOptions.up_down_mbps: |-
-  @required
+  @Required
 
+HysteriaOutboundOptions.up_down_mbps: |-
   以 Mbps 为单位的 `up, down`。
 
-ShadowsocksOutboundOptions.method: |-
-  @required
+  @Required
 
+ShadowsocksOutboundOptions.method: |-
   加密方法：
 
   * `2022-blake3-aes-128-gcm`
@@ -267,6 +259,8 @@ ShadowsocksOutboundOptions.method: |-
   * `chacha20-ietf`
   * `xchacha20`
 
+  @Required
+
 ShadowsocksOutboundOptions.multiplex: 参阅 [多路复用](/zh/configuration/shared/multiplex#出站)。
 
 ShadowsocksOutboundOptions.network: |-
@@ -277,9 +271,9 @@ ShadowsocksOutboundOptions.network: |-
   默认所有。
 
 ShadowsocksOutboundOptions.password: |-
-  @required
-
   Shadowsocks 密码。
+
+  @Required
 
 ShadowsocksOutboundOptions.plugin: |-
   Shadowsocks SIP003 插件，由内部实现。
@@ -300,8 +294,6 @@ TUICOutboundOptions.congestion_control: |-
 
   可选值: `cubic`, `new_reno`, `bbr`
 
-  默认使用 `cubic`。
-
 TUICOutboundOptions.heartbeat: 发送心跳包以保持连接存活的时间间隔
 
 TUICOutboundOptions.network: |-
@@ -314,9 +306,9 @@ TUICOutboundOptions.network: |-
 TUICOutboundOptions.password: TUIC 用户密码
 
 TUICOutboundOptions.tls: |-
-  @required
-
   TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+  @Required
 
 TUICOutboundOptions.udp_over_stream: |-
   这是 TUIC 的 [UDP over TCP 协议](/zh/configuration/shared/udp-over-tcp/) 移植， 旨在提供 TUIC 不提供的 基于 QUIC 流的 UDP 中继模式。 由于它是一个附加协议，因此您需要使用 sing-box 或其他兼容的程序作为服务器。
@@ -336,54 +328,54 @@ TUICOutboundOptions.udp_relay_mode: |-
   与 `udp_over_stream` 冲突。
 
 TUICOutboundOptions.uuid: |-
-  @required
-
   TUIC 用户 UUID
+
+  @Required
 
 TUICOutboundOptions.zero_rtt_handshake: |-
   在客户端启用 0-RTT QUIC 连接握手
   这对性能影响不大，因为协议是完全复用的
 
-  @warning:
+  @Warning:
 
       强烈建议禁用此功能，因为它容易受到重放攻击。
       请参阅 [Attack of the clones](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/#attack-of-the-clones)
 
 _SnellOutboundOptions.mode: |-
-  @indicator: 仅版本 6
-
   流量整形模式，`default` `unshaped` `unsafe-raw` 之一。
 
   默认为 `default`。
 
-_SnellOutboundOptions.obfs_host: |-
-  @indicator: 仅版本 4
+  @Indicator: 仅版本 6
 
+_SnellOutboundOptions.obfs_host: |-
   `obfs_mode` 为 `http` 时发送的 HTTP `Host` 头。
 
   默认为 `bing.com`。
 
-_SnellOutboundOptions.obfs_mode: |-
-  @indicator: 仅版本 4
+  @Indicator: 仅版本 4
 
+_SnellOutboundOptions.obfs_mode: |-
   HTTP 混淆模式，`none` `http` 之一。
 
   默认为 `none`。
 
-_SnellOutboundOptions.psk: |-
-  @required
+  @Indicator: 仅版本 4
 
+_SnellOutboundOptions.psk: |-
   预共享密钥。
 
-_SnellOutboundOptions.version: |-
-  @required
+  @Required
 
+_SnellOutboundOptions.version: |-
   Snell 协议版本，`4` `6` 之一。
 
   版本 `4` 支持 HTTP 混淆（`obfs_mode` / `obfs_host`）；版本 `6` 以流量整形（`mode`）
   取而代之，并要求 `psk` 长度为 12 到 255 字节。
 
-  @note
+  @Required
+
+  @Note
 
       由于我们有意不支持 Snell v5 的 QUIC 代理模式，v5 的线路协议实际上与 v4 没有区别，
       因此不提供独立的 v4 服务器和 v5 客户端。

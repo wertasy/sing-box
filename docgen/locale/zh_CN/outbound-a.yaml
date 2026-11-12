@@ -1,7 +1,7 @@
 AnyTLSOutboundOptions.client_metadata: |-
-  @since 1.13.16
-
   参阅 [AnyTLS 客户端元数据](/zh/manual/misc/anytls-client-metadata/)。
+
+  @Since 1.13.16
 
 AnyTLSOutboundOptions.idle_session_check_interval: 检查空闲会话的时间间隔。默认值：30秒。
 
@@ -10,14 +10,14 @@ AnyTLSOutboundOptions.idle_session_timeout: 在检查中，关闭闲置时间超
 AnyTLSOutboundOptions.min_idle_session: 在检查中，至少前 `n` 个空闲会话保持打开状态。默认值：`n`=0
 
 AnyTLSOutboundOptions.password: |-
-  @required
-
   AnyTLS 密码。
 
-AnyTLSOutboundOptions.tls: |-
-  @required
+  @Required
 
+AnyTLSOutboundOptions.tls: |-
   TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+  @Required
 
 BridgeOutboundOptions.bridge_name: |-
   自定义 bridge TUN 接口名前缀，默认使用 `bridge`。
@@ -30,36 +30,34 @@ BridgeOutboundOptions.interface: |-
   默认使用默认接口。
 
 BridgeOutboundOptions.iproute2_rule_index: |-
-  @quote:
-
-      仅支持 Linux。
-
   Linux iproute2 规则起始索引。
 
-  默认使用 `100`。
-
-BridgeOutboundOptions.iproute2_table_index: |-
-  @quote:
+  @Quote:
 
       仅支持 Linux。
 
+BridgeOutboundOptions.iproute2_table_index: |-
   Linux iproute2 路由表索引。
 
   默认使用 `2200` + 实例索引。
 
+  @Quote:
+
+      仅支持 Linux。
+
 DirectOutboundOptions.override_address: |-
-  @failure: 已在 sing-box 1.11.0 废弃
-
-      目标覆盖字段在 sing-box 1.11.0 中已废弃，并将在 sing-box 1.13.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-direct-出站中的目标地址覆盖字段到路由字段)。
-
   覆盖连接目标地址。
 
-DirectOutboundOptions.override_port: |-
-  @failure: 已在 sing-box 1.11.0 废弃
+  @Failure: 已在 sing-box 1.11.0 废弃
 
       目标覆盖字段在 sing-box 1.11.0 中已废弃，并将在 sing-box 1.13.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-direct-出站中的目标地址覆盖字段到路由字段)。
 
+DirectOutboundOptions.override_port: |-
   覆盖连接目标端口。
+
+  @Failure: 已在 sing-box 1.11.0 废弃
+
+      目标覆盖字段在 sing-box 1.11.0 中已废弃，并将在 sing-box 1.13.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-direct-出站中的目标地址覆盖字段到路由字段)。
 
 NaiveOutboundOptions.extra_headers: HTTP 请求中发送的额外头部。
 
@@ -82,13 +80,11 @@ NaiveOutboundOptions.quic_congestion_control: |-
   默认使用 `cubic`（NaiveProxy 基于的 Chromium 的默认值）。
 
 NaiveOutboundOptions.quic_session_receive_window: |-
-  @note:
-
-      仅在 `quic` 启用时使用。
-
   QUIC 初始会话接收窗口。
 
-  默认使用 `15 MB`。
+  @Note:
+
+      仅在 `quic` 启用时使用。
 
 NaiveOutboundOptions.stream_receive_window: |-
   流量控制窗口。
@@ -98,13 +94,13 @@ NaiveOutboundOptions.stream_receive_window: |-
   否则，它设置 HTTP/2 会话接收窗口，流接收窗口被设置为它的一半，在 iOS 上默认使用 `4 MB`，在其他平台上默认使用 `128 MB`。
 
 NaiveOutboundOptions.tls: |-
-  @required
-
   TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
   只有 `server_name`、`certificate`、`certificate_path` 和 `ech` 是被支持的。
 
   自签名证书会显著改变流量行为，违背了 NaiveProxy 旨在抵抗流量分析的设计初衷，不应该在生产环境中使用。
+
+  @Required
 
 NaiveOutboundOptions.udp_over_tcp: |-
   UDP over TCP 配置。
@@ -135,9 +131,9 @@ SOCKSOutboundOptions.version: |-
   默认使用 SOCKS5。
 
 _HTTPOutboundOptions.disable_version_fallback: |-
-  @since 1.15.0
-
   禁用自动回退到更低的 HTTP 版本。
+
+  @Since 1.15.0
 
 _HTTPOutboundOptions.headers: HTTP 请求的额外标头。
 
@@ -150,8 +146,6 @@ _HTTPOutboundOptions.tls: TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/
 _HTTPOutboundOptions.username: Basic 认证用户名。
 
 _HTTPOutboundOptions.version: |-
-  @since 1.15.0
-
   HTTP 版本。
 
   可用值：`1`、`2`、`3`。
@@ -161,3 +155,5 @@ _HTTPOutboundOptions.version: |-
   `path` 和 `Host` 头仅在 `1` 时可用。
 
   当为 `3` 时，[HTTP2 字段](#http2-字段) 替换为 [QUIC 字段](#quic-字段)。
+
+  @Since 1.15.0

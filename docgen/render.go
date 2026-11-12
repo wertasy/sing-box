@@ -166,11 +166,11 @@ func renderTagLine(entries []FlattenEntry, node *SchemaNode, index *SchemaIndex,
 //	@admonition question "Free .."  -> !!! question "Free .." (generic form)
 //	@tab "With auto_redirect"       -> === "With auto_redirect"
 var (
-	requiredMarker   = "@required"
-	indicatorPrefix  = "@indicator: "
-	admonitionPrefix = "@admonition "
-	sincePrefix      = "@since "
-	tabPrefix        = "@tab "
+	requiredMarker   = "@Required"
+	indicatorPrefix  = "@Indicator: "
+	admonitionPrefix = "@Admonition "
+	sincePrefix      = "@Since "
+	tabPrefix        = "@Tab "
 )
 
 // admonitionTypes enumerates the mkdocs admonition types accepted by the
@@ -188,11 +188,11 @@ func shorthandAdmonition(line string) (admonitionType string, title string, titl
 	}
 	rest := strings.TrimPrefix(line, "@")
 	if index := strings.IndexByte(rest, ':'); index >= 0 {
-		admonitionType = rest[:index]
+		admonitionType = strings.ToLower(rest[:index])
 		title = strings.TrimPrefix(rest[index+1:], " ")
 		titled = true
 	} else {
-		admonitionType = rest
+		admonitionType = strings.ToLower(rest)
 	}
 	if !admonitionTypes[admonitionType] {
 		return "", "", false, false
@@ -216,23 +216,36 @@ func renderAdmonition(admonitionType string, title string, titled bool) string {
 // markerRank orders the metadata blocks that documentation descriptions keep
 // after the field description: required banner, status indicators, version
 // hints, admonitions, then tabbed presentations. Zero means "not a marker".
+// hasPrefixFold reports whether s starts with prefix, ignoring case.
+func hasPrefixFold(s, prefix string) bool {
+	return len(s) >= len(prefix) && strings.EqualFold(s[:len(prefix)], prefix)
+}
+
+// cutPrefixFold strips a case-insensitive prefix.
+func cutPrefixFold(s, prefix string) (string, bool) {
+	if !hasPrefixFold(s, prefix) {
+		return "", false
+	}
+	return s[len(prefix):], true
+}
+
 func markerRank(line string) int {
-	if line == "@required" {
+	if strings.EqualFold(line, requiredMarker) {
 		return 1
 	}
-	if strings.HasPrefix(line, "@indicator: ") {
+	if hasPrefixFold(line, indicatorPrefix) {
 		return 2
 	}
-	if strings.HasPrefix(line, "@since ") {
+	if hasPrefixFold(line, sincePrefix) {
 		return 3
 	}
-	if strings.HasPrefix(line, "@tab ") {
+	if hasPrefixFold(line, tabPrefix) {
 		return 5
 	}
 	if !strings.HasPrefix(line, "@") {
 		return 0
 	}
-	name := strings.TrimPrefix(line, "@")
+	name := strings.ToLower(strings.TrimPrefix(line, "@"))
 	if index := strings.IndexAny(name, ": "); index >= 0 {
 		name = name[:index]
 	}
@@ -242,15 +255,19 @@ func markerRank(line string) int {
 	return 0
 }
 
-// reorderDescription moves leading marker blocks after the field description,
-// so JSON schema consumers read the description first.
-func reorderDescription(prose []string) []string {
+// splitMarkerGroups separates markdown prose into the field description and
+// the metadata marker blocks (required banners, indicators, version hints,
+// admonitions, tabs), regardless of where the markers sit.
+func splitMarkerGroups(prose []string) ([]string, [][]string) {
+	var description []string
 	var groups [][]string
 	index := 0
 	for index < len(prose) {
 		line := prose[index]
 		if line == "" || line[0] == ' ' || line[0] == '\t' || markerRank(line) == 0 {
-			break
+			description = append(description, line)
+			index++
+			continue
 		}
 		block := []string{line}
 		index++
@@ -266,27 +283,43 @@ func reorderDescription(prose []string) []string {
 			index++
 		}
 	}
-	if len(groups) == 0 || index >= len(prose) {
+	return trimBlankLines(description), groups
+}
+
+// markersFirst restores the rendering order: marker blocks first (in source
+// order), then the field description. Go comments are authored with the
+// description first for readability, so this pass runs before rendering.
+func markersFirst(prose []string) []string {
+	description, groups := splitMarkerGroups(prose)
+	if len(groups) == 0 || len(description) == 0 {
 		return prose
 	}
-	rest := prose[index:]
-	for len(rest) > 0 && rest[0] == "" {
-		rest = rest[1:]
+	out := make([]string, 0, len(prose))
+	for _, group := range groups {
+		if len(out) > 0 {
+			out = append(out, "")
+		}
+		out = append(out, group...)
 	}
-	for len(rest) > 0 && rest[len(rest)-1] == "" {
-		rest = rest[:len(rest)-1]
-	}
-	if len(rest) == 0 {
+	out = append(out, "")
+	out = append(out, description...)
+	return out
+}
+
+// reorderDescription moves marker blocks after the field description, in the
+// fixed order required, indicators, version hints, admonitions, tabs; this is
+// the schema description order (JSON consumers read the description first).
+func reorderDescription(prose []string) []string {
+	description, groups := splitMarkerGroups(prose)
+	if len(groups) == 0 || len(description) == 0 {
 		return prose
 	}
-	// Fixed order: required, indicators, version hints, admonitions, tabs;
-	// relative order inside one rank is preserved.
 	ordered := make([][][]string, 6)
 	for _, group := range groups {
 		rank := markerRank(group[0])
 		ordered[rank] = append(ordered[rank], group)
 	}
-	out := append([]string{}, rest...)
+	out := append([]string{}, description...)
 	for rank := 1; rank < len(ordered); rank++ {
 		for _, block := range ordered[rank] {
 			out = append(out, "")
@@ -316,28 +349,35 @@ func expandProse(prose []string, pageLang string, proseLang string) []string {
 		trimmed := strings.TrimLeft(line, " \t")
 		indent := line[:len(line)-len(trimmed)]
 		switch {
-		case trimmed == requiredMarker:
+		case strings.EqualFold(trimmed, requiredMarker):
 			if pageLang == "zh" {
 				expanded = append(expanded, indent+"==必填==")
 			} else {
 				expanded = append(expanded, indent+"==Required==")
 			}
-		case strings.HasPrefix(trimmed, indicatorPrefix):
-			expanded = append(expanded, indent+"=="+strings.TrimPrefix(trimmed, indicatorPrefix)+"==")
-		case strings.HasPrefix(trimmed, sincePrefix):
-			version := strings.TrimPrefix(trimmed, sincePrefix)
+		case hasPrefixFold(trimmed, requiredMarker+":"):
+			rest := strings.TrimSpace(trimmed[len(requiredMarker)+1:])
+			if pageLang == "zh" {
+				expanded = append(expanded, indent+"==必填== "+rest)
+			} else {
+				expanded = append(expanded, indent+"==Required== "+rest)
+			}
+		case hasPrefixFold(trimmed, indicatorPrefix):
+			expanded = append(expanded, indent+"=="+trimmed[len(indicatorPrefix):]+"==")
+		case hasPrefixFold(trimmed, sincePrefix):
+			version := trimmed[len(sincePrefix):]
 			if proseLang == "zh" {
 				expanded = append(expanded, indent+`!!! question "自 sing-box `+version+` 起"`)
 			} else {
 				expanded = append(expanded, indent+`!!! question "Since sing-box `+version+`"`)
 			}
-		case strings.HasPrefix(trimmed, admonitionPrefix):
+		case hasPrefixFold(trimmed, admonitionPrefix):
 			// A quoted title renders verbatim; without quotes the marker is
 			// emitted bare (mkdocs default title), distinguishing it from the
 			// explicit empty title form `@admonition note ""`.
-			expanded = append(expanded, indent+"!!! "+strings.TrimPrefix(trimmed, admonitionPrefix))
-		case strings.HasPrefix(trimmed, tabPrefix):
-			expanded = append(expanded, indent+"=== "+strings.TrimPrefix(trimmed, tabPrefix))
+			expanded = append(expanded, indent+"!!! "+trimmed[len(admonitionPrefix):])
+		case hasPrefixFold(trimmed, tabPrefix):
+			expanded = append(expanded, indent+"=== "+trimmed[len(tabPrefix):])
 		case strings.HasPrefix(trimmed, "@") && !strings.HasPrefix(trimmed, "@default") &&
 			!strings.HasPrefix(trimmed, "@enum") && !strings.HasPrefix(trimmed, "@deprecated") &&
 			!strings.HasPrefix(trimmed, "@see"):

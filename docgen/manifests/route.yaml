@@ -20,13 +20,13 @@ pages:
     extras:
       action:
         prose: |-
-          @required
+          @Required
 
           See [Rule Actions](../rule_action/) for details.
         locale_key: DefaultRule.action
       outbound:
         prose: |-
-          @failure: Deprecated in sing-box 1.11.0
+          @Failure: Deprecated in sing-box 1.11.0
 
               Moved to [Rule Action](../rule_action#route).
         locale_key: DefaultRule.outbound
@@ -168,7 +168,7 @@ pages:
           prose: 一组 [路由规则](./rule/)    。
         network_strategy:
           prose: |-
-            @since 1.11.0
+            @Since 1.11.0
 
             详情参阅 [拨号字段](/zh/configuration/shared/dial/#network_strategy)。
 

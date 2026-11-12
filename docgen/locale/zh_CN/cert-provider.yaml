@@ -1,7 +1,7 @@
 ACMECertificateProviderOptions.account_key: |-
-  @since 1.14.0
-
   现有 ACME 帐户的 PEM 编码私钥。
+
+  @Since 1.14.0
 
 ACMECertificateProviderOptions.alternative_http_port: 用于 ACME HTTP 质询的备用端口；如果非空，将使用此端口而不是 80 来启动 HTTP 质询的侦听器。
 
@@ -24,9 +24,9 @@ ACMECertificateProviderOptions.dns01_challenge: |-
   参阅 [DNS01 质询字段](/zh/configuration/shared/dns01_challenge/)。
 
 ACMECertificateProviderOptions.domain: |-
-  @required
-
   域名列表。
+
+  @Required
 
 ACMECertificateProviderOptions.email: 创建或选择现有 ACME 服务器帐户时使用的电子邮件地址。
 
@@ -38,15 +38,13 @@ ACMECertificateProviderOptions.external_account: |-
   为了启用 ACME 帐户绑定，运行 ACME 服务器的 CA 需要使用 ACME 之外的某种机制向 ACME 客户端提供 MAC 密钥和密钥标识符。§7.3.4
 
 ACMECertificateProviderOptions.http_client: |-
-  @since 1.14.0
-
   用于所有提供者 HTTP 请求的 HTTP 客户端。
 
   参阅 [HTTP 客户端字段](/zh/configuration/shared/http-client/) 了解详情。
 
-ACMECertificateProviderOptions.key_type: |-
-  @since 1.14.0
+  @Since 1.14.0
 
+ACMECertificateProviderOptions.key_type: |-
   为新证书生成的私钥类型。
 
   | 值         | 类型      |
@@ -57,12 +55,14 @@ ACMECertificateProviderOptions.key_type: |-
   | `rsa2048` | RSA     |
   | `rsa4096` | RSA     |
 
-ACMECertificateProviderOptions.profile: |-
-  @since 1.14.0
+  @Since 1.14.0
 
+ACMECertificateProviderOptions.profile: |-
   用于证书签发的 ACME profile。
 
   当为空且 `provider` 为 Let's Encrypt 时，如果任意域名为 IP 地址，将自动使用 `shortlived`。
+
+  @Since 1.14.0
 
 ACMECertificateProviderOptions.provider: |-
   要使用的 ACME CA 提供商。
@@ -98,9 +98,9 @@ CloudflareOriginCACertificateProviderOptions.data_directory: |-
   `$XDG_DATA_HOME/certmagic` 或 `$HOME/.local/share/certmagic`。
 
 CloudflareOriginCACertificateProviderOptions.domain: |-
-  @required
-
   要写入证书的域名或通配符域名列表。
+
+  @Required
 
 CloudflareOriginCACertificateProviderOptions.http_client: |-
   用于所有提供者 HTTP 请求的 HTTP 客户端。
@@ -132,8 +132,8 @@ CloudflareOriginCACertificateProviderOptions.requested_validity: |-
   如果为空，使用 `5475` 天（15 年）。
 
 TailscaleCertificateProviderOptions.endpoint: |-
-  @required
-
   要复用的 [Tailscale 端点](/zh/configuration/endpoint/tailscale/) 的标签。
 
   必须在 Tailscale 管理控制台中启用 [MagicDNS 和 HTTPS](https://tailscale.com/kb/1153/enabling-https)。
+
+  @Required

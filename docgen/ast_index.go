@@ -13,10 +13,14 @@ import (
 
 // FieldTags holds the extension markers parsed from a field doc comment.
 type FieldTags struct {
-	Default    string
-	Enum       string   // comma separated values from "@enum:"
-	Deprecated bool     // "@deprecated: true" or godoc "Deprecated:" line
-	See        []string // arguments of "@see:" lines, markdown fragments
+	Default        string
+	Enum           string   // comma separated values from "@enum:"
+	Deprecated     bool     // "@deprecated: <note>" or godoc "Deprecated:" line
+	DeprecatedNote string   // optional replacement note, kept for reference
+	See            []string // arguments of "@see:" lines, markdown fragments
+	Example        string   // "@example: <value>" or an indented block, raw JSON value text
+	Omit           bool     // "@omit[: pages]": not documented (on the listed pages)
+	OmitPages      []string // page files for "@omit: <pages>"; empty means all pages
 }
 
 // FlattenEntry describes a single JSON field of a root struct, mirroring
@@ -35,11 +39,20 @@ type FlattenEntry struct {
 
 // ASTIndex indexes option package struct definitions with doc comments.
 type ASTIndex struct {
-	fset    *token.FileSet
-	structs map[string]*ast.StructType
-	aliases map[string]string   // defined type -> underlying named struct
-	types   map[string]ast.Expr // type name -> declared type expression
-	files   map[string]string
+	fset        *token.FileSet
+	structs     map[string]*ast.StructType
+	aliases     map[string]string   // defined type -> underlying named struct
+	types       map[string]ast.Expr // type name -> declared type expression
+	files       map[string]string
+	sharedSlugs map[string]string // type name -> @shared slug of its doc comment
+	tagSamples  map[string]string // type name -> @tag example sample of its doc comment
+}
+
+// SharedOrigin is one option origin whose fields are documented on a shared
+// page instead of the embedding page.
+type SharedOrigin struct {
+	Origin string // struct name declaring the fields
+	Slug   string // @shared slug, e.g. "dial"
 }
 
 // resolve follows defined-type aliases to the underlying struct name.
@@ -54,14 +67,135 @@ func (i *ASTIndex) resolve(name string) string {
 	return name
 }
 
+// sharedSlugOf returns the @shared slug declared in a doc comment group.
+func sharedSlugOf(docs ...*ast.CommentGroup) string {
+	for _, doc := range docs {
+		if doc == nil {
+			continue
+		}
+		for _, comment := range doc.List {
+			text := strings.TrimSpace(strings.TrimPrefix(comment.Text, "//"))
+			rest, found := cutPrefixFold(text, "@Shared")
+			if !found {
+				continue
+			}
+			slug := strings.TrimSpace(rest)
+			if slug == "" || strings.ContainsAny(slug, " \t") {
+				continue
+			}
+			return slug
+		}
+	}
+	return ""
+}
+
+// tagSampleOf returns the @tag example sample declared in a doc comment.
+func tagSampleOf(docs ...*ast.CommentGroup) string {
+	for _, doc := range docs {
+		if doc == nil {
+			continue
+		}
+		for _, comment := range doc.List {
+			text := strings.TrimSpace(strings.TrimPrefix(comment.Text, "//"))
+			rest, found := cutPrefixFold(text, "@Tag ")
+			if !found {
+				continue
+			}
+			sample := strings.TrimSpace(rest)
+			if len(sample) >= 2 && sample[0] == sample[len(sample)-1] && (sample[0] == '"' || sample[0] == '\'') {
+				sample = sample[1 : len(sample)-1]
+			}
+			if sample == "" {
+				continue
+			}
+			return sample
+		}
+	}
+	return ""
+}
+
+// TagSample returns the @tag example sample of a type, accepting the defined
+// type and its underscore-prefixed underlying struct names.
+func (i *ASTIndex) TagSample(name string) (string, bool) {
+	for _, candidate := range []string{name, i.resolve(name), "_" + strings.TrimPrefix(name, "_"), strings.TrimPrefix(name, "_")} {
+		if sample, ok := i.tagSamples[candidate]; ok {
+			return sample, true
+		}
+	}
+	return "", false
+}
+
+// SharedOrigins returns the ordered origins whose fields are documented on a
+// shared page: every struct embedding a type marked `@shared <slug>`,
+// including the origins embedded underneath it.
+func (i *ASTIndex) SharedOrigins(root string) ([]SharedOrigin, error) {
+	var out []SharedOrigin
+	seen := make(map[string]bool)
+	var collect func(name string, slug string)
+	collect = func(name string, slug string) {
+		name = i.resolve(name)
+		if seen[name] {
+			return
+		}
+		seen[name] = true
+		out = append(out, SharedOrigin{Origin: name, Slug: slug})
+		structType := i.structs[name]
+		if structType == nil {
+			return
+		}
+		for _, field := range structType.Fields.List {
+			if len(field.Names) > 0 {
+				continue
+			}
+			embedded, err := embeddedTypeName(field.Type)
+			if err != nil {
+				continue
+			}
+			collect(embedded, slug)
+		}
+	}
+	var walk func(name string) error
+	walk = func(name string) error {
+		name = i.resolve(name)
+		structType := i.structs[name]
+		if structType == nil {
+			return fmt.Errorf("unknown struct option.%s", name)
+		}
+		for _, field := range structType.Fields.List {
+			if len(field.Names) > 0 {
+				continue
+			}
+			embedded, err := embeddedTypeName(field.Type)
+			if err != nil {
+				return err
+			}
+			resolved := i.resolve(embedded)
+			if slug, marked := i.sharedSlugs[resolved]; marked {
+				collect(resolved, slug)
+				continue
+			}
+			if err := walk(embedded); err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+	if err := walk(root); err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LoadASTIndex parses all Go files in dir (package option).
 func LoadASTIndex(dir string) (*ASTIndex, error) {
 	idx := &ASTIndex{
-		fset:    token.NewFileSet(),
-		structs: make(map[string]*ast.StructType),
-		aliases: make(map[string]string),
-		types:   make(map[string]ast.Expr),
-		files:   make(map[string]string),
+		fset:        token.NewFileSet(),
+		structs:     make(map[string]*ast.StructType),
+		aliases:     make(map[string]string),
+		types:       make(map[string]ast.Expr),
+		files:       make(map[string]string),
+		sharedSlugs: make(map[string]string),
+		tagSamples:  make(map[string]string),
 	}
 	entries, err := os.ReadDir(dir)
 	if err != nil {
@@ -91,6 +225,12 @@ func LoadASTIndex(dir string) (*ASTIndex, error) {
 					continue
 				}
 				idx.types[typeSpec.Name.Name] = typeSpec.Type
+				if slug := sharedSlugOf(typeSpec.Doc, genDecl.Doc); slug != "" {
+					idx.sharedSlugs[typeSpec.Name.Name] = slug
+				}
+				if sample := tagSampleOf(typeSpec.Doc, genDecl.Doc); sample != "" {
+					idx.tagSamples[typeSpec.Name.Name] = sample
+				}
 				structType, ok := typeSpec.Type.(*ast.StructType)
 				if !ok {
 					// Defined type over a named type (e.g. `type X _X`).
@@ -110,6 +250,156 @@ func LoadASTIndex(dir string) (*ASTIndex, error) {
 	return idx, nil
 }
 
+// embedOverrides holds prose overrides declared on an embedded field's doc
+// comment: byField entries come from `@field <key>:` blocks, base carries a
+// plain prose comment that applies when the embedded struct declares exactly
+// one JSON field.
+type embedOverrides struct {
+	base     []string
+	byField  map[string][]string
+	examples map[string]string // per-field @example values declared on the embed
+}
+
+// parseEmbedOverrides reads prose overrides from an embedded field doc
+// comment. `@override:` starts an embed-level block applying to single-field
+// containers; `@field <key>:` starts a per-field block. Comments without
+// these markers carry no overrides.
+func parseEmbedOverrides(doc *ast.CommentGroup) (*embedOverrides, error) {
+	if doc == nil {
+		return nil, nil
+	}
+	comments := make([]string, 0, len(doc.List))
+	for _, comment := range doc.List {
+		text := strings.TrimPrefix(comment.Text, "//")
+		comments = append(comments, strings.TrimPrefix(text, " "))
+	}
+	overrides := &embedOverrides{byField: make(map[string][]string), examples: make(map[string]string)}
+	inBase := false
+	var current string
+	var currentLines []string
+	flush := func() {
+		if current == "" {
+			return
+		}
+		lines := stripBlankEdges(stripCommonIndent(currentLines))
+		if len(lines) > 0 {
+			overrides.byField[current] = lines
+		}
+		current = ""
+		currentLines = nil
+	}
+	for _, line := range comments {
+		trimmed := strings.TrimSpace(line)
+		if strings.EqualFold(trimmed, "@Override:") || strings.EqualFold(trimmed, "@Override") {
+			flush()
+			inBase = true
+			continue
+		}
+		if key, ok := cutPrefixFold(trimmed, "@Override "); ok {
+			flush()
+			inBase = false
+			current = strings.TrimSuffix(strings.TrimSpace(key), ":")
+			if current == "" || strings.ContainsAny(current, " \t") {
+				return nil, fmt.Errorf("@Override marker without a key: %q", line)
+			}
+			continue
+		}
+		if value, ok := cutPrefixFold(trimmed, "@Example: "); ok && current != "" {
+			overrides.examples[current] = value
+			continue
+		}
+		if current != "" {
+			currentLines = append(currentLines, line)
+			continue
+		}
+		if inBase {
+			overrides.base = append(overrides.base, line)
+		}
+	}
+	flush()
+	overrides.base = stripBlankEdges(stripCommonIndent(overrides.base))
+	if len(overrides.base) == 0 {
+		overrides.base = nil
+	}
+	if len(overrides.byField) == 0 {
+		overrides.byField = nil
+	}
+	if overrides.base == nil && overrides.byField == nil && len(overrides.examples) == 0 {
+		return nil, nil
+	}
+	return overrides, nil
+}
+
+// stripCommonIndent removes the common leading indentation of a block, so
+// embed overrides can be written visually indented below their marker while
+// the rendered prose stays flush.
+func stripCommonIndent(lines []string) []string {
+	minimum := -1
+	for _, line := range lines {
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
+		indent := len(line) - len(strings.TrimLeft(line, " "))
+		if minimum < 0 || indent < minimum {
+			minimum = indent
+		}
+	}
+	if minimum <= 0 {
+		return lines
+	}
+	out := make([]string, len(lines))
+	for index, line := range lines {
+		if strings.TrimSpace(line) == "" {
+			out[index] = ""
+			continue
+		}
+		out[index] = line[minimum:]
+	}
+	return out
+}
+
+// stripBlankEdges trims leading and trailing blank lines.
+func stripBlankEdges(lines []string) []string {
+	for len(lines) > 0 && strings.TrimSpace(lines[0]) == "" {
+		lines = lines[1:]
+	}
+	for len(lines) > 0 && strings.TrimSpace(lines[len(lines)-1]) == "" {
+		lines = lines[:len(lines)-1]
+	}
+	return lines
+}
+
+// jsonFieldCount counts the documented JSON fields a struct declares itself
+// (direct fields only, embedded structs excluded).
+func (i *ASTIndex) jsonFieldCount(structName string) int {
+	structName = i.resolve(structName)
+	structType := i.structs[structName]
+	if structType == nil {
+		return 0
+	}
+	count := 0
+	for _, field := range structType.Fields.List {
+		if len(field.Names) == 0 {
+			continue
+		}
+		if !field.Names[0].IsExported() {
+			continue
+		}
+		jsonName := ""
+		if field.Tag != nil && strings.HasPrefix(field.Tag.Value, "`") {
+			if value, err := strconv.Unquote(field.Tag.Value); err == nil {
+				jsonName = reflect.StructTag(value).Get("json")
+			}
+		}
+		tagName, _, _ := strings.Cut(jsonName, ",")
+		if tagName == "-" {
+			continue
+		}
+		count++
+	}
+	return count
+}
+
 // Flatten expands root following schema.Generator.FlattenStruct semantics.
 // Embedded structs listed in omitOrigins are skipped entirely.
 func (i *ASTIndex) Flatten(root string, omitOrigins []string) ([]FlattenEntry, error) {
@@ -119,12 +409,20 @@ func (i *ASTIndex) Flatten(root string, omitOrigins []string) ([]FlattenEntry, e
 	}
 	var out []FlattenEntry
 	index := make(map[string]int)
-	var walk func(structName string, prefix []string) error
-	walk = func(structName string, prefix []string) error {
+	var walk func(structName string, prefix []string, overrides *embedOverrides) error
+	walk = func(structName string, prefix []string, overrides *embedOverrides) error {
 		structName = i.resolve(structName)
 		structType := i.structs[structName]
 		if structType == nil {
 			return fmt.Errorf("unknown struct option.%s", structName)
+		}
+		// A plain embed comment applies only to single-field containers.
+		base := []string(nil)
+		if overrides != nil && overrides.base != nil {
+			if i.jsonFieldCount(structName) != 1 {
+				return fmt.Errorf("struct %s: embed prose needs @field markers for multi-field structs", structName)
+			}
+			base = overrides.base
 		}
 		for _, field := range structType.Fields.List {
 			if len(field.Names) > 0 && !field.Names[0].IsExported() {
@@ -160,7 +458,11 @@ func (i *ASTIndex) Flatten(root string, omitOrigins []string) ([]FlattenEntry, e
 				if omit[embedded] {
 					continue
 				}
-				if err := walk(embedded, prefix); err != nil {
+				nestedOverrides, err := parseEmbedOverrides(field.Doc)
+				if err != nil {
+					return fmt.Errorf("struct %s: %w", structName, err)
+				}
+				if err := walk(embedded, prefix, nestedOverrides); err != nil {
 					return err
 				}
 				continue
@@ -175,6 +477,18 @@ func (i *ASTIndex) Flatten(root string, omitOrigins []string) ([]FlattenEntry, e
 			prose, tags, err := commentProse(field.Doc)
 			if err != nil {
 				return fmt.Errorf("struct %s field %s: %w", structName, tagName, err)
+			}
+			if overrides != nil {
+				if override, ok := overrides.byField[tagName]; ok {
+					prose = override
+				} else if base != nil {
+					prose = base
+				}
+			}
+			if overrides != nil && overrides.examples != nil && tags.Example == "" {
+				if example, ok := overrides.examples[tagName]; ok {
+					tags.Example = example
+				}
 			}
 			entry := FlattenEntry{
 				Key:      strings.Join(segments, "."),
@@ -200,7 +514,7 @@ func (i *ASTIndex) Flatten(root string, omitOrigins []string) ([]FlattenEntry, e
 		}
 		return nil
 	}
-	if err := walk(root, nil); err != nil {
+	if err := walk(root, nil, nil); err != nil {
 		return nil, err
 	}
 	return out, nil
@@ -248,12 +562,19 @@ func (i *ASTIndex) Expand(entries []FlattenEntry, key string) ([]FlattenEntry, e
 		}
 	}
 	var out []FlattenEntry
-	var walk func(structName string, prefix []string) error
-	walk = func(structName string, prefix []string) error {
+	var walk func(structName string, prefix []string, overrides *embedOverrides) error
+	walk = func(structName string, prefix []string, overrides *embedOverrides) error {
 		resolved := i.resolve(structName)
 		structType := i.structs[resolved]
 		if structType == nil {
 			return fmt.Errorf("unknown struct option.%s", structName)
+		}
+		base := []string(nil)
+		if overrides != nil && overrides.base != nil {
+			if i.jsonFieldCount(resolved) != 1 {
+				return fmt.Errorf("struct %s: embed prose needs @field markers for multi-field structs", resolved)
+			}
+			base = overrides.base
 		}
 		for _, field := range structType.Fields.List {
 			if len(field.Names) > 0 && !field.Names[0].IsExported() {
@@ -271,7 +592,7 @@ func (i *ASTIndex) Expand(entries []FlattenEntry, key string) ([]FlattenEntry, e
 				// their fields are decoded through custom unmarshallers.
 				if len(field.Names) == 1 {
 					if holder := structNameOf(field.Type); holder != "" && i.structs[i.resolve(holder)] != nil {
-						if err := walk(holder, prefix); err != nil {
+						if err := walk(holder, prefix, nil); err != nil {
 							return err
 						}
 					}
@@ -283,7 +604,11 @@ func (i *ASTIndex) Expand(entries []FlattenEntry, key string) ([]FlattenEntry, e
 				if err != nil {
 					return fmt.Errorf("struct %s: %w", structName, err)
 				}
-				if err := walk(embedded, prefix); err != nil {
+				nestedOverrides, err := parseEmbedOverrides(field.Doc)
+				if err != nil {
+					return fmt.Errorf("struct %s: %w", structName, err)
+				}
+				if err := walk(embedded, prefix, nestedOverrides); err != nil {
 					return err
 				}
 				continue
@@ -295,6 +620,18 @@ func (i *ASTIndex) Expand(entries []FlattenEntry, key string) ([]FlattenEntry, e
 			prose, tags, err := commentProse(field.Doc)
 			if err != nil {
 				return fmt.Errorf("struct %s field %s: %w", structName, tagName, err)
+			}
+			if overrides != nil {
+				if override, ok := overrides.byField[tagName]; ok {
+					prose = override
+				} else if base != nil {
+					prose = base
+				}
+			}
+			if overrides != nil && overrides.examples != nil && tags.Example == "" {
+				if example, ok := overrides.examples[tagName]; ok {
+					tags.Example = example
+				}
 			}
 			entry := FlattenEntry{
 				Key:      strings.Join(segments, "."),
@@ -313,14 +650,14 @@ func (i *ASTIndex) Expand(entries []FlattenEntry, key string) ([]FlattenEntry, e
 			}
 			out = append(out, entry)
 			if name := structNameOf(field.Type); name != "" && i.structs[name] != nil {
-				if err := walk(name, segments); err != nil {
+				if err := walk(name, segments, nil); err != nil {
 					return err
 				}
 			}
 		}
 		return nil
 	}
-	if err := walk(startStruct, prefix); err != nil {
+	if err := walk(startStruct, prefix, nil); err != nil {
 		return nil, err
 	}
 	return out, nil
@@ -450,6 +787,8 @@ func commentProse(doc *ast.CommentGroup) ([]string, FieldTags, error) {
 	if doc == nil {
 		return nil, tags, nil
 	}
+	var inExample bool
+	var exampleLines []string
 	for _, comment := range doc.List {
 		text := comment.Text
 		var lines []string
@@ -476,23 +815,60 @@ func commentProse(doc *ast.CommentGroup) ([]string, FieldTags, error) {
 			if strings.HasPrefix(line, "nolint:") {
 				continue
 			}
-			if value, ok := strings.CutPrefix(line, "@default: "); ok {
+			if value, ok := cutPrefixFold(line, "@Default: "); ok {
 				tags.Default = value
 				continue
 			}
-			if value, ok := strings.CutPrefix(line, "@enum: "); ok {
+			if value, ok := cutPrefixFold(line, "@Enum: "); ok {
 				tags.Enum = value
 				continue
 			}
-			if value, ok := strings.CutPrefix(line, "@deprecated: "); ok {
-				if value != "true" {
-					return nil, tags, fmt.Errorf("invalid @deprecated value %q", value)
-				}
+			if value, ok := cutPrefixFold(line, "@Deprecated: "); ok {
 				tags.Deprecated = true
+				if value != "true" {
+					tags.DeprecatedNote = value
+				}
 				continue
 			}
-			if value, ok := strings.CutPrefix(line, "@see: "); ok {
+			if value, ok := cutPrefixFold(line, "@See: "); ok {
 				tags.See = append(tags.See, value)
+				continue
+			}
+			if value, ok := cutPrefixFold(line, "@Example: "); ok {
+				tags.Example = value
+				continue
+			}
+			if strings.EqualFold(line, "@Example:") {
+				inExample = true
+				continue
+			}
+			if inExample {
+				if line == "" {
+					inExample = false
+					continue
+				}
+				if line[0] == ' ' {
+					// Indented lines belong to the example value block.
+					exampleLines = append(exampleLines, line)
+					continue
+				}
+				inExample = false
+			}
+			if strings.EqualFold(line, "@Omit") {
+				tags.Omit = true
+				continue
+			}
+			if value, ok := cutPrefixFold(line, "@Omit:"); ok {
+				tags.Omit = true
+				for _, page := range strings.Split(value, ",") {
+					page = strings.TrimSpace(page)
+					if page != "" {
+						tags.OmitPages = append(tags.OmitPages, page)
+					}
+				}
+				if len(tags.OmitPages) == 0 {
+					return nil, tags, fmt.Errorf("empty @omit page list")
+				}
 				continue
 			}
 			if value, ok := strings.CutPrefix(line, "Deprecated:"); ok {
@@ -505,6 +881,9 @@ func commentProse(doc *ast.CommentGroup) ([]string, FieldTags, error) {
 	}
 	for len(prose) > 0 && prose[len(prose)-1] == "" {
 		prose = prose[:len(prose)-1]
+	}
+	if len(exampleLines) > 0 {
+		tags.Example = strings.Join(stripCommonIndent(exampleLines), "\n")
 	}
 	return prose, tags, nil
 }

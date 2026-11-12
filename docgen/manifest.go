@@ -16,12 +16,16 @@ var manifestFS embed.FS
 
 // DefRef references a schema definition rendered into one section.
 type DefRef struct {
-	Name        string   `yaml:"name"`
-	Root        string   `yaml:"root"`
-	Registry    string   `yaml:"registry,omitempty"`
-	OmitOrigins []string `yaml:"omit_origins,omitempty"`
-	OmitKeys    []string `yaml:"omit_keys,omitempty"`
-	IncludeKeys []string `yaml:"include_keys,omitempty"`
+	Name           string   `yaml:"name"`
+	Root           string   `yaml:"root"`
+	Registry       string   `yaml:"registry,omitempty"`
+	OmitOrigins    []string `yaml:"omit_origins,omitempty"`
+	IncludeOrigins []string `yaml:"include_origins,omitempty"`
+	OmitKeys       []string `yaml:"omit_keys,omitempty"`
+	IncludeKeys    []string `yaml:"include_keys,omitempty"`
+	// DocsTag documents a real `tag` field of the options struct (wrapper
+	// tags are omitted by default).
+	DocsTag bool `yaml:"docs_tag,omitempty"`
 }
 
 // Extra declares a legacy documentation key without a schema counterpart.
@@ -44,6 +48,16 @@ type SectionPatch struct {
 	Extras    map[string]Extra    `yaml:"extras,omitempty"`
 	Overrides map[string]Override `yaml:"overrides,omitempty"`
 	Format    string              `yaml:"format,omitempty"`
+}
+
+// ExampleSpec customizes the generated `### Structure` example block of a
+// single-definition page.
+type ExampleSpec struct {
+	Omit       []string          `yaml:"omit,omitempty"`        // json keys excluded from the block
+	Values     map[string]string `yaml:"values,omitempty"`      // key → raw JSON value text, rendered verbatim
+	Comments   map[string]string `yaml:"comments,omitempty"`    // key → inline JSON comment after the value
+	CommentsZh map[string]string `yaml:"comments_zh,omitempty"` // zh overrides for Comments on localized pages
+	Groups     []string          `yaml:"groups,omitempty"`      // extra ellipsis labels, e.g. "UDP NAT Fields"
 }
 
 // Section is one generated region below a heading.
@@ -79,6 +93,24 @@ type Page struct {
 	Format    string                  `yaml:"format,omitempty"`
 	Patches   map[string]SectionPatch `yaml:"patches,omitempty"`
 	Sections  []Section               `yaml:"sections,omitempty"`
+	Example   *ExampleSpec            `yaml:"example,omitempty"`
+}
+
+// ResolveExample returns the example spec of a page, inheriting it from the
+// twin page for localized pages.
+func (p *Page) ResolveExample(manifest *Manifest) *ExampleSpec {
+	if p.Example != nil {
+		return p.Example
+	}
+	if p.Twin == "" {
+		return nil
+	}
+	for index := range manifest.Pages {
+		if manifest.Pages[index].File == p.Twin {
+			return manifest.Pages[index].Example
+		}
+	}
+	return nil
 }
 
 // Manifest describes which documentation pages are generated. It is merged
@@ -289,6 +321,15 @@ func (m *Manifest) Validate(docsDir string, complete bool) error {
 		pageSet[page.File] = page.File
 		if len(page.Sections) == 0 && page.Twin == "" {
 			return fmt.Errorf("%s: missing sections", page.File)
+		}
+		if page.Example != nil {
+			total := 0
+			for sectionIndex := range page.Sections {
+				total += len(page.Sections[sectionIndex].Defs)
+			}
+			if total != 1 {
+				return fmt.Errorf("%s: example requires exactly one definition, got %d", page.File, total)
+			}
 		}
 		for sectionIndex := range page.Sections {
 			section := &page.Sections[sectionIndex]

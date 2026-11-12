@@ -1,7 +1,7 @@
 SSHOutboundOptions.cipher: |-
-  @since 1.14.0
-
   允许的加密算法。留空使用默认值。
+
+  @Since 1.14.0
 
 SSHOutboundOptions.client_version: 客户端版本，默认使用随机值。
 
@@ -10,14 +10,14 @@ SSHOutboundOptions.host_key: 主机密钥，留空接受所有。
 SSHOutboundOptions.host_key_algorithms: 主机密钥算法。
 
 SSHOutboundOptions.kex_algorithm: |-
-  @since 1.14.0
-
   允许的密钥交换算法。留空使用默认值。
 
-SSHOutboundOptions.mac: |-
-  @since 1.14.0
+  @Since 1.14.0
 
+SSHOutboundOptions.mac: |-
   允许的 MAC 算法。留空使用默认值。
+
+  @Since 1.14.0
 
 SSHOutboundOptions.password: 密码。
 
@@ -39,9 +39,9 @@ SelectorOutboundOptions.interrupt_exist_connections: |-
   仅入站连接受此设置影响，内部连接将始终被中断。
 
 SelectorOutboundOptions.outbounds: |-
-  @required
-
   用于选择的出站标签列表。
+
+  @Required
 
 ShadowTLSOutboundOptions.password: |-
   设置密码。
@@ -49,9 +49,9 @@ ShadowTLSOutboundOptions.password: |-
   仅在 ShadowTLS v2/v3 协议中可用。
 
 ShadowTLSOutboundOptions.tls: |-
-  @required
-
   TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
+
+  @Required
 
 ShadowTLSOutboundOptions.version: |-
   ShadowTLS 协议版本。
@@ -64,8 +64,6 @@ ShadowTLSOutboundOptions.version: |-
 
 TailcatDERPOptions.derp_map_url: |-
   [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap) 的 URL。
-
-  默认使用 `https://tailcat.dev/derpmap.json`。
 
 TailcatDERPOptions.derp_region: |-
   DERP map 中的 DERP 区域 ID。
@@ -93,21 +91,21 @@ TailcatOutboundOptions.private_key: |-
   验证客户端时必须设置。
 
 TailcatOutboundOptions.server_disco_key: |-
-  @required
-
   服务器 disco 公钥。
 
-TailcatOutboundOptions.server_public_key: |-
-  @required
+  @Required
 
+TailcatOutboundOptions.server_public_key: |-
   服务器公钥。
 
-TorOutboundOptions.data_directory: |-
-  @indicator: 推荐
+  @Required
 
+TorOutboundOptions.data_directory: |-
   Tor 的数据目录。
 
   如未设置，每次启动都需要长时间。
+
+  @Indicator: 推荐
 
 TorOutboundOptions.executable_path: |-
   Tor 可执行文件路径
@@ -131,9 +129,9 @@ URLTestOutboundOptions.interrupt_exist_connections: |-
 URLTestOutboundOptions.interval: 测试间隔。 默认使用 `3m`。
 
 URLTestOutboundOptions.outbounds: |-
-  @required
-
   用于测试的出站标签列表。
+
+  @Required
 
 URLTestOutboundOptions.tolerance: 以毫秒为单位的测试容差。 默认使用 `50`。
 
@@ -169,9 +167,9 @@ VLESSOutboundOptions.tls: TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/
 VLESSOutboundOptions.transport: V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。
 
 VLESSOutboundOptions.uuid: |-
-  @required
-
   VLESS 用户 ID。
+
+  @Required
 
 VMessOutboundOptions.alter_id: |-
   | Alter ID | 描述         |
@@ -220,6 +218,6 @@ VMessOutboundOptions.tls: TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/
 VMessOutboundOptions.transport: V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。
 
 VMessOutboundOptions.uuid: |-
-  @required
-
   VMess 用户 ID。
+
+  @Required

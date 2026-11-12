@@ -80,6 +80,15 @@ func Run(check bool, base string, only []string) error {
 	if err != nil {
 		return err
 	}
+	if len(only) == 0 {
+		issues := auditIndexTables(schemaIndex, docsDir)
+		if len(issues) > 0 {
+			for _, issue := range issues {
+				fmt.Fprintln(os.Stderr, "AUDIT:", issue.Error())
+			}
+			return fmt.Errorf("documentation audit failed: %d issue(s)", len(issues))
+		}
+	}
 	locale, err := loadLocale()
 	if err != nil {
 		return err
@@ -184,20 +193,25 @@ func (g *generator) renderPage(page *Page) ([]error, string, error) {
 		if err != nil {
 			return nil, "", fmt.Errorf("section %q: %w", section.Heading, err)
 		}
-		blocks, err := g.sectionBlocks(section, lang)
+		blocks, err := g.sectionBlocks(page.File, section, lang)
 		if err != nil {
 			return nil, "", fmt.Errorf("section %q: %w", section.Heading, err)
 		}
 		blocks = orderBlocks(blocks, parts.oldOrder)
 		replacement := renderSection(parts, blocks)
-		// Audit against the baseline document.
+		// Audit against the baseline document. Pages newly entering the
+		// pipeline have no baseline section under the new heading; the audit
+		// falls back to an empty baseline (additions are not regressions).
 		baseline, err := g.baselinePage(page.File)
 		if err != nil {
 			return nil, "", err
 		}
 		baselineSection, err := extractOldSection(strings.Split(baseline, "\n"), section.Heading, section.Format)
 		if err != nil {
-			return nil, "", fmt.Errorf("section %q: %w", section.Heading, err)
+			if !strings.Contains(err.Error(), "not found") {
+				return nil, "", fmt.Errorf("section %q: %w", section.Heading, err)
+			}
+			baselineSection = &oldSection{heading: section.Heading, prose: make(map[string][]string)}
 		}
 		newKeys := make(map[string][]string)
 		for _, block := range blocks {
@@ -206,16 +220,85 @@ func (g *generator) renderPage(page *Page) ([]error, string, error) {
 		allIssues = append(allIssues, auditSectionCompare(page.File, section.Heading, baselineSection, newKeys, lang)...)
 		lines = spliceSection(lines, location, replacement)
 	}
+	lines, err = g.spliceOriginSections(page, sections, lang, lines)
+	if err != nil {
+		return nil, "", err
+	}
+	lines, err = g.spliceExample(page, sections, lang, lines)
+	if err != nil {
+		return nil, "", err
+	}
 	content := strings.Join(lines, "\n")
 	if !strings.HasSuffix(content, "\n") {
 		content += "\n"
 	}
+	if g.check {
+		current := strings.TrimSuffix(string(currentContent), "\n") + "\n"
+		if current != content {
+			allIssues = append(allIssues, fmt.Errorf("%s: generated documentation is not up to date, run 'go run ./cmd/internal/generate_docs'", page.File))
+			return allIssues, "", nil
+		}
+	}
 	return allIssues, content, nil
+}
+
+// omittedOrigins returns the origins excluded from a page definition: the
+// @shared origins inferred from the Go struct comments (unless re-included
+// via include_origins) plus the explicit omit_origins list. The inferred
+// shared origins are returned in walk order for link-section generation.
+func (g *generator) omittedOrigins(def DefRef) (map[string]bool, []SharedOrigin, error) {
+	omitted := make(map[string]bool)
+	var shared []SharedOrigin
+	if def.Root != "" {
+		inferred, err := g.ast.SharedOrigins(def.Root)
+		if err != nil {
+			return nil, nil, err
+		}
+		for _, origin := range inferred {
+			if contains(def.IncludeOrigins, origin.Origin) {
+				continue
+			}
+			omitted[origin.Origin] = true
+			shared = append(shared, origin)
+		}
+	}
+	for _, origin := range def.OmitOrigins {
+		omitted[origin] = true
+	}
+	return omitted, shared, nil
+}
+
+// omittedOnPage reports whether a field marked @omit is hidden on the page:
+// without a page list it is hidden everywhere, otherwise the list matches the
+// page file (localized twins match their English page).
+func omittedOnPage(tags FieldTags, pageFile string) bool {
+	if !tags.Omit {
+		return false
+	}
+	if len(tags.OmitPages) == 0 {
+		return true
+	}
+	for _, candidate := range []string{pageFile, englishPageName(pageFile)} {
+		for _, page := range tags.OmitPages {
+			if candidate == page || candidate == englishPageName(page) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// englishPageName maps a localized page file to its English twin name.
+func englishPageName(file string) string {
+	if strings.HasSuffix(file, ".zh.md") {
+		return strings.TrimSuffix(file, ".zh.md") + ".md"
+	}
+	return file
 }
 
 // sectionBlocks renders the generated field blocks of one section in
 // generation order.
-func (g *generator) sectionBlocks(section *Section, lang string) ([]string, error) {
+func (g *generator) sectionBlocks(pageFile string, section *Section, lang string) ([]string, error) {
 	type entryInfo struct {
 		key    string
 		prose  []string
@@ -258,16 +341,16 @@ func (g *generator) sectionBlocks(section *Section, lang string) ([]string, erro
 		for _, key := range def.OmitKeys {
 			omit[key] = true
 		}
-		omitOrigins := make(map[string]bool)
-		for _, origin := range def.OmitOrigins {
-			omitOrigins[origin] = true
+		omitOrigins, _, err := g.omittedOrigins(def)
+		if err != nil {
+			return nil, err
 		}
 		include := make(map[string]bool)
 		for _, key := range def.IncludeKeys {
 			include[key] = true
 		}
 		for _, astEntry := range flattened {
-			if omit[astEntry.Key] || omitOrigins[astEntry.Origin] {
+			if omittedOnPage(astEntry.Tags, pageFile) || omit[astEntry.Key] || omitOrigins[astEntry.Origin] {
 				continue
 			}
 			if len(include) > 0 && !include[astEntry.Key] {
@@ -294,7 +377,7 @@ func (g *generator) sectionBlocks(section *Section, lang string) ([]string, erro
 				return nil, fmt.Errorf("expand %s: %w", expandKey, err)
 			}
 			for _, entry := range expanded {
-				if omit[entry.Key] || omitOrigins[entry.Origin] {
+				if omittedOnPage(entry.Tags, pageFile) || omit[entry.Key] || omitOrigins[entry.Origin] {
 					continue
 				}
 				if len(include) > 0 && !include[entry.Key] {
@@ -367,7 +450,7 @@ func (g *generator) sectionBlocks(section *Section, lang string) ([]string, erro
 		if lang == "zh" && hasCJK(strings.Join(info.prose, "\n")) {
 			proseLang = "zh"
 		}
-		blocks = append(blocks, renderFieldBlock(key, expandProse(info.prose, lang, proseLang), info.tags))
+		blocks = append(blocks, renderFieldBlock(key, expandProse(markersFirst(info.prose), lang, proseLang), info.tags))
 	}
 	return blocks, nil
 }

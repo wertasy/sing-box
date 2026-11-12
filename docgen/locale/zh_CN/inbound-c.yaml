@@ -1,7 +1,7 @@
 AbstractSnellInboundOptions.psk: |-
-  @required
-
   预共享密钥。
+
+  @Required
 
 AbstractSnellInboundOptions.users: |-
   Snell 用户。
@@ -43,10 +43,10 @@ CloudflaredInboundOptions.region: |-
   与 `token` 中嵌入的 endpoint 冲突。
 
 CloudflaredInboundOptions.token: |-
-  @required
-
   来自 Cloudflare Zero Trust 仪表板的 Base64 编码隧道令牌
   （`Networks → Tunnels → Install connector`）。
+
+  @Required
 
 CloudflaredInboundOptions.tunnel_dialer: |-
   隧道客户端拨向 Cloudflare edge 数据面时使用的
@@ -62,15 +62,15 @@ DirectInboundOptions.override_address: 覆盖连接目标地址。
 DirectInboundOptions.override_port: 覆盖连接目标端口。
 
 HTTPMixedInboundOptions.set_system_proxy: |-
-  @quote:
+  启动时自动设置系统代理，停止时自动清理。
+
+  @Quote:
 
       仅支持 Linux、Android、Windows 和 macOS。
 
-  @warning:
+  @Warning:
 
       要在无特权的 Android 和 iOS 上工作，请改用 tun.platform.http_proxy。
-
-  启动时自动设置系统代理，停止时自动清理。
 
 HTTPMixedInboundOptions.users: |-
   SOCKS 和 HTTP 用户
@@ -83,8 +83,6 @@ NaiveInboundOptions.network: |-
   默认所有。
 
 NaiveInboundOptions.quic_congestion_control: |-
-  @question: Since sing-box 1.13.0
-
   QUIC 拥塞控制算法。
 
   | 算法             | 描述                 |
@@ -93,18 +91,16 @@ NaiveInboundOptions.quic_congestion_control: |-
   | `cubic`        | CUBIC              |
   | `reno`         | New Reno           |
 
-  默认使用 `bbr`。
+  @Question: Since sing-box 1.13.0
 
 NaiveInboundOptions.users: |-
-  @required
-
   Naive 用户。
+
+  @Required
 
 ShadowsocksInboundOptions.managed: 默认为 `false`。当该入站需要由 [SSM API](/zh/configuration/service/ssm-api) 管理用户时必须启用此字段。
 
 ShadowsocksInboundOptions.method: |-
-  @required
-
   | 方法                            | 密钥长度 |
   |-------------------------------|------|
   | 2022-blake3-aes-128-gcm       | 16   |
@@ -117,6 +113,8 @@ ShadowsocksInboundOptions.method: |-
   | chacha20-ietf-poly1305        | /    |
   | xchacha20-ietf-poly1305       | /    |
 
+  @Required
+
 ShadowsocksInboundOptions.multiplex: 参阅 [多路复用](/zh/configuration/shared/multiplex#入站)。
 
 ShadowsocksInboundOptions.network: |-
@@ -125,20 +123,20 @@ ShadowsocksInboundOptions.network: |-
   默认所有。
 
 ShadowsocksInboundOptions.password: |-
-  @required
-
   | 方法            | 密码格式                                     |
   |---------------|------------------------------------------|
   | none          | /                                        |
   | 2022 methods  | `sing-box generate rand --base64 <密钥长度>` |
   | other methods | 任意字符串                                    |
 
-SnellInboundOptions.mode: |-
-  @indicator: 仅版本 6
+  @Required
 
+SnellInboundOptions.mode: |-
   流量整形模式，`default` `unshaped` `unsafe-raw` 之一。
 
   默认为 `default`。
+
+  @Indicator: 仅版本 6
 
 SocksInboundOptions.users: |-
   SOCKS 用户
@@ -152,8 +150,6 @@ TProxyInboundOptions.network: |-
 
 TailcatInboundOptions.derp_map_url: |-
   [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap) 的 URL。
-
-  默认使用 `https://tailcat.dev/derpmap.json`。
 
 TailcatInboundOptions.derp_region: |-
   DERP map 中的 DERP 区域 ID。
@@ -179,11 +175,11 @@ TailcatInboundOptions.http_client: |-
 TailcatInboundOptions.pre_shared_key: 预共享密钥。
 
 TailcatInboundOptions.private_key: |-
-  @required
-
   私钥。
 
   使用 `sing-box generate tailcat-keypair` 生成。
+
+  @Required
 
 TailcatInboundOptions.users: |-
   Tailcat 用户。
@@ -194,18 +190,18 @@ TailcatInboundOptions.users: |-
   中设置 `verify_client_inbound` 或 `verify_client_key`，且客户端必须使用固定的私钥。
 
 TailcatInboundOptions.users.public_key: |-
-  @required
-
   客户端公钥。
+
+  @Required
 
 VLESSInboundOptions.multiplex: 参阅 [多路复用](/zh/configuration/shared/multiplex#入站)。
 
 VLESSInboundOptions.transport: V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。
 
 VLESSInboundOptions.users: |-
-  @required
-
   VLESS 用户。
+
+  @Required
 
 VLESSInboundOptions.users.flow: |-
   VLESS 子协议。
@@ -215,17 +211,15 @@ VLESSInboundOptions.users.flow: |-
   * `xtls-rprx-vision`
 
 VLESSInboundOptions.users.uuid: |-
-  @required
-
   VLESS 用户 ID。
+
+  @Required
 
 VMessInboundOptions.multiplex: 参阅 [多路复用](/zh/configuration/shared/multiplex#入站)。
 
 VMessInboundOptions.transport: V2Ray 传输配置，参阅 [V2Ray 传输层](/zh/configuration/shared/v2ray-transport/)。
 
 VMessInboundOptions.users: |-
-  @required
-
   VMess 用户。
 
   | Alter ID | 描述    |
@@ -233,20 +227,22 @@ VMessInboundOptions.users: |-
   | 0        | 禁用旧协议 |
   | > 0      | 启用旧协议 |
 
-  @warning:
+  @Required
+
+  @Warning:
 
       提供旧协议支持（VMess MD5 身份验证）仅出于兼容性目的，不建议使用 alterId > 1。
 
 _HTTPInboundOptions.set_system_proxy: |-
-  @quote:
+  启动时自动设置系统代理，停止时自动清理。
+
+  @Quote:
 
       仅支持 Linux、Android、Windows 和 macOS。
 
-  @warning:
+  @Warning:
 
       要在无特权的 Android 和 iOS 上工作，请改用 tun.platform.http_proxy。
-
-  启动时自动设置系统代理，停止时自动清理。
 
 _HTTPInboundOptions.users: |-
   HTTP 用户
@@ -254,8 +250,6 @@ _HTTPInboundOptions.users: |-
   如果为空则不需要验证。
 
 _HTTPInboundOptions.version: |-
-  @since 1.15.0
-
   提供的 HTTP 版本列表。
 
   可用值：`1`、`2`、`3`。
@@ -264,22 +258,24 @@ _HTTPInboundOptions.version: |-
 
   `3` 需要 TLS。
 
-_SnellInboundOptions.obfs_mode: |-
-  @indicator: 仅版本 5
+  @Since 1.15.0
 
+_SnellInboundOptions.obfs_mode: |-
   HTTP 混淆模式，`none` `http` 之一。
 
   默认为 `none`。
 
-_SnellInboundOptions.version: |-
-  @required
+  @Indicator: 仅版本 5
 
+_SnellInboundOptions.version: |-
   Snell 协议版本，`5` `6` 之一。
 
   版本 `5` 支持 HTTP 混淆（`obfs_mode`）；版本 `6` 以流量整形（`mode`）取而代之，并要求
   `psk` 长度为 12 到 255 字节。
 
-  @note
+  @Required
+
+  @Note
 
       由于我们有意不支持 Snell v5 的 QUIC 代理模式，v5 的线路协议实际上与 v4 没有区别，
       因此不提供独立的 v4 服务器和 v5 客户端。

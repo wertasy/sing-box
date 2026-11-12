@@ -7,6 +7,3 @@ pages:
   defs:
   - name: trojan
     registry: Outbound
-    omit_origins:
-    - DialerOptions
-    - AbstractDialerOptions

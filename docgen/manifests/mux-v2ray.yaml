@@ -18,17 +18,15 @@ pages:
       root: OutboundMultiplexOptions
 
 - file: shared/tcp-brutal.md
+  example: {}
   defs:
 
   - name: BrutalOptions
     root: BrutalOptions
-    omit_keys:
-    - up_mbps
-    - down_mbps
   extras:
     up_mbps, down_mbps:
       prose: |-
-        @required
+        @Required
 
         Upload and download bandwidth, in Mbps.
       locale_key: BrutalOptions.up_down_mbps

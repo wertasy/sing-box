@@ -1,20 +1,109 @@
 defaults:
   heading: '### Fields'
-  omit_origins:
-  - DialerOptions
-  - AbstractDialerOptions
 
 pages:
+
+- file: endpoint/masque-client.md
+  example:
+    omit:
+      - udp_timeout
+      - udp_mapping
+      - udp_filtering
+      - udp_nat_max
+    groups:
+      - HTTP2 Fields / QUIC Fields
+      - UDP NAT Fields
+  defs:
+  - name: masque-client
+    registry: Endpoint
+
+- file: endpoint/masque-server.md
+  example:
+    omit:
+      - udp_timeout
+      - udp_mapping
+      - udp_filtering
+      - udp_nat_max
+    groups:
+      - HTTP2 Fields / QUIC Fields
+      - UDP NAT Fields
+  defs:
+  - name: masque-server
+    registry: Endpoint
+    omit_origins:
+    - InboundOptions
+
+- file: endpoint/openvpn-client.md
+  example:
+    omit:
+      - udp_timeout
+      - udp_mapping
+      - udp_filtering
+      - udp_nat_max
+    groups:
+      - UDP NAT Fields
+  defs:
+  - name: openvpn-client
+    registry: Endpoint
+  expand:
+  - tls
+  - pull_filters
+- file: endpoint/openvpn-server.md
+  example:
+    omit:
+      - udp_timeout
+      - udp_mapping
+      - udp_filtering
+      - udp_nat_max
+    groups:
+      - UDP NAT Fields
+  defs:
+  - name: openvpn-server
+    registry: Endpoint
+    omit_origins:
+    - InboundOptions
+    omit_keys:
+    - push.dns_servers.priority
+    - push.dns_servers.addresses
+    - push.dns_servers.resolve_domains
+    - push.dns_servers.dnssec
+    - push.dns_servers.transport
+    - push.dns_servers.sni
+  expand:
+  - tls
+  - push
+  extras:
+    users.username:
+      prose: Username.
+      locale_key: OpenVPNServerEndpointOptions.users.username
+    users.password:
+      prose: Password.
+      locale_key: OpenVPNServerEndpointOptions.users.password
+- file: endpoint/openconnect.md
+  example:
+    omit:
+      - udp_timeout
+      - udp_mapping
+      - udp_filtering
+      - udp_nat_max
+    groups:
+      - UDP NAT Fields
+  defs:
+  - name: openconnect
+    registry: Endpoint
+    expand:
+    - token
+    - mobile
+    - csd
+    - hip
+    - tncc
+    - fortinet_host_check
+    - tls
+    - form_entries
 
 - file: endpoint/wireguard.md
   defs:
   - name: wireguard
-    omit_keys:
-    - tag
-    - udp_timeout
-    - udp_mapping
-    - udp_filtering
-    - udp_nat_max
   expand:
   - peers
 
@@ -30,32 +119,18 @@ pages:
   - name: default
     registry: NetworkNamespace
     root: DefaultNetworkNamespaceOptions
-    omit_origins: []
 
 - file: network-namespace/unshare.md
   defs:
   - name: unshare
     root: UnshareNetworkNamespaceOptions
-    omit_origins: []
 
 - file: log/index.md
   defs:
   - name: LogOptions
     root: LogOptions
-    omit_origins: []
 
 - file: ntp/index.md
   defs:
   - name: NTPOptions
     root: NTPOptions
-  overrides:
-    server:
-      prose: |-
-        @required
-
-        NTP server address.
-    server_port:
-      prose: |-
-        NTP server port.
-
-        123 is used by default.

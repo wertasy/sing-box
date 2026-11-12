@@ -1,12 +1,12 @@
 ServerOptions.server: |-
-  @required
-
   服务器地址。
 
-ServerOptions.server_port: |-
-  @required
+  @Required
 
+ServerOptions.server_port: |-
   服务器端口。
+
+  @Required
 
 TrojanOutboundOptions.multiplex: 参阅 [多路复用](/zh/configuration/shared/multiplex#出站)。
 
@@ -18,9 +18,9 @@ TrojanOutboundOptions.network: |-
   默认所有。
 
 TrojanOutboundOptions.password: |-
-  @required
-
   Trojan 密码。
+
+  @Required
 
 TrojanOutboundOptions.tls: TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 

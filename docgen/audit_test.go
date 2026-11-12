@@ -118,19 +118,19 @@ func TestRenderFieldBlock(t *testing.T) {
 }
 
 func TestReorderDescription(t *testing.T) {
-	prose := []string{"@since 1.13.0", "", "@quote:", "", "    Only supported on Linux.", "", "Do not reserve a port.", "", "This allows reuse."}
-	expected := []string{"Do not reserve a port.", "", "This allows reuse.", "", "@since 1.13.0", "", "@quote:", "", "    Only supported on Linux."}
+	prose := []string{"@Since 1.13.0", "", "@Quote:", "", "    Only supported on Linux.", "", "Do not reserve a port.", "", "This allows reuse."}
+	expected := []string{"Do not reserve a port.", "", "This allows reuse.", "", "@Since 1.13.0", "", "@Quote:", "", "    Only supported on Linux."}
 	if got := reorderDescription(prose); strings.Join(got, "\n") != strings.Join(expected, "\n") {
 		t.Fatalf("reorderDescription = %q, want %q", got, expected)
 	}
 	// All markers move after the description in a fixed order: required,
 	// indicator, since, admonitions, tab.
-	mixed := []string{"@tab \"Example\"", "", "    body", "", "@quote:", "", "    quote body", "", "@since 1.2.0", "", "@indicator: Server only", "", "@required", "", "Description."}
-	wantOrder := []string{"Description.", "", "@required", "", "@indicator: Server only", "", "@since 1.2.0", "", "@quote:", "", "    quote body", "", "@tab \"Example\"", "", "    body"}
+	mixed := []string{"@Tab \"Example\"", "", "    body", "", "@Quote:", "", "    quote body", "", "@Since 1.2.0", "", "@Indicator: Server only", "", "@Required", "", "Description."}
+	wantOrder := []string{"Description.", "", "@Required", "", "@Indicator: Server only", "", "@Since 1.2.0", "", "@Quote:", "", "    quote body", "", "@Tab \"Example\"", "", "    body"}
 	if got := reorderDescription(mixed); strings.Join(got, "\n") != strings.Join(wantOrder, "\n") {
 		t.Fatalf("reorderDescription order = %q, want %q", got, wantOrder)
 	}
-	if got := reorderDescription([]string{"@since 1.0.0"}); strings.Join(got, "\n") != "@since 1.0.0" {
+	if got := reorderDescription([]string{"@Since 1.0.0"}); strings.Join(got, "\n") != "@Since 1.0.0" {
 		t.Fatalf("marker-only prose must stay unchanged: %q", got)
 	}
 }
@@ -151,21 +151,21 @@ func TestExpandProse(t *testing.T) {
 		lang     string
 		expected []string
 	}{
-		{"required en", []string{"@required"}, "en", []string{"==Required=="}},
-		{"required zh", []string{"@required"}, "zh", []string{"==必填=="}},
-		{"indicator", []string{"@indicator: Server only"}, "en", []string{"==Server only=="}},
-		{"admonition titled", []string{`@admonition question "Since sing-box 1.11.0"`}, "en", []string{`!!! question "Since sing-box 1.11.0"`}},
-		{"admonition empty title", []string{`@admonition note ""`}, "en", []string{`!!! note ""`}},
-		{"admonition bare", []string{"@admonition note"}, "en", []string{"!!! note"}},
-		{"tab", []string{`@tab "With auto_redirect"`}, "en", []string{`=== "With auto_redirect"`}},
-		{"nested indented marker", []string{`    @admonition quote ""`, "        body"}, "en", []string{`    !!! quote ""`, "        body"}},
-		{"shorthand bare", []string{"@note"}, "en", []string{"!!! note"}},
-		{"shorthand titled", []string{"@note: Some title"}, "en", []string{`!!! note "Some title"`}},
-		{"shorthand colon titleless", []string{"@quote:"}, "en", []string{`!!! quote ""`}},
-		{"shorthand empty title", []string{`@quote: ""`}, "en", []string{`!!! quote ""`}},
-		{"shorthand since en", []string{"@since 1.11.0"}, "en", []string{`!!! question "Since sing-box 1.11.0"`}},
-		{"shorthand since zh", []string{"@since 1.11.0"}, "zh", []string{`!!! question "自 sing-box 1.11.0 起"`}},
-		{"shorthand indented", []string{"    @warning"}, "en", []string{"    !!! warning"}},
+		{"required en", []string{"@Required"}, "en", []string{"==Required=="}},
+		{"required zh", []string{"@Required"}, "zh", []string{"==必填=="}},
+		{"indicator", []string{"@Indicator: Server only"}, "en", []string{"==Server only=="}},
+		{"admonition titled", []string{`@Admonition question "Since sing-box 1.11.0"`}, "en", []string{`!!! question "Since sing-box 1.11.0"`}},
+		{"admonition empty title", []string{`@Admonition note ""`}, "en", []string{`!!! note ""`}},
+		{"admonition bare", []string{"@Admonition note"}, "en", []string{"!!! note"}},
+		{"tab", []string{`@Tab "With auto_redirect"`}, "en", []string{`=== "With auto_redirect"`}},
+		{"nested indented marker", []string{`    @Admonition quote ""`, "        body"}, "en", []string{`    !!! quote ""`, "        body"}},
+		{"shorthand bare", []string{"@Note"}, "en", []string{"!!! note"}},
+		{"shorthand titled", []string{"@Note: Some title"}, "en", []string{`!!! note "Some title"`}},
+		{"shorthand colon titleless", []string{"@Quote:"}, "en", []string{`!!! quote ""`}},
+		{"shorthand empty title", []string{`@Quote: ""`}, "en", []string{`!!! quote ""`}},
+		{"shorthand since en", []string{"@Since 1.11.0"}, "en", []string{`!!! question "Since sing-box 1.11.0"`}},
+		{"shorthand since zh", []string{"@Since 1.11.0"}, "zh", []string{`!!! question "自 sing-box 1.11.0 起"`}},
+		{"shorthand indented", []string{"    @Warning"}, "en", []string{"    !!! warning"}},
 		{"unknown at word untouched", []string{"@unknown"}, "en", []string{"@unknown"}},
 		{"plain prose untouched", []string{"The server address."}, "en", []string{"The server address."}},
 	}

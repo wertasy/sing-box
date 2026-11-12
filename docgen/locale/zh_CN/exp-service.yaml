@@ -5,11 +5,6 @@ APIServiceOptions.access_control_allow_private_network: 允许从私有网络访
 APIServiceOptions.dashboard: |-
   下载并通过 API 监听器在 `/dashboard/` 提供的 Web 仪表板；其他浏览器请求将被重定向到该路径。
 
-  @info:
-
-      该对象可以替换为布尔值（等同于 `{ "enabled": <bool> }`），
-      或字符串路径（等同于 `{ "enabled": true, "path": "<string>" }`）。
-
   ##### enabled
 
   启用仪表板。
@@ -38,7 +33,10 @@ APIServiceOptions.dashboard: |-
 
   仪表板的更新间隔。
 
-  默认使用 `1d`。
+  @Info:
+
+      该对象可以替换为布尔值（等同于 `{ "enabled": <bool> }`），
+      或字符串路径（等同于 `{ "enabled": true, "path": "<string>" }`）。
 
 APIServiceOptions.secret: |-
   API 密钥。
@@ -99,11 +97,9 @@ CCMServiceOptions.users: |-
   - `token`：用于身份验证的 Bearer 令牌。Claude Code 通过设置 `ANTHROPIC_AUTH_TOKEN` 环境变量为其令牌值进行身份验证。
 
 CacheFileOptions.buffer_size: |-
-  @since 1.15.0
-
   写缓存的大小。
 
-  默认使用 `1MB`。
+  @Since 1.15.0
 
 CacheFileOptions.cache_id: |-
   缓存文件中的标识符。
@@ -113,68 +109,66 @@ CacheFileOptions.cache_id: |-
 CacheFileOptions.enabled: 启用缓存文件。
 
 CacheFileOptions.flush_interval: |-
-  @since 1.15.0
-
   自动冲刷写缓存的间隔。
 
   默认禁用。
 
+  @Since 1.15.0
+
 CacheFileOptions.path: 缓存文件路径，默认使用`cache.db`。
 
 CacheFileOptions.rdrc_timeout: |-
-  @failure: 已在 sing-box 1.14.0 废弃
+  拒绝的 DNS 响应缓存超时。
+
+  @Failure: 已在 sing-box 1.14.0 废弃
 
       `rdrc_timeout` 已在 sing-box 1.14.0 废弃，且将在 sing-box 1.16.0 中被移除，参阅[迁移指南](/zh/migration/#迁移-store_rdrc)。
 
-  拒绝的 DNS 响应缓存超时。
-
-  默认使用 `7d`。
-
 CacheFileOptions.store_dns: |-
-  @since 1.14.0
-
   将 DNS 缓存存储在缓存文件中。
+
+  @Since 1.14.0
 
 CacheFileOptions.store_fakeip: 将 fakeip 存储在缓存文件中。
 
 CacheFileOptions.store_rdrc: |-
-  @failure: 已在 sing-box 1.14.0 废弃
-
-      `store_rdrc` 已在 sing-box 1.14.0 废弃，且将在 sing-box 1.16.0 中被移除，参阅[迁移指南](/zh/migration/#迁移-store_rdrc)。
-
   将拒绝的 DNS 响应缓存存储在缓存文件中。
 
   [旧版地址筛选字段](/zh/configuration/dns/rule/#旧版地址筛选字段) 的检查结果将被缓存至过期。
 
-ClashAPIOptions.access_control_allow_origin: |-
-  @since 1.10.0
+  @Failure: 已在 sing-box 1.14.0 废弃
 
+      `store_rdrc` 已在 sing-box 1.14.0 废弃，且将在 sing-box 1.16.0 中被移除，参阅[迁移指南](/zh/migration/#迁移-store_rdrc)。
+
+ClashAPIOptions.access_control_allow_origin: |-
   允许的 CORS 来源，默认使用 `*`。
 
   要从公共网站访问私有网络上的 Clash API，必须在 `access_control_allow_origin` 中明确指定它而不是使用 `*`。
 
-ClashAPIOptions.access_control_allow_private_network: |-
-  @since 1.10.0
+  @Since 1.10.0
 
+ClashAPIOptions.access_control_allow_private_network: |-
   允许从私有网络访问。
 
   要从公共网站访问私有网络上的 Clash API，必须启用 `access_control_allow_private_network`。
 
+  @Since 1.10.0
+
 ClashAPIOptions.cache_file: |-
-  @failure: 已在 sing-box 1.8.0 废弃
+  缓存文件路径，默认使用`cache.db`。
+
+  @Failure: 已在 sing-box 1.8.0 废弃
 
       `cache_file` 已在 Clash API 中废弃，且已迁移到 `cache_file.enabled` 和 `cache_file.path`。
 
-  缓存文件路径，默认使用`cache.db`。
-
 ClashAPIOptions.cache_id: |-
-  @failure: 已在 sing-box 1.8.0 废弃
-
-      `cache_id` 已在 Clash API 中废弃，且已迁移到 `cache_file.cache_id`。
-
   缓存 ID。
 
   如果不为空，配置特定的数据将使用由其键控的单独存储。
+
+  @Failure: 已在 sing-box 1.8.0 废弃
+
+      `cache_id` 已在 Clash API 中废弃，且已迁移到 `cache_file.cache_id`。
 
 ClashAPIOptions.default_mode: |-
   Clash 中的默认模式，默认使用 `Rule`。
@@ -193,44 +187,42 @@ ClashAPIOptions.external_ui_download_detour: |-
 ClashAPIOptions.external_ui_download_url: |-
   静态网页资源的 ZIP 下载 URL，如果指定的 `external_ui` 目录为空，将使用。
 
-  默认使用 `https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip`。
-
 ClashAPIOptions.secret: |-
   RESTful API 的密钥（可选）
   通过指定 HTTP 标头 `Authorization: Bearer ${secret}` 进行身份验证
   如果 RESTful API 正在监听 0.0.0.0，请始终设置一个密钥。
 
 ClashAPIOptions.store_fakeip: |-
-  @failure: 已在 sing-box 1.8.0 废弃
+  将 fakeip 存储在缓存文件中。
+
+  @Failure: 已在 sing-box 1.8.0 废弃
 
       `store_selected` 已在 Clash API 中废弃，且已迁移到 `cache_file.store_fakeip`。
 
-  将 fakeip 存储在缓存文件中。
-
 ClashAPIOptions.store_mode: |-
-  @failure: 已在 sing-box 1.8.0 废弃
+  将 Clash 模式存储在缓存文件中。
+
+  @Failure: 已在 sing-box 1.8.0 废弃
 
       `store_mode` 已在 Clash API 中废弃，且默认启用当 `cache_file.enabled`。
 
-  将 Clash 模式存储在缓存文件中。
-
 ClashAPIOptions.store_selected: |-
-  @failure: 已在 sing-box 1.8.0 废弃
+  将 `Selector` 中出站的选定的目标出站存储在缓存文件中。
+
+  @Failure: 已在 sing-box 1.8.0 废弃
 
       `store_selected` 已在 Clash API 中废弃，且默认启用当 `cache_file.enabled`。
 
-  @note:
+  @Note:
 
       必须为目标出站设置标签。
 
-  将 `Selector` 中出站的选定的目标出站存储在缓存文件中。
-
 DERPServiceOptions.config_path: |-
-  @required
-
   Derper 配置文件路径。
 
   示例：`derper.key`
+
+  @Required
 
 DERPServiceOptions.home: 在根路径提供的内容。可以留空（默认值，显示默认主页）、`blank` 显示空白页面，或一个重定向的 URL。
 
@@ -291,14 +283,14 @@ DERPServiceOptions.stun: |-
 DERPServiceOptions.verify_client_endpoint: 用于验证客户端的 Tailscale 端点标签。
 
 DERPServiceOptions.verify_client_inbound: |-
-  @since 1.15.0
-
   用于验证客户端的 Tailcat 入站标签。
 
-DERPServiceOptions.verify_client_key: |-
-  @since 1.15.0
+  @Since 1.15.0
 
+DERPServiceOptions.verify_client_key: |-
   用于验证客户端的 Tailcat 公钥。
+
+  @Since 1.15.0
 
 DERPServiceOptions.verify_client_url: |-
   用于验证客户端的 URL。
@@ -320,21 +312,21 @@ DERPServiceOptions.verify_client_url: |-
   ```
 
 HysteriaRealmServiceOptions.users: |-
-  @required
-
   授权用户。
+
+  @Required
 
 HysteriaRealmServiceOptions.users.max_realms: 此用户可同时持有的 realm 槽位数量上限。
 
 HysteriaRealmServiceOptions.users.name: |-
-  @required
-
   用户名，用于日志记录和配额键。
 
-HysteriaRealmServiceOptions.users.token: |-
-  @required
+  @Required
 
+HysteriaRealmServiceOptions.users.token: |-
   Hysteria2 入站和出站通过 `Authorization: Bearer <token>` 出示的 Bearer 令牌。
+
+  @Required
 
 OCMServiceOptions.credential_path: |-
   OpenAI OAuth 凭据文件的路径。
@@ -386,26 +378,24 @@ OCMServiceOptions.users: |-
   - `token`：用于身份验证的 Bearer 令牌。客户端通过设置 `Authorization: Bearer <token>` 头进行身份验证。
 
 ResolvedServiceOptions.listen: |-
-  @required
-
   监听地址。
 
   默认使用 `127.0.0.53`。
 
-ResolvedServiceOptions.listen_port: |-
-  @required
+  @Required
 
+ResolvedServiceOptions.listen_port: |-
   监听端口。
 
   默认使用 `53`。
+
+  @Required
 
 SSMAPIServiceOptions.cache_path: |-
   如果设置，当服务器即将停止时，流量和用户状态将保存到指定的 JSON 文件中，
   以便在下次启动时恢复。
 
 SSMAPIServiceOptions.servers: |-
-  @required
-
   从 HTTP 端点到 [Shadowsocks 入站](/zh/configuration/inbound/shadowsocks) 标签的映射对象。
 
   选定的 Shadowsocks 入站必须配置启用 [managed](/zh/configuration/inbound/shadowsocks#managed)。
@@ -419,6 +409,8 @@ SSMAPIServiceOptions.servers: |-
     }
   }
   ```
+
+  @Required
 
 USBIPClientServiceOptions.devices: |-
   设备匹配列表，用于选择要导入的远程设备。如果为空，则导入所有已导出的设备。
@@ -474,7 +466,7 @@ USBIPServerServiceOptions.provider: |-
   - `default`：导出由 `devices` 匹配的本地设备。默认值。
   - `dynamic`：设备在运行时通过 [sing-box API](/zh/configuration/service/api/) 客户端提供，而非来自配置文件，支持的平台包括 [macOS](/zh/clients/apple/) 和 [Android](/zh/clients/android/) 上的 sing-box 图形客户端，以及配合 [sing-box Dashboard](https://github.com/SagerNet/sing-box-dashboard) 的基于 Chromium 的浏览器。
 
-  @quote:
+  @Quote:
 
       `default` 提供者仅支持通过 CLI 直接运行在 Linux、Windows 和 macOS 上，并且需要提升的权限。
 

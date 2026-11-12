@@ -1,11 +1,11 @@
 DefaultHeadlessRule.default_interface_address: |-
-  @since 1.13.0
+  匹配默认接口地址。
 
-  @quote:
+  @Since 1.13.0
+
+  @Quote:
 
       仅支持 Linux、Windows 和 macOS.
-
-  匹配默认接口地址。
 
 DefaultHeadlessRule.domain: 匹配完整域名。
 
@@ -22,80 +22,82 @@ DefaultHeadlessRule.ip_cidr: 匹配 IP CIDR。
 DefaultHeadlessRule.network: '`tcp` 或 `udp`。'
 
 DefaultHeadlessRule.network_interface_address: |-
-  @since 1.13.0
+  匹配网络接口（可用值同 `network_type`）地址。
 
-  @quote:
+  @Since 1.13.0
+
+  @Quote:
 
       仅在 Android 与 Apple 平台图形客户端中支持。
 
-  匹配网络接口（可用值同 `network_type`）地址。
-
 DefaultHeadlessRule.network_is_constrained: |-
-  @since 1.11.0
+  匹配如果网络在低数据模式下。
 
-  @quote:
+  @Since 1.11.0
+
+  @Quote:
 
       仅在 Apple 平台图形客户端中支持。
 
-  匹配如果网络在低数据模式下。
-
 DefaultHeadlessRule.network_is_expensive: |-
-  @since 1.11.0
-
-  @quote:
-
-      仅在 Android 与 Apple 平台图形客户端中支持。
-
   匹配如果网络被视为计费 (在 Android) 或被视为昂贵，
   像蜂窝网络或个人热点 (在 Apple 平台)。
 
-DefaultHeadlessRule.network_type: |-
-  @since 1.11.0
+  @Since 1.11.0
 
-  @quote:
+  @Quote:
 
       仅在 Android 与 Apple 平台图形客户端中支持。
 
+DefaultHeadlessRule.network_type: |-
   匹配网络类型。
 
   Available values: `wifi`, `cellular`, `ethernet` and `other`.
 
+  @Since 1.11.0
+
+  @Quote:
+
+      仅在 Android 与 Apple 平台图形客户端中支持。
+
 DefaultHeadlessRule.package_name: 匹配 Android 应用包名。
 
 DefaultHeadlessRule.package_name_regex: |-
-  @since 1.14.0
-
   使用正则表达式匹配 Android 应用包名。
+
+  @Since 1.14.0
 
 DefaultHeadlessRule.port: 匹配端口。
 
 DefaultHeadlessRule.port_range: 匹配端口范围。
 
 DefaultHeadlessRule.process_name: |-
-  @quote:
+  匹配进程名称。
+
+  @Quote:
 
       仅支持 Linux、Windows 和 macOS。
 
-  匹配进程名称。
-
 DefaultHeadlessRule.process_path: |-
-  @quote:
-
-      仅支持 Linux、Windows 和 macOS.
-
   匹配进程路径。
 
-DefaultHeadlessRule.process_path_regex: |-
-  @since 1.10.0
-
-  @quote:
+  @Quote:
 
       仅支持 Linux、Windows 和 macOS.
 
+DefaultHeadlessRule.process_path_regex: |-
   使用正则表达式匹配进程路径。
 
+  @Since 1.10.0
+
+  @Quote:
+
+      仅支持 Linux、Windows 和 macOS.
+
 DefaultHeadlessRule.query_type: |-
-  @quote: sing-box 1.14.0 中的更改
+  DNS 查询类型。值可以为整数或者类型名称字符串。
+
+  @Quote: sing-box 1.14.0 中的更改
 
       当 DNS 规则引用此规则集时，此字段现在也会在 DNS 规则被未指定具体
       DNS 服务器的内部域名解析匹配时生效。参阅
@@ -105,8 +107,6 @@ DefaultHeadlessRule.query_type: |-
       不能与旧版地址筛选字段 (DNS 规则)、旧版 DNS 规则动作 `strategy` 选项，
       或旧版 `rule_set_ip_cidr_accept_empty` DNS 规则项共存。
 
-  DNS 查询类型。值可以为整数或者类型名称字符串。
-
 DefaultHeadlessRule.source_ip_cidr: 匹配源 IP CIDR。
 
 DefaultHeadlessRule.source_port: 匹配源端口。
@@ -114,60 +114,58 @@ DefaultHeadlessRule.source_port: 匹配源端口。
 DefaultHeadlessRule.source_port_range: 匹配源端口范围。
 
 DefaultHeadlessRule.wifi_bssid: |-
-  @quote:
-
-      仅在 Android 与 Apple 平台图形客户端中支持。
-
   匹配 WiFi BSSID。
 
-DefaultHeadlessRule.wifi_ssid: |-
-  @quote:
+  @Quote:
 
       仅在 Android 与 Apple 平台图形客户端中支持。
 
+DefaultHeadlessRule.wifi_ssid: |-
   匹配 WiFi SSID。
 
-DefaultRule.action: |-
-  @required
+  @Quote:
 
+      仅在 Android 与 Apple 平台图形客户端中支持。
+
+DefaultRule.action: |-
   参阅 [规则动作](../rule_action/)。
 
+  @Required
+
 DefaultRule.outbound: |-
-  @failure: 已在 sing-box 1.11.0 废弃
+  @Failure: 已在 sing-box 1.11.0 废弃
 
       已移动到 [规则动作](../rule_action#route).
 
 LogicalHeadlessRule.mode: |-
-  @required
-
   `and` 或 `or`
 
-LogicalHeadlessRule.rules: |-
-  @required
+  @Required
 
+LogicalHeadlessRule.rules: |-
   包括的规则。
+
+  @Required
 
 RawDefaultRule.auth_user: 认证用户名，参阅入站设置。
 
 RawDefaultRule.clash_mode: 匹配 Clash 模式。
 
 RawDefaultRule.client: |-
-  @since 1.10.0
-
   探测到的客户端类型, 参阅 [协议探测](/zh/configuration/route/sniff/)。
 
-RawDefaultRule.default_interface_address: |-
-  @since 1.13.0
+  @Since 1.10.0
 
-  @quote:
+RawDefaultRule.default_interface_address: |-
+  匹配默认接口地址。
+
+  @Since 1.13.0
+
+  @Quote:
 
       仅支持 Linux、Windows 和 macOS.
 
-  匹配默认接口地址。
-
 RawDefaultRule.dns_search_domain: |-
-  @since 1.15.0
-
   匹配指定 DNS 服务器的搜索域。
 
   | 类型            | 匹配                            |
@@ -179,9 +177,9 @@ RawDefaultRule.dns_search_domain: |-
   | `openvpn`     | 匹配 VPN 服务器推送的搜索域              |
   | `openconnect` | 匹配 VPN 服务器推送的搜索域              |
 
-RawDefaultRule.dns_server_address: |-
-  @since 1.15.0
+  @Since 1.15.0
 
+RawDefaultRule.dns_server_address: |-
   匹配指定 DNS 服务器的服务器地址。
 
   | 类型            | 匹配                               |
@@ -193,6 +191,8 @@ RawDefaultRule.dns_server_address: |-
   | `openvpn`     | 匹配 VPN 服务器推送的 DNS 服务器             |
   | `openconnect` | 匹配 VPN 服务器推送的 DNS 服务器             |
 
+  @Since 1.15.0
+
 RawDefaultRule.domain: 匹配完整域名。
 
 RawDefaultRule.domain_keyword: 匹配域名关键字。
@@ -202,38 +202,38 @@ RawDefaultRule.domain_regex: 匹配域名正则表达式。
 RawDefaultRule.domain_suffix: 匹配域名后缀。
 
 RawDefaultRule.geoip: |-
-  @failure: 已在 sing-box 1.8.0 废弃
+  匹配 GeoIP。
+
+  @Failure: 已在 sing-box 1.8.0 废弃
 
       GeoIP 已废弃且可能在不久的将来移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
 
-  匹配 GeoIP。
-
 RawDefaultRule.geosite: |-
-  @failure: 已在 sing-box 1.8.0 废弃
+  匹配 Geosite。
+
+  @Failure: 已在 sing-box 1.8.0 废弃
 
       Geosite 已废弃且可能在不久的将来移除，参阅 [迁移指南](/zh/migration/#迁移-geosite-到规则集)。
-
-  匹配 Geosite。
 
 RawDefaultRule.inbound: '[入站](/zh/configuration/inbound/) 标签。'
 
 RawDefaultRule.interface_address: |-
-  @since 1.13.0
+  匹配接口地址。
 
-  @quote:
+  @Since 1.13.0
+
+  @Quote:
 
       仅支持 Linux、Windows 和 macOS.
-
-  匹配接口地址。
 
 RawDefaultRule.invert: 反选匹配结果。
 
 RawDefaultRule.ip_cidr: 匹配 IP CIDR。
 
 RawDefaultRule.ip_is_private: |-
-  @since 1.8.0
-
   匹配非公开 IP。
+
+  @Since 1.8.0
 
 RawDefaultRule.ip_version: |-
   4 或 6。
@@ -241,69 +241,67 @@ RawDefaultRule.ip_version: |-
   默认不限制。
 
 RawDefaultRule.network: |-
-  @quote: sing-box 1.13.0 中的更改
+  匹配网络类型。
+
+  `tcp`、`udp` 或 `icmp`。
+
+  @Quote: sing-box 1.13.0 中的更改
 
       自 sing-box 1.13.0 起，您可以通过新的 `icmp` 网络匹配 ICMP 回显（ping）请求。
 
       此类流量源自 `TUN`、`WireGuard` 和 `Tailscale` 入站，并可路由至 `Direct`、`WireGuard` 和 `Tailscale` 出站。
 
-  匹配网络类型。
-
-  `tcp`、`udp` 或 `icmp`。
-
 RawDefaultRule.network_interface_address: |-
-  @since 1.13.0
+  匹配网络接口（可用值同 `network_type`）地址。
 
-  @quote:
+  @Since 1.13.0
+
+  @Quote:
 
       仅在 Android 与 Apple 平台图形客户端中支持。
 
-  匹配网络接口（可用值同 `network_type`）地址。
-
 RawDefaultRule.network_is_constrained: |-
-  @since 1.11.0
+  匹配如果网络在低数据模式下。
 
-  @quote:
+  @Since 1.11.0
+
+  @Quote:
 
       仅在 Apple 平台图形客户端中支持。
 
-  匹配如果网络在低数据模式下。
-
 RawDefaultRule.network_is_expensive: |-
-  @since 1.11.0
-
-  @quote:
-
-      仅在 Android 与 Apple 平台图形客户端中支持。
-
   匹配如果网络被视为计费 (在 Android) 或被视为昂贵，
   像蜂窝网络或个人热点 (在 Apple 平台)。
 
-RawDefaultRule.network_type: |-
-  @since 1.11.0
+  @Since 1.11.0
 
-  @quote:
+  @Quote:
 
       仅在 Android 与 Apple 平台图形客户端中支持。
 
+RawDefaultRule.network_type: |-
   匹配网络类型。
 
   可用值: `wifi`, `cellular`, `ethernet` and `other`.
 
+  @Since 1.11.0
+
+  @Quote:
+
+      仅在 Android 与 Apple 平台图形客户端中支持。
+
 RawDefaultRule.package_name: 匹配 Android 应用包名。
 
 RawDefaultRule.package_name_regex: |-
-  @since 1.14.0
-
   使用正则表达式匹配 Android 应用包名。
+
+  @Since 1.14.0
 
 RawDefaultRule.port: 匹配端口。
 
 RawDefaultRule.port_range: 匹配端口范围。
 
 RawDefaultRule.preferred_by: |-
-  @since 1.13.0
-
   匹配制定出站的首选路由。
 
   | 类型          | 匹配                             |
@@ -312,99 +310,101 @@ RawDefaultRule.preferred_by: |-
   | `wireguard` | 匹配对端的 allowed IPs              |
   | `bridge`    | 匹配除本机本地地址外的所有地址，仅在[预匹配](/zh/configuration/shared/pre-match/)中 |
 
+  @Since 1.13.0
+
 RawDefaultRule.process_name: |-
-  @quote:
+  匹配进程名称。
+
+  @Quote:
 
       仅支持 Linux、Windows 和 macOS。
 
-  匹配进程名称。
-
 RawDefaultRule.process_path: |-
-  @quote:
-
-      仅支持 Linux、Windows 和 macOS.
-
   匹配进程路径。
 
-RawDefaultRule.process_path_regex: |-
-  @since 1.10.0
-
-  @quote:
+  @Quote:
 
       仅支持 Linux、Windows 和 macOS.
 
+RawDefaultRule.process_path_regex: |-
   使用正则表达式匹配进程路径。
+
+  @Since 1.10.0
+
+  @Quote:
+
+      仅支持 Linux、Windows 和 macOS.
 
 RawDefaultRule.protocol: 探测到的协议, 参阅 [协议探测](/zh/configuration/route/sniff/)。
 
 RawDefaultRule.rule_set: |-
-  @since 1.8.0
-
   匹配[规则集](/zh/configuration/route/#rule_set)。
 
-RawDefaultRule.rule_set_ip_cidr_match_source: |-
-  @since 1.10.0
+  @Since 1.8.0
 
+RawDefaultRule.rule_set_ip_cidr_match_source: |-
   使规则集中的 `ip_cidr` 规则匹配源 IP。
 
-RawDefaultRule.rule_set_ipcidr_match_source: |-
-  @since 1.8.0
+  @Since 1.10.0
 
-  @failure: 已在 sing-box 1.10.0 废弃
+RawDefaultRule.rule_set_ipcidr_match_source: |-
+  使规则集中的 `ip_cidr` 规则匹配源 IP。
+
+  @Since 1.8.0
+
+  @Failure: 已在 sing-box 1.10.0 废弃
 
       `rule_set_ipcidr_match_source` 已重命名为 `rule_set_ip_cidr_match_source` 且将在 sing-box 1.11.0 中被移除。
 
-  使规则集中的 `ip_cidr` 规则匹配源 IP。
-
 RawDefaultRule.source_geoip: |-
-  @failure: 已在 sing-box 1.8.0 废弃
+  匹配源 GeoIP。
+
+  @Failure: 已在 sing-box 1.8.0 废弃
 
       GeoIP 已废弃且可能在不久的将来移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
 
-  匹配源 GeoIP。
-
 RawDefaultRule.source_hostname: |-
-  @since 1.14.0
+  匹配源设备从 DHCP 租约获取的主机名。
 
-  @quote:
+  @Since 1.14.0
+
+  @Quote:
 
       仅支持 Linux、macOS，或在 Android 和 macOS 图形客户端中支持。参阅 [邻居解析](/configuration/shared/neighbor/) 了解设置方法。
-
-  匹配源设备从 DHCP 租约获取的主机名。
 
 RawDefaultRule.source_ip_cidr: 匹配源 IP CIDR。
 
 RawDefaultRule.source_ip_is_private: |-
-  @since 1.8.0
-
   匹配非公开源 IP。
 
-RawDefaultRule.source_mac_address: |-
-  @since 1.14.0
+  @Since 1.8.0
 
-  @quote:
+RawDefaultRule.source_mac_address: |-
+  匹配源设备 MAC 地址。
+
+  @Since 1.14.0
+
+  @Quote:
 
       仅支持 Linux、macOS，或在 Android 和 macOS 图形客户端中支持。参阅 [邻居解析](/configuration/shared/neighbor/) 了解设置方法。
-
-  匹配源设备 MAC 地址。
 
 RawDefaultRule.source_port: 匹配源端口。
 
 RawDefaultRule.source_port_range: 匹配源端口范围。
 
 RawDefaultRule.user: |-
-  @quote:
-
-      仅支持 Linux.
-
   匹配用户名。
 
-RawDefaultRule.user_id: |-
-  @quote:
+  @Quote:
 
       仅支持 Linux.
 
+RawDefaultRule.user_id: |-
   匹配用户 ID。
+
+  @Quote:
+
+      仅支持 Linux.
 
 RawDefaultRule.wifi_bssid: |-
   匹配 WiFi BSSID。
@@ -417,14 +417,14 @@ RawDefaultRule.wifi_ssid: |-
   参阅 [Wi-Fi 状态](/zh/configuration/shared/wifi-state/)。
 
 RawLogicalRule.mode: |-
-  @required
-
   `and` 或 `or`
 
-RawLogicalRule.rules: |-
-  @required
+  @Required
 
+RawLogicalRule.rules: |-
   包括的规则。
+
+  @Required
 
 RawRouteOptionsActionOptions.fallback_delay: 详情参阅 [拨号字段](/zh/configuration/shared/dial/#fallback_delay)。
 
@@ -443,8 +443,6 @@ RawRouteOptionsActionOptions.override_address: 覆盖目标地址。
 RawRouteOptionsActionOptions.override_port: 覆盖目标端口。
 
 RawRouteOptionsActionOptions.tls_fragment: |-
-  @since 1.12.0
-
   通过分段 TLS 握手数据包来绕过防火墙检测。
 
   此功能旨在规避基于**明文数据包匹配**的简单防火墙，不应该用于规避真的审查。
@@ -456,35 +454,35 @@ RawRouteOptionsActionOptions.tls_fragment: |-
 
   此外，若实际等待时间小于 20 毫秒，同样会回退至固定等待时间模式，因为此时判定目标处于本地或透明代理之后。
 
-RawRouteOptionsActionOptions.tls_fragment_fallback_delay: |-
-  @since 1.12.0
+  @Since 1.12.0
 
+RawRouteOptionsActionOptions.tls_fragment_fallback_delay: |-
   当 TLS 分片功能无法自动判定等待时间时使用的回退值。
 
-  默认使用 `500ms`。
+  @Since 1.12.0
 
 RawRouteOptionsActionOptions.tls_record_fragment: |-
-  @since 1.12.0
-
   通过分段 TLS 握手数据包到多个 TLS 记录来绕过防火墙检测。
 
+  @Since 1.12.0
+
 RawRouteOptionsActionOptions.tls_spoof: |-
-  @since 1.14.0
-
-  @quote:
-
-      仅支持 Linux、macOS 和 Windows，需要提升的权限。
-
   在真实 ClientHello 之前注入携带本字段所指定 SNI 的伪造 TLS ClientHello，
   用于欺骗仅放行特定主机名的 SNI 过滤中间盒。
 
   详情与所需权限参阅出站 TLS [`spoof`](/zh/configuration/shared/tls/#spoof)。
 
-RawRouteOptionsActionOptions.tls_spoof_method: |-
-  @since 1.14.0
+  @Since 1.14.0
 
+  @Quote:
+
+      仅支持 Linux、macOS 和 Windows，需要提升的权限。
+
+RawRouteOptionsActionOptions.tls_spoof_method: |-
   控制伪造报文被真实服务器拒绝的方式。完整取值表与平台说明参阅出站 TLS
   [`spoof_method`](/zh/configuration/shared/tls/#spoof_method)。
+
+  @Since 1.14.0
 
 RawRouteOptionsActionOptions.udp_connect: 如果启用，将尝试将 UDP 连接 connect 到目标而不是 listen。
 
@@ -515,47 +513,45 @@ RawRouteOptionsActionOptions.udp_timeout: |-
   | 3478 | `stun` |
 
 RouteActionOptions.outbound: |-
-  @required
-
   目标出站的标签。
 
-RouteActionResolve.client_subnet: |-
-  @since 1.12.0
+  @Required
 
+RouteActionResolve.client_subnet: |-
   默认情况下，将带有指定 IP 前缀的 `edns0-subnet` OPT 附加记录附加到每个查询。
 
   如果值是 IP 地址而不是前缀，则会自动附加 `/32` 或 `/128`。
 
   将覆盖 `dns.client_subnet`.
 
-RouteActionResolve.disable_cache: |-
-  @since 1.12.0
+  @Since 1.12.0
 
+RouteActionResolve.disable_cache: |-
   在此查询中禁用缓存。
 
-RouteActionResolve.disable_optimistic_cache: |-
-  @since 1.14.0
+  @Since 1.12.0
 
+RouteActionResolve.disable_optimistic_cache: |-
   在此查询中禁用乐观 DNS 缓存。
 
-RouteActionResolve.rewrite_ttl: |-
-  @since 1.12.0
+  @Since 1.14.0
 
+RouteActionResolve.rewrite_ttl: |-
   重写 DNS 回应中的 TTL。
+
+  @Since 1.12.0
 
 RouteActionResolve.server: 指定要使用的 DNS 服务器的标签，而不是通过 DNS 路由进行选择。
 
 RouteActionResolve.strategy: |-
   DNS 解析策略，可用值有：`prefer_ipv4`、`prefer_ipv6`、`ipv4_only`、`ipv6_only`。
 
-  默认使用 `dns.strategy`。
-
 RouteActionResolve.timeout: |-
-  @since 1.14.0
-
   覆盖此查询的 DNS 查询超时时间。
 
   将覆盖 `dns.timeout`。
+
+  @Since 1.14.0
 
 RouteActionSniff.sniffer: |-
   启用的探测器。
@@ -567,62 +563,58 @@ RouteActionSniff.sniffer: |-
 RouteActionSniff.timeout: |-
   探测超时时间。
 
-  默认使用 300ms。
-
 RouteOptions.auto_detect_interface: |-
-  @quote:
-
-      仅支持 Linux、Windows 和 macOS。
-
   默认将出站连接绑定到默认网卡，以防止在 tun 下出现路由环路。
 
   如果设置了 `outbound.bind_interface` 设置，则不生效。
 
-RouteOptions.default_domain_resolver: |-
-  @since 1.12.0
+  @Quote:
 
+      仅支持 Linux、Windows 和 macOS。
+
+RouteOptions.default_domain_resolver: |-
   详情参阅 [拨号字段](/zh/configuration/shared/dial/#domain_resolver)。
 
   可以被 `outbound.domain_resolver` 覆盖。
 
-RouteOptions.default_fallback_delay: |-
-  @since 1.11.0
+  @Since 1.12.0
 
+RouteOptions.default_fallback_delay: |-
   详情参阅 [拨号字段](/zh/configuration/shared/dial/#fallback_delay)。
 
-RouteOptions.default_fallback_network_type: |-
-  @since 1.11.0
+  @Since 1.11.0
 
+RouteOptions.default_fallback_network_type: |-
   详情参阅 [拨号字段](/zh/configuration/shared/dial/#default_fallback_network_type)。
 
-RouteOptions.default_http_client: |-
-  @since 1.14.0
+  @Since 1.11.0
 
+RouteOptions.default_http_client: |-
   远程规则集使用的默认 [HTTP 客户端](/zh/configuration/shared/http-client/) 的标签。
 
   如果为空且 `http_clients` 已定义，将使用第一个 HTTP 客户端。
 
+  @Since 1.14.0
+
 RouteOptions.default_interface: |-
-  @quote:
-
-      仅支持 Linux、Windows 和 macOS。
-
   默认将出站连接绑定到指定网卡，以防止在 tun 下出现路由环路。
 
   如果设置了 `auto_detect_interface` 设置，则不生效。
 
+  @Quote:
+
+      仅支持 Linux、Windows 和 macOS。
+
 RouteOptions.default_mark: |-
-  @quote:
-
-      仅支持 Linux。
-
   默认为出站连接设置路由标记。
 
   如果设置了 `outbound.routing_mark` 设置，则不生效。
 
-RouteOptions.default_network_strategy: |-
-  @since 1.11.0
+  @Quote:
 
+      仅支持 Linux。
+
+RouteOptions.default_network_strategy: |-
   详情参阅 [拨号字段](/zh/configuration/shared/dial/#network_strategy)。
 
   当 `outbound.bind_interface`, `outbound.inet4_bind_address` 或 `outbound.inet6_bind_address` 已设置时不生效。
@@ -631,53 +623,55 @@ RouteOptions.default_network_strategy: |-
 
   与 `default_interface` 冲突。
 
-RouteOptions.default_network_type: |-
-  @since 1.11.0
+  @Since 1.11.0
 
+RouteOptions.default_network_type: |-
   详情参阅 [拨号字段](/zh/configuration/shared/dial/#default_network_type)。
 
+  @Since 1.11.0
+
 RouteOptions.dhcp_lease_files: |-
-  @since 1.14.0
-
-  @quote:
-
-      仅支持 Linux 和 macOS。
-
   用于主机名和 MAC 地址解析的自定义 DHCP 租约文件路径。
 
   为空时自动从常见 DHCP 服务器（dnsmasq、odhcpd、ISC dhcpd、Kea）检测。
 
-RouteOptions.final: 默认出站标签。如果为空，将使用第一个可用于对应协议的出站。
+  @Since 1.14.0
 
-RouteOptions.find_neighbor: |-
-  @since 1.14.0
-
-  @quote:
+  @Quote:
 
       仅支持 Linux 和 macOS。
 
+RouteOptions.final: 默认出站标签。如果为空，将使用第一个可用于对应协议的出站。
+
+RouteOptions.find_neighbor: |-
   在没有 `source_mac_address` 或 `source_hostname` 规则时启用邻居解析以输出日志。
 
   参阅 [邻居解析](/configuration/shared/neighbor/) 了解设置方法。
 
+  @Since 1.14.0
+
+  @Quote:
+
+      仅支持 Linux 和 macOS。
+
 RouteOptions.find_process: |-
-  @quote:
+  在没有 `process_name`、`process_path`、`package_name`、`user` 或 `user_id` 规则时启用进程搜索以输出日志。
+
+  @Quote:
 
       仅支持 Linux、Windows 和 macOS。
 
-  在没有 `process_name`、`process_path`、`package_name`、`user` 或 `user_id` 规则时启用进程搜索以输出日志。
-
 RouteOptions.override_android_vpn: |-
-  @quote:
+  启用 `auto_detect_interface` 时接受 Android VPN 作为上游网卡。
+
+  @Quote:
 
       仅支持 Android。
 
-  启用 `auto_detect_interface` 时接受 Android VPN 作为上游网卡。
-
 RouteOptions.rule_set: |-
-  @since 1.8.0
-
   一组 [规则集](/zh/configuration/rule-set/)。
+
+  @Since 1.8.0
 
 RouteOptions.rules: 一组 [路由规则](./rule/)    。
 

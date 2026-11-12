@@ -1,22 +1,10 @@
 defaults:
   heading: '### Fields'
-  omit_origins:
-  - DialerOptions
-  - AbstractDialerOptions
 pages:
 
 - file: outbound/hysteria.md
-  sections:
-
-  - defs:
-
-    - name: hysteria
-      registry: Outbound
-      omit_keys:
-      - up
-      - down
-      - up_mbps
-      - down_mbps
+  example:
+    omit:
       - idle_timeout
       - keep_alive_period
       - stream_receive_window
@@ -24,11 +12,26 @@ pages:
       - max_concurrent_streams
       - initial_packet_size
       - disable_path_mtu_discovery
-      - tag
+    groups:
+      - QUIC Fields
+  sections:
+
+  - defs:
+
+    - name: hysteria
+      registry: Outbound
+      omit_keys:
+      - idle_timeout
+      - keep_alive_period
+      - stream_receive_window
+      - connection_receive_window
+      - max_concurrent_streams
+      - initial_packet_size
+      - disable_path_mtu_discovery
     extras:
       up, down:
         prose: |-
-          @required
+          @Required
 
           Format: `[Integer] [Unit]` e.g. `100 Mbps, 640 KBps, 2 Gbps`
 
@@ -47,34 +50,28 @@ pages:
         locale_key: HysteriaOutboundOptions.up_down
       up_mbps, down_mbps:
         prose: |-
-          @required
+          @Required
 
           `up, down` in Mbps.
         locale_key: HysteriaOutboundOptions.up_down_mbps
-    overrides:
-      tls:
-        prose: |-
-          @required
-
-          TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 
   - heading: '### Deprecated Fields'
     extras:
       recv_window_conn:
         prose: |-
-          @failure: Deprecated in sing-box 1.14.0
+          @Failure: Deprecated in sing-box 1.14.0
 
               Use QUIC fields `stream_receive_window` instead.
         locale_key: HysteriaOutboundOptions.recv_window_conn
       recv_window:
         prose: |-
-          @failure: Deprecated in sing-box 1.14.0
+          @Failure: Deprecated in sing-box 1.14.0
 
               Use QUIC fields `connection_receive_window` instead.
         locale_key: HysteriaOutboundOptions.recv_window
       disable_mtu_discovery:
         prose: |-
-          @failure: Deprecated in sing-box 1.14.0
+          @Failure: Deprecated in sing-box 1.14.0
 
               Use QUIC fields `disable_path_mtu_discovery` instead.
         locale_key: HysteriaOutboundOptions.disable_mtu_discovery
@@ -87,8 +84,6 @@ pages:
     - name: hysteria2
       registry: Outbound
       omit_keys:
-      - up_mbps
-      - down_mbps
       - realm
       - idle_timeout
       - keep_alive_period
@@ -97,8 +92,6 @@ pages:
       - max_concurrent_streams
       - initial_packet_size
       - disable_path_mtu_discovery
-      - obfs
-      - tag
       - bbr_profile
       - brutal_debug
       - disable_chrome_parrot
@@ -112,21 +105,16 @@ pages:
           If empty, the BBR congestion control algorithm will be used instead of Hysteria CC.
         locale_key: Hysteria2OutboundOptions.up_down_mbps
     overrides:
-      tls:
-        prose: |-
-          @required
-
-          TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
       server:
         prose: |-
-          @required
+          @Required
 
           The server address.
 
           Conflicts with `realm`.
       server_port:
         prose: |-
-          @required
+          @Required
 
           The server port.
 
@@ -140,8 +128,6 @@ pages:
     - name: hysteria2
       registry: Outbound
       omit_origins:
-      - DialerOptions
-      - AbstractDialerOptions
       - ServerOptions
       - OutboundTLSOptionsContainer
       - QUICOptions
@@ -150,13 +136,9 @@ pages:
       - server_ports
       - hop_interval
       - hop_interval_max
-      - up_mbps
-      - down_mbps
-      - obfs
       - password
       - network
       - tls
-      - tag
       include_keys:
       - bbr_profile
       - brutal_debug
@@ -176,6 +158,17 @@ pages:
     - realm
 
 - file: outbound/tuic.md
+  example:
+    omit:
+      - idle_timeout
+      - keep_alive_period
+      - stream_receive_window
+      - connection_receive_window
+      - max_concurrent_streams
+      - initial_packet_size
+      - disable_path_mtu_discovery
+    groups:
+      - QUIC Fields
   defs:
 
   - name: tuic
@@ -188,21 +181,11 @@ pages:
     - max_concurrent_streams
     - initial_packet_size
     - disable_path_mtu_discovery
-    - tag
-  overrides:
-    tls:
-      prose: |-
-        @required
-
-        TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
-
 - file: outbound/snell.md
   defs:
 
   - name: snell
     registry: Outbound
-    omit_keys:
-    - tag
   expand:
   - ObfsOptions
   - V6Options
