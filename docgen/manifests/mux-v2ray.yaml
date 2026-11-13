@@ -1,67 +1,37 @@
 defaults:
   heading: '### Fields'
 pages:
-
 - file: shared/multiplex.md
   sections:
-
   - heading: '### Inbound Fields'
     defs:
-
     - name: InboundMultiplexOptions
       root: InboundMultiplexOptions
-
   - heading: '### Outbound Fields'
     defs:
-
     - name: OutboundMultiplexOptions
       root: OutboundMultiplexOptions
-
 - file: shared/tcp-brutal.md
-  example: {}
   defs:
-
   - name: BrutalOptions
     root: BrutalOptions
-  extras:
-    up_mbps, down_mbps:
-      prose: |-
-        @Required
-
-        Upload and download bandwidth, in Mbps.
-      locale_key: BrutalOptions.up_down_mbps
-
 - file: shared/v2ray-transport.md
   sections:
-
   - heading: '### HTTP'
     defs:
-
     - name: http
       registry: V2RayTransport
       root: V2RayHTTPOptions
-
   - heading: '### WebSocket'
     defs:
-
     - name: ws
       root: V2RayWebsocketOptions
-
   - heading: '### gRPC'
     defs:
-
     - name: grpc
       root: V2RayGRPCOptions
-
   - heading: '### HTTPUpgrade'
     defs:
-
     - name: httpupgrade
       root: V2RayHTTPUpgradeOptions
-
 - file: shared/tcp-brutal.zh.md
-  patches:
-    '### Fields':
-      extras:
-        up_mbps, down_mbps:
-          locale_key: BrutalOptions.up_down_mbps

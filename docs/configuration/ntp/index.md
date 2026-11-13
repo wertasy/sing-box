@@ -40,13 +40,13 @@ NTP server address.
 
 NTP server port.
 
-123 is used by default.
+123 will be used by default.
 
 #### interval
 
 Time synchronization interval.
 
-- Default: `30 minutes`
+`30m` will be used by default.
 
 #### write_to_system
 

@@ -88,6 +88,7 @@ sing-box 会自动向 ZeroSSL 请求 EAB 凭据。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 现有 ACME 帐户的 PEM 编码私钥。
 
 #### disable_http_challenge
@@ -124,6 +125,7 @@ ACME DNS01 质询字段。如果配置，将禁用其他质询方法。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 为新证书生成的私钥类型。
 
 | 值         | 类型      |
@@ -138,6 +140,7 @@ ACME DNS01 质询字段。如果配置，将禁用其他质询方法。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 用于证书签发的 ACME profile。
 
 当为空且 `provider` 为 Let's Encrypt 时，如果任意域名为 IP 地址，将自动使用 `shortlived`。
@@ -145,6 +148,7 @@ ACME DNS01 质询字段。如果配置，将禁用其他质询方法。
 #### http_client
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 用于所有提供者 HTTP 请求的 HTTP 客户端。
 

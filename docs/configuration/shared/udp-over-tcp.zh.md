@@ -34,7 +34,7 @@ UDP over TCP 协议用于在 TCP 中传输 UDP 数据包。
 
 默认使用 2。
 
-- 默认值：`2`
+默认使用 `2`。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

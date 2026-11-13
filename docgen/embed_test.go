@@ -1,6 +1,7 @@
 package docgen
 
 import (
+	"slices"
 	"strings"
 	"testing"
 )
@@ -87,8 +88,12 @@ func TestEmbedOverrides(t *testing.T) {
 	if got := proseOf("Hysteria2InboundOptions", "tls"); len(got) < 3 || got[2] != "TLS configuration, see [TLS](/configuration/shared/tls/#inbound)." {
 		t.Errorf("hysteria2 tls override = %v", got)
 	}
-	if got := proseOf("HysteriaRealmServiceOptions", "tls"); len(got) < 5 || got[4] != "When configured, the realm serves HTTP/2 over TLS; otherwise plain HTTP/1.1." {
-		t.Errorf("realm tls override = %v", got)
+	realmTLS := strings.Join(proseOf("HysteriaRealmServiceOptions", "tls"), "\n")
+	if !strings.Contains(realmTLS, "When configured, the realm serves HTTP/2 over TLS; otherwise plain HTTP/1.1.") {
+		t.Errorf("realm tls override = %v", proseOf("HysteriaRealmServiceOptions", "tls"))
+	}
+	if strings.Contains(realmTLS, "@Required") || strings.Contains(realmTLS, "==Required==") {
+		t.Errorf("realm tls override must not require TLS: %v", proseOf("HysteriaRealmServiceOptions", "tls"))
 	}
 	// Expand path must honor embed overrides too (tun platform.http_proxy).
 	flat, err := ast.Flatten("TunInboundOptions", nil)
@@ -124,21 +129,27 @@ func TestEmbedOverrides(t *testing.T) {
 	}
 }
 
-func TestMarkersFirst(t *testing.T) {
-	prose := []string{"Do not reserve a port.", "", "@Since 1.13.0", "", "@Quote:", "", "    Only supported on Linux."}
-	want := []string{"@Since 1.13.0", "", "@Quote:", "", "    Only supported on Linux.", "", "Do not reserve a port."}
-	if got := markersFirst(prose); strings.Join(got, "\n") != strings.Join(want, "\n") {
-		t.Fatalf("markersFirst = %q, want %q", got, want)
+func TestOrderMarkers(t *testing.T) {
+	// @Since and @Deprecated in keep their rendered positions above the
+	// description (@Since first); the description follows, then the remaining
+	// groups in source order.
+	prose := []string{"Do not reserve a port.", "", "@Quote:", "", "    Only supported on Linux.", "", "@Since 1.13.0", "", "@Deprecated in 1.14.0:", "", "    Use the replacement."}
+	want := []string{"@Since 1.13.0", "", "@Deprecated in 1.14.0:", "", "    Use the replacement.", "", "@Quote:", "", "    Only supported on Linux.", "", "Do not reserve a port."}
+	if got := orderMarkers(prose); strings.Join(got, "\n") != strings.Join(want, "\n") {
+		t.Fatalf("orderMarkers = %q, want %q", got, want)
 	}
-	// Marker-only and description-only prose stay unchanged.
-	if got := markersFirst([]string{"@Required", "", "Description."}); strings.Join(got, "\n") != strings.Join([]string{"@Required", "", "Description."}, "\n") {
-		t.Fatalf("markers-first prose changed: %q", got)
+	// Required banners are "rest" groups: they stay above the description.
+	if got := orderMarkers([]string{"@Required", "", "Description."}); strings.Join(got, "\n") != strings.Join([]string{"@Required", "", "Description."}, "\n") {
+		t.Fatalf("required banner not kept above description: %q", got)
 	}
-	if got := markersFirst([]string{"Plain description."}); strings.Join(got, "\n") != "Plain description." {
+	if got := orderMarkers([]string{"@Since 1.0.0"}); strings.Join(got, "\n") != "@Since 1.0.0" {
+		t.Fatalf("marker-only prose changed: %q", got)
+	}
+	if got := orderMarkers([]string{"Plain description."}); strings.Join(got, "\n") != "Plain description." {
 		t.Fatalf("description-only prose changed: %q", got)
 	}
 	// Round trip: schema order then render order restores the authored split.
-	if got := markersFirst(reorderDescription(prose)); strings.Join(got, "\n") != strings.Join(want, "\n") {
+	if got := orderMarkers(reorderDescription(prose)); strings.Join(got, "\n") != strings.Join(want, "\n") {
 		t.Fatalf("round trip = %q, want %q", got, want)
 	}
 }
@@ -161,8 +172,17 @@ func TestDeprecatedNote(t *testing.T) {
 		if !entry.Tags.Deprecated {
 			t.Error("store_rdrc not marked deprecated")
 		}
-		if !strings.Contains(entry.Tags.DeprecatedNote, "replaced by store_dns") {
-			t.Errorf("deprecated note = %q", entry.Tags.DeprecatedNote)
+		// The plain godoc `Deprecated:` line renders the `- Deprecated.` tag;
+		// the replacement note is not retained.
+		if entry.Tags.DeprecatedNote != "" {
+			t.Errorf("godoc Deprecated line must not keep a note, got %q", entry.Tags.DeprecatedNote)
+		}
+		tagLines, err := renderTagLine([]FlattenEntry{entry}, nil, nil, "en")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !slices.Contains(tagLines, "- Deprecated.") {
+			t.Errorf("deprecated tag line missing: %v", tagLines)
 		}
 	}
 	if !found {

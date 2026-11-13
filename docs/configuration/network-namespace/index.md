@@ -27,6 +27,11 @@ referenced by tag from the [tun](/configuration/inbound/tun/#netns),
 }
 ```
 
+### Fields
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### type
 
 The type of the network namespace, `default` is used by default.
@@ -41,3 +46,5 @@ The type of the network namespace, `default` is used by default.
 ==Required==
 
 The tag of the network namespace.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

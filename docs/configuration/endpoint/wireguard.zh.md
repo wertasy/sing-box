@@ -69,7 +69,7 @@
 
 WireGuard MTU。
 
-- 默认值：`1408`
+默认使用 `1408`。
 
 #### address
 
@@ -142,11 +142,12 @@ WireGuard worker 数量。
 
 !!! question "自 sing-box 1.15.0 起"
 
+
 允许该 endpoint 在需要时断开连接。
 
 #### listen_port
 
-Listen port for incoming connections.
+传入连接的监听端口。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

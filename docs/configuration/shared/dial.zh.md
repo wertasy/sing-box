@@ -149,6 +149,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 禁用 TCP keep alive。
 
 #### tcp_keep_alive
@@ -157,17 +158,19 @@ icon: material/new-box
 
     默认值从 `10m` 更改为 `5m`。
 
+
 TCP keep alive 初始周期。
 
-- 默认值：`5m`
+默认使用 `5m`。
 
 #### tcp_keep_alive_interval
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 TCP keep alive 间隔。
 
-- 默认值：`75s`
+默认使用 `75s`。
 
 #### udp_fragment
 
@@ -178,7 +181,6 @@ TCP keep alive 间隔。
 !!! warning ""
 
     `outbound` DNS 规则项已弃用，且将在 sing-box 1.14.0 中被移除。因此，从 sing-box 1.14.0 版本开始，所有在服务器地址中使用域名的出站/端点均需配置此项。
-
 !!! info ""
 
     当只有一个 DNS 服务器已配置时，`domain_resolver` 或 `route.default_domain_resolver` 是可选的。 
@@ -244,6 +246,12 @@ TCP keep alive 间隔。
 
 #### fallback_delay
 
+!!! question "自 sing-box 1.11.0 起"
+
+!!! quote ""
+
+    仅在启用了 `auto_detect_interface` 的 Android 与 Apple 平台图形客户端中支持。
+
 在生成 RFC 6555 快速回退连接之前等待的时间长度。
 
 对于 `domain_strategy`，是在假设之前等待 IPv6 成功的时间量如果设置了 "prefer_ipv4"，则 IPv6 配置错误并回退到 IPv4。
@@ -252,7 +260,7 @@ TCP keep alive 间隔。
 
 仅当 `domain_strategy` 或 `network_strategy` 已设置时生效。
 
-- 默认值：`300ms`
+默认使用 `300ms`。
 
 #### domain_strategy
 

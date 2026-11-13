@@ -7,6 +7,7 @@ import (
 type CCMServiceOptions struct {
 	ListenOptions
 	InboundTLSOptionsContainer
+
 	// Path to the Claude Code OAuth credentials file.
 	//
 	// If not specified, defaults to:
@@ -17,6 +18,7 @@ type CCMServiceOptions struct {
 	//
 	// Refreshed tokens are automatically written back to the same location.
 	CredentialPath string `json:"credential_path,omitempty"`
+
 	// List of authorized users for token authentication.
 	//
 	// If empty, no authentication is required.
@@ -35,12 +37,15 @@ type CCMServiceOptions struct {
 	// - `name`: Username identifier for tracking purposes.
 	// - `token`: Bearer token for authentication. Claude Code authenticates by setting the `ANTHROPIC_AUTH_TOKEN` environment variable to their token value.
 	Users []CCMUser `json:"users,omitempty"`
+
 	// Custom HTTP headers to send to the Claude API.
 	//
 	// These headers will override any existing headers with the same name.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`
+
 	// Outbound tag for connecting to the Claude API.
 	Detour string `json:"detour,omitempty" reference:"outbound"`
+
 	// Path to the file for storing aggregated API usage statistics.
 	//
 	// Usage tracking is disabled if not specified.

@@ -12,15 +12,18 @@ type TailcatDERPOptions struct {
 	//
 	// @Default: https://tailcat.dev/derpmap.json
 	DERPMapURL string `json:"derp_map_url,omitempty"`
+
 	// DERP region ID in the DERP map.
 	//
 	// Conflicts with `derp_servers`.
 	DERPRegion int `json:"derp_region,omitempty"`
+
 	// Custom DERP servers, see [derp_servers](/configuration/inbound/tailcat/#derp_servers) in Tailcat inbound.
 	//
 	// Conflicts with `derp_map_url` and `derp_region`.
 	//
 	DERPServers []TailcatDERPServer `json:"derp_servers,omitempty"`
+
 	// HTTP client used to fetch the DERP map.
 	//
 	// See [HTTP Client](/configuration/shared/http-client/) for details.
@@ -68,6 +71,7 @@ func (s TailcatDERPServer) DescribeSchema(builder schema.Builder) (*schema.Node,
 
 type TailcatUser struct {
 	Name string `json:"name,omitempty"`
+
 	// Client public key.
 	//
 	// @Required
@@ -81,8 +85,10 @@ type TailcatInboundOptions struct {
 	//
 	// @Required
 	PrivateKey string `json:"private_key"`
+
 	// Pre-shared key.
 	PreSharedKey string `json:"pre_shared_key,omitempty"`
+
 	// Tailcat users.
 	//
 	// Clients are not verified if empty.
@@ -99,6 +105,7 @@ type TailcatInboundOptions struct {
 	//      }
 	//    ]
 	Users []TailcatUser `json:"users,omitempty"`
+
 	// @Override derp_servers:
 	//    Custom DERP servers in [DERPNode](https://pkg.go.dev/tailscale.com/tailcfg#DERPNode) format, with
 	//    snake_case field names.
@@ -117,19 +124,22 @@ type TailcatInboundOptions struct {
 type TailcatOutboundOptions struct {
 	// Private key.
 	//
-	// A random key is used by default.
+	// A random key will be used by default.
 	//
 	// Required when the server verifies clients with `users`, or the DERP server verifies clients with
 	// `verify_client_inbound` or `verify_client_key`.
 	PrivateKey string `json:"private_key,omitempty"`
+
 	// Server public key.
 	//
 	// @Required
 	ServerPublicKey string `json:"server_public_key"`
+
 	// Server disco public key.
 	//
 	// @Required
 	ServerDiscoKey string `json:"server_disco_key"`
+
 	// Pre-shared key.
 	PreSharedKey string `json:"pre_shared_key,omitempty"`
 	TailcatDERPOptions

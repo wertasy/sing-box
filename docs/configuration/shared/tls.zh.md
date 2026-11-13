@@ -252,6 +252,7 @@ TLS 版本值：
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 支持的密钥交换机制集合。列表的顺序被忽略，密钥交换机制通过 Golang 的内部偏好顺序从此列表中选择。
 
 可用值，同时也是默认列表：
@@ -298,10 +299,9 @@ TLS 版本值：
 
 !!! question "自 sing-box 1.13.0 起"
 
-==仅客户端==
-
 !!! question "自 sing-box 1.13.0 起"
 
+==仅客户端==
 ==仅服务器==
 
 客户端证书链行数组，PEM 格式。
@@ -312,12 +312,10 @@ TLS 版本值：
 
 !!! question "自 sing-box 1.13.0 起"
 
-==仅客户端==
-
 !!! question "自 sing-box 1.13.0 起"
 
+==仅客户端==
 ==仅服务器==
-
 !!! note ""
 
     文件更改时将自动重新加载。
@@ -357,7 +355,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 #### key
 
 ==仅服务器==
-
 !!! note ""
 
     文件更改时将自动重新加载。
@@ -367,7 +364,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 #### key_path
 
 ==仅服务器==
-
 !!! note ""
 
     文件更改时将自动重新加载。
@@ -381,11 +377,9 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 !!! quote ""
 
     仅支持 Linux 5.1+，如果可能，使用较新的内核。
-
 !!! quote ""
 
     仅支持 TLS 1.3。
-
 !!! warning ""
 
     kTLS TX 仅当 `splice(2)` 可用时（两端经过握手后必须为没有附加协议的 TCP 或 TLS）才能提高性能；否则肯定会降低性能。
@@ -399,11 +393,9 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 !!! quote ""
 
     仅支持 Linux 5.1+，如果可能，使用较新的内核。
-
 !!! quote ""
 
     仅支持 TLS 1.3。
-
 !!! failure ""
 
     即使使用 `splice(2)`，kTLS RX 也肯定会降低性能，因此不建议启用。
@@ -414,16 +406,16 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 TLS 握手超时，采用 golang 的 Duration 格式。
 
-- 默认值：`15s`
+默认使用 `15s`。
 
 #### certificate_provider
 
 !!! question "自 sing-box 1.14.0 起"
 
 ==仅服务器==
-
 !!! info "QUIC 支持"
 
     只有 ECH 在 QUIC 中被支持.
@@ -441,11 +433,9 @@ TLS 握手超时，采用 golang 的 Duration 格式。
 !!! question "自 sing-box 1.14.0 起"
 
 ==仅客户端==
-
 !!! note ""
 
     `windows` 通过 SSPI 使用 Schannel，仅在 Windows build 17763 及以上可用，包括 Windows 10 版本 1809、Windows Server 2019 及后续版本。
-
 !!! note ""
 
     TLS 1.3 仅在 Windows 11 或 Windows Server 2022 及后续版本上协商。
@@ -547,7 +537,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
 #### utls
 
 ==仅客户端==
-
 !!! failure "不推荐"
 
     uTLS 已被研究人员多次发现其指纹可被识别的漏洞。
@@ -558,7 +547,6 @@ echo | openssl s_client -servername example.com -connect example.com:443 2>/dev/
     此外，此库缺乏积极维护，且代码质量较差，不建议用于反审查场景。
 
     如需 TLS 指纹抵抗，请改用 [NaiveProxy](/zh/configuration/inbound/naive/)。
-
 !!! warning "已在 sing-box 1.10.0 移除"
 
     一些旧 chrome 指纹已被删除，并将会退到 chrome：
@@ -606,7 +594,6 @@ ECH 密钥行数组，PEM 格式。
 #### key_path
 
 ==仅服务器==
-
 !!! note ""
 
     文件更改时将自动重新加载。
@@ -679,7 +666,7 @@ ECH 配置路径，PEM 格式。
 
 当 TLS 分段无法自动确定等待时间时使用的回退值。
 
-- 默认值：`500ms`
+默认使用 `500ms`。
 
 #### pq_signature_schemes_enabled
 
@@ -704,7 +691,6 @@ ECH 配置路径，PEM 格式。
 !!! question "自 sing-box 1.14.0 起"
 
 ==仅客户端==
-
 !!! quote ""
 
     仅支持 Linux、macOS 和 Windows，需要提升的权限。
@@ -827,6 +813,7 @@ MAC 密钥。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 用于证书签发的 ACME 配置文件。
 
 当为空且 `provider` 为 Let's Encrypt 时，如果任何域名为 IP 地址，将自动使用 `shortlived`。
@@ -841,7 +828,6 @@ MAC 密钥。
 #### handshake
 
 ==仅服务器==
-
 ==必填==
 
 握手服务器地址和 [拨号参数](/zh/configuration/shared/dial/)。
@@ -849,7 +835,6 @@ MAC 密钥。
 #### private_key
 
 ==仅服务器==
-
 ==必填==
 
 私钥，由 `sing-box generate reality-keypair` 生成。
@@ -871,7 +856,6 @@ MAC 密钥。
 #### public_key
 
 ==仅客户端==
-
 ==必填==
 
 公钥，由 `sing-box generate reality-keypair` 生成。

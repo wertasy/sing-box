@@ -16,6 +16,7 @@ const (
 
 type _USBIPServerServiceOptions struct {
 	ListenOptions
+
 	// The device source provider.
 	//
 	// - `default`: Exports the local devices matched by `devices`. The default value.
@@ -75,6 +76,7 @@ func (o USBIPServerServiceOptions) DescribeSchema(builder schema.Builder) (*sche
 
 type USBIPClientServiceOptions struct {
 	DialerOptions
+
 	// @Override server:
 	//    @Required
 	//
@@ -87,6 +89,7 @@ type USBIPClientServiceOptions struct {
 	//
 	//    @Example: 0
 	ServerOptions
+
 	// List of device matches selecting which remote devices to import. If empty, all exported devices
 	// are imported.
 	//

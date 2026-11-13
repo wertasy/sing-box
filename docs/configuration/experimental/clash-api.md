@@ -86,7 +86,7 @@ serve it at `http://{{external-controller}}/ui`.
 
 ZIP download URL for the external UI, will be used if the specified `external_ui` directory is empty.
 
-- Default: `https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip`
+`https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip` will be used by default.
 
 #### external_ui_download_detour
 
@@ -110,6 +110,7 @@ This setting has no direct effect, but can be used in routing and DNS rules via 
 
 !!! question "Since sing-box 1.10.0"
 
+
 CORS allowed origins, `*` will be used if empty.
 
 To access the Clash API on a private network from a public website, you must explicitly specify it in `access_control_allow_origin` instead of using `*`.
@@ -117,6 +118,7 @@ To access the Clash API on a private network from a public website, you must exp
 #### access_control_allow_private_network
 
 !!! question "Since sing-box 1.10.0"
+
 
 Allow access from private network.
 
@@ -137,7 +139,6 @@ Store Clash mode in cache file.
 !!! failure "Deprecated in sing-box 1.8.0"
 
     `store_selected` is deprecated in Clash API and enabled by default if `cache_file.enabled`.
-
 !!! note ""
 
     The tag must be set for target outbounds.

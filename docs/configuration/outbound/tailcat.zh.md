@@ -59,7 +59,7 @@ icon: material/new-box
 
 [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap) 的 URL。
 
-- 默认值：`https://tailcat.dev/derpmap.json`
+默认使用 `https://tailcat.dev/derpmap.json`。
 
 #### derp_region
 

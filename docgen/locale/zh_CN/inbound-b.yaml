@@ -266,3 +266,32 @@ TUICInboundOptions.zero_rtt_handshake: |-
   @Warning:
     强烈建议禁用此功能，因为它容易受到重放攻击。
     请参阅 [Attack of the clones](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/#attack-of-the-clones)
+
+HysteriaInboundOptions.up, down: |-
+  格式: `[Integer] [Unit]` 例如： `100 Mbps, 640 KBps, 2 Gbps`
+
+  支持的单位 (大小写敏感, b = bits, B = bytes, 8b=1B)：
+
+      bps (bits per second)
+      Bps (bytes per second)
+      Kbps (kilobits per second)
+      KBps (kilobytes per second)
+      Mbps (megabits per second)
+      MBps (megabytes per second)
+      Gbps (gigabits per second)
+      GBps (gigabytes per second)
+      Tbps (terabits per second)
+      TBps (terabytes per second)
+
+  @Required
+
+HysteriaInboundOptions.up_mbps, down_mbps: |-
+  以 Mbps 为单位的 `up, down`。
+
+  @Required
+
+Hysteria2InboundOptions.up_mbps, down_mbps: |-
+  支持的速率，默认不限制。
+
+  与 `ignore_client_bandwidth` 冲突。
+

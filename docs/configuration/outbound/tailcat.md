@@ -34,7 +34,7 @@ icon: material/new-box
 
 Private key.
 
-A random key is used by default.
+A random key will be used by default.
 
 Required when the server verifies clients with `users`, or the DERP server verifies clients with
 `verify_client_inbound` or `verify_client_key`.
@@ -59,7 +59,7 @@ Pre-shared key.
 
 URL of the [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap).
 
-- Default: `https://tailcat.dev/derpmap.json`
+`https://tailcat.dev/derpmap.json` will be used by default.
 
 #### derp_region
 

@@ -42,7 +42,6 @@ No authentication required if empty.
 !!! quote ""
 
     Only supported on Linux, Android, Windows, and macOS.
-
 !!! warning ""
 
     To work on Android and Apple platforms without privileges, use tun.platform.http_proxy instead.

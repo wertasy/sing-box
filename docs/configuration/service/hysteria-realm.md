@@ -48,8 +48,6 @@ See [HTTP2 Fields](/configuration/shared/http2/) for details.
 
 #### tls
 
-==Required==
-
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
 
 When configured, the realm serves HTTP/2 over TLS; otherwise plain HTTP/1.1.

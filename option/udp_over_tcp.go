@@ -13,6 +13,7 @@ type _UDPOverTCPOptions struct {
 	//
 	// @Example: true
 	Enabled bool `json:"enabled,omitempty"`
+
 	// The protocol version, `1` or `2`.
 	//
 	// @Default: 2

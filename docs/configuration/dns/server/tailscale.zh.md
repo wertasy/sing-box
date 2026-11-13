@@ -50,6 +50,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 启用后，单标签查询（例如 `my-device`）将依次附加 Tailscale 搜索域进行重试，直到其中一个解析成功。
 
 <!-- AUTO-GENERATED-CONFIG-END -->

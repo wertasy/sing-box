@@ -1,21 +1,14 @@
 defaults:
   heading: '### Fields'
 pages:
-
 - file: outbound/anytls.md
   defs:
-
-  - name: anytls
-    registry: Outbound
 - file: outbound/http.md
   example:
     groups:
-      - HTTP2 Fields / QUIC Fields
+    - HTTP2 Fields / QUIC Fields
   defs:
-
-  - name: http
-    registry: Outbound
-    omit_keys:
+  - omit_keys:
     - idle_timeout
     - keep_alive_period
     - stream_receive_window
@@ -23,41 +16,17 @@ pages:
     - max_concurrent_streams
     - initial_packet_size
     - disable_path_mtu_discovery
-
 - file: outbound/socks.md
   defs:
-
-  - name: socks
-    registry: Outbound
-
 - file: outbound/direct.md
-  extras:
-    override_address:
-      prose: |-
-        @Failure: Deprecated in sing-box 1.11.0
-
-            Destination override fields are deprecated in sing-box 1.11.0 and will be removed in sing-box 1.13.0, see [Migration](/migration/#migrate-destination-override-fields-to-route-options).
-
-        Override the connection destination address.
-      locale_key: DirectOutboundOptions.override_address
-    override_port:
-      prose: |-
-        @Failure: Deprecated in sing-box 1.11.0
-
-            Destination override fields are deprecated in sing-box 1.11.0 and will be removed in sing-box 1.13.0, see [Migration](/migration/#migrate-destination-override-fields-to-route-options).
-
-        Override the connection destination port.
-
-        Protocol value can be `1` or `2`.
-      locale_key: DirectOutboundOptions.override_port
-
+  sections:
+  - heading: '### Fields'
+    defs:
+    - root: DirectOutboundOptions
+      include_keys:
+      - override_address
+      - override_port
 - file: outbound/bridge.md
   defs:
-
-  - name: bridge
-
 - file: outbound/naive.md
   defs:
-
-  - name: naive
-    registry: Outbound

@@ -54,7 +54,7 @@ The default interface will be used by default.
 
 #### bridge_name
 
-Custom bridge TUN interface name prefix, `bridge` is used by default.
+Custom bridge TUN interface name prefix, `bridge` will be used by default.
 
 Not effective on Apple platforms.
 
@@ -66,7 +66,7 @@ Not effective on Apple platforms.
 
 Linux iproute2 table index.
 
-`2200` + instance index is used by default.
+`2200` + instance index will be used by default.
 
 #### iproute2_rule_index
 
@@ -76,6 +76,6 @@ Linux iproute2 table index.
 
 Linux iproute2 rule start index.
 
-- Default: `100`
+`100` will be used by default.
 
 <!-- AUTO-GENERATED-CONFIG-END -->

@@ -147,3 +147,9 @@ V2RayWebsocketOptions.path: |-
   HTTP 请求路径
 
   服务器将验证。
+
+BrutalOptions.up_mbps, down_mbps: |-
+  上传和下载带宽，以 Mbps 为单位。
+
+  @Required
+

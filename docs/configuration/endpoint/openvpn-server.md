@@ -120,7 +120,7 @@ If disabled, sing-box uses the internal network stack.
 
 Custom interface name for system interface.
 
-An automatically generated `ovpn` interface name is used by default.
+An automatically generated `ovpn` interface name will be used by default.
 
 #### mtu
 
@@ -134,7 +134,7 @@ OpenVPN session mode, one of `tls` or `static_key`.
 
 `static_key` serves one peer without a TLS control channel or forward secrecy.
 
-- Default: `tls`
+`tls` will be used by default.
 
 #### network
 
@@ -143,7 +143,7 @@ OpenVPN transport network, one of `udp` or `tcp`.
 Only one transport network is served per endpoint; to serve both TCP and UDP,
 configure two endpoints with separate `address` subnets.
 
-- Default: `udp`
+`udp` will be used by default.
 
 #### remote
 
@@ -161,7 +161,7 @@ Required with `remote` in UDP `static_key` mode.
 
 Maximum number of established and pending TLS client sessions.
 
-`1024` is used by default. The maximum value is `16777215`.
+`1024` will be used by default. The maximum value is `16777215`.
 
 Must be `0` or `1` in `static_key` mode.
 
@@ -195,7 +195,7 @@ Required when an IPv6 `address` is configured in `static_key` mode.
 
 OpenVPN topology pushed to clients, one of `subnet`, `p2p` or `net30`.
 
-`subnet` is used by default in TLS mode. `p2p` is used by default in
+`subnet` will be used by default in TLS mode. `p2p` will be used by default in
 `static_key` mode.
 
 #### duplicate_cn
@@ -215,14 +215,6 @@ List of OpenVPN username/password users.
 If set, clients must pass username/password authentication in addition to any certificate policy configured by `tls.verify_client_certificate`.
 
 Only available in TLS mode.
-
-#### users.username
-
-Username.
-
-#### users.password
-
-Password.
 
 #### static_key
 
@@ -254,6 +246,123 @@ Only available in `static_key` mode.
 Required in TLS mode.
 
 OpenVPN control channel TLS configuration.
+
+#### cipher
+
+Data-channel cipher used in `static_key` mode.
+
+The upstream static-key default `BF-CBC` is used when empty. Supported
+static-key ciphers are the AES-CBC, ARIA-CBC, Camellia-CBC, DES-CBC,
+Blowfish-CBC, CAST5-CBC families, `SEED-CBC`, `SM4-CBC`, and `NONE`.
+
+Only available in `static_key` mode.
+
+#### data_ciphers
+
+Allowed OpenVPN data channel ciphers.
+
+`AES-256-GCM`, `AES-128-GCM` and `CHACHA20-POLY1305` are used by default.
+
+The AES-GCM family includes `AES-192-GCM`. Retained ciphers include the CBC,
+CFB, and OFB forms of AES, ARIA, Camellia, DES, Blowfish, and CAST5, the CBC,
+CFB, and OFB forms of SEED and SM4, and `NONE`. CFB and OFB are available only
+in TLS mode.
+
+Only available in TLS mode.
+
+#### data_ciphers_fallback
+
+OpenVPN data channel cipher for legacy clients that do not support cipher negotiation.
+
+Equivalent to OpenVPN `data-ciphers-fallback`.
+
+Disabled by default.
+
+Only available in TLS mode.
+
+#### auth
+
+OpenVPN data channel authentication digest.
+
+`SHA1` will be used by default. It only applies to non-AEAD data ciphers and `tls_auth`.
+
+#### mss_fix
+
+Maximum encapsulated packet size used to clamp TCP MSS. The upstream default calculation uses `1492` with the default MTU.
+
+#### mss_fix_disabled
+
+Disable MSS clamping, including the default clamp.
+
+#### mss_fix_mode
+
+Calculation mode for an explicit `mss_fix`, one of `mtu` or `fixed`. Requires `mss_fix`.
+
+#### replay_window
+
+UDP data-channel replay window size. `64` will be used by default.
+
+#### replay_window_time
+
+UDP replay window duration. `15s` will be used by default. The value must use whole seconds.
+
+#### push
+
+Options pushed to clients.
+
+#### ping_interval
+
+Interval after which the server sends a data-channel ping when no packet has been sent to a client.
+
+This value applies to the server. Use `push.ping_interval` to configure clients.
+
+The value must use whole seconds.
+
+Disabled by default.
+
+#### ping_restart
+
+Time without receiving a packet after which the server closes the client session.
+
+This value applies to the server. Use `push.ping_restart` to configure clients.
+
+The value must use whole seconds.
+
+Disabled by default.
+
+#### renegotiate_interval
+
+OpenVPN TLS renegotiation interval.
+
+When empty, the OpenVPN default `1h` is used.
+
+Only available in TLS mode.
+
+#### renegotiate_disabled
+
+Disable time-based TLS renegotiation, including the default interval.
+
+Only available in TLS mode.
+
+#### renegotiate_bytes
+
+Renegotiate data-channel keys after this many bytes. `0` uses the cipher-dependent OpenVPN default.
+
+Only available in TLS mode.
+
+#### renegotiate_packets
+
+Renegotiate data-channel keys after this many packets. `0` uses the cipher-dependent OpenVPN default.
+
+Only available in TLS mode.
+
+#### handshake_window
+
+Maximum time allowed for the initial TLS handshake and each TLS renegotiation.
+
+Only available in TLS mode.
+
+`1m` will be used by default.
 
 #### tls.certificate
 
@@ -311,7 +420,7 @@ If set to `optional`, a client certificate is verified when provided, but client
 
 If set to `none`, client certificates are not requested.
 
-- Default: `require`
+`require` will be used by default.
 
 #### tls.client_name
 
@@ -321,7 +430,7 @@ Expected client certificate name. Disabled when empty.
 
 Certificate field matched by `tls.client_name`, one of `subject`, `name`, or `name-prefix`.
 
-`name` is used by default when `tls.client_name` is configured.
+`name` will be used by default when `tls.client_name` is configured.
 
 #### tls.peer_fingerprint
 
@@ -341,7 +450,7 @@ Required client certificate extended key usage. Conflict with an explicitly conf
 
 #### tls.remote_certificate_tls
 
-Client certificate purpose check, one of `server`, `client`, or `none`. `client` is used by default.
+Client certificate purpose check, one of `server`, `client`, or `none`. `client` will be used by default.
 
 #### tls.certificate_profile
 
@@ -354,7 +463,7 @@ requires stronger signatures and keys.
 
 When `suiteb` is selected, the TLS 1.2 cipher list defaults to the Suite B ECDHE-ECDSA AES-GCM suites when `tls.cipher` is empty, and the TLS groups default to `secp256r1` and `secp384r1` when `tls.groups` is empty.
 
-- Default: `legacy`
+`legacy` will be used by default.
 
 #### tls.ns_certificate_type
 
@@ -362,11 +471,11 @@ Deprecated Netscape certificate type check, one of `server` or `client`.
 
 #### tls.version_min
 
-Minimum TLS version. `1.2` is used by default.
+Minimum TLS version. `1.2` will be used by default.
 
 #### tls.version_max
 
-Maximum TLS version. The maximum supported version is used by default.
+Maximum TLS version. The maximum supported version will be used by default.
 
 #### tls.cipher
 
@@ -433,69 +542,6 @@ clients without cookie support are accepted using the upstream `allow-noncookie`
 
 Disabled by default.
 
-#### cipher
-
-Data-channel cipher used in `static_key` mode.
-
-The upstream static-key default `BF-CBC` is used when empty. Supported
-static-key ciphers are the AES-CBC, ARIA-CBC, Camellia-CBC, DES-CBC,
-Blowfish-CBC, CAST5-CBC families, `SEED-CBC`, `SM4-CBC`, and `NONE`.
-
-Only available in `static_key` mode.
-
-#### data_ciphers
-
-Allowed OpenVPN data channel ciphers.
-
-`AES-256-GCM`, `AES-128-GCM` and `CHACHA20-POLY1305` are used by default.
-
-The AES-GCM family includes `AES-192-GCM`. Retained ciphers include the CBC,
-CFB, and OFB forms of AES, ARIA, Camellia, DES, Blowfish, and CAST5, the CBC,
-CFB, and OFB forms of SEED and SM4, and `NONE`. CFB and OFB are available only
-in TLS mode.
-
-Only available in TLS mode.
-
-#### data_ciphers_fallback
-
-OpenVPN data channel cipher for legacy clients that do not support cipher negotiation.
-
-Equivalent to OpenVPN `data-ciphers-fallback`.
-
-Disabled by default.
-
-Only available in TLS mode.
-
-#### auth
-
-OpenVPN data channel authentication digest.
-
-`SHA1` will be used by default. It only applies to non-AEAD data ciphers and `tls_auth`.
-
-#### mss_fix
-
-Maximum encapsulated packet size used to clamp TCP MSS. The upstream default calculation uses `1492` with the default MTU.
-
-#### mss_fix_disabled
-
-Disable MSS clamping, including the default clamp.
-
-#### mss_fix_mode
-
-Calculation mode for an explicit `mss_fix`, one of `mtu` or `fixed`. Requires `mss_fix`.
-
-#### replay_window
-
-UDP data-channel replay window size. `64` is used by default.
-
-#### replay_window_time
-
-UDP replay window duration. `15s` is used by default. The value must use whole seconds.
-
-#### push
-
-Options pushed to clients.
-
 #### push.routes
 
 Routes to push to clients.
@@ -526,7 +572,7 @@ Additional legacy `dhcp-option` values to push, without the `dhcp-option` prefix
 
 Push `redirect-gateway` to clients, which routes client traffic through the VPN according to `push.redirect_gateway_flags`.
 
-When `push.redirect_gateway_flags` is empty, `def1` is used by default.
+When `push.redirect_gateway_flags` is empty, `def1` will be used by default.
 
 #### push.redirect_gateway_flags
 
@@ -534,7 +580,7 @@ OpenVPN `redirect-gateway` flags to push to clients.
 
 Only available when `push.redirect_gateway` is enabled.
 
-- Default: `def1`
+`def1` is added by default.
 
 #### push.block_outside_dns
 
@@ -560,59 +606,13 @@ The value must use whole seconds.
 
 Disabled by default.
 
-#### ping_interval
+#### users.password
 
-Interval after which the server sends a data-channel ping when no packet has been sent to a client.
+Password.
 
-This value applies to the server. Use `push.ping_interval` to configure clients.
+#### users.username
 
-The value must use whole seconds.
-
-Disabled by default.
-
-#### ping_restart
-
-Time without receiving a packet after which the server closes the client session.
-
-This value applies to the server. Use `push.ping_restart` to configure clients.
-
-The value must use whole seconds.
-
-Disabled by default.
-
-#### renegotiate_interval
-
-OpenVPN TLS renegotiation interval.
-
-When empty, the OpenVPN default `1h` is used.
-
-Only available in TLS mode.
-
-#### renegotiate_disabled
-
-Disable time-based TLS renegotiation, including the default interval.
-
-Only available in TLS mode.
-
-#### renegotiate_bytes
-
-Renegotiate data-channel keys after this many bytes. `0` uses the cipher-dependent OpenVPN default.
-
-Only available in TLS mode.
-
-#### renegotiate_packets
-
-Renegotiate data-channel keys after this many packets. `0` uses the cipher-dependent OpenVPN default.
-
-Only available in TLS mode.
-
-#### handshake_window
-
-Maximum time allowed for the initial TLS handshake and each TLS renegotiation.
-
-Only available in TLS mode.
-
-- Default: `1m`
+Username.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

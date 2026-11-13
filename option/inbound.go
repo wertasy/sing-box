@@ -67,7 +67,7 @@ func (h Inbound) DescribeSchema(builder schema.Builder) (*schema.Node, error) {
 	})
 }
 
-// @Deprecated: Use rule action instead
+// Deprecated: Use rule action instead
 type InboundOptions struct {
 	// Enable sniffing.
 	//
@@ -77,6 +77,7 @@ type InboundOptions struct {
 	//
 	//     Inbound fields are deprecated and will be removed in sing-box 1.13.0, check [Migration](/migration/#migrate-legacy-inbound-fields-to-rule-actions).
 	SniffEnabled bool `json:"sniff,omitempty" schema:"omit"`
+
 	// Override the connection destination address with the sniffed domain.
 	//
 	// If the domain name is invalid (like tor), this will not work.
@@ -85,6 +86,7 @@ type InboundOptions struct {
 	//
 	//     Inbound fields are deprecated and will be removed in sing-box 1.13.0.
 	SniffOverrideDestination bool `json:"sniff_override_destination,omitempty" schema:"omit"`
+
 	// Timeout for sniffing.
 	//
 	// @Failure: Deprecated in sing-box 1.11.0
@@ -93,6 +95,7 @@ type InboundOptions struct {
 	//
 	// @Default: 300ms
 	SniffTimeout badoption.Duration `json:"sniff_timeout,omitempty" schema:"omit"`
+
 	// One of `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`.
 	//
 	// If set, the requested domain name will be resolved to IP before routing.
@@ -103,6 +106,7 @@ type InboundOptions struct {
 	//
 	//     Inbound fields are deprecated and will be removed in sing-box 1.13.0, check [Migration](/migration/#migrate-legacy-inbound-fields-to-rule-actions).
 	DomainStrategy DomainStrategy `json:"domain_strategy,omitempty" schema:"omit"`
+
 	// If enabled, for UDP proxy requests addressed to a domain,
 	// the original packet address will be sent in the response instead of the mapped domain.
 	//
@@ -121,13 +125,16 @@ type ListenOptions struct {
 	//
 	// @Required
 	Listen *badoption.Addr `json:"listen,omitempty"`
+
 	// Listen port.
 	//
 	ListenPort uint16 `json:"listen_port,omitempty"`
+
 	// The network interface to bind to.
 	//
 	// @Since 1.12.0
 	BindInterface string `json:"bind_interface,omitempty"`
+
 	// Set netfilter routing mark.
 	//
 	// Integers (e.g. `1234`) and string hexadecimals (e.g. `"0x1234"`) are supported.
@@ -138,10 +145,12 @@ type ListenOptions struct {
 	//
 	//     Only supported on Linux.
 	RoutingMark FwMark `json:"routing_mark,omitempty"`
+
 	// Reuse listener address.
 	//
 	// @Since 1.12.0
 	ReuseAddr bool `json:"reuse_addr,omitempty"`
+
 	// Set network namespace, name or path.
 	//
 	// Since sing-box 1.14.0, the tag of a [network namespace](/configuration/network-namespace/) can also be used.
@@ -152,10 +161,12 @@ type ListenOptions struct {
 	//
 	//     Only supported on Linux.
 	NetNs string `json:"netns,omitempty" reference:"network_namespace"`
+
 	// Disable TCP keep alive.
 	//
 	// @Since 1.13.0
 	DisableTCPKeepAlive bool `json:"disable_tcp_keep_alive,omitempty"`
+
 	// TCP keep alive initial period.
 	//
 	// @Default: 5m
@@ -164,34 +175,44 @@ type ListenOptions struct {
 	//
 	//     Default value changed from `10m` to `5m`.
 	TCPKeepAlive badoption.Duration `json:"tcp_keep_alive,omitempty"`
+
 	// TCP keep alive interval.
 	//
 	// @Default: 75s
 	TCPKeepAliveInterval badoption.Duration `json:"tcp_keep_alive_interval,omitempty"`
+
 	// Enable TCP Fast Open.
 	TCPFastOpen bool `json:"tcp_fast_open,omitempty"`
+
 	// Enable TCP Multi Path.
 	//
 	// @Warning:
 	//
 	//     Go 1.21 required.
 	TCPMultiPath bool `json:"tcp_multi_path,omitempty"`
+
 	// Enable UDP fragmentation.
 	UDPFragment        *bool `json:"udp_fragment,omitempty"`
 	UDPFragmentDefault bool  `json:"-"`
+
 	// UDP NAT expiration time.
 	//
 	// @Default: 5m
 	UDPTimeout UDPTimeoutCompat `json:"udp_timeout,omitempty"`
+
 	// If set, connections will be forwarded to the specified inbound.
 	//
 	// Requires target inbound support, see [Injectable](/configuration/inbound/#fields).
 	Detour string `json:"detour,omitempty" reference:"inbound"`
 
-	// @Deprecated: removed
+	// @Omit
+	// Deprecated: removed
 	ProxyProtocol bool `json:"proxy_protocol,omitempty" schema:"omit"`
-	// @Deprecated: removed
+
+	// @Omit
+	// Deprecated: removed
 	ProxyProtocolAcceptNoHeader bool `json:"proxy_protocol_accept_no_header,omitempty" schema:"omit"`
+
 	// Legacy inbound fields are rejected since sing-box 1.13.0.
 	//nolint:staticcheck
 	InboundOptions `schema:"omit"`

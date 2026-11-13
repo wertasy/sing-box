@@ -47,6 +47,7 @@ icon: material/alert-decagram
 |----------|-------------------------|
 | `server` | 一组 [DNS 服务器](./server/) |
 | `rules`  | 一组 [DNS 规则](./rule/)    |
+| `fakeip` | :material-note-remove: [FakeIP](./fakeip/) |
 
 <!-- AUTO-GENERATED-CONFIG-START -->
 <!-- 此区域由脚本自动生成，切勿手动修改 -->
@@ -87,6 +88,7 @@ icon: material/alert-decagram
 
 !!! question "自 sing-box 1.11.0 起"
 
+
 LRU 缓存容量。
 
 小于 1024 的值将被忽略。
@@ -94,6 +96,7 @@ LRU 缓存容量。
 #### optimistic
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 启用乐观 DNS 缓存。当缓存的 DNS 条目已过期但仍在超时窗口内时，
 立即返回过期的响应，同时在后台触发刷新。
@@ -117,17 +120,16 @@ LRU 缓存容量。
 
 过期缓存条目可被乐观提供的最长时间。
 
-- 默认值：`3d`
-
 #### timeout
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 每次 DNS 查询的默认超时时间。
 
 可被 `rules.[].timeout`（DNS 规则动作）或 `domain_resolver.timeout` 覆盖。
 
-- 默认值：`10s`
+默认使用 `10s`。
 
 #### reverse_mapping
 
@@ -139,14 +141,11 @@ LRU 缓存容量。
 
 !!! question "自 sing-box 1.9.0 起"
 
+
 默认情况下，将带有指定 IP 前缀的 `edns0-subnet` OPT 附加记录附加到每个查询。
 
 如果值是 IP 地址而不是前缀，则会自动附加 `/32` 或 `/128`。
 
 可以被 `servers.[].client_subnet` 或 `rules.[].client_subnet` 覆盖。
-
-#### fakeip :material-note-remove:
-
-[FakeIP](./fakeip/) 设置。
 
 <!-- AUTO-GENERATED-CONFIG-END -->

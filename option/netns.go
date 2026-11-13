@@ -11,7 +11,16 @@ import (
 )
 
 type _NetworkNamespace struct {
-	Type           string                         `json:"type,omitempty"`
+	// The type of the network namespace, `default` is used by default.
+	//
+	// | Type      | Format                 |
+	// |-----------|------------------------|
+	// | `default` | [Default](./default/)  |
+	// | `unshare` | [Unshare](./unshare/)  |
+	Type string `json:"type,omitempty"`
+	// The tag of the network namespace.
+	//
+	// @Required
 	Tag            string                         `json:"tag"`
 	DefaultOptions DefaultNetworkNamespaceOptions `json:"-"`
 	UnshareOptions UnshareNetworkNamespaceOptions `json:"-"`

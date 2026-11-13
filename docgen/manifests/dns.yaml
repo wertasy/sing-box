@@ -1,70 +1,30 @@
 defaults:
   heading: '### Fields'
 pages:
-
 - defs:
-
   - name: DNS
     root: RawDNSOptions
   file: dns/index.md
-
 - defs:
-
   - name: fakeip
-  extras:
-    enabled:
-      locale_key: FakeIPDNSServerOptions.enabled
-      prose: Enable FakeIP service.
   file: dns/fakeip.md
-
 - file: dns/rule.md
   sections:
-
   - defs:
-
     - name: default
       omit_keys:
+      - geoip
+      - ip_cidr
+      - ip_is_private
+      - rule_set_ip_cidr_accept_empty
       - response_rcode
       - response_answer
       - response_ns
       - response_extra
       registry: DNSRule
       root: RawDefaultDNSRule
-    extras:
-      action:
-        locale_key: RawDefaultDNSRule.action
-        prose: |-
-          @Required
-
-          See [DNS Rule Actions](../rule_action/) for details.
-      client_subnet:
-        locale_key: RawDefaultDNSRule.client_subnet
-        prose: |-
-          @Failure: Deprecated in sing-box 1.11.0
-
-              Moved to [DNS Rule Action](../rule_action#route).
-      disable_cache:
-        locale_key: RawDefaultDNSRule.disable_cache
-        prose: |-
-          @Failure: Deprecated in sing-box 1.11.0
-
-              Moved to [DNS Rule Action](../rule_action#route).
-      rewrite_ttl:
-        locale_key: RawDefaultDNSRule.rewrite_ttl
-        prose: |-
-          @Failure: Deprecated in sing-box 1.11.0
-
-              Moved to [DNS Rule Action](../rule_action#route).
-      server:
-        locale_key: RawDefaultDNSRule.server
-        prose: |-
-          @Failure: Deprecated in sing-box 1.11.0
-
-              Moved to [DNS Rule Action](../rule_action#route).
     heading: '### Default Fields'
-
   - defs:
-
     - name: default
       omit_keys:
       - inbound
@@ -109,6 +69,10 @@ pages:
       - rule_set
       - rule_set_ip_cidr_match_source
       - match_response
+      - geosite
+      - outbound
+      - rule_set_ipcidr_match_source
+      - source_geoip
       - ip_accept_any
       - response_rcode
       - response_answer
@@ -118,9 +82,7 @@ pages:
       registry: DNSRule
       root: RawDefaultDNSRule
     heading: '### Legacy Address Filter Fields'
-
   - defs:
-
     - name: default
       omit_keys:
       - inbound
@@ -165,6 +127,12 @@ pages:
       - rule_set
       - rule_set_ip_cidr_match_source
       - match_response
+      - geosite
+      - outbound
+      - rule_set_ipcidr_match_source
+      - source_geoip
+      - geoip
+      - rule_set_ip_cidr_accept_empty
       - ip_cidr
       - ip_is_private
       - ip_accept_any
@@ -172,23 +140,14 @@ pages:
       registry: DNSRule
       root: RawDefaultDNSRule
     heading: '### Response Match Fields'
-
   - defs:
-
     - name: logical
       registry: DNSRule
       root: RawLogicalDNSRule
-    extras:
-      type:
-        locale_key: RawLogicalDNSRule.type
-        prose: '`logical`'
     heading: '### Logical Fields'
-
 - file: dns/rule_action.md
   sections:
-
   - defs:
-
     - name: route
       omit_keys:
       - server
@@ -199,12 +158,11 @@ pages:
       - rewrite_ttl
       - client_subnet
       - remove_client_subnet
+      - strategy
       registry: DNSRuleAction
       root: _DNSRuleAction
     heading: '### Structure'
-
   - defs:
-
     - name: route
       omit_keys:
       - action
@@ -212,9 +170,7 @@ pages:
       registry: DNSRuleAction
       root: DNSRouteActionOptions
     heading: '### route'
-
   - defs:
-
     - name: evaluate
       docs_tag: true
       omit_keys:
@@ -222,156 +178,59 @@ pages:
       - race
       root: DNSEvaluateActionOptions
     heading: '### evaluate'
-
   - defs:
-
     - name: reject
       omit_keys:
       - action
       - race
       registry: DNSRuleAction
-      root: _RejectActionOptions
+      root: DNSRejectActionOptions
     heading: '### reject'
-    overrides:
-      method:
-        prose: |-
-          - `default`: Reply with REFUSED.
-          - `drop`: Drop the request.
-
-          `default` will be used by default.
-
   - defs:
-
     - name: predefined
       omit_keys:
       - action
       - race
       root: DNSRouteActionPredefined
     heading: '### predefined'
-
 - defs:
-
-  - name: udp
   file: dns/server/udp.md
-
 - defs:
-
-  - name: tcp
   file: dns/server/tcp.md
-
 - defs:
-
-  - name: tls
   file: dns/server/tls.md
-  overrides:
-    server_port:
-      prose: |-
-        The port of the DNS server.
-
-        `853` will be used by default.
-
 - defs:
-
-  - name: quic
-    registry: DNSServer
   file: dns/server/quic.md
-  overrides:
-    server_port:
-      prose: |-
-        The port of the DNS server.
-
-        `853` will be used by default.
-
 - defs:
-
-  - name: https
   file: dns/server/https.md
-  overrides:
-    server_port:
-      prose: |-
-        The port of the DNS server.
-
-        `443` will be used by default.
-
 - defs:
-
   - name: h3
   file: dns/server/http3.md
-  overrides:
-    server_port:
-      prose: |-
-        The port of the DNS server.
-
-        `443` will be used by default.
-
 - defs:
-
-  - name: hosts
   file: dns/server/hosts.md
-
 - defs:
-
-  - name: local
-    registry: DNSServer
   file: dns/server/local.md
-
 - defs:
-
-  - name: dhcp
-    omit_origins:
+  - omit_origins:
     - LocalDNSServerOptions
   file: dns/server/dhcp.md
-
 - defs:
-
-  - name: mdns
-    omit_origins:
+  - omit_origins:
     - LocalDNSServerOptions
   file: dns/server/mdns.md
-
 - defs:
-
-  - name: fakeip
   file: dns/server/fakeip.md
-
 - defs:
-
-  - name: resolved
-    registry: DNSServer
   file: dns/server/resolved.md
-
 - defs:
-
-  - name: tailscale
-    registry: DNSServer
   file: dns/server/tailscale.md
-
 - defs:
-
-  - name: openconnect
-    registry: DNSServer
   file: dns/server/openconnect.md
-
 - defs:
-
-  - name: openvpn
   file: dns/server/openvpn.md
-
 - file: dns/index.zh.md
   patches:
     '### Fields':
-      extras:
-        'fakeip :material-note-remove:':
-          locale_key: dns.index.fakeip
-          prose: ''
-
+      remove_keys:
+      - 'fakeip :material-note-remove:'
 - file: dns/rule_action.zh.md
-  patches:
-    '### reject':
-      overrides:
-        method:
-          prose: |-
-            - `default`: 返回 REFUSED。
-            - `drop`: 丢弃请求。
-
-            默认使用 `default`。

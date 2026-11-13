@@ -84,6 +84,12 @@ DialerOptions.fallback_delay: |-
 
   仅当 `domain_strategy` 或 `network_strategy` 已设置时生效。
 
+  @Since 1.11.0
+
+  @Quote:
+
+      仅在启用了 `auto_detect_interface` 的 Android 与 Apple 平台图形客户端中支持。
+
 DialerOptions.fallback_network_type: |-
   当使用 `fallback` 网络策略时，在首选网络不可用或超时的情况下要使用的回退网络类型。
 
@@ -178,3 +184,216 @@ DialerOptions.tcp_multi_path: |-
       需要 Go 1.21。
 
 DialerOptions.udp_fragment: 启用 UDP 分段。
+
+AbstractDialerOptions.bind_address_no_port: |-
+  绑定到源地址时不保留端口。
+
+  这允许在完整的四元组（源 IP、源端口、目标 IP、目标端口）保持唯一的情况下，为多个连接复用同一源端口。
+
+  @Since 1.13.0
+
+  @Quote:
+
+      仅支持 Linux。
+
+AbstractDialerOptions.bind_interface: 要绑定到的网络接口。
+
+AbstractDialerOptions.connect_timeout: |-
+  连接超时，采用 golang 的 Duration 格式。
+
+  持续时间字符串是一个可能有符号的序列十进制数，每个都有可选的分数和单位后缀， 例如 "300ms"、"-1.5h" 或 "2h45m"。
+  有效时间单位为 "ns"、"us"（或 "µs"）、"ms"、"s"、"m"、"h"。
+
+AbstractDialerOptions.detour: |-
+  上游出站的标签。
+
+  启用时，其他拨号字段将被忽略。
+
+AbstractDialerOptions.disable_tcp_keep_alive: |-
+  禁用 TCP keep alive。
+
+  @Since 1.13.0
+
+AbstractDialerOptions.domain_resolver: |-
+  用于设置解析域名的域名解析器。
+
+  此选项的格式与 [路由 DNS 规则动作](/zh/configuration/dns/rule_action/#route) 相同，但不包含 `action` 字段。  
+
+  若直接将此选项设置为字符串，则等同于设置该选项的 `server` 字段。
+
+  | 出站/端点       | 受影响的域名                |
+  |----------------|---------------------------|
+  | `direct`       | 请求中的域名                | 
+  | 其他类型        | 服务器地址中的域名           |
+
+  @Warning:
+
+      `outbound` DNS 规则项已弃用，且将在 sing-box 1.14.0 中被移除。因此，从 sing-box 1.14.0 版本开始，所有在服务器地址中使用域名的出站/端点均需配置此项。
+
+  @Info:
+
+      当只有一个 DNS 服务器已配置时，`domain_resolver` 或 `route.default_domain_resolver` 是可选的。 
+
+AbstractDialerOptions.fallback_delay: |-
+  在生成 RFC 6555 快速回退连接之前等待的时间长度。
+
+  对于 `domain_strategy`，是在假设之前等待 IPv6 成功的时间量如果设置了 "prefer_ipv4"，则 IPv6 配置错误并回退到 IPv4。
+
+  对于 `network_strategy`，对于 `network_strategy`，是在回退到其他接口之前等待连接成功的时间。
+
+  仅当 `domain_strategy` 或 `network_strategy` 已设置时生效。
+
+  @Since 1.11.0
+
+  @Quote:
+
+      仅在启用了 `auto_detect_interface` 的 Android 与 Apple 平台图形客户端中支持。
+
+AbstractDialerOptions.fallback_network_type: |-
+  当使用 `fallback` 网络策略时，在首选网络不可用或超时的情况下要使用的回退网络类型。
+
+  默认使用除首选网络外的所有其他网络。
+
+  @Since 1.11.0
+
+  @Quote:
+
+      仅在 Android 与 iOS 平台图形客户端中支持，并且需要 `route.auto_detect_interface`。
+
+AbstractDialerOptions.inet4_bind_address: 要绑定的 IPv4 地址。
+
+AbstractDialerOptions.inet6_bind_address: 要绑定的 IPv6 地址。
+
+AbstractDialerOptions.netns: |-
+  设置网络命名空间，名称或路径。
+
+  自 sing-box 1.14.0 起，也可以使用[网络命名空间](/zh/configuration/network-namespace/)的标签。
+  应避免引用 `unshare` 类型的网络命名空间。
+
+  @Since 1.12.0
+
+  @Quote:
+
+      仅支持 Linux。
+
+AbstractDialerOptions.network_strategy: |-
+  用于选择网络接口的策略。
+
+  可用值：
+
+  - `default`（默认值）：按顺序连接默认网络或 `network_type` 中指定的网络。
+  - `hybrid`：同时连接所有网络或 `network_type` 中指定的网络。
+  - `fallback`：同时连接默认网络或 `network_type` 中指定的首选网络，当不可用或超时时尝试回退网络。
+
+  对于回退模式，当首选接口失败或超时时，
+  将进入15秒的快速回退状态（同时连接所有首选和回退网络），
+  如果首选网络恢复，则立即退出。
+
+  与 `bind_interface`, `bind_inet4_address` 和 `bind_inet6_address` 冲突。
+
+  @Since 1.11.0
+
+  @Quote:
+
+      仅在 Android 与 iOS 平台图形客户端中支持，并且需要 `route.auto_detect_interface`。
+
+AbstractDialerOptions.network_type: |-
+  当使用 `default` 或 `hybrid` 网络策略时要使用的网络类型，或当使用 `fallback` 网络策略时要使用的首选网络类型。
+
+  可用值：`wifi`, `cellular`, `ethernet`, `other`。
+
+  默认使用设备默认网络。
+
+  @Since 1.11.0
+
+  @Quote:
+
+      仅在 Android 与 iOS 平台图形客户端中支持，并且需要 `route.auto_detect_interface`。
+
+AbstractDialerOptions.reuse_addr: 重用监听地址。
+
+AbstractDialerOptions.routing_mark: |-
+  设置 netfilter 路由标记。
+
+  支持数字 (如 `1234`) 和十六进制字符串 (如 `"0x1234"`)。
+
+  @Quote:
+
+      仅支持 Linux。
+
+AbstractDialerOptions.tcp_fast_open: 启用 TCP Fast Open。
+
+AbstractDialerOptions.tcp_keep_alive: |-
+  TCP keep alive 初始周期。
+
+  @Since 1.13.0
+
+      默认值从 `10m` 更改为 `5m`。
+
+AbstractDialerOptions.tcp_keep_alive_interval: |-
+  TCP keep alive 间隔。
+
+  @Since 1.13.0
+
+AbstractDialerOptions.tcp_multi_path: |-
+  启用 TCP Multi Path。
+
+  @Warning:
+
+      需要 Go 1.21。
+
+AbstractDialerOptions.udp_fragment: 启用 UDP 分段。
+
+NetworkNamespace.type: |-
+  网络命名空间的类型，默认使用 `default`。
+
+  | 类型      | 格式                   |
+  |-----------|------------------------|
+  | `default` | [Default](./default/)  |
+  | `unshare` | [Unshare](./unshare/)  |
+
+NetworkNamespace.tag: |-
+  @Required
+
+  网络命名空间的标签。
+
+UDPNATOptions.udp_timeout: |-
+  UDP NAT 过期时间。
+
+  默认使用 `5m`。
+
+UDPNATOptions.udp_mapping: |-
+  @Since 1.14.0
+
+  UDP NAT 映射行为。
+
+  | 值                            | 行为                                                     |
+  |------------------------------|----------------------------------------------------------|
+  | `endpoint_independent`       | 对相同的源地址和端口，所有目标复用同一映射。                |
+  | `address_dependent`          | 每个目标地址使用单独的映射。                               |
+  | `address_and_port_dependent` | 每个目标地址和端口使用单独的映射。                          |
+
+  默认使用 `endpoint_independent`。
+
+UDPNATOptions.udp_filtering: |-
+  @Since 1.14.0
+
+  UDP NAT 过滤行为。
+
+  | 值                            | 行为                                                     |
+  |------------------------------|----------------------------------------------------------|
+  | `endpoint_independent`       | 接受来自任意远程端点的数据包。                              |
+  | `address_dependent`          | 仅接受来自已向其发送过数据包的远程地址的数据包。              |
+  | `address_and_port_dependent` | 仅接受来自已向其发送过数据包的远程地址和端口的数据包。         |
+
+  默认使用 `endpoint_independent`。
+
+UDPNATOptions.udp_nat_max: |-
+  @Since 1.14.0
+
+  UDP NAT 会话的最大数量。
+
+  达到限制时，将关闭最近最少使用的会话。
+
+  未设置或设置为 `0` 时，iOS 使用 `4096`。其他平台根据总内存在 `4096` 到 `16384` 之间选择；
+  无法检测总内存时使用 `16384`。

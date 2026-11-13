@@ -87,7 +87,7 @@ Client public key.
 
 URL of the [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap).
 
-- Default: `https://tailcat.dev/derpmap.json`
+`https://tailcat.dev/derpmap.json` will be used by default.
 
 #### derp_region
 
@@ -137,9 +137,6 @@ The IPv6 address to bind to.
 Do not reserve a port when binding to a source address.
 
 This allows reusing the same source port for multiple connections if the full 4-tuple (source IP, source port, destination IP, destination port) remains unique.
-
-#### protect_path
-
 
 #### routing_mark
 
@@ -193,6 +190,7 @@ Enable TCP Multi Path.
 
 !!! question "Since sing-box 1.13.0"
 
+
 Disable TCP keep alive.
 
 #### tcp_keep_alive
@@ -201,17 +199,19 @@ Disable TCP keep alive.
 
     Default value changed from `10m` to `5m`.
 
+
 TCP keep alive initial period.
 
-- Default: `5m`
+`5m` will be used by default.
 
 #### tcp_keep_alive_interval
 
 !!! question "Since sing-box 1.13.0"
 
+
 TCP keep alive interval.
 
-- Default: `75s`
+`75s` will be used by default.
 
 #### udp_fragment
 
@@ -222,7 +222,6 @@ Enable UDP fragmentation.
 !!! info ""
 
     `domain_resolver` or `route.default_domain_resolver` is optional when only one DNS server is configured.
-
 !!! warning ""
 
     `outbound` DNS rule items are deprecated and will be removed in sing-box 1.14.0, so this item will be required for outbound/endpoints using domain name in server address since sing-box 1.14.0.
@@ -273,7 +272,7 @@ preferred network types to use when using `fallback` network strategy.
 
 Available values: `wifi`, `cellular`, `ethernet`, `other`.
 
-Device's default network is used by default.
+Device's default network will be used by default.
 
 #### fallback_network_type
 
@@ -305,7 +304,7 @@ back to other interfaces.
 
 Only take effect when `domain_strategy` or `network_strategy` is set.
 
-- Default: `300ms`
+`300ms` will be used by default.
 
 #### domain_strategy
 

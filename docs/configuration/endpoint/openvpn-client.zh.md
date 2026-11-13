@@ -127,7 +127,7 @@ OpenVPN 会话模式，可选值为 `tls` 或 `static_key`。
 
 `static_key` 是已弃用的 OpenVPN 模式，不使用 TLS 控制通道且不提供前向保密。
 
-- 默认值：`tls`
+默认使用 `tls`。
 
 #### server
 
@@ -165,7 +165,7 @@ OpenVPN 服务器列表。
 
 该值应用于 `server` 和未单独设置 `network` 的 `servers` 条目。
 
-- 默认值：`udp`
+默认使用 `udp`。
 
 #### address
 
@@ -341,7 +341,7 @@ OpenVPN 控制通道 TLS 配置。
 
 与 `tls.remote_certificate_eku` 冲突。
 
-- 默认值：`server`
+默认使用 `server`。
 
 #### tls.certificate_profile
 
@@ -353,7 +353,7 @@ OpenVPN 控制通道 TLS 配置。
 
 选择 `suiteb` 时，`tls.cipher` 为空则 TLS 1.2 cipher 列表默认使用 Suite B ECDHE-ECDSA AES-GCM 套件，`tls.groups` 为空则 TLS group 默认使用 `secp256r1` 和 `secp384r1`。
 
-- 默认值：`legacy`
+默认使用 `legacy`。
 
 #### tls.ns_certificate_type
 
@@ -367,7 +367,7 @@ OpenVPN 控制通道 TLS 配置。
 
 默认使用 `1.2`。
 
-- 默认值：`1.2`
+默认使用 `1.2`。
 
 #### tls.version_max
 
@@ -650,13 +650,15 @@ Notification 之间间隔一秒。设为 `0` 时禁用。
 
 使用系统接口。
 
-需要特权且不能与已有系统接口冲突。
+需要权限，且不能与现有系统接口冲突。
 
-如果禁用，sing-box 将使用内部网络栈。
+禁用时，sing-box 使用内部网络栈。
 
 #### name
 
 系统接口的自定义接口名称。
+
+默认使用自动生成的 `ovpn` 接口名称。
 
 #### mtu
 
@@ -668,7 +670,26 @@ OpenVPN 接口 MTU。
 
 !!! question "自 sing-box 1.15.0 起"
 
+
 允许该 endpoint 在需要时断开连接。
+
+#### servers.server
+
+==必填==
+
+OpenVPN 服务器地址。
+
+#### servers.server_port
+
+==必填==
+
+OpenVPN 服务器端口。
+
+#### servers.network
+
+该服务器的 OpenVPN 传输网络，可选值为 `udp` 或 `tcp`。
+
+默认使用顶层 `network`。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -682,6 +703,6 @@ OpenVPN 接口 MTU。
 参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
 <!-- AUTO-GENERATED-ORIGIN-END -->
 
-## 交互式认证
+### 交互式认证
 
 在 sing-box dashboard 或任意 sing-box 图形客户端的 `工具` > `端点` 中认证和管理 endpoint。

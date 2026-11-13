@@ -120,6 +120,8 @@
 
 系统接口的自定义接口名称。
 
+默认使用自动生成的 `ovpn` 接口名称。
+
 #### mtu
 
 OpenVPN 接口 MTU。
@@ -132,7 +134,7 @@ OpenVPN 会话模式，`tls` 或 `static_key` 之一。
 
 `static_key` 在没有 TLS 控制信道和前向保密的情况下服务一个对端。
 
-- 默认值：`tls`
+默认使用 `tls`。
 
 #### network
 
@@ -141,7 +143,7 @@ OpenVPN 传输网络，`udp` 或 `tcp` 之一。
 每个端点仅服务一种传输网络；如需同时服务 TCP 与 UDP，
 需要配置两个端点并使用互不重叠的 `address` 子网。
 
-- 默认值：`udp`
+默认使用 `udp`。
 
 #### remote
 
@@ -309,7 +311,7 @@ OpenVPN 客户端证书策略，`require`、`optional` 或 `none` 之一。
 
 设为 `none` 时，不请求客户端证书。
 
-- 默认值：`require`
+默认使用 `require`。
 
 #### tls.client_name
 
@@ -351,7 +353,7 @@ OpenVPN `remote-cert-ku` 格式的客户端证书 Key Usage mask。
 
 选择 `suiteb` 时，`tls.cipher` 为空则 TLS 1.2 cipher 列表默认使用 Suite B ECDHE-ECDSA AES-GCM 套件，`tls.groups` 为空则 TLS group 默认使用 `secp256r1` 和 `secp384r1`。
 
-- 默认值：`legacy`
+默认使用 `legacy`。
 
 #### tls.ns_certificate_type
 
@@ -527,8 +529,6 @@ IPv4 和 IPv6 前缀可以混用。
 
 默认使用 `def1`。
 
-- 默认值：`def1`
-
 #### push.block_outside_dns
 
 向客户端推送 `block-outside-dns`，在 Windows 客户端上阻止 VPN 之外的 DNS 查询。
@@ -605,7 +605,7 @@ OpenVPN TLS 重协商间隔。
 
 仅在 TLS 模式下可用。
 
-- 默认值：`1m`
+默认使用 `1m`。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

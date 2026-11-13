@@ -727,6 +727,8 @@ RawLogicalDNSRule.type: '`logical`'
 RemoteDNSServerOptions.server_port: |-
   DNS 服务器的端口。
 
+  默认使用 `53`。
+
 RemoteHTTPSDNSServerOptions.headers: 发送到 DNS 服务器的额外标头。
 
 RemoteHTTPSDNSServerOptions.path: |-
@@ -787,4 +789,8 @@ _DNSRuleAction.race: |-
 
   @Since 1.14.0
 
-dns.index.fakeip: '[FakeIP](./fakeip/) 设置。'
+DNSRejectActionOptions.method: |-
+  - `default`: 返回 REFUSED。
+  - `drop`: 丢弃请求。
+
+  默认使用 `default`。

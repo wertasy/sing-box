@@ -13,6 +13,7 @@ import (
 type indexTable struct {
 	file     string
 	registry string
+
 	// legacy lists first-column values allowed without a schema variant
 	// (non-schema legacy rows).
 	legacy map[string]bool

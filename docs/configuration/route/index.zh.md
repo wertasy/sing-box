@@ -67,13 +67,10 @@ icon: material/alert-decagram
 <!-- AUTO-GENERATED-CONFIG-START -->
 <!-- 此区域由脚本自动生成，切勿手动修改 -->
 
-#### rule
-
-一组 [路由规则](./rule/)    。
-
 #### rule_set
 
 !!! question "自 sing-box 1.8.0 起"
+
 
 一组 [规则集](/zh/configuration/rule-set/)。
 
@@ -155,6 +152,7 @@ icon: material/alert-decagram
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 远程规则集使用的默认 [HTTP 客户端](/zh/configuration/shared/http-client/) 的标签。
 
 如果为空且 `http_clients` 已定义，将使用第一个 HTTP 客户端。
@@ -163,25 +161,15 @@ icon: material/alert-decagram
 
 !!! question "自 sing-box 1.12.0 起"
 
+
 详情参阅 [拨号字段](/zh/configuration/shared/dial/#domain_resolver)。
 
 可以被 `outbound.domain_resolver` 覆盖。
 
-#### network_strategy
-
-!!! question "自 sing-box 1.11.0 起"
-
-详情参阅 [拨号字段](/zh/configuration/shared/dial/#network_strategy)。
-
-当 `outbound.bind_interface`, `outbound.inet4_bind_address` 或 `outbound.inet6_bind_address` 已设置时不生效。
-
-可以被 `outbound.network_strategy` 覆盖。
-
-与 `default_interface` 冲突。
-
 #### default_network_type
 
 !!! question "自 sing-box 1.11.0 起"
+
 
 详情参阅 [拨号字段](/zh/configuration/shared/dial/#default_network_type)。
 
@@ -189,11 +177,13 @@ icon: material/alert-decagram
 
 !!! question "自 sing-box 1.11.0 起"
 
+
 详情参阅 [拨号字段](/zh/configuration/shared/dial/#default_fallback_network_type)。
 
 #### default_fallback_delay
 
 !!! question "自 sing-box 1.11.0 起"
+
 
 详情参阅 [拨号字段](/zh/configuration/shared/dial/#fallback_delay)。
 
@@ -205,6 +195,7 @@ icon: material/alert-decagram
 
 !!! question "自 sing-box 1.11.0 起"
 
+
 详情参阅 [拨号字段](/zh/configuration/shared/dial/#network_strategy)。
 
 当 `outbound.bind_interface`, `outbound.inet4_bind_address` 或 `outbound.inet6_bind_address` 已设置时不生效。
@@ -212,11 +203,5 @@ icon: material/alert-decagram
 可以被 `outbound.network_strategy` 覆盖。
 
 与 `default_interface` 冲突。
-
-#### geoip
-
-
-#### geosite
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->

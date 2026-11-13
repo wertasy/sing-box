@@ -1,6 +1,7 @@
 package docgen
 
 import (
+	"bytes"
 	"embed"
 	"fmt"
 	"os"
@@ -23,6 +24,7 @@ type DefRef struct {
 	IncludeOrigins []string `yaml:"include_origins,omitempty"`
 	OmitKeys       []string `yaml:"omit_keys,omitempty"`
 	IncludeKeys    []string `yaml:"include_keys,omitempty"`
+
 	// DocsTag documents a real `tag` field of the options struct (wrapper
 	// tags are omitted by default).
 	DocsTag bool `yaml:"docs_tag,omitempty"`
@@ -43,11 +45,12 @@ type Override struct {
 // SectionPatch carries localized section deltas, keyed by the english section
 // heading, so localized pages only declare sections that differ.
 type SectionPatch struct {
-	Defs      []DefRef            `yaml:"defs,omitempty"`
-	Expand    []string            `yaml:"expand,omitempty"`
-	Extras    map[string]Extra    `yaml:"extras,omitempty"`
-	Overrides map[string]Override `yaml:"overrides,omitempty"`
-	Format    string              `yaml:"format,omitempty"`
+	Defs       []DefRef            `yaml:"defs,omitempty"`
+	Expand     []string            `yaml:"expand,omitempty"`
+	Extras     map[string]Extra    `yaml:"extras,omitempty"`
+	Overrides  map[string]Override `yaml:"overrides,omitempty"`
+	Format     string              `yaml:"format,omitempty"`
+	RemoveKeys []string            `yaml:"remove_keys,omitempty"`
 }
 
 // ExampleSpec customizes the generated `### Structure` example block of a
@@ -62,13 +65,15 @@ type ExampleSpec struct {
 
 // Section is one generated region below a heading.
 type Section struct {
-	Heading   string              `yaml:"heading"`
-	EnHeading string              `yaml:"en_heading,omitempty"`
-	Defs      []DefRef            `yaml:"defs,omitempty"`
-	Expand    []string            `yaml:"expand,omitempty"`
-	Extras    map[string]Extra    `yaml:"extras,omitempty"`
-	Overrides map[string]Override `yaml:"overrides,omitempty"`
-	Format    string              `yaml:"format,omitempty"`
+	Heading    string              `yaml:"heading"`
+	Root       string              `yaml:"root,omitempty"`
+	EnHeading  string              `yaml:"en_heading,omitempty"`
+	Defs       []DefRef            `yaml:"defs,omitempty"`
+	Expand     []string            `yaml:"expand,omitempty"`
+	Extras     map[string]Extra    `yaml:"extras,omitempty"`
+	Overrides  map[string]Override `yaml:"overrides,omitempty"`
+	Format     string              `yaml:"format,omitempty"`
+	RemoveKeys []string            `yaml:"remove_keys,omitempty"`
 }
 
 // Defaults provides per-file fallbacks so manifest entries only carry deltas.
@@ -200,16 +205,39 @@ func LoadManifest() (*Manifest, error) {
 			return nil, err
 		}
 		var partial Manifest
-		if err := yaml.Unmarshal(content, &partial); err != nil {
+		decoder := yaml.NewDecoder(bytes.NewReader(content))
+		decoder.KnownFields(true)
+		if err := decoder.Decode(&partial); err != nil {
 			return nil, fmt.Errorf("docgen/manifests/%s: %w", name, err)
 		}
+		inferImplicitDefs(partial.Pages)
 		applyPageDefaults(partial.Defaults, partial.Pages)
+		applyDirectoryDefaults(partial.Pages)
 		applyTwinConvention(partial.Pages)
 		manifest.Manual = append(manifest.Manual, partial.Manual...)
 		manifest.Pages = append(manifest.Pages, partial.Pages...)
 	}
 	sort.Strings(manifest.Manual)
 	return manifest, nil
+}
+
+// inferImplicitDefs synthesizes the implicit definition of pages registered
+// under a registry directory (inbound/, outbound/, endpoint/, service/,
+// dns/server/) so manifests do not need placeholder `defs: [{}]` entries.
+func inferImplicitDefs(pages []Page) {
+	for index := range pages {
+		page := &pages[index]
+		if strings.HasSuffix(page.File, ".zh.md") {
+			continue
+		}
+		if directoryRegistry(page.File) == "" {
+			continue
+		}
+		if len(page.Sections) > 0 || len(page.Defs) > 0 {
+			continue
+		}
+		page.Defs = []DefRef{{}}
+	}
 }
 
 // applyPageDefaults merges per-file defaults into page entries so the YAML
@@ -253,9 +281,61 @@ func applyPageDefaults(defaults *Defaults, pages []Page) {
 				if def.OmitKeys == nil {
 					def.OmitKeys = defaults.OmitKeys
 				}
+				if def.IncludeKeys == nil {
+					def.IncludeKeys = defaults.IncludeKeys
+				}
 			}
 		}
 	}
+}
+
+// applyDirectoryDefaults infers def registration from the page file path so
+// manifests stay minimal: a def without an explicit registry that lives under
+// inbound/, outbound/, endpoint/, service/ or dns/server/ registers with that
+// directory's registry, and a registry def without an explicit name takes the
+// page file stem. Explicit name/registry/root entries always win.
+func applyDirectoryDefaults(pages []Page) {
+	for pi := range pages {
+		file := pages[pi].File
+		registry := directoryRegistry(file)
+		for si := range pages[pi].Sections {
+			applyDirectoryDefaultsToDefs(&pages[pi].Sections[si].Defs, registry, file)
+		}
+		applyDirectoryDefaultsToDefs(&pages[pi].Defs, registry, file)
+	}
+}
+
+func applyDirectoryDefaultsToDefs(defs *[]DefRef, registry string, file string) {
+	stem := strings.TrimSuffix(filepath.Base(file), ".md")
+	for di := range *defs {
+		def := &(*defs)[di]
+		if def.Root == "" && def.Registry == "" && registry != "" {
+			def.Registry = registry
+		}
+		if def.Name == "" && def.Root == "" && def.Registry != "" {
+			def.Name = stem
+		}
+	}
+}
+
+// directoryRegistry maps page directories to the registry their defs
+// register with by default.
+func directoryRegistry(file string) string {
+	segments := strings.Split(file, "/")
+	if len(segments) >= 3 && segments[0] == "dns" && segments[1] == "server" {
+		return "DNSServer"
+	}
+	switch segments[0] {
+	case "inbound":
+		return "Inbound"
+	case "outbound":
+		return "Outbound"
+	case "endpoint":
+		return "Endpoint"
+	case "service":
+		return "Service"
+	}
+	return ""
 }
 
 // applyTwinConvention derives the twin reference of localized pages from the
@@ -475,6 +555,7 @@ func (p *Page) ResolveSections(manifest *Manifest) ([]Section, error) {
 			}
 		}
 		section.EnHeading = enSection.Heading
+		section.Root = enSection.Root
 		section.Defs = enSection.Defs
 		section.Expand = enSection.Expand
 		section.Format = enSection.Format
@@ -496,6 +577,9 @@ func (p *Page) ResolveSections(manifest *Manifest) ([]Section, error) {
 			}
 			if patch.Format != "" {
 				section.Format = patch.Format
+			}
+			if patch.RemoveKeys != nil {
+				section.RemoveKeys = patch.RemoveKeys
 			}
 		}
 		sections = append(sections, section)

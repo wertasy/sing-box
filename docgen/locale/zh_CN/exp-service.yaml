@@ -481,3 +481,20 @@ V2RayAPIOptions.stats.inbounds: 统计流量的入站列表。
 V2RayAPIOptions.stats.outbounds: 统计流量的出站列表。
 
 V2RayAPIOptions.stats.users: 统计流量的用户列表。
+
+APIServiceOptions.tls: |-
+  TLS 配置,参阅 [TLS](/zh/configuration/shared/tls/#inbound)。
+CCMServiceOptions.tls: |-
+  TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+DERPServiceOptions.tls: |-
+  TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+OCMServiceOptions.tls: |-
+  TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+SSMAPIServiceOptions.tls: |-
+  TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
+USBIPClientServiceOptions.server: |-
+  @Required
+
+  远程 `usbip-server` 地址。
+USBIPClientServiceOptions.server_port: |-
+  远程 `usbip-server` 端口。默认为 `3240`。

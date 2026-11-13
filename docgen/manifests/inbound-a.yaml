@@ -2,30 +2,20 @@ defaults:
   heading: '### Fields'
   omit_origins:
   - InboundOptions
-
 pages:
-
 - file: inbound/trojan.md
-  example: {}
   defs:
-  - name: trojan
-    registry: Inbound
-
 - file: inbound/shadowtls.md
   defs:
-  - name: shadowtls
-    registry: Inbound
-
 - file: inbound/tun.md
   example:
     omit:
-      - udp_timeout
-      - udp_mapping
-      - udp_filtering
-      - udp_nat_max
+    - udp_timeout
+    - udp_mapping
+    - udp_filtering
+    - udp_nat_max
     groups:
-      - UDP NAT Fields
+    - UDP NAT Fields
   defs:
-  - name: tun
   expand:
   - platform

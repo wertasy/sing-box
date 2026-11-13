@@ -97,6 +97,7 @@ Conflicts with `realm`.
 
 !!! question "Since sing-box 1.11.0"
 
+
 Server port range list.
 
 Conflicts with `server_port` and `realm`.
@@ -105,13 +106,15 @@ Conflicts with `server_port` and `realm`.
 
 !!! question "Since sing-box 1.11.0"
 
+
 Port hopping interval.
 
-- Default: `30s`
+`30s` will be used by default.
 
 #### hop_interval_max
 
 !!! question "Since sing-box 1.14.0"
+
 
 Maximum port hopping interval, used for randomization.
 
@@ -137,17 +140,19 @@ QUIC traffic obfuscator password.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Minimum on-wire packet size in bytes. Gecko only.
 
-- Default: `512`
+`512` will be used by default.
 
 #### obfs.max_packet_size
 
 !!! question "Since sing-box 1.14.0"
 
+
 Maximum on-wire packet size in bytes. Gecko only.
 
-- Default: `1200`
+`1200` will be used by default.
 
 #### password
 
@@ -180,9 +185,10 @@ See [QUIC Fields](/configuration/shared/quic/) for details.
 
 !!! question "Since sing-box 1.14.0"
 
+
 BBR congestion control algorithm profile, one of `conservative` `standard` `aggressive`.
 
-- Default: `standard`
+`standard` will be used by default.
 
 #### brutal_debug
 
@@ -210,6 +216,7 @@ maximums.
 #### realm
 
 !!! question "Since sing-box 1.14.0"
+
 
 Connect to a Hysteria2 server through a Hysteria Realm rendezvous service.
 
@@ -265,13 +272,13 @@ Enable port mapping.
 
 Timeout for gateway discovery and mapping operations.
 
-- Default: `10s`
+`10s` will be used by default.
 
 #### realm.port_mapping.lifetime
 
 Lease lifetime of the mapping.
 
-- Default: `10m`
+`10m` will be used by default.
 
 #### realm.http_client
 

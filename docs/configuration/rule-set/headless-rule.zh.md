@@ -226,6 +226,7 @@ DNS 查询类型。值可以为整数或者类型名称字符串。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 使用正则表达式匹配 Android 应用包名。
 
 #### network_type
@@ -323,9 +324,5 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 ==必填==
 
 包括的规则。
-
-#### invert
-
-Invert match result.
 
 <!-- AUTO-GENERATED-CONFIG-END -->

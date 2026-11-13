@@ -74,6 +74,7 @@ Listen port.
 
 !!! question "Since sing-box 1.12.0"
 
+
 The network interface to bind to.
 
 #### routing_mark
@@ -91,6 +92,7 @@ Integers (e.g. `1234`) and string hexadecimals (e.g. `"0x1234"`) are supported.
 #### reuse_addr
 
 !!! question "Since sing-box 1.12.0"
+
 
 Reuse listener address.
 
@@ -110,6 +112,7 @@ Since sing-box 1.14.0, the tag of a [network namespace](/configuration/network-n
 
 !!! question "Since sing-box 1.13.0"
 
+
 Disable TCP keep alive.
 
 #### tcp_keep_alive
@@ -118,15 +121,16 @@ Disable TCP keep alive.
 
     Default value changed from `10m` to `5m`.
 
+
 TCP keep alive initial period.
 
-- Default: `5m`
+`5m` will be used by default.
 
 #### tcp_keep_alive_interval
 
 TCP keep alive interval.
 
-- Default: `75s`
+`75s` will be used by default.
 
 #### tcp_fast_open
 
@@ -148,7 +152,7 @@ Enable UDP fragmentation.
 
 UDP NAT expiration time.
 
-- Default: `5m`
+`5m` will be used by default.
 
 #### detour
 
@@ -196,7 +200,7 @@ If the domain name is invalid (like tor), this will not work.
 
 Timeout for sniffing.
 
-- Default: `300ms`
+`300ms` will be used by default.
 
 #### udp_disable_domain_unmapping
 
@@ -209,15 +213,5 @@ the original packet address will be sent in the response instead of the mapped d
 
 This option is used for compatibility with clients that
 do not support receiving UDP packets with domain addresses, such as Surge.
-
-#### proxy_protocol
-
-
-- Deprecated.
-
-#### proxy_protocol_accept_no_header
-
-
-- Deprecated.
 
 <!-- AUTO-GENERATED-CONFIG-END -->

@@ -88,6 +88,7 @@ Make each DNS server's cache independent for special purposes. If enabled, will 
 
 !!! question "Since sing-box 1.11.0"
 
+
 LRU cache capacity.
 
 Value less than 1024 will be ignored.
@@ -95,6 +96,7 @@ Value less than 1024 will be ignored.
 #### optimistic
 
 !!! question "Since sing-box 1.14.0"
+
 
 Enable optimistic DNS caching. When a cached DNS entry has expired but is still within the timeout window,
 the stale response is returned immediately while a background refresh is triggered.
@@ -118,17 +120,18 @@ Enable optimistic DNS caching.
 
 The maximum time an expired cache entry can be served optimistically.
 
-- Default: `3d`
+`3d` will be used by default.
 
 #### timeout
 
 !!! question "Since sing-box 1.14.0"
 
+
 Default timeout for each DNS query.
 
 Can be overridden by `rules.[].timeout` (DNS rule action) or `domain_resolver.timeout`.
 
-- Default: `10s`
+`10s` will be used by default.
 
 #### reverse_mapping
 
@@ -140,6 +143,7 @@ problematic in environments such as macOS, where DNS is proxied and cached by th
 #### client_subnet
 
 !!! question "Since sing-box 1.9.0"
+
 
 Append a `edns0-subnet` OPT extra record with the specified IP prefix to every query by default.
 

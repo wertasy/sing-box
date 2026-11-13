@@ -27,16 +27,14 @@ icon: material/new-box
   "obfs": "fuck me till the daylight",
   "auth": "",
   "auth_str": "password",
+  "recv_window_conn": 0,
+  "recv_window": 0,
+  "disable_mtu_discovery": false,
   "network": "",
-  "tls": {},
+  "tls": {}
 
   ... // 拨号字段
   ... // QUIC 字段
-
-  // Deprecated
-  "recv_window_conn": 0,
-  "recv_window": 0,
-  "disable_mtu_discovery": false
 }
 ```
 <!-- AUTO-GENERATED-EXAMPLE-END -->
@@ -62,6 +60,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.12.0 起"
 
+
 服务器端口范围列表。
 
 与 `server_port` 冲突。
@@ -70,9 +69,10 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.12.0 起"
 
+
 端口跳跃间隔。
 
-- 默认值：`30s`
+默认使用 `30s`。
 
 #### up, down
 
@@ -131,23 +131,17 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
     请使用 QUIC 字段 `stream_receive_window` 代替。
 
-- 已废弃。
-
 #### recv_window
 
 !!! failure "已在 sing-box 1.14.0 废弃"
 
     请使用 QUIC 字段 `connection_receive_window` 代替。
 
-- 已废弃。
-
 #### disable_mtu_discovery
 
 !!! failure "已在 sing-box 1.14.0 废弃"
 
     请使用 QUIC 字段 `disable_path_mtu_discovery` 代替。
-
-- 已废弃。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

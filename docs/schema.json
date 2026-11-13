@@ -146,21 +146,26 @@
               "const": "alidns"
             },
             "ttl": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "The TTL of the temporary TXT record used for the DNS challenge.\n\n@Since 1.14.0"
             },
             "propagation_delay": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "How long to wait after creating the challenge record before starting propagation checks.\n\n@Since 1.14.0"
             },
             "propagation_timeout": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "The maximum time to wait for the challenge record to propagate.\n\nSet to `-1` to disable propagation checks.\n\n@Since 1.14.0"
             },
             "resolvers": {
+              "description": "Preferred DNS resolvers to use for DNS propagation checks.\n\n@Since 1.14.0",
               "type": "array",
               "items": {
                 "type": "string"
               }
             },
             "override_domain": {
+              "description": "Override the domain name used for the DNS challenge record.\n\nUseful when `_acme-challenge` is delegated to a different zone.\n\n@Since 1.14.0",
               "type": "string"
             },
             "access_key_id": {
@@ -173,6 +178,7 @@
               "type": "string"
             },
             "security_token": {
+              "description": "The Security Token for STS temporary credentials.\n\n@Since 1.13.0",
               "type": "string"
             }
           },
@@ -188,27 +194,33 @@
               "const": "cloudflare"
             },
             "ttl": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "The TTL of the temporary TXT record used for the DNS challenge.\n\n@Since 1.14.0"
             },
             "propagation_delay": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "How long to wait after creating the challenge record before starting propagation checks.\n\n@Since 1.14.0"
             },
             "propagation_timeout": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "The maximum time to wait for the challenge record to propagate.\n\nSet to `-1` to disable propagation checks.\n\n@Since 1.14.0"
             },
             "resolvers": {
+              "description": "Preferred DNS resolvers to use for DNS propagation checks.\n\n@Since 1.14.0",
               "type": "array",
               "items": {
                 "type": "string"
               }
             },
             "override_domain": {
+              "description": "Override the domain name used for the DNS challenge record.\n\nUseful when `_acme-challenge` is delegated to a different zone.\n\n@Since 1.14.0",
               "type": "string"
             },
             "api_token": {
               "type": "string"
             },
             "zone_token": {
+              "description": "Optional API token with `Zone:Read` permission.\n\nWhen provided, allows `api_token` to be scoped to a single zone.\n\n@Since 1.13.0",
               "type": "string"
             }
           },
@@ -224,21 +236,26 @@
               "const": "acmedns"
             },
             "ttl": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "The TTL of the temporary TXT record used for the DNS challenge.\n\n@Since 1.14.0"
             },
             "propagation_delay": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "How long to wait after creating the challenge record before starting propagation checks.\n\n@Since 1.14.0"
             },
             "propagation_timeout": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "The maximum time to wait for the challenge record to propagate.\n\nSet to `-1` to disable propagation checks.\n\n@Since 1.14.0"
             },
             "resolvers": {
+              "description": "Preferred DNS resolvers to use for DNS propagation checks.\n\n@Since 1.14.0",
               "type": "array",
               "items": {
                 "type": "string"
               }
             },
             "override_domain": {
+              "description": "Override the domain name used for the DNS challenge record.\n\nUseful when `_acme-challenge` is delegated to a different zone.\n\n@Since 1.14.0",
               "type": "string"
             },
             "username": {
@@ -277,7 +294,7 @@
       "type": "object",
       "properties": {
         "enabled": {
-          "description": "Enable TCP Brutal congestion control algorithm。",
+          "description": "Enable TCP Brutal congestion control algorithm.",
           "type": "boolean"
         },
         "up_mbps": {
@@ -880,7 +897,7 @@
           ]
         },
         "network_type": {
-          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
           "anyOf": [
             {
               "$ref": "#/$defs/InterfaceType"
@@ -963,8 +980,7 @@
           "maximum": 4294967295
         },
         "optimistic": {
-          "description": "Enable optimistic DNS caching. When a cached DNS entry has expired but is still within the timeout window,\nthe stale response is returned immediately while a background refresh is triggered.\n\nConflict with `disable_cache` and `disable_expire`.\n\nAccepts a boolean or an object. When set to `true`, the default timeout of `3d` is used.\n\n```json\n{\n  \"enabled\": true,\n  \"timeout\": \"3d\"\n}\n```\n\n##### enabled\n\nEnable optimistic DNS caching.\n\n##### timeout\n\nThe maximum time an expired cache entry can be served optimistically.\n\n@Since 1.14.0",
-          "default": "3d",
+          "description": "Enable optimistic DNS caching. When a cached DNS entry has expired but is still within the timeout window,\nthe stale response is returned immediately while a background refresh is triggered.\n\nConflict with `disable_cache` and `disable_expire`.\n\nAccepts a boolean or an object. When set to `true`, the default timeout of `3d` is used.\n\n```json\n{\n  \"enabled\": true,\n  \"timeout\": \"3d\"\n}\n```\n\n##### enabled\n\nEnable optimistic DNS caching.\n\n##### timeout\n\nThe maximum time an expired cache entry can be served optimistically.\n\n`3d` will be used by default.\n\n@Since 1.14.0",
           "anyOf": [
             {
               "type": "boolean"
@@ -1963,23 +1979,29 @@
               "type": "boolean"
             },
             "timeout": {
-              "$ref": "#/$defs/Duration"
+              "$ref": "#/$defs/Duration",
+              "description": "Override the DNS query timeout for matched queries.\n\nWill override `dns.timeout`.\n\n@Since 1.14.0"
             },
             "disable_cache": {
+              "description": "Disable cache and save cache in this query.",
               "type": "boolean"
             },
             "disable_optimistic_cache": {
+              "description": "Disable optimistic DNS caching in this query.\n\n@Since 1.14.0",
               "type": "boolean"
             },
             "rewrite_ttl": {
+              "description": "Rewrite TTL in DNS responses.",
               "type": "integer",
               "minimum": 0,
               "maximum": 4294967295
             },
             "client_subnet": {
-              "$ref": "#/$defs/IPAddressOrPrefix"
+              "$ref": "#/$defs/IPAddressOrPrefix",
+              "description": "Append a `edns0-subnet` OPT extra record with the specified IP prefix to every query by default.\n\nIf value is an IP address instead of prefix, `/32` or `/128` will be appended automatically.\n\nWill override `dns.client_subnet`."
             },
             "remove_client_subnet": {
+              "description": "Remove the `edns0-subnet` OPT extra record from the query, and suppress `dns.client_subnet`.\n\nConflict with `client_subnet`.\n\n@Since 1.14.0",
               "type": "boolean"
             }
           },
@@ -2177,7 +2199,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -2365,7 +2387,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -2402,9 +2424,8 @@
               "type": "string"
             },
             "server_port": {
-              "description": "The port of the DNS server.",
+              "description": "The port of the DNS server.\n\n`53` will be used by default.",
               "type": "integer",
-              "default": 53,
               "minimum": 0,
               "maximum": 65535
             },
@@ -2439,7 +2460,7 @@
               "type": "string"
             },
             "path": {
-              "description": "List of paths to hosts files.\n\n`/etc/hosts` is used by default.\n\n`C:\\Windows\\System32\\Drivers\\etc\\hosts` is used by default on Windows.\n\nExample:\n\n```json\n{\n  // \"path\": \"/etc/hosts\"\n\n  \"path\": [\n    \"/etc/hosts\",\n    \"$HOME/.hosts\"\n  ]\n}\n```",
+              "description": "List of paths to hosts files.\n\n`/etc/hosts` will be used by default.\n\n`C:\\Windows\\System32\\Drivers\\etc\\hosts` will be used by default on Windows.\n\nExample:\n\n```json\n{\n  // \"path\": \"/etc/hosts\"\n\n  \"path\": [\n    \"/etc/hosts\",\n    \"$HOME/.hosts\"\n  ]\n}\n```",
               "anyOf": [
                 {
                   "type": "string"
@@ -2574,7 +2595,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -2611,9 +2632,8 @@
               "type": "string"
             },
             "server_port": {
-              "description": "The port of the DNS server.",
+              "description": "The port of the DNS server.\n\n`53` will be used by default.",
               "type": "integer",
-              "default": 53,
               "minimum": 0,
               "maximum": 65535
             },
@@ -2737,7 +2757,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -2892,7 +2912,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -3115,7 +3135,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -3152,9 +3172,8 @@
               "type": "string"
             },
             "server_port": {
-              "description": "The port of the DNS server.",
+              "description": "The port of the DNS server.\n\n`53` will be used by default.",
               "type": "integer",
-              "default": 53,
               "minimum": 0,
               "maximum": 65535
             },
@@ -3205,7 +3224,7 @@
               "type": "string"
             },
             "accept_default_resolvers": {
-              "description": "Indicates whether default DNS resolvers should be accepted for fallback queries in addition to MagicDNS。\n\nif not enabled, `NXDOMAIN` will be returned for non-Tailscale domain queries.",
+              "description": "Indicates whether default DNS resolvers should be accepted for fallback queries in addition to MagicDNS.\n\nif not enabled, `NXDOMAIN` will be returned for non-Tailscale domain queries.",
               "type": "boolean"
             },
             "accept_search_domain": {
@@ -3317,7 +3336,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -3354,9 +3373,8 @@
               "type": "string"
             },
             "server_port": {
-              "description": "The port of the DNS server.",
+              "description": "The port of the DNS server.\n\n`53` will be used by default.",
               "type": "integer",
-              "default": 53,
               "minimum": 0,
               "maximum": 65535
             }
@@ -3465,7 +3483,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -3502,9 +3520,8 @@
               "type": "string"
             },
             "server_port": {
-              "description": "The port of the DNS server.",
+              "description": "The port of the DNS server.\n\n`53` will be used by default.",
               "type": "integer",
-              "default": 53,
               "minimum": 0,
               "maximum": 65535
             },
@@ -3617,7 +3634,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -3654,9 +3671,8 @@
               "type": "string"
             },
             "server_port": {
-              "description": "The port of the DNS server.",
+              "description": "The port of the DNS server.\n\n`53` will be used by default.",
               "type": "integer",
-              "default": 53,
               "minimum": 0,
               "maximum": 65535
             }
@@ -3799,7 +3815,7 @@
           ]
         },
         "network_type": {
-          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
           "anyOf": [
             {
               "$ref": "#/$defs/InterfaceType"
@@ -3991,7 +4007,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -4038,7 +4054,7 @@
               "type": "boolean"
             },
             "name": {
-              "description": "Custom interface name for system interface.\n\nAn automatically generated `masque` interface name is used by default.",
+              "description": "Custom interface name for system interface.\n\nAn automatically generated `masque` interface name will be used by default.",
               "type": "string"
             },
             "mtu": {
@@ -4072,9 +4088,11 @@
               "maximum": 4294967295
             },
             "username": {
+              "description": "Basic authorization username.",
               "type": "string"
             },
             "password": {
+              "description": "Basic authorization password.",
               "type": "string"
             },
             "tls": {
@@ -4082,13 +4100,17 @@
               "description": "TLS configuration, see [TLS](/configuration/shared/tls/#outbound)."
             },
             "path": {
+              "description": "URI template path of the IP proxying resource, may contain the `target` and `ipproto` variables.\n\n`/.well-known/masque/ip/{target}/{ipproto}/` will be used by default.",
               "type": "string"
             },
             "headers": {
-              "$ref": "#/$defs/HTTPHeader"
+              "$ref": "#/$defs/HTTPHeader",
+              "description": "Extra headers of HTTP request."
             },
             "version": {
+              "description": "HTTP version.\n\nAvailable values: `1`, `2`, `3`.\n\nWhen `2`, [QUIC Fields](#quic-fields) are replaced by [HTTP2 Fields](#http2-fields).",
               "type": "integer",
+              "default": 3,
               "enum": [
                 0,
                 1,
@@ -4097,9 +4119,11 @@
               ]
             },
             "disable_version_fallback": {
+              "description": "Disable automatic fallback to lower HTTP version.",
               "type": "boolean"
             },
             "advertise_routes": {
+              "description": "List of IP prefixes to advertise to the server.\n\nThe server will route traffic for these prefixes into this endpoint, where it is handled as inbound traffic.",
               "type": "array",
               "items": {
                 "$ref": "#/$defs/IPPrefix"
@@ -4109,6 +4133,7 @@
               "$ref": "#/$defs/Duration"
             },
             "on_demand": {
+              "description": "Allow the endpoint to be disconnected when necessary.",
               "type": "boolean"
             },
             "idle_timeout": {
@@ -4247,7 +4272,7 @@
               "type": "boolean"
             },
             "name": {
-              "description": "Custom interface name for system interface.\n\nAn automatically generated `masque` interface name is used by default.",
+              "description": "Custom interface name for system interface.\n\nAn automatically generated `masque` interface name will be used by default.",
               "type": "string"
             },
             "mtu": {
@@ -4281,12 +4306,14 @@
               "maximum": 4294967295
             },
             "users": {
+              "description": "HTTP users, verified by the `Authorization` header.\n\nNo authentication required if empty.",
               "type": "array",
               "items": {
                 "$ref": "#/$defs/User"
               }
             },
             "version": {
+              "description": "List of HTTP versions to serve.\n\nAvailable values: `1`, `2`, `3`.\n\nAll versions are used by default.\n\nTLS is required for `3`.",
               "anyOf": [
                 {
                   "type": "integer",
@@ -4314,9 +4341,11 @@
               "description": "TLS configuration, see [TLS](/configuration/shared/tls/#inbound)."
             },
             "path": {
+              "description": "URI template path of the IP proxying resource, may contain the `target` and `ipproto` variables.\n\n`/.well-known/masque/ip/{target}/{ipproto}/` will be used by default.",
               "type": "string"
             },
             "address": {
+              "description": "List of IP prefixes of the tunnel network, at most one for each IP version.\n\nThe address of the prefix is used by the server itself, other addresses in the prefix are assigned to clients.\n\n@Required",
               "anyOf": [
                 {
                   "$ref": "#/$defs/IPPrefix"
@@ -4330,6 +4359,7 @@
               ]
             },
             "advertise_routes": {
+              "description": "List of IP prefixes to advertise to clients, in addition to the tunnel network.\n\nTraffic from clients to other destinations is rejected.\n\nAll addresses are advertised by default.",
               "type": "array",
               "items": {
                 "$ref": "#/$defs/IPPrefix"
@@ -4484,7 +4514,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -4521,7 +4551,7 @@
               "type": "boolean"
             },
             "name": {
-              "description": "Custom interface name for the system interface.\n\nAn automatically generated `oc` interface name is used by default.",
+              "description": "Custom interface name for the system interface.\n\nAn automatically generated `oc` interface name will be used by default.",
               "type": "string"
             },
             "udp_timeout": {
@@ -4601,7 +4631,7 @@
               "default": "v9.21"
             },
             "local_hostname": {
-              "description": "Local hostname reported to the VPN server when supported by the selected flavor.\n\nThe system hostname is used by default, or `localhost` if it is unavailable.",
+              "description": "Local hostname reported to the VPN server when supported by the selected flavor.\n\nThe system hostname will be used by default, or `localhost` if it is unavailable.",
               "type": "string"
             },
             "mobile": {
@@ -4610,15 +4640,15 @@
             },
             "csd": {
               "$ref": "#/$defs/OpenConnectCSDOptions",
-              "description": "AnyConnect CSD/host scan compliance options.\n\nBuilt-in CSD handling is used by default when requested by the server."
+              "description": "AnyConnect CSD/host scan compliance options.\n\nBuilt-in CSD handling will be used by default when requested by the server."
             },
             "hip": {
               "$ref": "#/$defs/OpenConnectHIPOptions",
-              "description": "GlobalProtect HIP check and report options.\n\nBuilt-in HIP reporting is used by default when requested by the server."
+              "description": "GlobalProtect HIP check and report options.\n\nBuilt-in HIP reporting will be used by default when requested by the server."
             },
             "tncc": {
               "$ref": "#/$defs/OpenConnectTNCCOptions",
-              "description": "Network Connect TNCC compliance options.\n\nBuilt-in TNCC handling is used by default when requested by the server."
+              "description": "Network Connect TNCC compliance options.\n\nBuilt-in TNCC handling will be used by default when requested by the server."
             },
             "fortinet_host_check": {
               "$ref": "#/$defs/OpenConnectFortinetHostCheckOptions",
@@ -4629,7 +4659,7 @@
               "type": "boolean"
             },
             "dtls_local_port": {
-              "description": "Local UDP port used by the direct DTLS or ESP secondary data channel.\n\nAn automatically selected ephemeral port is used by default.",
+              "description": "Local UDP port used by the direct DTLS or ESP secondary data channel.\n\nAn automatically selected ephemeral port will be used by default.",
               "type": "integer",
               "minimum": 0,
               "maximum": 65535
@@ -4690,7 +4720,7 @@
             },
             "dpd_interval": {
               "$ref": "#/$defs/Duration",
-              "description": "Override the Dead Peer Detection interval.\n\nThe server-provided or flavor-specific interval is used by default.\n\nPositive values below `2s` are treated as `2s`. The value must not be negative."
+              "description": "Override the Dead Peer Detection interval.\n\nThe server-provided or flavor-specific interval will be used by default.\n\nPositive values below `2s` are treated as `2s`. The value must not be negative."
             },
             "reconnect_timeout": {
               "$ref": "#/$defs/Duration",
@@ -4699,7 +4729,7 @@
             },
             "trojan_interval": {
               "$ref": "#/$defs/Duration",
-              "description": "Override the interval between GlobalProtect HIP reports or Network Connect TNCC checks.\n\nThe server-provided interval is used by default. GlobalProtect uses `1h` when the server does not provide one.\n\nThe value must not be negative."
+              "description": "Override the interval between GlobalProtect HIP reports or Network Connect TNCC checks.\n\nThe server-provided interval will be used by default. GlobalProtect uses `1h` when the server does not provide one.\n\nThe value must not be negative."
             },
             "queue_length": {
               "description": "Inbound and outbound packet queue length between the VPN transport and the tunnel interface.",
@@ -4832,7 +4862,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -4879,7 +4909,7 @@
               "type": "boolean"
             },
             "name": {
-              "description": "Custom interface name for the system interface.\n\nAn automatically generated `ovpn` interface name is used by default.",
+              "description": "Custom interface name for the system interface.\n\nAn automatically generated `ovpn` interface name will be used by default.",
               "type": "string"
             },
             "mtu": {
@@ -4984,7 +5014,7 @@
               "type": "string"
             },
             "auth_retry": {
-              "description": "Behavior after username/password authentication fails, one of `none`, `nointeract`, or `interact`.\n\n`none` is used by default and treats a permanent authentication failure as terminal.\n\n`nointeract` and `interact` allow authentication retries.",
+              "description": "Behavior after username/password authentication fails, one of `none`, `nointeract`, or `interact`.\n\n`none` will be used by default and treats a permanent authentication failure as terminal.\n\n`nointeract` and `interact` allow authentication retries.",
               "type": "string",
               "enum": [
                 "none",
@@ -5046,7 +5076,7 @@
               "type": "string"
             },
             "auth": {
-              "description": "OpenVPN data channel authentication digest.\n\n`SHA1` is used by default. It only applies to non-AEAD data ciphers and `tls_auth`.",
+              "description": "OpenVPN data channel authentication digest.\n\n`SHA1` will be used by default. It only applies to non-AEAD data ciphers and `tls_auth`.",
               "type": "string"
             },
             "mss_fix": {
@@ -5074,14 +5104,14 @@
               "maximum": 4294967295
             },
             "replay_window": {
-              "description": "UDP data-channel replay window size. `64` is used by default. The maximum is `65536`.",
+              "description": "UDP data-channel replay window size. `64` will be used by default. The maximum is `65536`.",
               "type": "integer",
               "minimum": 0,
               "maximum": 4294967295
             },
             "replay_window_time": {
               "$ref": "#/$defs/Duration",
-              "description": "UDP data-channel replay window duration. `15s` is used by default and the maximum is `10m`.\n\nThe value must use whole seconds."
+              "description": "UDP data-channel replay window duration. `15s` will be used by default and the maximum is `10m`.\n\nThe value must use whole seconds."
             },
             "compression": {
               "description": "OpenVPN `compress` framing mode, one of `none`, `no`, `lz4`, `lz4-v2`, `stub`, `stub-v2`, `disabled`, or `off`.\n\nDisabled by default.",
@@ -5111,7 +5141,7 @@
               ]
             },
             "allow_compression": {
-              "description": "Policy for compression pushed by the server, one of `no`, `asym`, or `yes`.\n\n`no` is used by default and permits only compression stub framing. `asym` accepts compressed packets from the server but does not compress outgoing packets. `yes` is a legacy alias for `asym`.\n\nConflict with non-stub compression enabled by `compression` or `compression_lzo` when set to `no`.",
+              "description": "Policy for compression pushed by the server, one of `no`, `asym`, or `yes`.\n\n`no` will be used by default and permits only compression stub framing. `asym` accepts compressed packets from the server but does not compress outgoing packets. `yes` is a legacy alias for `asym`.\n\nConflict with non-stub compression enabled by `compression` or `compression_lzo` when set to `no`.",
               "type": "string",
               "enum": [
                 "no",
@@ -5307,7 +5337,7 @@
               "type": "boolean"
             },
             "name": {
-              "description": "Custom interface name for the system interface.\n\nAn automatically generated `ovpn` interface name is used by default.",
+              "description": "Custom interface name for the system interface.\n\nAn automatically generated `ovpn` interface name will be used by default.",
               "type": "string"
             },
             "mtu": {
@@ -5368,7 +5398,7 @@
               "maximum": 65535
             },
             "max_clients": {
-              "description": "Maximum number of established and pending TLS client sessions.\n\n`1024` is used by default. The maximum value is `16777215`.\n\nMust be `0` or `1` in `static_key` mode.",
+              "description": "Maximum number of established and pending TLS client sessions.\n\n`1024` will be used by default. The maximum value is `16777215`.\n\nMust be `0` or `1` in `static_key` mode.",
               "type": "integer"
             },
             "address": {
@@ -5394,7 +5424,7 @@
               "description": "IPv6 tunnel peer address.\n\nRequired when an IPv6 `address` is configured in `static_key` mode."
             },
             "topology": {
-              "description": "OpenVPN topology pushed to clients, one of `subnet`, `p2p` or `net30`.\n\n`subnet` is used by default in TLS mode. `p2p` is used by default in\n`static_key` mode.",
+              "description": "OpenVPN topology pushed to clients, one of `subnet`, `p2p` or `net30`.\n\n`subnet` will be used by default in TLS mode. `p2p` will be used by default in\n`static_key` mode.",
               "type": "string",
               "enum": [
                 "net30",
@@ -5481,14 +5511,14 @@
               ]
             },
             "replay_window": {
-              "description": "UDP data-channel replay window size. `64` is used by default.",
+              "description": "UDP data-channel replay window size. `64` will be used by default.",
               "type": "integer",
               "minimum": 0,
               "maximum": 4294967295
             },
             "replay_window_time": {
               "$ref": "#/$defs/Duration",
-              "description": "UDP replay window duration. `15s` is used by default. The value must use whole seconds."
+              "description": "UDP replay window duration. `15s` will be used by default. The value must use whole seconds."
             },
             "push": {
               "$ref": "#/$defs/OpenVPNPushOptions",
@@ -5630,7 +5660,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -5681,7 +5711,7 @@
               "type": "boolean"
             },
             "hostname": {
-              "description": "The hostname of the node.\n\nSystem hostname is used by default.\n\nExample: `localhost`\n\n@Since 1.14.0\n\n    On iOS, tvOS and Android, the device name is used by default.",
+              "description": "The hostname of the node.\n\nSystem hostname will be used by default.\n\nExample: `localhost`\n\n@Since 1.14.0\n\n    On iOS, tvOS and Android, the device name will be used by default.",
               "type": "string"
             },
             "accept_routes": {
@@ -5762,15 +5792,19 @@
                   "type": "object",
                   "properties": {
                     "enabled": {
+                      "description": "Enable the SSH server.",
                       "type": "boolean"
                     },
                     "disable_pty": {
+                      "description": "Refuse PTY allocation requests.",
                       "type": "boolean"
                     },
                     "disable_sftp": {
+                      "description": "Refuse the SFTP subsystem.",
                       "type": "boolean"
                     },
                     "disable_forwarding": {
+                      "description": "Refuse local and remote TCP and Unix-socket forwarding, including SSH agent forwarding.",
                       "type": "boolean"
                     }
                   },
@@ -5875,7 +5909,7 @@
               "maximum": 4294967295
             },
             "workers": {
-              "description": "WireGuard worker count.\n\nCPU count is used by default.",
+              "description": "WireGuard worker count.\n\nCPU count will be used by default.",
               "type": "integer"
             },
             "on_demand": {
@@ -5972,7 +6006,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -6037,6 +6071,7 @@
           "type": "string"
         },
         "engine": {
+          "description": "HTTP engine to use.\n\nValues:\n\n* `go` (default)\n* `apple`\n\n`apple` uses NSURLSession, only available on Apple platforms.\n\nSupported fields:\n\n* `headers`\n* `tls.server_name` (must match request host)\n* `tls.insecure`\n* `tls.min_version` / `tls.max_version`\n* `tls.certificate` / `tls.certificate_path`\n* `tls.certificate_sha256`\n* `tls.certificate_public_key_sha256`\n* Dial Fields\n\nUnsupported fields:\n\n* `version`\n* `disable_version_fallback`\n* HTTP2 Fields\n* QUIC Fields\n* `tls.engine`\n* `tls.alpn`\n* `tls.disable_sni`\n* `tls.cipher_suites`\n* `tls.curve_preferences`\n* `tls.client_certificate` / `tls.client_certificate_path` / `tls.client_key` / `tls.client_key_path`\n* `tls.fragment` / `tls.record_fragment`\n* `tls.kernel_tx` / `tls.kernel_rx`\n* `tls.ech`\n* `tls.utls`\n* `tls.reality`\n\n@Warning:\n\n    Experimental only: do not use in hot paths on iOS and tvOS.",
           "type": "string",
           "enum": [
             "go",
@@ -6044,7 +6079,9 @@
           ]
         },
         "version": {
+          "description": "HTTP version.\n\nAvailable values: `1`, `2`, `3`.\n\nWhen `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).",
           "type": "integer",
+          "default": 2,
           "enum": [
             0,
             1,
@@ -6053,10 +6090,12 @@
           ]
         },
         "disable_version_fallback": {
+          "description": "Disable automatic fallback to lower HTTP version.",
           "type": "boolean"
         },
         "headers": {
-          "$ref": "#/$defs/HTTPHeader"
+          "$ref": "#/$defs/HTTPHeader",
+          "description": "Custom HTTP headers.\n\n`Host` header is used as request host."
         },
         "tls": {
           "$ref": "#/$defs/OutboundTLSOptions",
@@ -6152,7 +6191,7 @@
           ]
         },
         "network_type": {
-          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
           "anyOf": [
             {
               "$ref": "#/$defs/InterfaceType"
@@ -6241,6 +6280,7 @@
           "type": "object",
           "properties": {
             "engine": {
+              "description": "HTTP engine to use.\n\nValues:\n\n* `go` (default)\n* `apple`\n\n`apple` uses NSURLSession, only available on Apple platforms.\n\nSupported fields:\n\n* `headers`\n* `tls.server_name` (must match request host)\n* `tls.insecure`\n* `tls.min_version` / `tls.max_version`\n* `tls.certificate` / `tls.certificate_path`\n* `tls.certificate_sha256`\n* `tls.certificate_public_key_sha256`\n* Dial Fields\n\nUnsupported fields:\n\n* `version`\n* `disable_version_fallback`\n* HTTP2 Fields\n* QUIC Fields\n* `tls.engine`\n* `tls.alpn`\n* `tls.disable_sni`\n* `tls.cipher_suites`\n* `tls.curve_preferences`\n* `tls.client_certificate` / `tls.client_certificate_path` / `tls.client_key` / `tls.client_key_path`\n* `tls.fragment` / `tls.record_fragment`\n* `tls.kernel_tx` / `tls.kernel_rx`\n* `tls.ech`\n* `tls.utls`\n* `tls.reality`\n\n@Warning:\n\n    Experimental only: do not use in hot paths on iOS and tvOS.",
               "type": "string",
               "enum": [
                 "go",
@@ -6248,7 +6288,9 @@
               ]
             },
             "version": {
+              "description": "HTTP version.\n\nAvailable values: `1`, `2`, `3`.\n\nWhen `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).",
               "type": "integer",
+              "default": 2,
               "enum": [
                 0,
                 1,
@@ -6257,10 +6299,12 @@
               ]
             },
             "disable_version_fallback": {
+              "description": "Disable automatic fallback to lower HTTP version.",
               "type": "boolean"
             },
             "headers": {
-              "$ref": "#/$defs/HTTPHeader"
+              "$ref": "#/$defs/HTTPHeader",
+              "description": "Custom HTTP headers.\n\n`Host` header is used as request host."
             },
             "tls": {
               "$ref": "#/$defs/OutboundTLSOptions",
@@ -6356,7 +6400,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -7457,6 +7501,7 @@
               "x-tag-reference": "inbound"
             },
             "users": {
+              "description": "HTTP users.\n\nNo authentication required if empty.",
               "type": "array",
               "items": {
                 "$ref": "#/$defs/User"
@@ -7466,9 +7511,11 @@
               "$ref": "#/$defs/DomainResolver"
             },
             "set_system_proxy": {
+              "description": "Automatically set system proxy configuration when start and clean up when stop.\n\n@Quote:\n\n    Only supported on Linux, Android, Windows, and macOS.\n\n@Warning:\n\n    To work on Android and Apple platforms without privileges, use tun.platform.http_proxy instead.",
               "type": "boolean"
             },
             "version": {
+              "description": "List of HTTP versions to serve.\n\nAvailable values: `1`, `2`, `3`.\n\n`1` and `2` are used by default.\n\nTLS is required for `3`.\n\n@Since 1.15.0",
               "anyOf": [
                 {
                   "type": "integer",
@@ -9098,7 +9145,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -9598,7 +9645,7 @@
               ]
             },
             "dns_mode": {
-              "description": "How DNS is handled on the TUN interface.\n\n| Mode       | Description                                                                                                                                                |\n|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `disabled` | Do not configure native DNS and do not hijack DNS traffic.                                                                                                 |\n| `native`   | Set the platform's native interface DNS where possible: per-interface DNS on Windows and Apple platforms, and `systemd-resolved` interface DNS on Linux.   |\n| `hijack`   | Same as `native`, with additional port 53 hijacking described below.                                                                                       |\n\n`hijack` is used by default when [`auto_route`](#auto_route) is enabled, otherwise `disabled` is used by default.\n\n`hijack` adds the following on top of `native`:\n\n*On Linux*: DNS sent to addresses on the host's own interfaces (such as\n`127.0.0.53` or the host's LAN-side IP) is not hijacked.\n\n- Without `auto_redirect`, port 53 traffic to directly-attached subnets is\n  also routed through the TUN.\n- With `auto_redirect`, port 53 traffic is redirected to\n  [`dns_address`](#dns_address).\n\n*On Windows with [`strict_route`](#strict_route)*: port 53 traffic going\nthrough interfaces other than the TUN is blocked.\n\n@Since 1.14.0",
+              "description": "How DNS is handled on the TUN interface.\n\n| Mode       | Description                                                                                                                                                |\n|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| `disabled` | Do not configure native DNS and do not hijack DNS traffic.                                                                                                 |\n| `native`   | Set the platform's native interface DNS where possible: per-interface DNS on Windows and Apple platforms, and `systemd-resolved` interface DNS on Linux.   |\n| `hijack`   | Same as `native`, with additional port 53 hijacking described below.                                                                                       |\n\n`hijack` will be used by default when [`auto_route`](#auto_route) is enabled, otherwise `disabled` will be used by default.\n\n`hijack` adds the following on top of `native`:\n\n*On Linux*: DNS sent to addresses on the host's own interfaces (such as\n`127.0.0.53` or the host's LAN-side IP) is not hijacked.\n\n- Without `auto_redirect`, port 53 traffic to directly-attached subnets is\n  also routed through the TUN.\n- With `auto_redirect`, port 53 traffic is redirected to\n  [`dns_address`](#dns_address).\n\n*On Windows with [`strict_route`](#strict_route)*: port 53 traffic going\nthrough interfaces other than the TUN is blocked.\n\n@Since 1.14.0",
               "type": "string",
               "enum": [
                 "disabled",
@@ -9639,7 +9686,7 @@
               "type": "boolean"
             },
             "auto_redirect_input_mark": {
-              "description": "Connection input mark used by `auto_redirect`.\n\n`0x2023` is used by default (`0x400000` on Android).\n\n@Since 1.10.0",
+              "description": "Connection input mark used by `auto_redirect`.\n\n`0x2023` will be used by default (`0x400000` on Android).\n\n@Since 1.10.0",
               "anyOf": [
                 {
                   "type": "integer",
@@ -9652,7 +9699,7 @@
               ]
             },
             "auto_redirect_output_mark": {
-              "description": "Connection output mark used by `auto_redirect`.\n\n`0x2024` is used by default (`0x200000` on Android).\n\n@Since 1.10.0",
+              "description": "Connection output mark used by `auto_redirect`.\n\n`0x2024` will be used by default (`0x200000` on Android).\n\n@Since 1.10.0",
               "anyOf": [
                 {
                   "type": "integer",
@@ -9665,7 +9712,7 @@
               ]
             },
             "auto_redirect_reset_mark": {
-              "description": "Connection reset mark used by `auto_redirect` pre-matching.\n\n`0x2025` is used by default (`0x600000` on Android).\n\n@Since 1.13.0",
+              "description": "Connection reset mark used by `auto_redirect` pre-matching.\n\n`0x2025` will be used by default (`0x600000` on Android).\n\n@Since 1.13.0",
               "anyOf": [
                 {
                   "type": "integer",
@@ -9678,7 +9725,7 @@
               ]
             },
             "auto_redirect_tproxy_mark": {
-              "description": "Connection TPROXY mark used by the `auto_redirect` iptables backend for IPv6 TCP.\n\n`0x2026` is used by default (`0x800000` on Android).\n\n@Since 1.15.0",
+              "description": "Connection TPROXY mark used by the `auto_redirect` iptables backend for IPv6 TCP.\n\n`0x2026` will be used by default (`0x800000` on Android).\n\n@Since 1.15.0",
               "anyOf": [
                 {
                   "type": "integer",
@@ -10344,7 +10391,7 @@
           ]
         },
         "network_type": {
-          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
           "anyOf": [
             {
               "$ref": "#/$defs/InterfaceType"
@@ -10454,7 +10501,7 @@
           ]
         },
         "min_version": {
-          "description": "The minimum TLS version that is acceptable.\n\nTLS 1.2 is used by default.",
+          "description": "The minimum TLS version that is acceptable.\n\nTLS 1.2 will be used by default.",
           "type": "string",
           "enum": [
             "1.0",
@@ -10722,7 +10769,7 @@
         "interval": {
           "$ref": "#/$defs/Duration",
           "description": "Time synchronization interval.",
-          "default": "30 minutes"
+          "default": "30m"
         },
         "write_to_system": {
           "description": "Update system time after synchronization.",
@@ -10828,7 +10875,7 @@
           ]
         },
         "network_type": {
-          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
           "anyOf": [
             {
               "$ref": "#/$defs/InterfaceType"
@@ -12325,7 +12372,7 @@
           "type": "boolean"
         },
         "server_name": {
-          "description": "Server name used for TLS SNI and certificate hostname verification.\n\nThe hostname from `server` is used by default.",
+          "description": "Server name used for TLS SNI and certificate hostname verification.\n\nThe hostname from `server` will be used by default.",
           "type": "string"
         },
         "peer_fingerprint": {
@@ -12483,7 +12530,7 @@
           "type": "string"
         },
         "user_agent": {
-          "description": "User agent used by the built-in TNCC handler.\n\n`Neoteris HC Http` is used by default.\n\nConflict with `tncc.wrapper_path`.",
+          "description": "User agent used by the built-in TNCC handler.\n\n`Neoteris HC Http` will be used by default.\n\nConflict with `tncc.wrapper_path`.",
           "type": "string"
         },
         "machine_identification_enabled": {
@@ -12699,7 +12746,7 @@
           "type": "string"
         },
         "client_name_type": {
-          "description": "Certificate field matched by `tls.client_name`, one of `subject`, `name`, or `name-prefix`.\n\n`name` is used by default when `tls.client_name` is configured.",
+          "description": "Certificate field matched by `tls.client_name`, one of `subject`, `name`, or `name-prefix`.\n\n`name` will be used by default when `tls.client_name` is configured.",
           "type": "string",
           "enum": [
             "subject",
@@ -12744,7 +12791,7 @@
           "type": "string"
         },
         "remote_certificate_tls": {
-          "description": "Client certificate purpose check, one of `server`, `client`, or `none`. `client` is used by default.",
+          "description": "Client certificate purpose check, one of `server`, `client`, or `none`. `client` will be used by default.",
           "type": "string",
           "enum": [
             "server",
@@ -12772,7 +12819,7 @@
           ]
         },
         "version_min": {
-          "description": "Minimum TLS version. `1.2` is used by default.",
+          "description": "Minimum TLS version. `1.2` will be used by default.",
           "type": "string",
           "enum": [
             "1.0",
@@ -12782,7 +12829,7 @@
           ]
         },
         "version_max": {
-          "description": "Maximum TLS version. The maximum supported version is used by default.",
+          "description": "Maximum TLS version. The maximum supported version will be used by default.",
           "type": "string",
           "enum": [
             "1.0",
@@ -12814,7 +12861,7 @@
           "type": "string"
         },
         "server_name_type": {
-          "description": "Certificate field matched by `tls.server_name`, one of `subject`, `name`, or `name-prefix`.\n\n`name` is used by default when `tls.server_name` is set.\n\n`subject` matches the full certificate subject, `name` matches the common name exactly, and `name-prefix` matches a common name prefix.",
+          "description": "Certificate field matched by `tls.server_name`, one of `subject`, `name`, or `name-prefix`.\n\n`name` will be used by default when `tls.server_name` is set.\n\n`subject` matches the full certificate subject, `name` matches the common name exactly, and `name-prefix` matches a common name prefix.",
           "type": "string",
           "enum": [
             "subject",
@@ -12953,7 +13000,7 @@
           ]
         },
         "version_max": {
-          "description": "Maximum TLS version, one of `1.0`, `1.1`, `1.2`, or `1.3`.\n\nThe maximum supported version is used by default.\n\nThe value cannot be lower than `tls.version_min`.",
+          "description": "Maximum TLS version, one of `1.0`, `1.1`, `1.2`, or `1.3`.\n\nThe maximum supported version will be used by default.\n\nThe value cannot be lower than `tls.version_min`.",
           "type": "string",
           "enum": [
             "1.0",
@@ -13082,13 +13129,12 @@
           }
         },
         "redirect_gateway": {
-          "description": "Push `redirect-gateway` to clients, which routes client traffic through the VPN according to `push.redirect_gateway_flags`.\n\nWhen `push.redirect_gateway_flags` is empty, `def1` is used by default.",
+          "description": "Push `redirect-gateway` to clients, which routes client traffic through the VPN according to `push.redirect_gateway_flags`.\n\nWhen `push.redirect_gateway_flags` is empty, `def1` will be used by default.",
           "type": "boolean"
         },
         "redirect_gateway_flags": {
-          "description": "OpenVPN `redirect-gateway` flags to push to clients.\n\nOnly available when `push.redirect_gateway` is enabled.",
+          "description": "OpenVPN `redirect-gateway` flags to push to clients.\n\nOnly available when `push.redirect_gateway` is enabled.\n\n`def1` is added by default.",
           "type": "array",
-          "default": "def1",
           "items": {
             "type": "string"
           }
@@ -13122,7 +13168,7 @@
           "maximum": 65535
         },
         "network": {
-          "description": "OpenVPN transport network for this server, one of `udp` or `tcp`.\n\nThe top-level `network` is used by default.",
+          "description": "OpenVPN transport network for this server, one of `udp` or `tcp`.\n\nThe top-level `network` will be used by default.",
           "type": "string",
           "enum": [
             "udp",
@@ -13237,7 +13283,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -13338,11 +13384,11 @@
               "type": "string"
             },
             "bridge_name": {
-              "description": "Custom bridge TUN interface name prefix, `bridge` is used by default.\n\nNot effective on Apple platforms.",
+              "description": "Custom bridge TUN interface name prefix, `bridge` will be used by default.\n\nNot effective on Apple platforms.",
               "type": "string"
             },
             "iproute2_table_index": {
-              "description": "Linux iproute2 table index.\n\n`2200` + instance index is used by default.\n\n@Quote:\n\n    Only supported on Linux.",
+              "description": "Linux iproute2 table index.\n\n`2200` + instance index will be used by default.\n\n@Quote:\n\n    Only supported on Linux.",
               "type": "integer"
             },
             "iproute2_rule_index": {
@@ -13455,7 +13501,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -13592,7 +13638,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -13635,9 +13681,11 @@
               "maximum": 65535
             },
             "username": {
+              "description": "Basic authorization username.",
               "type": "string"
             },
             "password": {
+              "description": "Basic authorization password.",
               "type": "string"
             },
             "tls": {
@@ -13645,12 +13693,15 @@
               "description": "TLS configuration, see [TLS](/configuration/shared/tls/#outbound)."
             },
             "path": {
+              "description": "Path of HTTP request.",
               "type": "string"
             },
             "headers": {
-              "$ref": "#/$defs/HTTPHeader"
+              "$ref": "#/$defs/HTTPHeader",
+              "description": "Extra headers of HTTP request."
             },
             "version": {
+              "description": "HTTP version.\n\nAvailable values: `1`, `2`, `3`.\n\n`2` will be used by default, or `1` if `path` or the `Host` header is set.\n\n`path` and the `Host` header are only available for `1`.\n\nWhen `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).\n\n@Since 1.15.0",
               "type": "integer",
               "enum": [
                 0,
@@ -13660,6 +13711,7 @@
               ]
             },
             "disable_version_fallback": {
+              "description": "Disable automatic fallback to lower HTTP version.\n\n@Since 1.15.0",
               "type": "boolean"
             },
             "idle_timeout": {
@@ -13811,7 +13863,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -14092,7 +14144,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -14401,7 +14453,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -14460,7 +14512,7 @@
               "description": "Extra headers to send in HTTP requests."
             },
             "stream_receive_window": {
-              "description": "The flow control window.\n\nWhen `quic` is enabled, it sets the initial QUIC stream receive window, and `6 MB` is used by default.\n\nOtherwise, it sets the HTTP/2 session receive window, the stream receive window is set to half of it, and `4 MB` is used by default on iOS, `128 MB` on other platforms.",
+              "description": "The flow control window.\n\nWhen `quic` is enabled, it sets the initial QUIC stream receive window, and `6 MB` will be used by default.\n\nOtherwise, it sets the HTTP/2 session receive window, the stream receive window is set to half of it, and `4 MB` will be used by default on iOS, `128 MB` on other platforms.",
               "anyOf": [
                 {
                   "type": "integer",
@@ -14481,10 +14533,13 @@
                   "type": "object",
                   "properties": {
                     "enabled": {
+                      "description": "Enable the UDP over TCP protocol.",
                       "type": "boolean"
                     },
                     "version": {
+                      "description": "The protocol version, `1` or `2`.",
                       "type": "integer",
+                      "default": 2,
                       "enum": [
                         1,
                         2
@@ -14502,7 +14557,7 @@
               "type": "boolean"
             },
             "quic_congestion_control": {
-              "description": "QUIC congestion control algorithm.\n\n| Algorithm | Description |\n|-----------|-------------|\n| `bbr` | BBR |\n| `bbr2` | BBRv2 |\n| `cubic` | CUBIC |\n| `reno` | New Reno |\n\n`cubic` is used by default (the default of Chromium, which NaiveProxy is based on).",
+              "description": "QUIC congestion control algorithm.\n\n| Algorithm | Description |\n|-----------|-------------|\n| `bbr` | BBR |\n| `bbr2` | BBRv2 |\n| `cubic` | CUBIC |\n| `reno` | New Reno |\n\n`cubic` will be used by default (the default of Chromium, which NaiveProxy is based on).",
               "type": "string",
               "enum": [
                 "bbr",
@@ -14665,7 +14720,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -14775,10 +14830,13 @@
                   "type": "object",
                   "properties": {
                     "enabled": {
+                      "description": "Enable the UDP over TCP protocol.",
                       "type": "boolean"
                     },
                     "version": {
+                      "description": "The protocol version, `1` or `2`.",
                       "type": "integer",
+                      "default": 2,
                       "enum": [
                         1,
                         2
@@ -14900,7 +14958,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -15069,7 +15127,7 @@
                   ]
                 },
                 "network_type": {
-                  "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+                  "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
                   "anyOf": [
                     {
                       "$ref": "#/$defs/InterfaceType"
@@ -15269,7 +15327,7 @@
                   ]
                 },
                 "network_type": {
-                  "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+                  "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
                   "anyOf": [
                     {
                       "$ref": "#/$defs/InterfaceType"
@@ -15463,7 +15521,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -15554,10 +15612,13 @@
                   "type": "object",
                   "properties": {
                     "enabled": {
+                      "description": "Enable the UDP over TCP protocol.",
                       "type": "boolean"
                     },
                     "version": {
+                      "description": "The protocol version, `1` or `2`.",
                       "type": "integer",
+                      "default": 2,
                       "enum": [
                         1,
                         2
@@ -15675,7 +15736,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -15830,7 +15891,7 @@
               "type": "string"
             },
             "private_key": {
-              "description": "Private key.\n\nA random key is used by default.\n\nRequired when the server verifies clients with `users`, or the DERP server verifies clients with\n`verify_client_inbound` or `verify_client_key`.",
+              "description": "Private key.\n\nA random key will be used by default.\n\nRequired when the server verifies clients with `users`, or the DERP server verifies clients with\n`verify_client_inbound` or `verify_client_key`.",
               "type": "string"
             },
             "server_public_key": {
@@ -15987,7 +16048,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -16124,7 +16185,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -16283,7 +16344,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -16468,7 +16529,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -16769,7 +16830,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -16854,7 +16915,7 @@
               "description": "V2Ray Transport configuration, see [V2Ray Transport](/configuration/shared/v2ray-transport/)."
             },
             "packet_encoding": {
-              "description": "UDP packet encoding, xudp is used by default.\n\n| Encoding   | Description           |\n|------------|-----------------------|\n| (none)     | Disabled              |\n| packetaddr | Supported by v2ray 5+ |\n| xudp       | Supported by xray     |",
+              "description": "UDP packet encoding, xudp will be used by default.\n\n| Encoding   | Description           |\n|------------|-----------------------|\n| (none)     | Disabled              |\n| packetaddr | Supported by v2ray 5+ |\n| xudp       | Supported by xray     |",
               "type": "string"
             }
           },
@@ -16962,7 +17023,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -18551,8 +18612,7 @@
             },
             "strategy": {
               "$ref": "#/$defs/DomainStrategy",
-              "description": "DNS resolution strategy, available values are: `prefer_ipv4`, `prefer_ipv6`, `ipv4_only`, `ipv6_only`.",
-              "default": "dns.strategy"
+              "description": "DNS resolution strategy, available values are: `prefer_ipv4`, `prefer_ipv6`, `ipv4_only`, `ipv6_only`.\n\n`dns.strategy` will be used by default."
             },
             "disable_cache": {
               "description": "Disable cache and save cache in this query.\n\n@Since 1.12.0",
@@ -18829,7 +18889,7 @@
               "type": "boolean"
             },
             "dashboard": {
-              "description": "Web dashboard downloaded and served over the API listener at `/dashboard/`; other browser\nrequests are redirected to it.\n\n##### enabled\n\nEnable the dashboard.\n\n##### path\n\nDirectory the dashboard files are stored in.\n\n`dashboard` in the working directory will be used by default.\n\nIf the directory contains files not downloaded by sing-box, they are served as-is.\n\n##### download_url\n\nDownload URL of the dashboard archive (zip).\n\n##### http_client\n\nHTTP client used to download the dashboard.\n\nSee [HTTP Client Fields](/configuration/shared/http-client/) for details.\n\n##### update_interval\n\nUpdate interval of the dashboard.\n\n@Info:\n\n    The object can be replaced with a boolean value (equivalent to `{ \"enabled\": \u003cbool\u003e }`),\n    or with a string path (equivalent to `{ \"enabled\": true, \"path\": \"\u003cstring\u003e\" }`).",
+              "description": "Web dashboard downloaded and served over the API listener at `/dashboard/`; other browser\nrequests are redirected to it.\n\n##### enabled\n\nEnable the dashboard.\n\n##### path\n\nDirectory the dashboard files are stored in.\n\n`dashboard` in the working directory will be used by default.\n\nIf the directory contains files not downloaded by sing-box, they are served as-is.\n\n##### download_url\n\nDownload URL of the dashboard archive (zip).\n\n`https://github.com/SagerNet/sing-box-dashboard/archive/refs/heads/gh-pages.zip` will be used by default.\n\n##### http_client\n\nHTTP client used to download the dashboard.\n\nSee [HTTP Client Fields](/configuration/shared/http-client/) for details.\n\n##### update_interval\n\nUpdate interval of the dashboard.\n\n@Info:\n\n    The object can be replaced with a boolean value (equivalent to `{ \"enabled\": \u003cbool\u003e }`),\n    or with a string path (equivalent to `{ \"enabled\": true, \"path\": \"\u003cstring\u003e\" }`).",
               "default": "1d",
               "anyOf": [
                 {
@@ -19099,6 +19159,7 @@
                           "type": "string"
                         },
                         "engine": {
+                          "description": "HTTP engine to use.\n\nValues:\n\n* `go` (default)\n* `apple`\n\n`apple` uses NSURLSession, only available on Apple platforms.\n\nSupported fields:\n\n* `headers`\n* `tls.server_name` (must match request host)\n* `tls.insecure`\n* `tls.min_version` / `tls.max_version`\n* `tls.certificate` / `tls.certificate_path`\n* `tls.certificate_sha256`\n* `tls.certificate_public_key_sha256`\n* Dial Fields\n\nUnsupported fields:\n\n* `version`\n* `disable_version_fallback`\n* HTTP2 Fields\n* QUIC Fields\n* `tls.engine`\n* `tls.alpn`\n* `tls.disable_sni`\n* `tls.cipher_suites`\n* `tls.curve_preferences`\n* `tls.client_certificate` / `tls.client_certificate_path` / `tls.client_key` / `tls.client_key_path`\n* `tls.fragment` / `tls.record_fragment`\n* `tls.kernel_tx` / `tls.kernel_rx`\n* `tls.ech`\n* `tls.utls`\n* `tls.reality`\n\n@Warning:\n\n    Experimental only: do not use in hot paths on iOS and tvOS.",
                           "type": "string",
                           "enum": [
                             "go",
@@ -19106,7 +19167,9 @@
                           ]
                         },
                         "version": {
+                          "description": "HTTP version.\n\nAvailable values: `1`, `2`, `3`.\n\nWhen `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).",
                           "type": "integer",
+                          "default": 2,
                           "enum": [
                             0,
                             1,
@@ -19115,10 +19178,12 @@
                           ]
                         },
                         "disable_version_fallback": {
+                          "description": "Disable automatic fallback to lower HTTP version.",
                           "type": "boolean"
                         },
                         "headers": {
-                          "$ref": "#/$defs/HTTPHeader"
+                          "$ref": "#/$defs/HTTPHeader",
+                          "description": "Custom HTTP headers.\n\n`Host` header is used as request host."
                         },
                         "tls": {
                           "$ref": "#/$defs/OutboundTLSOptions",
@@ -19214,7 +19279,7 @@
                           ]
                         },
                         "network_type": {
-                          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+                          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
                           "anyOf": [
                             {
                               "$ref": "#/$defs/InterfaceType"
@@ -19312,6 +19377,7 @@
                             "type": "string"
                           },
                           "engine": {
+                            "description": "HTTP engine to use.\n\nValues:\n\n* `go` (default)\n* `apple`\n\n`apple` uses NSURLSession, only available on Apple platforms.\n\nSupported fields:\n\n* `headers`\n* `tls.server_name` (must match request host)\n* `tls.insecure`\n* `tls.min_version` / `tls.max_version`\n* `tls.certificate` / `tls.certificate_path`\n* `tls.certificate_sha256`\n* `tls.certificate_public_key_sha256`\n* Dial Fields\n\nUnsupported fields:\n\n* `version`\n* `disable_version_fallback`\n* HTTP2 Fields\n* QUIC Fields\n* `tls.engine`\n* `tls.alpn`\n* `tls.disable_sni`\n* `tls.cipher_suites`\n* `tls.curve_preferences`\n* `tls.client_certificate` / `tls.client_certificate_path` / `tls.client_key` / `tls.client_key_path`\n* `tls.fragment` / `tls.record_fragment`\n* `tls.kernel_tx` / `tls.kernel_rx`\n* `tls.ech`\n* `tls.utls`\n* `tls.reality`\n\n@Warning:\n\n    Experimental only: do not use in hot paths on iOS and tvOS.",
                             "type": "string",
                             "enum": [
                               "go",
@@ -19319,7 +19385,9 @@
                             ]
                           },
                           "version": {
+                            "description": "HTTP version.\n\nAvailable values: `1`, `2`, `3`.\n\nWhen `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).",
                             "type": "integer",
+                            "default": 2,
                             "enum": [
                               0,
                               1,
@@ -19328,10 +19396,12 @@
                             ]
                           },
                           "disable_version_fallback": {
+                            "description": "Disable automatic fallback to lower HTTP version.",
                             "type": "boolean"
                           },
                           "headers": {
-                            "$ref": "#/$defs/HTTPHeader"
+                            "$ref": "#/$defs/HTTPHeader",
+                            "description": "Custom HTTP headers.\n\n`Host` header is used as request host."
                           },
                           "tls": {
                             "$ref": "#/$defs/OutboundTLSOptions",
@@ -19427,7 +19497,7 @@
                             ]
                           },
                           "network_type": {
-                            "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+                            "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
                             "anyOf": [
                               {
                                 "$ref": "#/$defs/InterfaceType"
@@ -20240,7 +20310,7 @@
               ]
             },
             "network_type": {
-              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+              "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
               "anyOf": [
                 {
                   "$ref": "#/$defs/InterfaceType"
@@ -20596,7 +20666,7 @@
           ]
         },
         "network_type": {
-          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network is used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
+          "description": "Network types to use when using `default` or `hybrid` network strategy or\npreferred network types to use when using `fallback` network strategy.\n\nAvailable values: `wifi`, `cellular`, `ethernet`, `other`.\n\nDevice's default network will be used by default.\n\n@Since 1.11.0\n\n@Quote:\n\n    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.",
           "anyOf": [
             {
               "$ref": "#/$defs/InterfaceType"
@@ -20874,7 +20944,7 @@
             "idle_timeout": {
               "$ref": "#/$defs/Duration",
               "description": "In HTTP2 server:\n\nSpecifies the time until idle clients should be closed with a GOAWAY frame. PING frames are not considered as activity.\n\nIn HTTP2 client:\n\nSpecifies the period of time after which a health check will be performed using a ping frame if no frames have been\nreceived on the connection.Please note that a ping response is considered a received frame, so if there is no other\ntraffic on the connection, the health check will be executed every interval. If the value is zero, no health check will\nbe performed.",
-              "default": "Zero"
+              "default": "0s"
             },
             "ping_timeout": {
               "$ref": "#/$defs/Duration",

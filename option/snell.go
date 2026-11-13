@@ -29,10 +29,12 @@ type _SnellInboundOptions struct {
 
 type AbstractSnellInboundOptions struct {
 	ListenOptions
+
 	// The pre-shared key.
 	//
 	// @Required
 	PSK string `json:"psk"`
+
 	// Snell users.
 	//
 	// When set, the server runs in multi-user mode: each entry has a `name` (optional, used in
@@ -107,14 +109,18 @@ type _SnellOutboundOptions struct {
 type AbstractSnellOutboundOptions struct {
 	DialerOptions
 	ServerOptions
+
 	// The pre-shared key.
 	//
 	// @Required
 	PSK string `json:"psk"`
+
 	// The user key, used to authenticate against a multi-user server.
 	UserKey string `json:"userkey,omitempty"`
+
 	// Enable connection reuse (the Snell v2 `CONNECT` command).
 	Reuse bool `json:"reuse,omitempty"`
+
 	// Enabled network
 	//
 	// One of `tcp` `udp`.
@@ -189,6 +195,7 @@ type SnellObfsClientOptions struct {
 	//
 	// @Indicator: Version 4 only
 	ObfsMode string `json:"obfs_mode,omitempty" enum:"none,http,tls"`
+
 	// The HTTP `Host` header sent when `obfs_mode` is `http`.
 	//
 	// @Default: bing.com

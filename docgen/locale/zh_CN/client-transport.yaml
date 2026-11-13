@@ -49,6 +49,8 @@ ACMEProviderDNS01Challenge.cloudflare: |-
 
 ACMEProviderDNS01Challenge.provider: DNS 提供商。提供商专有字段见下文。
 
+ACMEProviderDNS01ChallengeOptions.provider: DNS 提供商。提供商专有字段见下文。
+
 AbstractACMEProviderDNS01ChallengeOptions.override_domain: |-
   覆盖 DNS 质询记录使用的域名。
 
@@ -161,3 +163,51 @@ UDPOverTCPOptions.version: |-
   协议版本，`1` 或 `2`。
 
   默认使用 2。
+
+ACMEProviderDNS01ChallengeOptions.ACME-DNS: |-
+  ```json
+  {
+    "provider": "acmedns",
+    "username": "",
+    "password": "",
+    "subdomain": "",
+    "server_url": ""
+  }
+  ```
+
+  参阅 [ACME-DNS](https://github.com/joohoi/acme-dns)。
+
+  @Since 1.13.0
+
+ACMEProviderDNS01ChallengeOptions.Alibaba Cloud DNS: |-
+  ```json
+  {
+    "provider": "alidns",
+    "access_key_id": "",
+    "access_key_secret": "",
+    "region_id": "",
+    "security_token": ""
+  }
+  ```
+
+ACMEProviderDNS01ChallengeOptions.Cloudflare: |-
+  ```json
+  {
+    "provider": "cloudflare",
+    "api_token": "",
+    "zone_token": ""
+  }
+  ```
+
+
+ACMEDNS01AliDNSOptions.security_token: |-
+  用于 STS 临时凭证的安全令牌。
+
+  @Since 1.13.0
+
+ACMEDNS01CloudflareOptions.zone_token: |-
+  具有 `Zone:Read` 权限的可选 API 令牌。
+
+  提供后可将 `api_token` 限定到单个区域。
+
+  @Since 1.13.0

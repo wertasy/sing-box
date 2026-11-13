@@ -11,6 +11,7 @@ import (
 // @Tag st-in
 type ShadowTLSInboundOptions struct {
 	ListenOptions
+
 	// ShadowTLS protocol version.
 	//
 	// | Value         | Protocol Version                                                                        |
@@ -21,12 +22,14 @@ type ShadowTLSInboundOptions struct {
 	//
 	// @Example: 3
 	Version int `json:"version,omitempty" enum:"1,2,3"`
+
 	// ShadowTLS password.
 	//
 	// Only available in the ShadowTLS protocol 2.
 	//
 	// @Example: "fuck me till the daylight"
 	Password string `json:"password,omitempty"`
+
 	// ShadowTLS users.
 	//
 	// Only available in the ShadowTLS protocol 3.
@@ -39,6 +42,7 @@ type ShadowTLSInboundOptions struct {
 	//      }
 	//    ]
 	Users []ShadowTLSUser `json:"users,omitempty"`
+
 	// When `wildcard_sni` is configured to `all`, the server address is optional.
 	//
 	// Handshake server address and [Dial Fields](/configuration/shared/dial/).
@@ -47,12 +51,15 @@ type ShadowTLSInboundOptions struct {
 	//    {
 	//      "server": "google.com",
 	//      "server_port": 443,
+	//      ... // Dial Fields
+	//    }
 	//
 	//      ... // Dial Fields
 	//    }
 	//
 	// @Required
 	Handshake ShadowTLSHandshakeOptions `json:"handshake,omitempty"`
+
 	// Handshake server address and [Dial Fields](/configuration/shared/dial/) for specific server name.
 	//
 	// Only available in the ShadowTLS protocol 2/3.
@@ -62,15 +69,22 @@ type ShadowTLSInboundOptions struct {
 	//      "example.com": {
 	//        "server": "example.com",
 	//        "server_port": 443,
+	//        ... // Dial Fields
+	//      }
+	//    }
 	//
 	//        ... // Dial Fields
 	//      }
 	//    }
 	HandshakeForServerName *badjson.TypedMap[string, ShadowTLSHandshakeOptions] `json:"handshake_for_server_name,omitempty"`
+
 	// ShadowTLS strict mode.
 	//
 	// Only available in the ShadowTLS protocol 3.
+	//
+	// @Example: false
 	StrictMode bool `json:"strict_mode,omitempty"`
+
 	// ShadowTLS wildcard SNI mode.
 	//
 	// Available values are:
@@ -84,6 +98,8 @@ type ShadowTLSInboundOptions struct {
 	// Only available in the ShadowTLS protocol 3.
 	//
 	// @Since 1.12.0
+	//
+	// @Example: ""
 	WildcardSNI WildcardSNI `json:"wildcard_sni,omitempty"`
 }
 
@@ -138,6 +154,7 @@ func (w WildcardSNI) DescribeSchema(builder schema.Builder) (*schema.Node, error
 type ShadowTLSUser struct {
 	// User name.
 	Name string `json:"name,omitempty"`
+
 	// User password.
 	Password string `json:"password,omitempty"`
 }
@@ -150,7 +167,14 @@ type ShadowTLSHandshakeOptions struct {
 // @Tag st-out
 type ShadowTLSOutboundOptions struct {
 	DialerOptions
+
+	// @Override server:
+	//    @Example: "127.0.0.1"
+	//
+	// @Override server_port:
+	//    @Example: 1080
 	ServerOptions
+
 	// ShadowTLS protocol version.
 	//
 	// | Value         | Protocol Version                                                                        |
@@ -161,12 +185,14 @@ type ShadowTLSOutboundOptions struct {
 	//
 	// @Example: 3
 	Version int `json:"version,omitempty" enum:"1,2,3"`
+
 	// Set password.
 	//
 	// Only available in the ShadowTLS v2/v3 protocol.
 	//
 	// @Example: "fuck me till the daylight"
 	Password string `json:"password,omitempty"`
+
 	// @Override:
 	//    @Required
 	//

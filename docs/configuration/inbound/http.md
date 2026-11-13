@@ -36,6 +36,7 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 
 !!! question "Since sing-box 1.15.0"
 
+
 List of HTTP versions to serve.
 
 Available values: `1`, `2`, `3`.
@@ -59,7 +60,6 @@ No authentication required if empty.
 !!! quote ""
 
     Only supported on Linux, Android, Windows, and macOS.
-
 !!! warning ""
 
     To work on Android and Apple platforms without privileges, use tun.platform.http_proxy instead.

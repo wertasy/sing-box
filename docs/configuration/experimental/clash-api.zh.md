@@ -84,7 +84,7 @@ RESTful web API 监听地址。如果为空，则禁用 Clash API。
 
 静态网页资源的 ZIP 下载 URL，如果指定的 `external_ui` 目录为空，将使用。
 
-- 默认值：`https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip`
+默认使用 `https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip`。
 
 #### external_ui_download_detour
 
@@ -108,6 +108,7 @@ Clash 中的默认模式，默认使用 `Rule`。
 
 !!! question "自 sing-box 1.10.0 起"
 
+
 允许的 CORS 来源，默认使用 `*`。
 
 要从公共网站访问私有网络上的 Clash API，必须在 `access_control_allow_origin` 中明确指定它而不是使用 `*`。
@@ -115,6 +116,7 @@ Clash 中的默认模式，默认使用 `Rule`。
 #### access_control_allow_private_network
 
 !!! question "自 sing-box 1.10.0 起"
+
 
 允许从私有网络访问。
 
@@ -135,7 +137,6 @@ Clash 中的默认模式，默认使用 `Rule`。
 !!! failure "已在 sing-box 1.8.0 废弃"
 
     `store_selected` 已在 Clash API 中废弃，且默认启用当 `cache_file.enabled`。
-
 !!! note ""
 
     必须为目标出站设置标签。

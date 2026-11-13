@@ -36,6 +36,7 @@
 
 !!! question "自 sing-box 1.15.0 起"
 
+
 提供的 HTTP 版本列表。
 
 可用值：`1`、`2`、`3`。
@@ -59,7 +60,6 @@ HTTP 用户
 !!! quote ""
 
     仅支持 Linux、Android、Windows 和 macOS。
-
 !!! warning ""
 
     要在无特权的 Android 和 iOS 上工作，请改用 tun.platform.http_proxy。

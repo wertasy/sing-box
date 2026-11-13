@@ -16,14 +16,18 @@ type InboundACMEOptions struct {
 	//
 	// ACME will be disabled if empty.
 	Domain badoption.Listable[string] `json:"domain,omitempty"`
+
 	// The directory to store ACME data.
 	//
 	// `$XDG_DATA_HOME/certmagic|$HOME/.local/share/certmagic` will be used if empty.
 	DataDirectory string `json:"data_directory,omitempty"`
+
 	// Server name to use when choosing a certificate if the ClientHello's ServerName field is empty.
 	DefaultServerName string `json:"default_server_name,omitempty"`
+
 	// The email address to use when creating or selecting an existing ACME server account
 	Email string `json:"email,omitempty"`
+
 	// The ACME CA provider to use.
 	//
 	// | Value                   | Provider      |
@@ -32,24 +36,31 @@ type InboundACMEOptions struct {
 	// | `zerossl`               | ZeroSSL       |
 	// | `https://...`           | Custom        |
 	Provider string `json:"provider,omitempty"`
+
 	// Disable all HTTP challenges.
 	DisableHTTPChallenge bool `json:"disable_http_challenge,omitempty"`
+
 	// Disable all TLS-ALPN challenges
 	DisableTLSALPNChallenge bool `json:"disable_tls_alpn_challenge,omitempty"`
+
 	// The alternate port to use for the ACME HTTP challenge; if non-empty, this port will be used instead of 80 to spin up a listener for the HTTP challenge.
 	AlternativeHTTPPort uint16 `json:"alternative_http_port,omitempty"`
+
 	// The alternate port to use for the ACME TLS-ALPN challenge; the system must forward 443 to this port for challenge to succeed.
 	AlternativeTLSPort uint16 `json:"alternative_tls_port,omitempty"`
+
 	// EAB (External Account Binding) contains information necessary to bind or map an ACME account to some other account known by the CA.
 	//
 	// External account bindings are "used to associate an ACME account with an existing account in a non-ACME system, such as a CA customer database.
 	//
 	// To enable ACME account binding, the CA operating the ACME server needs to provide the ACME client with a MAC key and a key identifier, using some mechanism outside of ACME. §7.3.4
 	ExternalAccount *ACMEExternalAccountOptions `json:"external_account,omitempty"`
+
 	// ACME DNS01 challenge field. If configured, other challenge methods will be disabled.
 	//
 	// See [DNS01 Challenge Fields](/configuration/shared/dns01_challenge/) for details.
 	DNS01Challenge *ACMEDNS01ChallengeOptions `json:"dns01_challenge,omitempty"`
+
 	// The ACME profile to use for certificate issuance.
 	//
 	// When empty and `provider` is Let's Encrypt, `shortlived` will be used automatically if any domain is an IP address.
@@ -61,6 +72,7 @@ type InboundACMEOptions struct {
 type ACMEExternalAccountOptions struct {
 	// The key identifier.
 	KeyID string `json:"key_id,omitempty"`
+
 	// The MAC key.
 	MACKey string `json:"mac_key,omitempty"`
 }
@@ -132,11 +144,21 @@ type ACMEDNS01AliDNSOptions struct {
 	AccessKeyID     string `json:"access_key_id,omitempty"`
 	AccessKeySecret string `json:"access_key_secret,omitempty"`
 	RegionID        string `json:"region_id,omitempty"`
-	SecurityToken   string `json:"security_token,omitempty"`
+
+	// The Security Token for STS temporary credentials.
+	//
+	// @Since 1.13.0
+	SecurityToken string `json:"security_token,omitempty"`
 }
 
 type ACMEDNS01CloudflareOptions struct {
-	APIToken  string `json:"api_token,omitempty"`
+	APIToken string `json:"api_token,omitempty"`
+
+	// Optional API token with `Zone:Read` permission.
+	//
+	// When provided, allows `api_token` to be scoped to a single zone.
+	//
+	// @Since 1.13.0
 	ZoneToken string `json:"zone_token,omitempty"`
 }
 

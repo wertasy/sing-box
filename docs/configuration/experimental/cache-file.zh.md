@@ -49,7 +49,7 @@
 
 缓存文件路径，默认使用`cache.db`。
 
-- 默认值：`cache.db`
+默认使用 `cache.db`。
 
 #### cache_id
 
@@ -81,12 +81,13 @@
 
 拒绝的 DNS 响应缓存超时。
 
-- 默认值：`7d`
+默认使用 `7d`。
 - 已废弃。
 
 #### store_dns
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 将 DNS 缓存存储在缓存文件中。
 
@@ -94,13 +95,15 @@
 
 !!! question "自 sing-box 1.15.0 起"
 
+
 写缓存的大小。
 
-- 默认值：`1MB`
+默认使用 `1MB`。
 
 #### flush_interval
 
 !!! question "自 sing-box 1.15.0 起"
+
 
 自动冲刷写缓存的间隔。
 

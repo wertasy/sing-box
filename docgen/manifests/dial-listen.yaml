@@ -1,8 +1,6 @@
 defaults:
   heading: '### Fields'
-
 pages:
-
 - defs:
   - name: DialerOptions
     omit_keys:
@@ -14,18 +12,11 @@ pages:
       domain_resolver: or {}
     comments_zh:
       domain_resolver: 或 {}
-
 - defs:
   - name: redirect
     include_origins:
     - ListenOptions
     - InboundOptions
   file: shared/listen.md
-
 - file: shared/dial.zh.md
-  patches:
-    '### Fields': {}
-
 - file: shared/listen.zh.md
-  patches:
-    '### Fields': {}

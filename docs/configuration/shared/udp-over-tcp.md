@@ -32,7 +32,7 @@ Enable the UDP over TCP protocol.
 
 The protocol version, `1` or `2`.
 
-- Default: `2`
+`2` will be used by default.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

@@ -52,8 +52,6 @@ The port of the DNS server.
 
 `853` will be used by default.
 
-- Default: `53`
-
 #### tls
 
 TLS configuration, see [TLS](/configuration/shared/tls/#outbound).

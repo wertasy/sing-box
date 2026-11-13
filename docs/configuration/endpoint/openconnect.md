@@ -137,7 +137,7 @@ If disabled, sing-box uses the internal network stack.
 
 Custom interface name for the system interface.
 
-An automatically generated `oc` interface name is used by default.
+An automatically generated `oc` interface name will be used by default.
 
 #### server
 
@@ -151,7 +151,7 @@ The `https://` scheme is added if omitted. URL user information, queries, and fr
 
 OpenConnect protocol flavor, one of `anyconnect`, `gp`, `fortinet`, `f5`, `pulse`, or `nc`.
 
-- Default: `anyconnect`
+`anyconnect` will be used by default.
 
 #### username
 
@@ -204,13 +204,13 @@ The default is flavor-specific. AnyConnect, Network Connect, Pulse, and F5 use `
 
 Client version reported separately from `user_agent` when supported by the selected flavor.
 
-- Default: `v9.21`
+`v9.21` will be used by default.
 
 #### local_hostname
 
 Local hostname reported to the VPN server when supported by the selected flavor.
 
-The system hostname is used by default, or `localhost` if it is unavailable.
+The system hostname will be used by default, or `localhost` if it is unavailable.
 
 #### mobile
 
@@ -220,19 +220,19 @@ AnyConnect mobile client identity. When configured, all three fields are require
 
 AnyConnect CSD/host scan compliance options.
 
-Built-in CSD handling is used by default when requested by the server.
+Built-in CSD handling will be used by default when requested by the server.
 
 #### hip
 
 GlobalProtect HIP check and report options.
 
-Built-in HIP reporting is used by default when requested by the server.
+Built-in HIP reporting will be used by default when requested by the server.
 
 #### tncc
 
 Network Connect TNCC compliance options.
 
-Built-in TNCC handling is used by default when requested by the server.
+Built-in TNCC handling will be used by default when requested by the server.
 
 #### fortinet_host_check
 
@@ -250,7 +250,7 @@ Disable the DTLS or ESP secondary data channel and use the TLS data channel only
 
 Local UDP port used by the direct DTLS or ESP secondary data channel.
 
-An automatically selected ephemeral port is used by default.
+An automatically selected ephemeral port will be used by default.
 
 #### compression_disabled
 
@@ -267,7 +267,7 @@ AnyConnect compression mode, one of:
 - `stateless`: Advertise stateless `oc-lz4` and `lzs` compression.
 - `all`: Additionally advertise stateful `deflate` compression for CSTP.
 
-- Default: `stateless`
+`stateless` will be used by default.
 
 #### ipv6_disabled
 
@@ -315,13 +315,13 @@ Base path MTU used to calculate the AnyConnect, GlobalProtect, F5, and Fortinet 
 
 These flavors treat values below `1280` as `1280`. The maximum value is `65535`.
 
-- Default: `1406`
+`1406` will be used by default.
 
 #### dpd_interval
 
 Override the Dead Peer Detection interval.
 
-The server-provided or flavor-specific interval is used by default.
+The server-provided or flavor-specific interval will be used by default.
 
 Positive values below `2s` are treated as `2s`. The value must not be negative.
 
@@ -331,13 +331,13 @@ Maximum accumulated backoff time after failed reconnect attempts.
 
 The value must not be negative.
 
-- Default: `300s`
+`300s` will be used by default.
 
 #### trojan_interval
 
 Override the interval between GlobalProtect HIP reports or Network Connect TNCC checks.
 
-The server-provided interval is used by default. GlobalProtect uses `1h` when the server does not provide one.
+The server-provided interval will be used by default. GlobalProtect uses `1h` when the server does not provide one.
 
 The value must not be negative.
 
@@ -345,7 +345,7 @@ The value must not be negative.
 
 Inbound and outbound packet queue length between the VPN transport and the tunnel interface.
 
-- Default: `32`
+`32` will be used by default.
 
 #### allow_insecure_crypto
 
@@ -367,7 +367,272 @@ An entry matches by `submission_key` when set, or by the combination of `form_id
 
 !!! question "Since sing-box 1.15.0"
 
+
 Allow the endpoint to be disconnected when necessary.
+
+#### token.mode
+
+==Required==
+
+Token mode, one of:
+
+- `totp`: Time-based One-Time Password.
+- `hotp`: HMAC-based One-Time Password.
+- `stoken`: RSA SecurID software token.
+- `oidc`: OIDC access token used for HTTP Bearer authentication.
+
+#### token.secret
+
+Software token secret.
+
+For `totp` and `hotp`, this can be a Base32 secret, a `base32:`-prefixed secret, or an `otpauth://` URI of the matching type.
+
+For `stoken`, this is the encoded RSA SecurID CTF token content.
+
+For `oidc`, this is the access token value.
+
+Conflict with `token.secret_path`.
+
+#### token.secret_path
+
+Path to the software token secret or OIDC access token.
+
+Conflict with `token.secret`.
+
+#### token.pin
+
+RSA SecurID PIN for `stoken` mode.
+
+#### token.password
+
+Password for decrypting a password-protected RSA SecurID token in `stoken` mode.
+
+#### token.device_id
+
+Device ID for decrypting a device-bound RSA SecurID token in `stoken` mode.
+
+#### token.counter
+
+Initial counter for `hotp` mode.
+
+If zero, the counter from an `otpauth://` URI is used when present; otherwise the counter starts at zero.
+
+#### mobile.platform_version
+
+Mobile operating system version reported to the AnyConnect server.
+
+#### mobile.device_type
+
+Mobile device model or type reported to the AnyConnect server.
+
+#### mobile.device_unique_id
+
+Mobile device identifier reported to the AnyConnect server.
+
+#### csd.wrapper_path
+
+Path to an external AnyConnect CSD wrapper executable.
+
+Built-in CSD handling is used if empty.
+
+#### hip.wrapper_path
+
+Path to an external GlobalProtect HIP report wrapper executable.
+
+Built-in HIP reporting is used if empty.
+
+#### tncc.wrapper_path
+
+Path to an external Network Connect TNCC wrapper executable.
+
+Built-in TNCC handling is used if empty.
+
+Conflict with `tncc.device_id`, `tncc.user_agent`, `tncc.machine_identification_enabled`, and `tncc.certificates`.
+
+#### tncc.device_id
+
+Device ID reported by the built-in TNCC handler.
+
+Conflict with `tncc.wrapper_path`.
+
+#### tncc.user_agent
+
+User agent used by the built-in TNCC handler.
+
+`Neoteris HC Http` will be used by default.
+
+Conflict with `tncc.wrapper_path`.
+
+#### tncc.machine_identification_enabled
+
+Enable built-in TNCC machine identification, including the platform, hostname, and observed MAC addresses.
+
+Conflict with `tncc.wrapper_path`.
+
+#### tncc.certificates
+
+Machine certificates used by the built-in TNCC handler to answer certificate requests.
+
+Requires `tncc.machine_identification_enabled`.
+
+Conflict with `tncc.wrapper_path`.
+
+#### tncc.certificates.certificate
+
+TNCC machine certificate content in PEM format.
+
+Conflict with `tncc.certificates.certificate_path`.
+
+#### tncc.certificates.certificate_path
+
+TNCC machine certificate path in PEM format.
+
+Conflict with `tncc.certificates.certificate`.
+
+#### fortinet_host_check.hostcheck
+
+Fortinet hostcheck result string.
+
+The conventional format is `<security-status>,<os-version>`, for example `0100,10.0.19042`. `security-status` contains four `0` or `1` characters representing, in order, third-party firewall, third-party antivirus, FortiClient firewall, and FortiClient antivirus.
+
+#### fortinet_host_check.check_virtual_desktop
+
+Fortinet virtual desktop check result string.
+
+FortiClient conventionally sends colon-separated MAC addresses joined by `|`, for example `74:78:27:4d:81:93|84:1b:77:3a:95:84`.
+
+#### tls.insecure
+
+Disable verification of the VPN server certificate and hostname.
+
+Disabled by default. Prefer `tls.certificate_authority` or `tls.peer_fingerprint` when possible.
+
+#### tls.server_name
+
+Server name used for TLS SNI and certificate hostname verification.
+
+The hostname from `server` will be used by default.
+
+#### tls.peer_fingerprint
+
+Allowed server certificate fingerprints. A single string or a list can be specified.
+
+Supported formats:
+
+- An unprefixed SHA-1 certificate fingerprint compatible with OpenConnect `--servercert`.
+- `sha1:<hex>`: SHA-1 SPKI fingerprint.
+- `sha256:<hex>`: SHA-256 SPKI fingerprint.
+- `pin-sha256:<base64>`: Base64-encoded SHA-256 SPKI pin.
+
+The encoded fingerprint in every format can be abbreviated to a prefix of at least four characters. When configured, the peer certificate must match one of these fingerprints; a match can authorize a certificate that is not otherwise trusted.
+
+#### tls.system_trust_disabled
+
+Disable the system CA certificate pool.
+
+Use `tls.certificate_authority` or `tls.peer_fingerprint` to establish trust when enabled.
+
+#### tls.certificate_authority
+
+Additional trusted CA certificate content in PEM format.
+
+The certificates are added to the system certificate pool.
+
+Conflict with `tls.certificate_authority_path`.
+
+#### tls.certificate_authority_path
+
+Path to additional trusted CA certificates in PEM format.
+
+The certificates are added to the system certificate pool.
+
+Conflict with `tls.certificate_authority`.
+
+#### tls.client_certificate
+
+Client certificate chain content in PEM format.
+
+Conflict with `tls.client_certificate_path`.
+
+#### tls.client_certificate_path
+
+Client certificate chain path in PEM format.
+
+Conflict with `tls.client_certificate`.
+
+#### tls.client_key
+
+Client private key content in PEM format.
+
+Conflict with `tls.client_key_path`.
+
+#### tls.client_key_path
+
+Client private key path in PEM format.
+
+Conflict with `tls.client_key`.
+
+The client certificate and key must both be set or both be empty.
+
+#### tls.client_key_password
+
+Password for the encrypted client private key.
+
+#### tls.mca_certificate
+
+AnyConnect multiple-certificate authentication (MCA) certificate chain content in PEM format.
+
+Conflict with `tls.mca_certificate_path`.
+
+#### tls.mca_certificate_path
+
+AnyConnect multiple-certificate authentication (MCA) certificate chain path in PEM format.
+
+Conflict with `tls.mca_certificate`.
+
+#### tls.mca_key
+
+AnyConnect multiple-certificate authentication (MCA) private key content in PEM format.
+
+Conflict with `tls.mca_key_path`.
+
+#### tls.mca_key_path
+
+AnyConnect multiple-certificate authentication (MCA) private key path in PEM format.
+
+Conflict with `tls.mca_key`.
+
+The MCA certificate and key must both be set or both be empty.
+
+#### tls.mca_key_password
+
+Password for the encrypted MCA private key.
+
+#### form_entries.form_id
+
+Authentication form identifier used with `form_entries.name` when `form_entries.submission_key` is empty.
+
+#### form_entries.submission_key
+
+Authentication field submission key.
+
+Either `form_entries.submission_key` or both `form_entries.form_id` and `form_entries.name` are required.
+
+#### form_entries.name
+
+Authentication field name used with `form_entries.form_id` when `form_entries.submission_key` is empty.
+
+#### form_entries.value
+
+Value supplied automatically for the matching authentication field.
+
+Conflict with `form_entries.promote`.
+
+#### form_entries.promote
+
+Ask for the matching authentication field interactively instead of supplying an automatic value.
+
+Conflict with `form_entries.value`.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -381,10 +646,10 @@ See [UDP NAT Fields](/configuration/shared/udp-nat/) for details.
 See [Dial Fields](/configuration/shared/dial/) for details.
 <!-- AUTO-GENERATED-ORIGIN-END -->
 
-## Interactive authentication
+### Interactive authentication
 
 Use `Tools` > `Endpoints` in the sing-box dashboard or any sing-box graphical client to authenticate and manage the endpoint.
 
-## DNS
+### DNS
 
 Configure an [OpenConnect DNS server](/configuration/dns/server/openconnect/) to use the pushed DNS settings.

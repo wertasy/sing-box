@@ -13,6 +13,7 @@ import (
 
 type SocksInboundOptions struct {
 	ListenOptions
+
 	// SOCKS users.
 	//
 	// No authentication required if empty.
@@ -25,6 +26,7 @@ type SocksInboundOptions struct {
 	//      }
 	//    ]
 	Users []auth.User `json:"users,omitempty"`
+
 	// @Omit
 	DomainResolver *DomainResolveOptions `json:"domain_resolver,omitempty"`
 }
@@ -32,6 +34,7 @@ type SocksInboundOptions struct {
 // @Tag mixed-in
 type HTTPMixedInboundOptions struct {
 	ListenOptions
+
 	// SOCKS and HTTP users.
 	//
 	// No authentication required if empty.
@@ -44,8 +47,10 @@ type HTTPMixedInboundOptions struct {
 	//      }
 	//    ]
 	Users []auth.User `json:"users,omitempty"`
+
 	// @Omit
 	DomainResolver *DomainResolveOptions `json:"domain_resolver,omitempty"`
+
 	// Automatically set system proxy configuration when start and clean up when stop.
 	//
 	// @Quote:
@@ -61,6 +66,7 @@ type HTTPMixedInboundOptions struct {
 
 type _HTTPInboundOptions struct {
 	ListenOptions
+
 	// HTTP users.
 	//
 	// No authentication required if empty.
@@ -73,8 +79,10 @@ type _HTTPInboundOptions struct {
 	//      }
 	//    ]
 	Users []auth.User `json:"users,omitempty"`
+
 	// @Omit
 	DomainResolver *DomainResolveOptions `json:"domain_resolver,omitempty"`
+
 	// Automatically set system proxy configuration when start and clean up when stop.
 	//
 	// @Quote:
@@ -85,6 +93,7 @@ type _HTTPInboundOptions struct {
 	//
 	//     To work on Android and Apple platforms without privileges, use tun.platform.http_proxy instead.
 	SetSystemProxy bool `json:"set_system_proxy,omitempty"`
+
 	// List of HTTP versions to serve.
 	//
 	// Available values: `1`, `2`, `3`.
@@ -137,20 +146,24 @@ func (o HTTPInboundOptions) DescribeSchema(builder schema.Builder) (*schema.Node
 type SOCKSOutboundOptions struct {
 	DialerOptions
 	ServerOptions
+
 	// The SOCKS version, one of `4` `4a` `5`.
 	//
 	// SOCKS5 used by default.
 	//
 	// @Example: "5"
 	Version string `json:"version,omitempty" enum:"4,4a,5"`
+
 	// SOCKS username.
 	//
 	// @Example: "sekai"
 	Username string `json:"username,omitempty"`
+
 	// SOCKS5 password.
 	//
 	// @Example: "admin"
 	Password string `json:"password,omitempty"`
+
 	// Enabled network
 	//
 	// One of `tcp` `udp`.
@@ -159,6 +172,7 @@ type SOCKSOutboundOptions struct {
 	//
 	// @Example: "udp"
 	Network NetworkList `json:"network,omitempty"`
+
 	// UDP over TCP protocol settings.
 	//
 	// See [UDP Over TCP](/configuration/shared/udp-over-tcp/) for details.
@@ -169,30 +183,41 @@ type SOCKSOutboundOptions struct {
 
 type _HTTPOutboundOptions struct {
 	DialerOptions
+
+	// @Override server:
+	//    @Example: "127.0.0.1"
+	//
+	// @Override server_port:
+	//    @Example: 1080
 	// @Override server:
 	//    @Example: "127.0.0.1"
 	//
 	// @Override server_port:
 	//    @Example: 1080
 	ServerOptions
+
 	// Basic authorization username.
 	//
 	// @Example: "sekai"
 	Username string `json:"username,omitempty"`
+
 	// Basic authorization password.
 	//
 	// @Example: "admin"
 	Password string `json:"password,omitempty"`
 	OutboundTLSOptionsContainer
+
 	// Path of HTTP request.
 	Path string `json:"path,omitempty"`
+
 	// Extra headers of HTTP request.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`
+
 	// HTTP version.
 	//
 	// Available values: `1`, `2`, `3`.
 	//
-	// `2` is used by default, or `1` if `path` or the `Host` header is set.
+	// `2` will be used by default, or `1` if `path` or the `Host` header is set.
 	//
 	// `path` and the `Host` header are only available for `1`.
 	//
@@ -200,6 +225,7 @@ type _HTTPOutboundOptions struct {
 	//
 	// @Since 1.15.0
 	Version int `json:"version,omitempty" enum:"0,1,2,3"`
+
 	// Disable automatic fallback to lower HTTP version.
 	//
 	// @Since 1.15.0

@@ -74,6 +74,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.12.0 起"
 
+
 要绑定到的网络接口。
 
 #### routing_mark
@@ -91,6 +92,7 @@ icon: material/new-box
 #### reuse_addr
 
 !!! question "自 sing-box 1.12.0 起"
+
 
 重用监听地址。
 
@@ -110,6 +112,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 禁用 TCP keep alive。
 
 #### tcp_keep_alive
@@ -118,15 +121,16 @@ icon: material/new-box
 
     默认值从 `10m` 更改为 `5m`。
 
+
 TCP keep alive 初始周期。
 
-- 默认值：`5m`
+默认使用 `5m`。
 
 #### tcp_keep_alive_interval
 
 TCP keep alive 间隔。
 
-- 默认值：`75s`
+默认使用 `75s`。
 
 #### tcp_fast_open
 
@@ -148,7 +152,7 @@ TCP keep alive 间隔。
 
 UDP NAT 过期时间。
 
-- 默认值：`5m`
+默认使用 `5m`。
 
 #### detour
 
@@ -196,7 +200,7 @@ UDP NAT 过期时间。
 
 探测超时时间。
 
-- 默认值：`300ms`
+默认使用 `300ms`。
 
 #### udp_disable_domain_unmapping
 
@@ -207,15 +211,5 @@ UDP NAT 过期时间。
 如果启用，对于地址为域的 UDP 代理请求，将在响应中发送原始包地址而不是映射的域。
 
 此选项用于兼容不支持接收带有域地址的 UDP 包的客户端，如 Surge。
-
-#### proxy_protocol
-
-
-- 已废弃。
-
-#### proxy_protocol_accept_no_header
-
-
-- 已废弃。
 
 <!-- AUTO-GENERATED-CONFIG-END -->

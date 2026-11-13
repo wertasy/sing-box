@@ -59,7 +59,7 @@ QUIC 拥塞控制算法。
 | `cubic`        | CUBIC              |
 | `reno`         | New Reno           |
 
-- 默认值：`bbr`
+默认使用 `bbr`。
 
 #### tls
 

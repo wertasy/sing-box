@@ -65,7 +65,6 @@ The server port.
 #### version
 
 ==Required==
-
 !!! note
 
     Since we intentionally do not support the QUIC proxy mode of Snell v5, the v5 wire protocol
@@ -105,7 +104,7 @@ Both is enabled by default.
 
 HTTP obfuscation mode, one of `none` `http`.
 
-- Default: `none`
+`none` will be used by default.
 
 #### obfs_host
 
@@ -113,7 +112,7 @@ HTTP obfuscation mode, one of `none` `http`.
 
 The HTTP `Host` header sent when `obfs_mode` is `http`.
 
-- Default: `bing.com`
+`bing.com` will be used by default.
 
 #### mode
 
@@ -121,7 +120,7 @@ The HTTP `Host` header sent when `obfs_mode` is `http`.
 
 Traffic shaping mode, one of `default` `unshaped` `unsafe-raw`.
 
-- Default: `default`
+`default` will be used by default.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

@@ -88,9 +88,9 @@ Extra headers to send in HTTP requests.
 
 The flow control window.
 
-When `quic` is enabled, it sets the initial QUIC stream receive window, and `6 MB` is used by default.
+When `quic` is enabled, it sets the initial QUIC stream receive window, and `6 MB` will be used by default.
 
-Otherwise, it sets the HTTP/2 session receive window, the stream receive window is set to half of it, and `4 MB` is used by default on iOS, `128 MB` on other platforms.
+Otherwise, it sets the HTTP/2 session receive window, the stream receive window is set to half of it, and `4 MB` will be used by default on iOS, `128 MB` on other platforms.
 
 #### udp_over_tcp
 
@@ -113,7 +113,7 @@ QUIC congestion control algorithm.
 | `cubic` | CUBIC |
 | `reno` | New Reno |
 
-`cubic` is used by default (the default of Chromium, which NaiveProxy is based on).
+`cubic` will be used by default (the default of Chromium, which NaiveProxy is based on).
 
 #### quic_session_receive_window
 
@@ -123,7 +123,7 @@ QUIC congestion control algorithm.
 
 The initial QUIC session receive window.
 
-- Default: `15 MB`
+`15 MB` will be used by default.
 
 #### tls
 

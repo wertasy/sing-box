@@ -90,6 +90,8 @@ If the directory contains files not downloaded by sing-box, they are served as-i
 
 Download URL of the dashboard archive (zip).
 
+`https://github.com/SagerNet/sing-box-dashboard/archive/refs/heads/gh-pages.zip` will be used by default.
+
 ##### http_client
 
 HTTP client used to download the dashboard.
@@ -100,7 +102,7 @@ See [HTTP Client Fields](/configuration/shared/http-client/) for details.
 
 Update interval of the dashboard.
 
-- Default: `1d`
+`1d` will be used by default.
 
 #### tls
 

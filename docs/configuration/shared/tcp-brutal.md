@@ -24,7 +24,7 @@ See [tcp-brutal](https://github.com/apernet/tcp-brutal) for details.
 
 #### enabled
 
-Enable TCP Brutal congestion control algorithm。
+Enable TCP Brutal congestion control algorithm.
 
 #### up_mbps, down_mbps
 

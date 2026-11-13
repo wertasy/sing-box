@@ -256,6 +256,7 @@ Sniffed protocol, see [Protocol Sniff](/configuration/route/sniff/) for details.
 
 !!! question "Since sing-box 1.10.0"
 
+
 Sniffed client type, see [Protocol Sniff](/configuration/route/sniff/) for details.
 
 #### network
@@ -318,6 +319,7 @@ Match source IP CIDR.
 
 !!! question "Since sing-box 1.8.0"
 
+
 Match non-public IP.
 
 #### ip_cidr
@@ -327,6 +329,7 @@ Match IP CIDR.
 #### source_ip_is_private
 
 !!! question "Since sing-box 1.8.0"
+
 
 Match non-public source IP.
 
@@ -379,6 +382,7 @@ Match android package name.
 #### package_name_regex
 
 !!! question "Since sing-box 1.14.0"
+
 
 Match android package name using regular expression.
 
@@ -481,6 +485,7 @@ See [Wi-Fi State](/configuration/shared/wifi-state/) for details.
 
 !!! question "Since sing-box 1.13.0"
 
+
 Match specified outbounds' preferred routes.
 
 | Type        | Match                                              |
@@ -492,6 +497,7 @@ Match specified outbounds' preferred routes.
 #### dns_server_address
 
 !!! question "Since sing-box 1.15.0"
+
 
 Match specified DNS servers' server addresses.
 
@@ -507,6 +513,7 @@ Match specified DNS servers' server addresses.
 #### dns_search_domain
 
 !!! question "Since sing-box 1.15.0"
+
 
 Match specified DNS servers' search domains.
 
@@ -543,15 +550,16 @@ Match source device hostname from DHCP leases.
 
 !!! question "Since sing-box 1.8.0"
 
+
 Match [rule-set](/configuration/route/#rule_set).
 
 #### rule_set_ipcidr_match_source
 
+!!! question "Since sing-box 1.8.0"
+
 !!! failure "Deprecated in sing-box 1.10.0"
 
     `rule_set_ipcidr_match_source` is renamed to `rule_set_ip_cidr_match_source` and will be remove in sing-box 1.11.0.
-
-!!! question "Since sing-box 1.8.0"
 
 Make `ip_cidr` in rule-sets match the source IP.
 
@@ -560,6 +568,7 @@ Make `ip_cidr` in rule-sets match the source IP.
 #### rule_set_ip_cidr_match_source
 
 !!! question "Since sing-box 1.10.0"
+
 
 Make `ip_cidr` in rule-sets match the source IP.
 
@@ -601,9 +610,5 @@ See [Rule Actions](../rule_action/) for details.
 ==Required==
 
 Included rules.
-
-#### invert
-
-Invert match result.
 
 <!-- AUTO-GENERATED-CONFIG-END -->

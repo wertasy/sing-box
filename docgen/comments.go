@@ -15,7 +15,7 @@ type SchemaCommentSource struct {
 // NewSchemaCommentSource parses the option package and returns a comment
 // source for schema generation.
 func NewSchemaCommentSource() (schema.CommentSource, error) {
-	repoRoot, err := findRepoRoot()
+	repoRoot, err := FindRepoRoot()
 	if err != nil {
 		return nil, err
 	}

@@ -1,19 +1,14 @@
 defaults:
   heading: '### Fields'
-
 pages:
-
 - file: shared/certificate-provider/acme.md
   defs:
   - name: acme
   expand:
   - external_account
-
 - file: shared/certificate-provider/cloudflare-origin-ca.md
   defs:
   - name: cloudflare-origin-ca
-
 - file: shared/certificate-provider/tailscale.md
   defs:
-  - name: tailscale
-    registry: CertificateProvider
+  - registry: CertificateProvider

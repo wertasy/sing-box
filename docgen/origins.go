@@ -99,8 +99,9 @@ func (g *generator) pageOrigins(sections []Section) ([]string, error) {
 
 // spliceOriginSections replaces the content of generated origin link
 // sections, appending the heading at EOF when the page documents the origin
-// fields but omits the section.
-func (g *generator) spliceOriginSections(page *Page, sections []Section, lang string, lines []string) ([]string, error) {
+// fields but omits the section. The heading level follows the baseline page
+// when it has the section.
+func (g *generator) spliceOriginSections(page *Page, sections []Section, lang string, lines []string, baselineLines []string) ([]string, error) {
 	if originExcludedFiles[page.File] {
 		return lines, nil
 	}
@@ -115,32 +116,20 @@ func (g *generator) spliceOriginSections(page *Page, sections []Section, lang st
 			headingText = info.zhHeading
 		}
 		heading := "### " + headingText
-		headingIndex := -1
-		for index, line := range lines {
-			if line == heading {
-				headingIndex = index
-				break
-			}
-		}
-		replacement := []string{"", originMarkerStart, renderOriginBody(info, lang), originMarkerEnd}
-		if headingIndex < 0 {
-			lines = append(lines, "", heading, replacement[1], replacement[2], replacement[3])
+		location, found := locateHeading(lines, heading)
+		if !found {
+			lines = append(lines, "", heading, originMarkerStart, renderOriginBody(info, lang), originMarkerEnd)
 			continue
 		}
-		endIndex := len(lines)
-		for inner := headingIndex + 1; inner < len(lines); inner++ {
-			if atxHeadingPattern.MatchString(lines[inner]) {
-				endIndex = inner
-				break
-			}
-		}
-		if endIndex < len(lines) {
+		replacement := []string{"", originMarkerStart, renderOriginBody(info, lang), originMarkerEnd}
+		if location.endIndex < len(lines) {
 			// Keep one blank line before the following heading.
 			replacement = append(replacement, "")
 		}
-		rebuilt := append([]string{}, lines[:headingIndex+1]...)
+		rebuilt := append([]string{}, lines[:location.headingIndex]...)
+		rebuilt = append(rebuilt, heading)
 		rebuilt = append(rebuilt, replacement...)
-		rebuilt = append(rebuilt, lines[endIndex:]...)
+		rebuilt = append(rebuilt, lines[location.endIndex:]...)
 		lines = rebuilt
 	}
 	return lines, nil

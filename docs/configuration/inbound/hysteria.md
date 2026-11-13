@@ -17,16 +17,14 @@
       "auth_str": "password"
     }
   ],
-  "tls": {},
-
-  ... // Listen Fields
-  ... // QUIC Fields
-
-  // Deprecated
   "recv_window_conn": 0,
   "recv_window_client": 0,
   "max_conn_client": 0,
-  "disable_mtu_discovery": false
+  "disable_mtu_discovery": false,
+  "tls": {}
+
+  ... // Listen Fields
+  ... // QUIC Fields
 }
 ```
 <!-- AUTO-GENERATED-EXAMPLE-END -->
@@ -89,28 +87,29 @@ Authentication password.
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
 
-#### users.name
-
-
 #### recv_window_conn
 
+!!! failure "Deprecated in sing-box 1.14.0"
 
-- Deprecated.
+    Use QUIC fields `stream_receive_window` instead.
 
 #### recv_window_client
 
+!!! failure "Deprecated in sing-box 1.14.0"
 
-- Deprecated.
+    Use QUIC fields `connection_receive_window` instead.
 
 #### max_conn_client
 
+!!! failure "Deprecated in sing-box 1.14.0"
 
-- Deprecated.
+    Use QUIC fields `max_concurrent_streams` instead.
 
 #### disable_mtu_discovery
 
+!!! failure "Deprecated in sing-box 1.14.0"
 
-- Deprecated.
+    Use QUIC fields `disable_path_mtu_discovery` instead.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

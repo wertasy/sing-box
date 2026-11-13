@@ -55,13 +55,13 @@ QUIC congestion control algorithm
 
 One of: `cubic`, `new_reno`, `bbr`
 
-- Default: `cubic`
+`cubic` will be used by default.
 
 #### auth_timeout
 
 How long the server should wait for the client to send the authentication command
 
-- Default: `3s`
+`3s` will be used by default.
 
 #### zero_rtt_handshake
 
@@ -76,16 +76,13 @@ This is not impacting much on the performance, as the protocol is fully multiple
 
 Interval for sending heartbeat packets for keeping the connection alive
 
-- Default: `10s`
+`10s` will be used by default.
 
 #### tls
 
 ==Required==
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
-
-#### users.name
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

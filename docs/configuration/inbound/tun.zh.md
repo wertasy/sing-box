@@ -242,7 +242,6 @@ tun 接口的 IPv4 和 IPv6 前缀。
 !!! failure "已在 sing-box 1.10.0 废弃"
 
     `inet4_address` 已合并到 `address` 且将在 sing-box 1.12.0 中被移除。
-
 ==必填==
 
 tun 接口的 IPv4 前缀。
@@ -266,6 +265,7 @@ tun 接口的 IPv6 前缀。
 #### dns_mode
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 TUN 接口上 DNS 的处理方式。
 
@@ -291,6 +291,7 @@ TUN 接口上 DNS 的处理方式。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 [`dns_mode`](#dns_mode) 使用的 DNS 服务器地址列表。
 
 未设置时，使用 [`address`](#address) 中第一个 IPv4 和 IPv6 条目的下一个地址，
@@ -301,12 +302,11 @@ TUN 接口上 DNS 的处理方式。
 
 #### gso
 
+!!! question "自 sing-box 1.8.0 起"
+
 !!! failure "已在 sing-box 1.11.0 废弃"
 
     GSO 对于透明代理场景没有优势，已废弃和不再生效，且将在 sing-box 1.12.0 中被移除。
-
-!!! question "自 sing-box 1.8.0 起"
-
 !!! quote ""
 
     仅支持 Linux。
@@ -320,11 +320,9 @@ TUN 接口上 DNS 的处理方式。
 !!! quote ""
 
     为避免流量环回，请设置 `route.auto_detect_interface` 或 `route.default_interface` 或 `outbound.bind_interface`。
-
 !!! note "与 Android VPN 一起使用"
 
     VPN 默认优先于 tun。要使 tun 经过 VPN，启用 `route.override_android_vpn`。
-
 !!! note "也启用 `auto_redirect`"
 
   在 Linux 上始终推荐使用 `auto_redirect`，它提供更好的路由， 更高的性能（优于 tproxy）， 并避免 TUN 与 Docker 桥接网络冲突。
@@ -335,17 +333,19 @@ TUN 接口上 DNS 的处理方式。
 
 !!! question "自 sing-box 1.10.0 起"
 
+
 `auto_route` 生成的 iproute2 路由表索引。
 
-- 默认值：`2022`
+默认使用 `2022`。
 
 #### iproute2_rule_index
 
 !!! question "自 sing-box 1.10.0 起"
 
+
 `auto_route` 生成的 iproute2 规则起始索引。
 
-- 默认值：`9000`
+默认使用 `9000`。
 
 #### auto_redirect
 
@@ -371,6 +371,7 @@ TUN 接口上 DNS 的处理方式。
 
 !!! question "自 sing-box 1.10.0 起"
 
+
 `auto_redirect` 使用的连接输入标记。
 
 默认使用 `0x2023`（Android 上为 `0x400000`）。
@@ -378,6 +379,7 @@ TUN 接口上 DNS 的处理方式。
 #### auto_redirect_output_mark
 
 !!! question "自 sing-box 1.10.0 起"
+
 
 `auto_redirect` 使用的连接输出标记。
 
@@ -387,6 +389,7 @@ TUN 接口上 DNS 的处理方式。
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 `auto_redirect` 预匹配使用的连接重置标记。
 
 默认使用 `0x2025`（Android 上为 `0x600000`）。
@@ -394,6 +397,7 @@ TUN 接口上 DNS 的处理方式。
 #### auto_redirect_tproxy_mark
 
 !!! question "自 sing-box 1.15.0 起"
+
 
 `auto_redirect` iptables 后端为 IPv6 TCP 使用的连接 TPROXY 标记。
 
@@ -403,20 +407,22 @@ TUN 接口上 DNS 的处理方式。
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 `auto_redirect` 预匹配使用的 NFQueue 编号。
 
-- 默认值：`100`
+默认使用 `100`。
 
 #### auto_redirect_iproute2_fallback_rule_index
 
 !!! question "自 sing-box 1.12.18 起"
+
 
 `auto_redirect` 生成的 iproute2 回退规则索引。
 
 此规则在系统默认规则（32766: main，32767: default）之后检查，
 仅当系统路由表中未找到路由时才将流量路由到 sing-box 路由表。
 
-- 默认值：`32768`
+默认使用 `32768`。
 
 #### exclude_mptcp
 
@@ -435,6 +441,7 @@ TUN 接口上 DNS 的处理方式。
 #### loopback_address
 
 !!! question "自 sing-box 1.12.0 起"
+
 
 环回地址是用于使指向指定地址的 TCP 连接连接到来源地址的。
 
@@ -465,6 +472,7 @@ TUN 接口上 DNS 的处理方式。
 
 !!! question "自 sing-box 1.10.0 起"
 
+
 设置到 Tun 的自定义路由。
 
 #### inet4_route_address
@@ -491,6 +499,7 @@ TUN 接口上 DNS 的处理方式。
 
 !!! question "自 sing-box 1.10.0 起"
 
+
 设置到 Tun 的排除自定义路由。
 
 #### inet4_route_exclude_address
@@ -515,7 +524,6 @@ TUN 接口上 DNS 的处理方式。
 
 #### route_address_set
 
-!!! question "自 sing-box 1.10.0 起"
 
 === "`auto_redirect` 已启用"
 
@@ -540,7 +548,6 @@ TUN 接口上 DNS 的处理方式。
 
 #### route_exclude_address_set
 
-!!! question "自 sing-box 1.10.0 起"
 
 === "`auto_redirect` 已启用"
 
@@ -580,11 +587,9 @@ TUN 接口上 DNS 的处理方式。
     `stack` 已废弃，并将在 sing-box 1.17.0 中被移除。
     移除 `stack` 参数以使用 sing-tun 自有的 TCP/IP stack。
     参阅[迁移指南](/zh/migration/#迁移-tun-stack)。
-
 !!! quote "sing-box 1.15.0 中的更改"
 
     自 1.15.0 起，sing-tun 使用自有 TCP/IP stack，极限性能、能效以及内存占用均大幅领先于所有旧实现。
-
 !!! quote "sing-box 1.8.0 中的更改"
 
     :material-delete-alert: 旧的 LWIP 栈已被弃用并移除。
@@ -698,23 +703,23 @@ TCP/IP 栈。
 
 系统 HTTP 代理设置。
 
-#### platform.http_proxy.enabled
+##### platform.http_proxy.enabled
 
 启用系统 HTTP 代理。
 
-#### platform.http_proxy.server
+##### platform.http_proxy.server
 
 ==必填==
 
 系统 HTTP 代理服务器地址。
 
-#### platform.http_proxy.server_port
+##### platform.http_proxy.server_port
 
 ==必填==
 
 系统 HTTP 代理服务器端口。
 
-#### platform.http_proxy.bypass_domain
+##### platform.http_proxy.bypass_domain
 
 !!! note ""
 
@@ -722,7 +727,7 @@ TCP/IP 栈。
 
 绕过代理的主机名列表。
 
-#### platform.http_proxy.match_domain
+##### platform.http_proxy.match_domain
 
 !!! quote ""
 

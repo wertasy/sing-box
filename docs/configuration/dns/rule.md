@@ -317,6 +317,7 @@ DNS query type. Values can be integers or type name strings.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Match the `edns0-subnet` OPT extra record (EDNS Client Subnet) in the query.
 
 A listed prefix matches when it is no more specific than the received client subnet and contains its address.
@@ -326,6 +327,7 @@ If value is an IP address instead of prefix, `/32` or `/128` will be appended au
 #### query_dnssec
 
 !!! question "Since sing-box 1.14.0"
+
 
 Match queries with the DNSSEC OK (`DO`) bit set.
 
@@ -383,6 +385,7 @@ Match source IP CIDR.
 
 !!! question "Since sing-box 1.8.0"
 
+
 Match non-public source IP.
 
 #### source_port
@@ -434,6 +437,7 @@ Match android package name.
 #### package_name_regex
 
 !!! question "Since sing-box 1.14.0"
+
 
 Match android package name using regular expression.
 
@@ -544,6 +548,7 @@ Match source device hostname from DHCP leases.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Match specified DNS servers' preferred domains.
 
 | Type          | Match                                                                        |
@@ -559,6 +564,7 @@ Match specified DNS servers' preferred domains.
 
 !!! question "Since sing-box 1.15.0"
 
+
 Match specified DNS servers' server addresses.
 
 | Type          | Match                                         |
@@ -573,6 +579,7 @@ Match specified DNS servers' server addresses.
 #### dns_search_domain
 
 !!! question "Since sing-box 1.15.0"
+
 
 Match specified DNS servers' search domains.
 
@@ -605,15 +612,16 @@ Match WiFi BSSID.
 
 !!! question "Since sing-box 1.8.0"
 
+
 Match [rule-set](/configuration/route/#rule_set).
 
 #### rule_set_ipcidr_match_source
 
+!!! question "Since sing-box 1.9.0"
+
 !!! failure "Deprecated in sing-box 1.10.0"
 
     `rule_set_ipcidr_match_source` is renamed to `rule_set_ip_cidr_match_source` and will be remove in sing-box 1.11.0.
-
-!!! question "Since sing-box 1.9.0"
 
 Make `ip_cidr` rule items in rule-sets match the source IP.
 
@@ -623,11 +631,13 @@ Make `ip_cidr` rule items in rule-sets match the source IP.
 
 !!! question "Since sing-box 1.10.0"
 
+
 Make `ip_cidr` rule items in rule-sets match the source IP.
 
 #### match_response
 
 !!! question "Since sing-box 1.14.0"
+
 
 Enable response-based matching. When enabled, this rule matches against the evaluated response
 (set by a preceding [`evaluate`](/configuration/dns/rule_action/#evaluate) action)
@@ -645,6 +655,7 @@ Also required for `ip_cidr`, `ip_is_private`, and `ip_accept_any` when used with
 #### ip_accept_any
 
 !!! question "Since sing-box 1.12.0"
+
 
 Match when the DNS query response contains at least one address.
 
@@ -692,45 +703,6 @@ See [DNS Rule Actions](../rule_action/) for details.
 
     Moved to [DNS Rule Action](../rule_action#route).
 
-#### ip_cidr
-
-!!! question "Since sing-box 1.9.0"
-
-Match IP CIDR with query response.
-
-As a Legacy Address Filter Field, deprecated. Use with `match_response` instead,
-check [Migration](/migration/#migrate-address-filter-fields-to-response-matching).
-
-#### ip_is_private
-
-!!! question "Since sing-box 1.9.0"
-
-Match private IP with query response.
-
-As a Legacy Address Filter Field, deprecated. Use with `match_response` instead,
-check [Migration](/migration/#migrate-address-filter-fields-to-response-matching).
-
-#### geoip
-
-!!! failure "Removed in sing-box 1.12.0"
-
-    GeoIP is deprecated in sing-box 1.8.0 and removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geoip-to-rule-sets).
-
-Match GeoIP with query response.
-
-#### rule_set_ip_cidr_accept_empty
-
-!!! failure "Deprecated in sing-box 1.14.0"
-
-    `rule_set_ip_cidr_accept_empty` is deprecated and will be removed in sing-box 1.16.0,
-    check [Migration](/migration/#migrate-address-filter-fields-to-response-matching).
-
-!!! question "Since sing-box 1.10.0"
-
-Make `ip_cidr` rules in rule-sets accept empty query response.
-
-- Deprecated.
-
 <!-- AUTO-GENERATED-CONFIG-END -->
 
 ### Legacy Address Filter Fields
@@ -765,6 +737,7 @@ Match GeoIP with query response.
 
 !!! question "Since sing-box 1.9.0"
 
+
 Match IP CIDR with query response.
 
 As a Legacy Address Filter Field, deprecated. Use with `match_response` instead,
@@ -774,6 +747,7 @@ check [Migration](/migration/#migrate-address-filter-fields-to-response-matching
 
 !!! question "Since sing-box 1.9.0"
 
+
 Match private IP with query response.
 
 As a Legacy Address Filter Field, deprecated. Use with `match_response` instead,
@@ -781,56 +755,15 @@ check [Migration](/migration/#migrate-address-filter-fields-to-response-matching
 
 #### rule_set_ip_cidr_accept_empty
 
+!!! question "Since sing-box 1.10.0"
+
 !!! failure "Deprecated in sing-box 1.14.0"
 
     `rule_set_ip_cidr_accept_empty` is deprecated and will be removed in sing-box 1.16.0,
     check [Migration](/migration/#migrate-address-filter-fields-to-response-matching).
 
-!!! question "Since sing-box 1.10.0"
 
 Make `ip_cidr` rules in rule-sets accept empty query response.
-
-- Deprecated.
-
-#### outbound
-
-!!! failure "Deprecated in sing-box 1.12.0"
-
-    `outbound` rule items are deprecated and will be removed in sing-box 1.14.0, check [Migration](/migration/#migrate-outbound-dns-rule-items-to-domain-resolver).
-
-Match outbound.
-
-`any` can be used as a value to match any outbound.
-
-#### geosite
-
-!!! failure "Deprecated in sing-box 1.8.0"
-
-    Geosite is deprecated and will be removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geosite-to-rule-sets).
-
-Match geosite.
-
-- Deprecated.
-
-#### source_geoip
-
-!!! failure "Deprecated in sing-box 1.8.0"
-
-    GeoIP is deprecated and will be removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geoip-to-rule-sets).
-
-Match source geoip.
-
-#### rule_set_ipcidr_match_source
-
-!!! failure "Deprecated in sing-box 1.10.0"
-
-    `rule_set_ipcidr_match_source` is renamed to `rule_set_ip_cidr_match_source` and will be remove in sing-box 1.11.0.
-
-!!! question "Since sing-box 1.9.0"
-
-Make `ip_cidr` rule items in rule-sets match the source IP.
-
-- Deprecated.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -869,67 +802,6 @@ Record format is the same as in [predefined action ns](/configuration/dns/rule_a
 Match DNS extra records.
 
 Record format is the same as in [predefined action extra](/configuration/dns/rule_action/#extra).
-
-#### outbound
-
-!!! failure "Deprecated in sing-box 1.12.0"
-
-    `outbound` rule items are deprecated and will be removed in sing-box 1.14.0, check [Migration](/migration/#migrate-outbound-dns-rule-items-to-domain-resolver).
-
-Match outbound.
-
-`any` can be used as a value to match any outbound.
-
-#### geosite
-
-!!! failure "Deprecated in sing-box 1.8.0"
-
-    Geosite is deprecated and will be removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geosite-to-rule-sets).
-
-Match geosite.
-
-- Deprecated.
-
-#### source_geoip
-
-!!! failure "Deprecated in sing-box 1.8.0"
-
-    GeoIP is deprecated and will be removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geoip-to-rule-sets).
-
-Match source geoip.
-
-#### geoip
-
-!!! failure "Removed in sing-box 1.12.0"
-
-    GeoIP is deprecated in sing-box 1.8.0 and removed in sing-box 1.12.0, check [Migration](/migration/#migrate-geoip-to-rule-sets).
-
-Match GeoIP with query response.
-
-#### rule_set_ip_cidr_accept_empty
-
-!!! failure "Deprecated in sing-box 1.14.0"
-
-    `rule_set_ip_cidr_accept_empty` is deprecated and will be removed in sing-box 1.16.0,
-    check [Migration](/migration/#migrate-address-filter-fields-to-response-matching).
-
-!!! question "Since sing-box 1.10.0"
-
-Make `ip_cidr` rules in rule-sets accept empty query response.
-
-- Deprecated.
-
-#### rule_set_ipcidr_match_source
-
-!!! failure "Deprecated in sing-box 1.10.0"
-
-    `rule_set_ipcidr_match_source` is renamed to `rule_set_ip_cidr_match_source` and will be remove in sing-box 1.11.0.
-
-!!! question "Since sing-box 1.9.0"
-
-Make `ip_cidr` rule items in rule-sets match the source IP.
-
-- Deprecated.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

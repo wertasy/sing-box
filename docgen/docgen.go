@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -33,6 +34,14 @@ type generator struct {
 	ast      *ASTIndex
 	schema   *SchemaIndex
 	locale   *Locale
+
+	// structDocEmitted tracks `@Doc` keys already rendered on the current
+	// page so that sections sharing a definition root do not repeat them.
+	structDocEmitted map[string]bool
+
+	// structDocSectionRoots holds the roots of sections that declare their
+	// own `root` and therefore own the `@Doc` keys of that struct.
+	structDocSectionRoots map[string]bool
 }
 
 // Run regenerates or verifies the configuration documentation. When only is
@@ -42,7 +51,7 @@ func Run(check bool, base string, only []string) error {
 	if base == "" {
 		base = DefaultBaseSha
 	}
-	repoRoot, err := findRepoRoot()
+	repoRoot, err := FindRepoRoot()
 	if err != nil {
 		return err
 	}
@@ -58,17 +67,35 @@ func Run(check bool, base string, only []string) error {
 		return err
 	}
 	if len(only) > 0 {
-		var filtered []Page
+		matched := make(map[string]bool)
 		for _, page := range manifest.Pages {
 			for _, pattern := range only {
-				if matched, _ := filepath.Match(pattern, page.File); matched {
-					filtered = append(filtered, page)
+				ok, err := path.Match(pattern, page.File)
+				if err != nil {
+					return fmt.Errorf("--only %s: %w", pattern, err)
+				}
+				if ok {
+					matched[page.File] = true
 					break
 				}
 			}
 		}
-		if len(filtered) == 0 {
+		if len(matched) == 0 {
 			return fmt.Errorf("--only %s: no matching pages in manifest", strings.Join(only, ","))
+		}
+		// Keep the English twin of matched localized pages so
+		// ResolveSections can resolve inherited sections.
+		needed := make(map[string]bool)
+		for _, page := range manifest.Pages {
+			if matched[page.File] && page.Twin != "" && !matched[page.Twin] {
+				needed[page.Twin] = true
+			}
+		}
+		var filtered []Page
+		for _, page := range manifest.Pages {
+			if matched[page.File] || needed[page.File] {
+				filtered = append(filtered, page)
+			}
 		}
 		manifest.Pages = filtered
 	}
@@ -146,6 +173,8 @@ func (g *generator) run() error {
 
 // renderPage renders one page and audits it against the baseline version.
 func (g *generator) renderPage(page *Page) ([]error, string, error) {
+	g.structDocEmitted = make(map[string]bool)
+	g.structDocSectionRoots = make(map[string]bool)
 	sections, err := page.ResolveSections(g.manifest)
 	if err != nil {
 		return nil, "", err
@@ -175,17 +204,58 @@ func (g *generator) renderPage(page *Page) ([]error, string, error) {
 		twinLines = strings.Split(string(twinContent), "\n")
 		break
 	}
+	for _, section := range sections {
+		if section.Root != "" {
+			g.structDocSectionRoots[section.Root] = true
+		}
+	}
 	var allIssues []error
+	baseline, err := g.baselinePage(page.File)
+	if err != nil {
+		return nil, "", err
+	}
+	baselineLines := strings.Split(baseline, "\n")
+	// Resolve localized section headings against the untouched page text:
+	// earlier splices shift the heading ordinals used by the twin mapping.
+	originalLines := append([]string(nil), lines...)
 	for sectionIndex := range sections {
 		section := &sections[sectionIndex]
-		if section.Heading == "" {
-			resolved, err := twinHeadingByOrdinal(twinLines, section.EnHeading, lines)
-			if err != nil {
-				return nil, "", err
-			}
-			section.Heading = resolved
+		if section.Heading != "" {
+			continue
 		}
-		location, err := locateSection(lines, section.Heading)
+		resolved, err := twinHeadingByOrdinal(twinLines, section.EnHeading, originalLines)
+		if err != nil {
+			return nil, "", err
+		}
+		section.Heading = resolved
+	}
+	for sectionIndex := range sections {
+		section := &sections[sectionIndex]
+		// Generated sections keep the level declared by the manifest (or the
+		// english twin heading for localized pages) instead of inheriting the
+		// legacy page level, so structural sections stay consistent across
+		// page families; only the heading text is localized.
+		emittedHeading := section.Heading
+		headingLevel := atxHeadingLevel(section.Heading)
+		if section.EnHeading != "" {
+			// Localized pages inherit the structural level from the english
+			// twin even when the localized heading still uses a legacy level.
+			headingLevel = atxHeadingLevel(section.EnHeading)
+		}
+		if headingLevel > 0 {
+			emittedHeading = strings.Repeat("#", headingLevel) + " " + headingText(emittedHeading)
+		}
+		// Audit against the baseline document. Pages newly entering the
+		// pipeline have no baseline section under the new heading; the audit
+		// falls back to an empty baseline (additions are not regressions).
+		baselineSection, err := extractOldSection(baselineLines, section.Heading, section.Format)
+		if err != nil {
+			if !strings.Contains(err.Error(), "not found") {
+				return nil, "", fmt.Errorf("section %q: %w", section.Heading, err)
+			}
+			baselineSection = &oldSection{heading: section.Heading, prose: make(map[string][]string), levels: make(map[string]int)}
+		}
+		location, err := locateSection(lines, emittedHeading)
 		if err != nil {
 			return nil, "", fmt.Errorf("section %q: %w", section.Heading, err)
 		}
@@ -193,38 +263,38 @@ func (g *generator) renderPage(page *Page) ([]error, string, error) {
 		if err != nil {
 			return nil, "", fmt.Errorf("section %q: %w", section.Heading, err)
 		}
-		blocks, err := g.sectionBlocks(page.File, section, lang)
+		fieldLevel := atxHeadingLevel(emittedHeading) + 1
+		keyLevels := baselineSection.levels
+		if baselineLocation, found := locateHeading(baselineLines, section.Heading); found && baselineLocation.level > 0 && atxHeadingLevel(emittedHeading) > 0 {
+			// Field headings keep the relative depth documented by the
+			// baseline, shifted together with the section level.
+			shift := atxHeadingLevel(emittedHeading) - baselineLocation.level
+			if shift != 0 {
+				keyLevels = make(map[string]int, len(baselineSection.levels))
+				for key, level := range baselineSection.levels {
+					keyLevels[key] = level + shift
+				}
+			}
+		}
+		blocks, err := g.sectionBlocks(page.File, section, lang, fieldLevel, keyLevels)
 		if err != nil {
 			return nil, "", fmt.Errorf("section %q: %w", section.Heading, err)
 		}
 		blocks = orderBlocks(blocks, parts.oldOrder)
 		replacement := renderSection(parts, blocks)
-		// Audit against the baseline document. Pages newly entering the
-		// pipeline have no baseline section under the new heading; the audit
-		// falls back to an empty baseline (additions are not regressions).
-		baseline, err := g.baselinePage(page.File)
-		if err != nil {
-			return nil, "", err
-		}
-		baselineSection, err := extractOldSection(strings.Split(baseline, "\n"), section.Heading, section.Format)
-		if err != nil {
-			if !strings.Contains(err.Error(), "not found") {
-				return nil, "", fmt.Errorf("section %q: %w", section.Heading, err)
-			}
-			baselineSection = &oldSection{heading: section.Heading, prose: make(map[string][]string)}
-		}
 		newKeys := make(map[string][]string)
 		for _, block := range blocks {
-			newKeys[blockKey(block)] = blockProse(block)
+			newKeys[blockKey(block)] = blockAuditLines(block)
 		}
-		allIssues = append(allIssues, auditSectionCompare(page.File, section.Heading, baselineSection, newKeys, lang)...)
+		allIssues = append(allIssues, auditSectionCompare(page.File, section.Heading, baselineSection, newKeys, lang, section.RemoveKeys)...)
+		lines[location.headingIndex] = emittedHeading
 		lines = spliceSection(lines, location, replacement)
 	}
-	lines, err = g.spliceOriginSections(page, sections, lang, lines)
+	lines, err = g.spliceOriginSections(page, sections, lang, lines, baselineLines)
 	if err != nil {
 		return nil, "", err
 	}
-	lines, err = g.spliceExample(page, sections, lang, lines)
+	lines, err = g.spliceExample(page, sections, lang, lines, baselineLines)
 	if err != nil {
 		return nil, "", err
 	}
@@ -297,15 +367,22 @@ func englishPageName(file string) string {
 }
 
 // sectionBlocks renders the generated field blocks of one section in
-// generation order.
-func (g *generator) sectionBlocks(pageFile string, section *Section, lang string) ([]string, error) {
+// generation order. Field headings render at fieldLevel, or at the level the
+// baseline documents for the key when known (nested keys may sit one level
+// deeper on some pages).
+func (g *generator) sectionBlocks(pageFile string, section *Section, lang string, fieldLevel int, keyLevels map[string]int) ([]string, error) {
 	type entryInfo struct {
-		key    string
-		prose  []string
-		tags   []string
-		root   string
-		origin string
-		field  string
+		key     string
+		prose   []string
+		tags    []string
+		root    string
+		origin  string
+		field   string
+		heading string
+
+		// nested holds pre-rendered `#####` sections for variant holder
+		// documentation blocks (e.g. provider-specific fields).
+		nested []string
 	}
 	entriesByKey := make(map[string]*entryInfo)
 	var order []string
@@ -317,6 +394,9 @@ func (g *generator) sectionBlocks(pageFile string, section *Section, lang string
 				existing.origin = info.origin
 				existing.field = info.field
 			}
+			if len(existing.nested) == 0 {
+				existing.nested = info.nested
+			}
 			if len(existing.tags) == 0 {
 				existing.tags = info.tags
 			}
@@ -326,11 +406,13 @@ func (g *generator) sectionBlocks(pageFile string, section *Section, lang string
 		entriesByKey[info.key] = &copied
 		order = append(order, info.key)
 	}
+	var structDocRoots []string
 	for _, rawDef := range section.Defs {
 		def, rootNode, err := g.schema.ResolveDef(rawDef)
 		if err != nil {
 			return nil, err
 		}
+		structDocRoots = append(structDocRoots, def.Root)
 		// The Go struct is the source of truth for documented keys; the schema
 		// node, when present, only supplies type labels and enum checks.
 		flattened, err := g.ast.Flatten(def.Root, nil)
@@ -399,6 +481,9 @@ func (g *generator) sectionBlocks(pageFile string, section *Section, lang string
 			}
 		}
 	}
+	if section.Root != "" {
+		structDocRoots = append(structDocRoots, section.Root)
+	}
 	// Manifest extras are reserved for keys removed from the code: a struct
 	// field with the same key must be documented from its comment instead.
 	for _, key := range sortedExtraKeys(section.Extras) {
@@ -420,6 +505,59 @@ func (g *generator) sectionBlocks(pageFile string, section *Section, lang string
 		}
 		add(entryInfo{key: key, prose: prose})
 	}
+	// Documentation blocks declared in the definition struct's own doc
+	// comment via `@Doc <key>:` markers: prose for keys without a struct
+	// field (legacy keys, synthesized keys, multi-field combinations).
+	structDocKeys := make([]string, 0)
+	structDocSeen := make(map[string]bool)
+	structDocProse := make(map[string][]string)
+	structDocRoot := make(map[string]string)
+	for _, root := range structDocRoots {
+		if section.Root == "" && g.structDocSectionRoots[root] {
+			continue
+		}
+		for key, prose := range g.ast.StructExtras(root) {
+			if _, exists := entriesByKey[key]; exists {
+				continue
+			}
+			if structDocSeen[key] {
+				continue
+			}
+			docRoot := root
+			if owner := g.ast.StructDocOwner(root, key); owner != "" {
+				docRoot = owner
+			}
+			documented := false
+			if len(keyLevels) > 0 {
+				_, documented = keyLevels[key]
+				if !documented {
+					if localized := g.localizedHeading(docRoot, key, lang); localized != "" {
+						_, documented = keyLevels[localized]
+					}
+				}
+				if !documented {
+					continue
+				}
+			}
+			if g.structDocEmitted[key] && !documented {
+				continue
+			}
+			structDocSeen[key] = true
+			structDocKeys = append(structDocKeys, key)
+			structDocProse[key] = prose
+			structDocRoot[key] = docRoot
+			g.structDocEmitted[key] = true
+		}
+	}
+	sort.Strings(structDocKeys)
+	for _, key := range structDocKeys {
+		root := structDocRoot[key]
+		nested, err := g.nestedDocBlocks(root, key, lang, fieldLevel)
+		if err != nil {
+			return nil, err
+		}
+		add(entryInfo{key: key, prose: structDocProse[key], root: root, origin: root, nested: nested})
+	}
 	// Locale pass for zh pages.
 	if lang == "zh" {
 		for _, key := range order {
@@ -436,6 +574,7 @@ func (g *generator) sectionBlocks(pageFile string, section *Section, lang string
 			if description, found := g.locale.Lookup(candidates...); found {
 				info.prose = splitProse(description)
 			}
+			info.heading = g.localizedHeading(info.root, key, lang)
 			// Per-section zh prose variants (e.g. an option whose description
 			// differs between the en and zh page).
 			if override, ok := section.Overrides[key]; ok {
@@ -450,7 +589,48 @@ func (g *generator) sectionBlocks(pageFile string, section *Section, lang string
 		if lang == "zh" && hasCJK(strings.Join(info.prose, "\n")) {
 			proseLang = "zh"
 		}
-		blocks = append(blocks, renderFieldBlock(key, expandProse(markersFirst(info.prose), lang, proseLang), info.tags))
+		level := fieldLevel
+		if keyLevel, known := keyLevels[key]; known {
+			level = keyLevel
+		}
+		heading := key
+		if info.heading != "" {
+			heading = info.heading
+		}
+		block := renderFieldBlock(heading, expandProse(orderMarkers(info.prose), lang, proseLang), info.tags, level)
+		if len(info.nested) > 0 {
+			block += "\n\n" + strings.Join(info.nested, "\n\n")
+		}
+		blocks = append(blocks, block)
+	}
+	return blocks, nil
+}
+
+// nestedDocBlocks renders the documented fields of a variant holder struct as
+// `#####` sections below a `@Doc <key>:` block, so provider-specific field
+// documentation lives on the fields themselves.
+func (g *generator) nestedDocBlocks(root string, key string, lang string, fieldLevel int) ([]string, error) {
+	holder := g.ast.StructDocHolder(root, key)
+	if holder == "" {
+		return nil, nil
+	}
+	var blocks []string
+	for _, field := range g.ast.DocumentedFields(holder) {
+		prose := field.Prose
+		if lang == "zh" {
+			var candidates []string
+			for _, name := range localeNameVariants(holder) {
+				candidates = append(candidates, name+"."+field.Key)
+			}
+			if description, found := g.locale.Lookup(candidates...); found {
+				prose = splitProse(description)
+			}
+		}
+		proseLang := "en"
+		if lang == "zh" && hasCJK(strings.Join(prose, "\n")) {
+			proseLang = "zh"
+		}
+		blocks = append(blocks, renderFieldBlock(field.Key, expandProse(orderMarkers(prose), lang, proseLang), nil, fieldLevel+1))
 	}
 	return blocks, nil
 }
@@ -486,6 +666,18 @@ func orderBlocks(blocks []string, oldOrder []string) []string {
 // localeNameVariants returns the struct name spellings used in locale keys:
 // the name itself plus its underscore-prefixed or unprefixed counterpart
 // (defined types and their underlying structs differ by a leading underscore).
+func (g *generator) localizedHeading(root string, key string, lang string) string {
+	if lang != "zh" {
+		return ""
+	}
+	for _, name := range localeNameVariants(root) {
+		if heading, found := g.locale.Lookup(name + "." + key + ".heading"); found {
+			return heading
+		}
+	}
+	return ""
+}
+
 func localeNameVariants(name string) []string {
 	if name == "" {
 		return nil
@@ -516,9 +708,17 @@ func splitProse(text string) []string {
 	return lines
 }
 
-// baselinePage reads a documentation file at the baseline revision.
+// baselinePage reads a documentation file at the baseline revision. A file
+// that does not exist at the baseline yields an empty result (nothing to
+// audit), so newly added pages pass; a missing baseline ref is an error.
 func (g *generator) baselinePage(file string) (string, error) {
 	relPath := docsDirRelative + "/" + file
+	if err := exec.Command("git", "-C", g.repoRoot, "rev-parse", "--verify", g.base+"^{commit}").Run(); err != nil {
+		return "", fmt.Errorf("git rev-parse --verify %s failed (use --base with a ref containing the baseline): %w", g.base, err)
+	}
+	if err := exec.Command("git", "-C", g.repoRoot, "cat-file", "-e", g.base+":"+relPath).Run(); err != nil {
+		return "", nil
+	}
 	output, err := exec.Command("git", "-C", g.repoRoot, "show", g.base+":"+relPath).Output()
 	if err != nil {
 		return "", fmt.Errorf("git show %s:%s failed (use --base with a ref containing the baseline): %w", g.base, relPath, err)
@@ -528,51 +728,35 @@ func (g *generator) baselinePage(file string) (string, error) {
 
 func blockKey(block string) string {
 	for _, line := range strings.Split(block, "\n") {
-		if strings.HasPrefix(line, "#### ") {
-			return strings.TrimSpace(strings.TrimPrefix(line, "#### "))
+		if atxHeadingLevel(line) > 0 {
+			return headingText(line)
 		}
 	}
 	return ""
 }
 
-// blockProse returns the prose lines of a rendered block, excluding the type
-// line and rendered tag lines, as used by the documentation audit.
-func blockProse(block string) []string {
-	var prose []string
+// blockAuditLines returns the lines of a rendered block, excluding the field
+// heading, for use by the documentation audit. Unlike a prose-only view, the
+// rendered default-value sentence is kept: a baseline default sentence counts
+// as migrated when the value appears in the generated prose.
+func blockAuditLines(block string) []string {
+	var lines []string
 	for index, line := range strings.Split(block, "\n") {
-		if index == 0 && strings.HasPrefix(line, "#### ") {
+		if index == 0 && atxHeadingLevel(line) > 0 {
 			continue
 		}
-		if strings.HasPrefix(line, "- ") && isTagLine(line) {
-			continue
-		}
-		prose = append(prose, line)
+		lines = append(lines, line)
 	}
-	for len(prose) > 0 && prose[0] == "" {
-		prose = prose[1:]
+	for len(lines) > 0 && lines[0] == "" {
+		lines = lines[1:]
 	}
-	for len(prose) > 0 && prose[len(prose)-1] == "" {
-		prose = prose[:len(prose)-1]
+	for len(lines) > 0 && lines[len(lines)-1] == "" {
+		lines = lines[:len(lines)-1]
 	}
-	return prose
+	return lines
 }
 
-func isTagLine(line string) bool {
-	switch {
-	case strings.HasPrefix(line, "- Default: `"),
-		strings.HasPrefix(line, "- 默认值：`"),
-		strings.HasPrefix(line, "- Possible values: "),
-		strings.HasPrefix(line, "- 可能值："),
-		line == "- Deprecated.",
-		line == "- 已废弃。",
-		strings.HasPrefix(line, "- See also: "),
-		strings.HasPrefix(line, "- 参阅："):
-		return true
-	}
-	return false
-}
-
-func findRepoRoot() (string, error) {
+func FindRepoRoot() (string, error) {
 	dir, err := os.Getwd()
 	if err != nil {
 		return "", err

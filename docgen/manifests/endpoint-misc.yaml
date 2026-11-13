@@ -1,66 +1,56 @@
 defaults:
   heading: '### Fields'
-
 pages:
-
 - file: endpoint/masque-client.md
   example:
     omit:
-      - udp_timeout
-      - udp_mapping
-      - udp_filtering
-      - udp_nat_max
+    - udp_timeout
+    - udp_mapping
+    - udp_filtering
+    - udp_nat_max
     groups:
-      - HTTP2 Fields / QUIC Fields
-      - UDP NAT Fields
+    - HTTP2 Fields / QUIC Fields
+    - UDP NAT Fields
   defs:
-  - name: masque-client
-    registry: Endpoint
-
 - file: endpoint/masque-server.md
   example:
     omit:
-      - udp_timeout
-      - udp_mapping
-      - udp_filtering
-      - udp_nat_max
+    - udp_timeout
+    - udp_mapping
+    - udp_filtering
+    - udp_nat_max
     groups:
-      - HTTP2 Fields / QUIC Fields
-      - UDP NAT Fields
+    - HTTP2 Fields / QUIC Fields
+    - UDP NAT Fields
   defs:
-  - name: masque-server
-    registry: Endpoint
-    omit_origins:
+  - omit_origins:
     - InboundOptions
-
 - file: endpoint/openvpn-client.md
   example:
     omit:
-      - udp_timeout
-      - udp_mapping
-      - udp_filtering
-      - udp_nat_max
+    - udp_timeout
+    - udp_mapping
+    - udp_filtering
+    - udp_nat_max
     groups:
-      - UDP NAT Fields
+    - UDP NAT Fields
   defs:
-  - name: openvpn-client
-    registry: Endpoint
   expand:
   - tls
   - pull_filters
+  - servers
+- file: endpoint/openvpn-client.zh.md
 - file: endpoint/openvpn-server.md
   example:
     omit:
-      - udp_timeout
-      - udp_mapping
-      - udp_filtering
-      - udp_nat_max
+    - udp_timeout
+    - udp_mapping
+    - udp_filtering
+    - udp_nat_max
     groups:
-      - UDP NAT Fields
+    - UDP NAT Fields
   defs:
-  - name: openvpn-server
-    registry: Endpoint
-    omit_origins:
+  - omit_origins:
     - InboundOptions
     omit_keys:
     - push.dns_servers.priority
@@ -72,64 +62,46 @@ pages:
   expand:
   - tls
   - push
-  extras:
-    users.username:
-      prose: Username.
-      locale_key: OpenVPNServerEndpointOptions.users.username
-    users.password:
-      prose: Password.
-      locale_key: OpenVPNServerEndpointOptions.users.password
 - file: endpoint/openconnect.md
   example:
     omit:
-      - udp_timeout
-      - udp_mapping
-      - udp_filtering
-      - udp_nat_max
+    - udp_timeout
+    - udp_mapping
+    - udp_filtering
+    - udp_nat_max
     groups:
-      - UDP NAT Fields
+    - UDP NAT Fields
   defs:
-  - name: openconnect
-    registry: Endpoint
-    expand:
-    - token
-    - mobile
-    - csd
-    - hip
-    - tncc
-    - fortinet_host_check
-    - tls
-    - form_entries
-
+  expand:
+  - token
+  - mobile
+  - csd
+  - hip
+  - tncc
+  - fortinet_host_check
+  - tls
+  - form_entries
 - file: endpoint/wireguard.md
   defs:
-  - name: wireguard
   expand:
   - peers
-
 - file: endpoint/tailscale.md
   defs:
-  - name: tailscale
-    registry: Endpoint
   expand:
   - ssh_server
-
 - file: network-namespace/default.md
   defs:
   - name: default
     registry: NetworkNamespace
     root: DefaultNetworkNamespaceOptions
-
 - file: network-namespace/unshare.md
   defs:
   - name: unshare
     root: UnshareNetworkNamespaceOptions
-
 - file: log/index.md
   defs:
   - name: LogOptions
     root: LogOptions
-
 - file: ntp/index.md
   defs:
   - name: NTPOptions

@@ -17,16 +17,14 @@
       "auth_str": "password"
     }
   ],
-  "tls": {},
-
-  ... // 监听字段
-  ... // QUIC 字段
-
-  // Deprecated
   "recv_window_conn": 0,
   "recv_window_client": 0,
   "max_conn_client": 0,
-  "disable_mtu_discovery": false
+  "disable_mtu_discovery": false,
+  "tls": {}
+
+  ... // 监听字段
+  ... // QUIC 字段
 }
 ```
 <!-- AUTO-GENERATED-EXAMPLE-END -->
@@ -89,16 +87,11 @@ base64 编码的认证密码。
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
 
-#### users.name
-
-
 #### recv_window_conn
 
 !!! failure "已在 sing-box 1.14.0 废弃"
 
     请使用 QUIC 字段 `stream_receive_window` 代替。
-
-- 已废弃。
 
 #### recv_window_client
 
@@ -106,23 +99,17 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
 
     请使用 QUIC 字段 `connection_receive_window` 代替。
 
-- 已废弃。
-
 #### max_conn_client
 
 !!! failure "已在 sing-box 1.14.0 废弃"
 
     请使用 QUIC 字段 `max_concurrent_streams` 代替。
 
-- 已废弃。
-
 #### disable_mtu_discovery
 
 !!! failure "已在 sing-box 1.14.0 废弃"
 
     请使用 QUIC 字段 `disable_path_mtu_discovery` 代替。
-
-- 已废弃。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

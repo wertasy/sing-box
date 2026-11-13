@@ -40,6 +40,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 覆盖 DNS 质询记录使用的域名。
 
 适用于将 `_acme-challenge` 委托到其他 zone 的场景。
@@ -48,11 +49,13 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 创建质询记录后，在开始传播检查前要等待的时间。
 
 #### propagation_timeout
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 等待质询记录传播完成的最长时间。
 
@@ -66,11 +69,13 @@ DNS 提供商。提供商专有字段见下文。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 进行 DNS 传播检查时优先使用的 DNS 解析器。
 
 #### ttl
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 DNS 质询临时 TXT 记录的 TTL。
 
@@ -84,6 +89,7 @@ DNS 质询临时 TXT 记录的 TTL。
 #### ACME-DNS
 
 !!! question "自 sing-box 1.13.0 起"
+
 
 ```json
 {
@@ -99,8 +105,6 @@ DNS 质询临时 TXT 记录的 TTL。
 
 #### Alibaba Cloud DNS
 
-!!! question "自 sing-box 1.13.0 起"
-
 ```json
 {
   "provider": "alidns",
@@ -113,11 +117,12 @@ DNS 质询临时 TXT 记录的 TTL。
 
 ##### security_token
 
+!!! question "自 sing-box 1.13.0 起"
+
+
 用于 STS 临时凭证的安全令牌。
 
 #### Cloudflare
-
-!!! question "自 sing-box 1.13.0 起"
 
 ```json
 {
@@ -128,6 +133,9 @@ DNS 质询临时 TXT 记录的 TTL。
 ```
 
 ##### zone_token
+
+!!! question "自 sing-box 1.13.0 起"
+
 
 具有 `Zone:Read` 权限的可选 API 令牌。
 

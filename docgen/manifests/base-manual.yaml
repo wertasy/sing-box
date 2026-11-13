@@ -15,8 +15,6 @@ manual:
 - inbound/redirect.zh.md
 - index.md
 - index.zh.md
-- network-namespace/index.md
-- network-namespace/index.zh.md
 - outbound/block.md
 - outbound/block.zh.md
 - outbound/dns.md
@@ -47,7 +45,5 @@ manual:
 - shared/neighbor.zh.md
 - shared/pre-match.md
 - shared/pre-match.zh.md
-- shared/udp-nat.md
-- shared/udp-nat.zh.md
 - shared/wifi-state.md
 - shared/wifi-state.zh.md

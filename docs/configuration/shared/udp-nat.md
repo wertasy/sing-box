@@ -21,6 +21,9 @@ icon: material/new-box
 
 ### Fields
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### udp_timeout
 
 UDP NAT expiration time.
@@ -31,6 +34,7 @@ UDP NAT expiration time.
 
 !!! question "Since sing-box 1.14.0"
 
+
 UDP NAT mapping behavior.
 
 | Value                        | Behavior                                                                      |
@@ -39,11 +43,12 @@ UDP NAT mapping behavior.
 | `address_dependent`          | Use a separate mapping for each destination address.                          |
 | `address_and_port_dependent` | Use a separate mapping for each destination address and port.                 |
 
-`endpoint_independent` is used by default.
+`endpoint_independent` will be used by default.
 
 #### udp_filtering
 
 !!! question "Since sing-box 1.14.0"
+
 
 UDP NAT filtering behavior.
 
@@ -53,11 +58,12 @@ UDP NAT filtering behavior.
 | `address_dependent`          | Accept packets only from remote addresses to which packets have been sent.  |
 | `address_and_port_dependent` | Accept packets only from remote addresses and ports to which packets have been sent. |
 
-`endpoint_independent` is used by default.
+`endpoint_independent` will be used by default.
 
 #### udp_nat_max
 
 !!! question "Since sing-box 1.14.0"
+
 
 Maximum number of UDP NAT sessions.
 
@@ -65,3 +71,5 @@ When the limit is reached, the least recently used session is closed.
 
 When unset or set to `0`, `4096` is used on iOS. On other platforms, a value from `4096` to `16384` is selected based on total memory;
 `16384` is used if total memory cannot be detected.
+
+<!-- AUTO-GENERATED-CONFIG-END -->

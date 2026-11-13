@@ -23,6 +23,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check_docs:
+    name: Check generated docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ^1.26
+      - name: Check generated documentation
+        run: make check_docs
+
   build:
     name: Lint ${{ matrix.goos }}/${{ matrix.goarch }}
     runs-on: ubuntu-latest

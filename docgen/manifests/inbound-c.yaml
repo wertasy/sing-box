@@ -2,27 +2,20 @@ defaults:
   heading: '### Fields'
   omit_origins:
   - InboundOptions
-
 pages:
-
 - file: inbound/socks.md
   example:
     omit:
-      - domain_resolver
+    - domain_resolver
   defs:
-  - name: socks
-    registry: Inbound
-
 - file: inbound/http.md
   example:
     omit:
-      - domain_resolver
+    - domain_resolver
     groups:
-      - HTTP2 Fields / QUIC Fields
+    - HTTP2 Fields / QUIC Fields
   defs:
-  - name: http
-    registry: Inbound
-    omit_keys:
+  - omit_keys:
     - idle_timeout
     - keep_alive_period
     - stream_receive_window
@@ -30,87 +23,57 @@ pages:
     - max_concurrent_streams
     - initial_packet_size
     - disable_path_mtu_discovery
-
 - file: inbound/mixed.md
   example:
     omit:
-      - domain_resolver
-      - tls
+    - domain_resolver
+    - tls
   defs:
-  - name: mixed
-
 - file: inbound/direct.md
-  example: {}
   defs:
-  - name: direct
-    registry: Inbound
-
 - file: inbound/vless.md
-  example: {}
   defs:
-  - name: vless
-    registry: Inbound
-    omit_keys:
+  - omit_keys:
     - users.name
   expand:
   - users
-
 - file: inbound/vmess.md
-  example: {}
   defs:
-  - name: vmess
-    registry: Inbound
-
 - file: inbound/snell.md
   defs:
-  - name: snell
-    registry: Inbound
   expand:
   - ObfsOptions
   - V6Options
-
 - file: inbound/shadowsocks.md
   example:
     omit:
-      - network
-      - users
-      - destinations
+    - network
+    - users
+    - destinations
   defs:
-  - name: shadowsocks
-    registry: Inbound
-
 - file: inbound/naive.md
-  example: {}
   defs:
-  - name: naive
-    registry: Inbound
-
 - file: inbound/tailcat.md
-  example: {}
   defs:
-  - name: tailcat
-    registry: Inbound
-    omit_origins:
+  - omit_origins:
     - DialerOptions
     include_origins:
     - AbstractDialerOptions
     - ListenOptions
     omit_keys:
     - users.name
+    - protect_path
   expand:
   - users
 - file: inbound/cloudflared.md
   defs:
-  - name: cloudflared
-
 - file: inbound/tproxy.md
   example:
     omit:
-      - udp_timeout
-      - udp_mapping
-      - udp_filtering
-      - udp_nat_max
+    - udp_timeout
+    - udp_mapping
+    - udp_filtering
+    - udp_nat_max
     groups:
-      - UDP NAT Fields
+    - UDP NAT Fields
   defs:
-  - name: tproxy

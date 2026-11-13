@@ -35,7 +35,6 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 #### users
 
 ==Required==
-
 !!! warning ""
 
     Legacy protocol support (VMess MD5 Authentication) is provided for compatibility purposes only, use of alterId > 1 is not recommended.

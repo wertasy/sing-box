@@ -87,6 +87,7 @@ When `provider` is `zerossl`, at least one of `external_account`, `email`, or `a
 
 !!! question "Since sing-box 1.14.0"
 
+
 The PEM-encoded private key of an existing ACME account.
 
 #### disable_http_challenge
@@ -123,6 +124,7 @@ See [DNS01 Challenge Fields](/configuration/shared/dns01_challenge/) for details
 
 !!! question "Since sing-box 1.14.0"
 
+
 The private key type to generate for new certificates.
 
 | Value      | Type    |
@@ -137,6 +139,7 @@ The private key type to generate for new certificates.
 
 !!! question "Since sing-box 1.14.0"
 
+
 The ACME profile to use for certificate issuance.
 
 When empty and `provider` is Let's Encrypt, `shortlived` will be used automatically if any domain is an IP address.
@@ -144,6 +147,7 @@ When empty and `provider` is Let's Encrypt, `shortlived` will be used automatica
 #### http_client
 
 !!! question "Since sing-box 1.14.0"
+
 
 HTTP Client for all provider HTTP requests.
 

@@ -1,25 +1,20 @@
 defaults:
   heading: '### Fields'
 pages:
-
 - file: shared/udp-over-tcp.md
-  example: {}
   defs:
-
   - root: UDPOverTCPOptions
-
 - file: shared/quic.md
   example:
     omit:
-      - idle_timeout
-      - keep_alive_period
-      - stream_receive_window
-      - connection_receive_window
-      - max_concurrent_streams
+    - idle_timeout
+    - keep_alive_period
+    - stream_receive_window
+    - connection_receive_window
+    - max_concurrent_streams
     groups:
-      - HTTP2 Fields
+    - HTTP2 Fields
   defs:
-
   - root: QUICOptions
     omit_keys:
     - idle_timeout
@@ -27,118 +22,22 @@ pages:
     - stream_receive_window
     - connection_receive_window
     - max_concurrent_streams
-
 - file: shared/http2.md
-  example: {}
   defs:
-
   - root: HTTP2Options
-
 - file: shared/dns01_challenge.md
   sections:
-
-  - extras:
-      override_domain:
-        prose: |-
-          @Since 1.14.0
-
-          Override the domain name used for the DNS challenge record.
-
-          Useful when `_acme-challenge` is delegated to a different zone.
-        locale_key: AbstractACMEProviderDNS01ChallengeOptions.override_domain
-      propagation_delay:
-        prose: |-
-          @Since 1.14.0
-
-          How long to wait after creating the challenge record before starting propagation checks.
-        locale_key: AbstractACMEProviderDNS01ChallengeOptions.propagation_delay
-      propagation_timeout:
-        prose: |-
-          @Since 1.14.0
-
-          The maximum time to wait for the challenge record to propagate.
-
-          Set to `-1` to disable propagation checks.
-        locale_key: AbstractACMEProviderDNS01ChallengeOptions.propagation_timeout
-      provider:
-        prose: The DNS provider. See below for provider-specific fields.
-        locale_key: ACMEProviderDNS01Challenge.provider
-      resolvers:
-        prose: |-
-          @Since 1.14.0
-
-          Preferred DNS resolvers to use for DNS propagation checks.
-        locale_key: AbstractACMEProviderDNS01ChallengeOptions.resolvers
-      ttl:
-        prose: |-
-          @Since 1.14.0
-
-          The TTL of the temporary TXT record used for the DNS challenge.
-        locale_key: AbstractACMEProviderDNS01ChallengeOptions.ttl
-
+  - defs:
+    - root: ACMEProviderDNS01ChallengeOptions
   - heading: '### Provider Fields'
-    extras:
-      ACME-DNS:
-        prose: |-
-          @Since 1.13.0
-
-          ```json
-          {
-            "provider": "acmedns",
-            "username": "",
-            "password": "",
-            "subdomain": "",
-            "server_url": ""
-          }
-          ```
-
-          See [ACME-DNS](https://github.com/joohoi/acme-dns) for details.
-        locale_key: ACMEProviderDNS01Challenge.acmedns
-      Alibaba Cloud DNS:
-        prose: |-
-          ```json
-          {
-            "provider": "alidns",
-            "access_key_id": "",
-            "access_key_secret": "",
-            "region_id": "",
-            "security_token": ""
-          }
-          ```
-
-          ##### security_token
-
-          @Since 1.13.0
-
-          The Security Token for STS temporary credentials.
-        locale_key: ACMEProviderDNS01Challenge.alidns
-      Cloudflare:
-        prose: |-
-          ```json
-          {
-            "provider": "cloudflare",
-            "api_token": "",
-            "zone_token": ""
-          }
-          ```
-
-          ##### zone_token
-
-          @Since 1.13.0
-
-          Optional API token with `Zone:Read` permission.
-
-          When provided, allows `api_token` to be scoped to a single zone.
-        locale_key: ACMEProviderDNS01Challenge.cloudflare
-
+    root: ACMEProviderDNS01ChallengeOptions
 - file: shared/http-client.md
   example:
     omit:
-      - tag
+    - tag
     groups:
-      - HTTP2 Fields
+    - HTTP2 Fields
   defs:
-
   - name: HTTPClient
     root: HTTPClientOptions
     omit_origins:

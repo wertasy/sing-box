@@ -254,6 +254,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.10.0 起"
 
+
 探测到的客户端类型, 参阅 [协议探测](/zh/configuration/route/sniff/)。
 
 #### network
@@ -316,6 +317,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.8.0 起"
 
+
 匹配非公开源 IP。
 
 #### ip_cidr
@@ -325,6 +327,7 @@ icon: material/new-box
 #### ip_is_private
 
 !!! question "自 sing-box 1.8.0 起"
+
 
 匹配非公开 IP。
 
@@ -377,6 +380,7 @@ icon: material/new-box
 #### package_name_regex
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 使用正则表达式匹配 Android 应用包名。
 
@@ -479,6 +483,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 匹配制定出站的首选路由。
 
 | 类型          | 匹配                             |
@@ -490,6 +495,7 @@ icon: material/new-box
 #### dns_server_address
 
 !!! question "自 sing-box 1.15.0 起"
+
 
 匹配指定 DNS 服务器的服务器地址。
 
@@ -505,6 +511,7 @@ icon: material/new-box
 #### dns_search_domain
 
 !!! question "自 sing-box 1.15.0 起"
+
 
 匹配指定 DNS 服务器的搜索域。
 
@@ -541,6 +548,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.8.0 起"
 
+
 匹配[规则集](/zh/configuration/route/#rule_set)。
 
 #### rule_set_ipcidr_match_source
@@ -558,6 +566,7 @@ icon: material/new-box
 #### rule_set_ip_cidr_match_source
 
 !!! question "自 sing-box 1.10.0 起"
+
 
 使规则集中的 `ip_cidr` 规则匹配源 IP。
 
@@ -599,9 +608,5 @@ icon: material/new-box
 ==必填==
 
 包括的规则。
-
-#### invert
-
-Invert match result.
 
 <!-- AUTO-GENERATED-CONFIG-END -->

@@ -580,22 +580,6 @@ OutboundTLSOptions.utls: |2-
       :material-close: chrome_pq  
       :material-close: chrome_pq_psk
 
-tls.ech_extras.dynamic_record_sizing_disabled: |2-
-  禁用 TLS 记录的自适应大小调整。
-
-  当为 true 时，总是使用最大可能的 TLS 记录大小。
-  当为 false 时，可能会调整 TLS 记录的大小以尝试改善延迟。
-
-  @Failure: 已在 sing-box 1.12.0 废弃
-
-      `dynamic_record_sizing_disabled` 已在 sing-box 1.12.0 废弃且已在 sing-box 1.13.0 中被移除。
-
-tls.ech_extras.pq_signature_schemes_enabled: |2-
-  启用对后量子对等证书签名方案的支持。
-
-  @Failure: 已在 sing-box 1.12.0 废弃
-
-      `pq_signature_schemes_enabled` 已在 sing-box 1.12.0 废弃且已在 sing-box 1.13.0 中被移除。
 HysteriaRealmServiceOptions.tls: |-
   TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
 

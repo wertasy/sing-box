@@ -379,3 +379,32 @@ _SnellOutboundOptions.version: |-
 
       由于我们有意不支持 Snell v5 的 QUIC 代理模式，v5 的线路协议实际上与 v4 没有区别，
       因此不提供独立的 v4 服务器和 v5 客户端。
+
+HysteriaOutboundOptions.up, down: |-
+  格式： `[Integer] [Unit]` 例如： `100 Mbps, 640 KBps, 2 Gbps`
+
+  支持的单位 (大小写敏感, b = bits, B = bytes, 8b=1B)：
+
+      bps (bits per second)
+      Bps (bytes per second)
+      Kbps (kilobits per second)
+      KBps (kilobytes per second)
+      Mbps (megabits per second)
+      MBps (megabytes per second)
+      Gbps (gigabits per second)
+      GBps (gigabytes per second)
+      Tbps (terabits per second)
+      TBps (terabytes per second)
+
+  @Required
+
+HysteriaOutboundOptions.up_mbps, down_mbps: |-
+  以 Mbps 为单位的 `up, down`。
+
+  @Required
+
+Hysteria2OutboundOptions.up_mbps, down_mbps: |-
+  最大带宽。
+
+  如果为空，将使用 BBR 拥塞控制算法而不是 Hysteria CC。
+

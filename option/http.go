@@ -16,16 +16,20 @@ import (
 type HTTP2Options struct {
 	// Idle connection timeout, in golang's Duration format.
 	IdleTimeout badoption.Duration `json:"idle_timeout,omitempty"`
+
 	// Keep alive period, in golang's Duration format.
 	KeepAlivePeriod badoption.Duration `json:"keep_alive_period,omitempty"`
+
 	// HTTP2 stream-level flow-control receive window size.
 	//
 	// Accepts memory size format, e.g. `"64 MB"`.
 	StreamReceiveWindow *byteformats.MemoryBytes `json:"stream_receive_window,omitempty"`
+
 	// HTTP2 connection-level flow-control receive window size.
 	//
 	// Accepts memory size format, e.g. `"64 MB"`.
 	ConnectionReceiveWindow *byteformats.MemoryBytes `json:"connection_receive_window,omitempty"`
+
 	// Maximum concurrent streams per connection.
 	//
 	// @Example: 0
@@ -34,10 +38,12 @@ type HTTP2Options struct {
 
 type QUICOptions struct {
 	HTTP2Options
+
 	// Initial QUIC packet size.
 	//
 	// @Example: 0
 	InitialPacketSize int `json:"initial_packet_size,omitempty"`
+
 	// Disable QUIC path MTU discovery.
 	//
 	// @Example: false
@@ -45,7 +51,9 @@ type QUICOptions struct {
 }
 
 type HTTPClientOptions struct {
+	// @Omit
 	Tag string `json:"tag,omitempty"`
+
 	// HTTP engine to use.
 	//
 	// Values:
@@ -88,6 +96,7 @@ type HTTPClientOptions struct {
 	//
 	//     Experimental only: do not use in hot paths on iOS and tvOS.
 	Engine string `json:"engine,omitempty" enum:"go,apple"`
+
 	// HTTP version.
 	//
 	// Available values: `1`, `2`, `3`.
@@ -96,8 +105,10 @@ type HTTPClientOptions struct {
 	//
 	// @Default: 2
 	Version int `json:"version,omitempty" enum:"0,1,2,3"`
+
 	// Disable automatic fallback to lower HTTP version.
 	DisableVersionFallback bool `json:"disable_version_fallback,omitempty"`
+
 	// Custom HTTP headers.
 	//
 	// `Host` header is used as request host.

@@ -10,16 +10,20 @@ import (
 
 type APIServiceOptions struct {
 	ListenOptions
+
 	// Secret for the API.
 	//
 	// Clients authenticate with the standard `authorization: Bearer <secret>` gRPC metadata header.
 	//
 	// If empty, authentication is disabled.
 	Secret string `json:"secret,omitempty"`
+
 	// CORS allowed origins, `*` will be used if empty.
 	AccessControlAllowOrigin badoption.Listable[string] `json:"access_control_allow_origin,omitempty" examples:"http://sing-box-dashboard.sagernet.org/,https://sing-box-dashboard.sagernet.org/"`
+
 	// Allow access from private network.
 	AccessControlAllowPrivateNetwork bool `json:"access_control_allow_private_network,omitempty"`
+
 	// Web dashboard downloaded and served over the API listener at `/dashboard/`; other browser
 	// requests are redirected to it.
 	//
@@ -38,6 +42,8 @@ type APIServiceOptions struct {
 	// ##### download_url
 	//
 	// Download URL of the dashboard archive (zip).
+	//
+	// `https://github.com/SagerNet/sing-box-dashboard/archive/refs/heads/gh-pages.zip` will be used by default.
 	//
 	// ##### http_client
 	//

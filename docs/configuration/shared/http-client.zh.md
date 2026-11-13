@@ -84,7 +84,7 @@ HTTP 版本。
 
 当为 `3` 时，[HTTP2 字段](#http2-字段) 替换为 [QUIC 字段](#quic-字段)。
 
-- 默认值：`2`
+默认使用 `2`。
 
 #### disable_version_fallback
 
@@ -95,9 +95,6 @@ HTTP 版本。
 自定义 HTTP 标头。
 
 `Host` 标头用作请求主机。
-
-#### tag
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

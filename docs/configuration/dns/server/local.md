@@ -47,6 +47,7 @@ icon: material/new-box
 
 !!! question "Since sing-box 1.13.0"
 
+
 When enabled, `local` DNS server will resolve DNS by dialing itself whenever possible.
 
 Specifically, it disables following behaviors which was added as features in sing-box 1.13.0:
@@ -67,6 +68,7 @@ it will not be disabled by `prefer_go`.
 #### neighbor_domain
 
 !!! question "Since sing-box 1.14.0"
+
 
 A list of domain suffixes for which A/AAAA queries are answered from the
 [neighbor resolver](/configuration/shared/neighbor/) instead of the upstream.

@@ -52,8 +52,6 @@ DNS 服务器的端口。
 
 默认使用 `853`。
 
-- 默认值：`53`
-
 #### tls
 
 TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#出站)。

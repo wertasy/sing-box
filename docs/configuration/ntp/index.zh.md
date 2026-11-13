@@ -45,11 +45,11 @@ NTP 服务器端口。
 
 时间同步间隔。
 
-- 默认值：`30 minutes`
+默认使用 `30m`。
 
 #### write_to_system
 
-Update system time after synchronization.
+同步后更新系统时间。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

@@ -48,7 +48,7 @@ DNS 服务器的地址。
 
 DNS 服务器的端口。
 
-- 默认值：`53`
+默认使用 `53`。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

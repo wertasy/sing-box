@@ -48,7 +48,7 @@ If domain name is used, `domain_resolver` must also be set to resolve IP address
 
 The port of the DNS server.
 
-- Default: `53`
+`53` will be used by default.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

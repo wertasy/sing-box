@@ -68,7 +68,7 @@ The directory where the Tailscale state is stored.
 
 Example: `$HOME/.tailscale`
 
-- Default: `tailscale`
+`tailscale` will be used by default.
 
 #### auth_key
 
@@ -83,7 +83,7 @@ used.
 
 The coordination server URL.
 
-- Default: `https://controlplane.tailscale.com`
+`https://controlplane.tailscale.com` will be used by default.
 
 #### ephemeral
 
@@ -93,11 +93,12 @@ Indicates whether the instance should register as an Ephemeral node (https://tai
 
 !!! question "Since sing-box 1.14.0"
 
-    On iOS, tvOS and Android, the device name is used by default.
+    On iOS, tvOS and Android, the device name will be used by default.
+
 
 The hostname of the node.
 
-System hostname is used by default.
+System hostname will be used by default.
 
 Example: `localhost`
 
@@ -131,6 +132,7 @@ Indicates whether the node should advertise itself as an exit node.
 
 !!! question "Since sing-box 1.13.0"
 
+
 Tags to advertise for this node, for ACL enforcement purposes.
 
 Example: `["tag:server"]`
@@ -138,6 +140,7 @@ Example: `["tag:server"]`
 #### listen_port
 
 !!! question "Since sing-box 1.14.0"
+
 
 The UDP port to listen on for WireGuard and peer-to-peer traffic.
 
@@ -147,11 +150,13 @@ A port is automatically selected by default.
 
 !!! question "Since sing-box 1.13.0"
 
+
 The port to listen on for incoming relay connections from other Tailscale nodes.
 
 #### relay_server_static_endpoints
 
 !!! question "Since sing-box 1.13.0"
+
 
 Static endpoints to advertise for the relay server.
 
@@ -159,11 +164,13 @@ Static endpoints to advertise for the relay server.
 
 !!! question "Since sing-box 1.13.0"
 
+
 Create a system TUN interface for Tailscale.
 
 #### system_interface_name
 
 !!! question "Since sing-box 1.13.0"
+
 
 Custom TUN interface name. By default, `tailscale` (or `utun` on macOS) will be used.
 
@@ -171,17 +178,19 @@ Custom TUN interface name. By default, `tailscale` (or `utun` on macOS) will be 
 
 !!! question "Since sing-box 1.13.0"
 
+
 Override the TUN MTU. By default, Tailscale's own MTU is used.
 
 #### udp_timeout
 
 UDP NAT expiration time.
 
-- Default: `5m`
+`5m` will be used by default.
 
 #### ssh_server
 
 !!! question "Since sing-box 1.14.0"
+
 
 Run a Tailscale SSH server on tailnet port 22.
 
@@ -227,16 +236,18 @@ Refuse local and remote TCP and Unix-socket forwarding, including SSH agent forw
 
 !!! question "Since sing-box 1.14.0"
 
+
 The directory where files received from tailnet peers are stored.
 
 Relative paths are resolved against the working directory, as [state_directory](#state_directory)
 is.
 
-- Default: `Taildrop`
+`Taildrop` will be used by default.
 
 #### on_demand
 
 !!! question "Since sing-box 1.15.0"
+
 
 Allow the endpoint to be disconnected when necessary.
 

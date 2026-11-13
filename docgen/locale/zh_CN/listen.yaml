@@ -58,17 +58,6 @@ ListenOptions.disable_tcp_keep_alive: |-
 
   @Since 1.13.0
 
-ListenOptions.domain_strategy: |-
-  可选值： `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`。
-
-  如果设置，请求的域名将在路由之前解析为 IP。
-
-  如果 `sniff_override_destination` 生效，它的值将作为后备。
-
-  @Failure: 已在 sing-box 1.11.0 废弃
-
-      入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
-
 ListenOptions.listen: |-
   监听地址。
 
@@ -103,31 +92,6 @@ ListenOptions.routing_mark: |-
 
       仅支持 Linux。
 
-ListenOptions.sniff: |-
-  启用协议探测。
-
-  参阅 [协议探测](/zh/configuration/route/sniff/)
-
-  @Failure: 已在 sing-box 1.11.0 废弃
-
-      入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
-
-ListenOptions.sniff_override_destination: |-
-  用探测出的域名覆盖连接目标地址。
-
-  如果域名无效（如 Tor），将不生效。
-
-  @Failure: 已在 sing-box 1.11.0 废弃
-
-      入站字段已废弃且将在 sing-box 1.12.0 中被移除。
-
-ListenOptions.sniff_timeout: |-
-  探测超时时间。
-
-  @Failure: 已在 sing-box 1.11.0 废弃
-
-      入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
-
 ListenOptions.tcp_fast_open: 启用 TCP Fast Open。
 
 ListenOptions.tcp_keep_alive: |-
@@ -146,15 +110,6 @@ ListenOptions.tcp_multi_path: |-
   @Warning:
 
       需要 Go 1.21。
-
-ListenOptions.udp_disable_domain_unmapping: |-
-  如果启用，对于地址为域的 UDP 代理请求，将在响应中发送原始包地址而不是映射的域。
-
-  此选项用于兼容不支持接收带有域地址的 UDP 包的客户端，如 Surge。
-
-  @Failure: 已在 sing-box 1.11.0 废弃
-
-      入站字段已废弃且将在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移旧的入站字段到规则动作).
 
 ListenOptions.udp_fragment: 启用 UDP 分段。
 

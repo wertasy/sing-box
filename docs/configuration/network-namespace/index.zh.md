@@ -27,6 +27,11 @@ icon: material/new-box
 }
 ```
 
+### 字段
+
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### type
 
 网络命名空间的类型，默认使用 `default`。
@@ -41,3 +46,5 @@ icon: material/new-box
 ==必填==
 
 网络命名空间的标签。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

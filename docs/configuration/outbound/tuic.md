@@ -56,7 +56,7 @@ QUIC congestion control algorithm
 
 One of: `cubic`, `new_reno`, `bbr`
 
-- Default: `cubic`
+`cubic` will be used by default.
 
 #### udp_relay_mode
 
@@ -69,7 +69,7 @@ UDP packet relay mode
 
 Conflict with `udp_over_stream`.
 
-- Default: `native`
+`native` will be used by default.
 
 #### udp_over_stream
 

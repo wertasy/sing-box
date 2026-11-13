@@ -1,39 +1,19 @@
 defaults:
   heading: '### Fields'
-
 pages:
-
 - file: outbound/shadowtls.md
   defs:
-  - name: shadowtls
-    registry: Outbound
 - file: outbound/vless.md
   defs:
-  - name: vless
-    registry: Outbound
-
 - file: outbound/vmess.md
   defs:
-  - name: vmess
-    registry: Outbound
-
 - file: outbound/ssh.md
   defs:
-  - name: ssh
 - file: outbound/tor.md
   defs:
-  - name: tor
-
 - file: outbound/tailcat.md
-  example: {}
   defs:
-  - name: tailcat
-    registry: Outbound
-
 - file: outbound/selector.md
   defs:
-  - name: selector
-
 - file: outbound/urltest.md
   defs:
-  - name: urltest

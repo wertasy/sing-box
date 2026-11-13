@@ -95,6 +95,7 @@
 
 !!! question "自 sing-box 1.11.0 起"
 
+
 服务器端口范围列表。
 
 与 `server_port` 和 `realm` 冲突。
@@ -103,13 +104,15 @@
 
 !!! question "自 sing-box 1.11.0 起"
 
+
 端口跳跃间隔。
 
-- 默认值：`30s`
+默认使用 `30s`。
 
 #### hop_interval_max
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 最大端口跳跃间隔，用于随机化。
 
@@ -135,21 +138,23 @@ QUIC 流量混淆器密码。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 最小线上数据包大小（字节）。仅限 Gecko。
 
 默认使用 `512`。
 
-- 默认值：`512`
+默认使用 `512`。
 
 #### obfs.max_packet_size
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 最大线上数据包大小（字节）。仅限 Gecko。
 
 默认使用 `1200`。
 
-- 默认值：`1200`
+默认使用 `1200`。
 
 #### password
 
@@ -182,9 +187,10 @@ TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#出站)。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 
-- 默认值：`standard`
+默认使用 `standard`。
 
 #### brutal_debug
 
@@ -210,6 +216,7 @@ BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 #### realm
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 通过 Hysteria Realm 会合服务连接 Hysteria2 服务器。
 
@@ -267,7 +274,7 @@ Realm 的 Bearer 令牌，需与 realm 上配置的 `users[].token` 之一匹配
 
 默认使用 `10s`。
 
-- 默认值：`10s`
+默认使用 `10s`。
 
 #### realm.port_mapping.lifetime
 
@@ -275,7 +282,7 @@ Realm 的 Bearer 令牌，需与 realm 上配置的 `users[].token` 之一匹配
 
 默认使用 `10m`。
 
-- 默认值：`10m`
+默认使用 `10m`。
 
 #### realm.http_client
 

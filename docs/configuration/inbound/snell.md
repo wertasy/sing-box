@@ -60,7 +60,6 @@ See [Listen Fields](/configuration/shared/listen/) for details.
 #### version
 
 ==Required==
-
 !!! note
 
     Since we intentionally do not support the QUIC proxy mode of Snell v5, the v5 wire protocol
@@ -90,7 +89,7 @@ logs) and a `userkey` (the user's key).
 
 HTTP obfuscation mode, one of `none` `http`.
 
-- Default: `none`
+`none` will be used by default.
 
 #### mode
 
@@ -98,6 +97,6 @@ HTTP obfuscation mode, one of `none` `http`.
 
 Traffic shaping mode, one of `default` `unshaped` `unsafe-raw`.
 
-- Default: `default`
+`default` will be used by default.
 
 <!-- AUTO-GENERATED-CONFIG-END -->

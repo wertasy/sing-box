@@ -14,13 +14,14 @@ import (
 // FieldTags holds the extension markers parsed from a field doc comment.
 type FieldTags struct {
 	Default        string
-	Enum           string   // comma separated values from "@enum:"
-	Deprecated     bool     // "@deprecated: <note>" or godoc "Deprecated:" line
-	DeprecatedNote string   // optional replacement note, kept for reference
-	See            []string // arguments of "@see:" lines, markdown fragments
-	Example        string   // "@example: <value>" or an indented block, raw JSON value text
-	Omit           bool     // "@omit[: pages]": not documented (on the listed pages)
-	OmitPages      []string // page files for "@omit: <pages>"; empty means all pages
+	Enum           string            // comma separated values from "@enum:"
+	Deprecated     bool              // "@deprecated: <note>" or godoc "Deprecated:" line
+	DeprecatedNote string            // optional replacement note, kept for reference
+	See            []string          // arguments of "@see:" lines, markdown fragments
+	Example        string            // "@example: <value>" or an indented block, raw JSON value text
+	Overrides      map[string]string // "@override <key>:" blocks: key → example value for a synthesized or inherited key
+	Omit           bool              // "@omit[: pages]": not documented (on the listed pages)
+	OmitPages      []string          // page files for "@omit: <pages>"; empty means all pages
 }
 
 // FlattenEntry describes a single JSON field of a root struct, mirroring
@@ -39,13 +40,24 @@ type FlattenEntry struct {
 
 // ASTIndex indexes option package struct definitions with doc comments.
 type ASTIndex struct {
-	fset        *token.FileSet
-	structs     map[string]*ast.StructType
-	aliases     map[string]string   // defined type -> underlying named struct
-	types       map[string]ast.Expr // type name -> declared type expression
-	files       map[string]string
-	sharedSlugs map[string]string // type name -> @shared slug of its doc comment
-	tagSamples  map[string]string // type name -> @tag example sample of its doc comment
+	fset         *token.FileSet
+	structs      map[string]*ast.StructType
+	aliases      map[string]string   // defined type -> underlying named struct
+	types        map[string]ast.Expr // type name -> declared type expression
+	files        map[string]string
+	sharedSlugs  map[string]string              // type name -> @shared slug of its doc comment
+	tagSamples   map[string]string              // type name -> @tag example sample of its doc comment
+	structExtras map[string]map[string][]string // type name -> @Doc <key>: documentation blocks
+
+	// structDocHolders maps a struct and its `@Doc <key>:` block to the
+	// variant holder field's struct whose documented fields accompany the
+	// block, e.g. ACME provider guides and their provider-specific fields.
+	structDocHolders map[string]map[string]string
+
+	// structDocFieldSource records, for `@Doc` keys declared on a field, the
+	// declaring field's JSON name ("-" for variant holders), so placement can
+	// be validated.
+	structDocFieldSource map[string]map[string]string
 }
 
 // SharedOrigin is one option origin whose fields are documented on a shared
@@ -125,6 +137,125 @@ func (i *ASTIndex) TagSample(name string) (string, bool) {
 	return "", false
 }
 
+// commentLineText returns the text of a single-line Go comment with the
+// `//` prefix and its conventional one-space separator removed, preserving
+// the remaining indentation.
+func commentLineText(text string) string {
+	trimmed := strings.TrimPrefix(text, "//")
+	return strings.TrimPrefix(trimmed, " ")
+}
+
+// structExtrasOf returns `@Doc <key>:` documentation blocks declared in a
+// type's doc comment: key → body lines (dedented, verbatim, @ markers
+// included). Bodies hold documentation prose for keys without a struct
+// field (legacy keys, synthesized keys, multi-field combinations).
+//
+// Placement convention: documentation belongs next to the definition it
+// describes. Keys backed by a single field are documented on that field;
+// variant holder fields (json:"-") carry `@Doc` for the option set they
+// introduce, and the holder's documented fields render as nested sections.
+// Only keys without any field stay on the type's doc comment.
+func structExtrasOf(docs ...*ast.CommentGroup) map[string][]string {
+	var extras map[string][]string
+	for _, doc := range docs {
+		if doc == nil {
+			continue
+		}
+		i := 0
+		for i < len(doc.List) {
+			raw := commentLineText(doc.List[i].Text)
+			text := strings.TrimSpace(raw)
+			rest, found := cutPrefixFold(text, "@Doc ")
+			if !found {
+				i++
+				continue
+			}
+			key := strings.TrimSpace(strings.TrimSuffix(strings.TrimSpace(rest), ":"))
+			if key == "" {
+				i++
+				continue
+			}
+			i++
+			var body []string
+			indent := -1
+			for i < len(doc.List) {
+				bodyRaw := commentLineText(doc.List[i].Text)
+				trimmed := strings.TrimSpace(bodyRaw)
+				if trimmed == "" {
+					if len(body) > 0 {
+						body = append(body, "")
+					}
+					i++
+					continue
+				}
+				if !strings.HasPrefix(bodyRaw, " ") && !strings.HasPrefix(bodyRaw, "\t") {
+					break
+				}
+				if indent < 0 {
+					indent = len(bodyRaw) - len(trimmed)
+				}
+				line := bodyRaw
+				if indent > 0 && len(line) >= indent {
+					line = line[indent:]
+				}
+				body = append(body, line)
+				i++
+			}
+			for len(body) > 0 && body[len(body)-1] == "" {
+				body = body[:len(body)-1]
+			}
+			if extras == nil {
+				extras = make(map[string][]string)
+			}
+			extras[key] = body
+		}
+	}
+	return extras
+}
+
+// StructExtras returns the `@Doc <key>:` documentation blocks of a type,
+// accepting the defined type and its underscore-prefixed underlying struct
+// names.
+func (i *ASTIndex) StructExtras(name string) map[string][]string {
+	extras := i.collectStructExtras(i.resolve(name), 0)
+	if len(extras) == 0 {
+		return nil
+	}
+	return extras
+}
+
+// collectStructExtras merges inherited `@Doc` blocks declared on embedded
+// structs (the documentation applies to the embedding option set too); blocks
+// declared on the type itself win.
+func (i *ASTIndex) collectStructExtras(name string, depth int) map[string][]string {
+	if name == "" || depth > 8 {
+		return nil
+	}
+	extras := make(map[string][]string)
+	structType := i.structs[name]
+	if structType != nil {
+		for _, field := range structType.Fields.List {
+			if len(field.Names) != 0 {
+				continue
+			}
+			embedded, err := embeddedTypeName(field.Type)
+			if err != nil {
+				continue
+			}
+			for key, body := range i.collectStructExtras(i.resolve(embedded), depth+1) {
+				extras[key] = body
+			}
+		}
+	}
+	for key, body := range i.structExtras[name] {
+		extras[key] = body
+	}
+	if len(extras) == 0 {
+		return nil
+	}
+	return extras
+}
+
 // SharedOrigins returns the ordered origins whose fields are documented on a
 // shared page: every struct embedding a type marked `@shared <slug>`,
 // including the origins embedded underneath it.
@@ -189,13 +320,16 @@ func (i *ASTIndex) SharedOrigins(root string) ([]SharedOrigin, error) {
 // LoadASTIndex parses all Go files in dir (package option).
 func LoadASTIndex(dir string) (*ASTIndex, error) {
 	idx := &ASTIndex{
-		fset:        token.NewFileSet(),
-		structs:     make(map[string]*ast.StructType),
-		aliases:     make(map[string]string),
-		types:       make(map[string]ast.Expr),
-		files:       make(map[string]string),
-		sharedSlugs: make(map[string]string),
-		tagSamples:  make(map[string]string),
+		fset:                 token.NewFileSet(),
+		structs:              make(map[string]*ast.StructType),
+		aliases:              make(map[string]string),
+		types:                make(map[string]ast.Expr),
+		files:                make(map[string]string),
+		sharedSlugs:          make(map[string]string),
+		tagSamples:           make(map[string]string),
+		structExtras:         make(map[string]map[string][]string),
+		structDocHolders:     make(map[string]map[string]string),
+		structDocFieldSource: make(map[string]map[string]string),
 	}
 	entries, err := os.ReadDir(dir)
 	if err != nil {
@@ -231,6 +365,9 @@ func LoadASTIndex(dir string) (*ASTIndex, error) {
 				if sample := tagSampleOf(typeSpec.Doc, genDecl.Doc); sample != "" {
 					idx.tagSamples[typeSpec.Name.Name] = sample
 				}
+				if extras := structExtrasOf(typeSpec.Doc, genDecl.Doc); len(extras) > 0 {
+					idx.structExtras[typeSpec.Name.Name] = extras
+				}
 				structType, ok := typeSpec.Type.(*ast.StructType)
 				if !ok {
 					// Defined type over a named type (e.g. `type X _X`).
@@ -244,10 +381,207 @@ func LoadASTIndex(dir string) (*ASTIndex, error) {
 				}
 				idx.structs[typeSpec.Name.Name] = structType
 				idx.files[typeSpec.Name.Name] = name
+				idx.collectFieldDocBlocks(typeSpec.Name.Name, structType)
 			}
 		}
 	}
+	// Defined types over structs (`type X _X`) are flattened by the schema
+	// generator under their defined name, so expose them under both names.
+	for name := range idx.aliases {
+		if structType := idx.structs[idx.resolve(name)]; structType != nil {
+			idx.structs[name] = structType
+		}
+	}
+	if err := idx.validateDocPlacement(); err != nil {
+		return nil, err
+	}
 	return idx, nil
+}
+
+// collectFieldDocBlocks records `@Doc <key>:` markers declared on a struct
+// field's doc comment under the enclosing struct, so documentation for keys
+// introduced by a field lives next to that field instead of on the type.
+func (i *ASTIndex) collectFieldDocBlocks(structName string, structType *ast.StructType) {
+	for _, field := range structType.Fields.List {
+		if len(field.Names) != 1 {
+			continue
+		}
+		extras := structExtrasOf(field.Doc)
+		if len(extras) == 0 {
+			continue
+		}
+		holder := ""
+		fieldName := "/"
+		if value, ok := structTagName(field.Tag, "json"); ok {
+			tagName, _, _ := strings.Cut(value, ",")
+			fieldName = tagName
+			if tagName == "-" {
+				holder = structNameOf(field.Type)
+			}
+		}
+		if i.structExtras[structName] == nil {
+			i.structExtras[structName] = make(map[string][]string)
+		}
+		for key, body := range extras {
+			if _, exists := i.structExtras[structName][key]; exists {
+				continue
+			}
+			i.structExtras[structName][key] = body
+			if i.structDocFieldSource[structName] == nil {
+				i.structDocFieldSource[structName] = make(map[string]string)
+			}
+			i.structDocFieldSource[structName][key] = fieldName
+			if holder != "" {
+				if i.structDocHolders[structName] == nil {
+					i.structDocHolders[structName] = make(map[string]string)
+				}
+				i.structDocHolders[structName][key] = holder
+			}
+		}
+	}
+}
+
+// StructDocOwner returns the struct that declares the `@Doc <key>:` block,
+// following embedded structs when the block is inherited.
+func (i *ASTIndex) StructDocOwner(name string, key string) string {
+	return i.collectStructDocOwner(i.resolve(name), key, 0)
+}
+
+func (i *ASTIndex) collectStructDocOwner(name string, key string, depth int) string {
+	if name == "" || depth > 8 {
+		return ""
+	}
+	if _, declared := i.structExtras[name][key]; declared {
+		return name
+	}
+	structType := i.structs[name]
+	if structType == nil {
+		return ""
+	}
+	for _, field := range structType.Fields.List {
+		if len(field.Names) != 0 {
+			continue
+		}
+		embedded, err := embeddedTypeName(field.Type)
+		if err != nil {
+			continue
+		}
+		if owner := i.collectStructDocOwner(i.resolve(embedded), key, depth+1); owner != "" {
+			return owner
+		}
+	}
+	return ""
+}
+
+// StructDocHolder returns the struct whose documented fields accompany the
+// `@Doc <key>:` block, when the block is declared on a variant holder field.
+func (i *ASTIndex) StructDocHolder(name string, key string) string {
+	return i.collectStructDocHolder(i.resolve(name), key, 0)
+}
+
+func (i *ASTIndex) collectStructDocHolder(name string, key string, depth int) string {
+	if name == "" || depth > 8 {
+		return ""
+	}
+	if holders := i.structDocHolders[name]; holders != nil {
+		if holder := holders[key]; holder != "" {
+			return holder
+		}
+	}
+	structType := i.structs[name]
+	if structType == nil {
+		return ""
+	}
+	for _, field := range structType.Fields.List {
+		if len(field.Names) != 0 {
+			continue
+		}
+		embedded, err := embeddedTypeName(field.Type)
+		if err != nil {
+			continue
+		}
+		if holder := i.collectStructDocHolder(i.resolve(embedded), key, depth+1); holder != "" {
+			return holder
+		}
+	}
+	return ""
+}
+
+// DocumentedField is a struct field carrying documentation prose.
+type DocumentedField struct {
+	Key   string
+	Prose []string
+}
+
+// DocumentedFields returns the documented fields of a struct in declaration
+// order, using their JSON names.
+func (i *ASTIndex) DocumentedFields(name string) []DocumentedField {
+	structType := i.structs[i.resolve(name)]
+	if structType == nil {
+		return nil
+	}
+	var fields []DocumentedField
+	for _, field := range structType.Fields.List {
+		if len(field.Names) != 1 {
+			continue
+		}
+		value, ok := structTagName(field.Tag, "json")
+		if !ok {
+			continue
+		}
+		tagName, _, _ := strings.Cut(value, ",")
+		if tagName == "" || tagName == "-" {
+			continue
+		}
+		prose, _, err := commentProse(field.Doc)
+		if err != nil || len(prose) == 0 {
+			continue
+		}
+		fields = append(fields, DocumentedField{Key: tagName, Prose: prose})
+	}
+	return fields
+}
+
+// validateDocPlacement enforces the documentation placement convention:
+// keys backed by a struct field must be documented on that field (or on the
+// field introducing a holder), not on the type.
+func (i *ASTIndex) validateDocPlacement() error {
+	for structName, extras := range i.structExtras {
+		structType := i.structs[i.resolve(structName)]
+		if structType == nil {
+			continue
+		}
+		fieldJSON := make(map[string]string)
+		for _, field := range structType.Fields.List {
+			if len(field.Names) != 1 {
+				continue
+			}
+			if value, ok := structTagName(field.Tag, "json"); ok {
+				tagName, _, _ := strings.Cut(value, ",")
+				if tagName != "" && tagName != "-" {
+					fieldJSON[tagName] = field.Names[0].Name
+				}
+			}
+		}
+		sources := i.structDocFieldSource[structName]
+		for key := range extras {
+			firstSegment, _, _ := strings.Cut(key, ".")
+			fieldGo, hasField := fieldJSON[firstSegment]
+			if source, fromField := sources[key]; fromField {
+				if source == "-" {
+					continue
+				}
+				if key != source && !strings.HasPrefix(key, source+".") {
+					return fmt.Errorf("option.%s: @Doc %q is declared on field %q, move it above a field it documents", structName, key, source)
+				}
+				continue
+			}
+			if hasField {
+				return fmt.Errorf("option.%s: @Doc %q documents field %s (json %q), move the block above that field", structName, key, fieldGo, firstSegment)
+			}
+		}
+	}
+	return nil
 }
 
 // embedOverrides holds prose overrides declared on an embedded field's doc
@@ -258,6 +592,63 @@ type embedOverrides struct {
 	base     []string
 	byField  map[string][]string
 	examples map[string]string // per-field @example values declared on the embed
+}
+
+// mergeEmbedOverrides combines overrides inherited from the documented root
+// with the ones declared on a nested embedded field. Overrides declared closer
+// to the root take precedence, because the root struct is the subject of the
+// page; the embed-level base prose stays local to the struct that declares it.
+func mergeEmbedOverrides(outer *embedOverrides, inner *embedOverrides) *embedOverrides {
+	if outer == nil {
+		return inner
+	}
+	merged := &embedOverrides{}
+	if inner != nil {
+		merged.base = inner.base
+	}
+	for key, prose := range innerByField(inner) {
+		merged.byField = setOverride(merged.byField, key, prose)
+	}
+	for key, prose := range outer.byField {
+		merged.byField = setOverride(merged.byField, key, prose)
+	}
+	for key, example := range innerExamples(inner) {
+		merged.examples = setExample(merged.examples, key, example)
+	}
+	for key, example := range outer.examples {
+		merged.examples = setExample(merged.examples, key, example)
+	}
+	return merged
+}
+
+func innerByField(overrides *embedOverrides) map[string][]string {
+	if overrides == nil {
+		return nil
+	}
+	return overrides.byField
+}
+
+func innerExamples(overrides *embedOverrides) map[string]string {
+	if overrides == nil {
+		return nil
+	}
+	return overrides.examples
+}
+
+func setOverride(target map[string][]string, key string, prose []string) map[string][]string {
+	if target == nil {
+		target = make(map[string][]string)
+	}
+	target[key] = prose
+	return target
+}
+
+func setExample(target map[string]string, key string, example string) map[string]string {
+	if target == nil {
+		target = make(map[string]string)
+	}
+	target[key] = example
+	return target
 }
 
 // parseEmbedOverrides reads prose overrides from an embedded field doc
@@ -462,7 +853,7 @@ func (i *ASTIndex) Flatten(root string, omitOrigins []string) ([]FlattenEntry, e
 				if err != nil {
 					return fmt.Errorf("struct %s: %w", structName, err)
 				}
-				if err := walk(embedded, prefix, nestedOverrides); err != nil {
+				if err := walk(embedded, prefix, mergeEmbedOverrides(overrides, nestedOverrides)); err != nil {
 					return err
 				}
 				continue
@@ -608,7 +999,7 @@ func (i *ASTIndex) Expand(entries []FlattenEntry, key string) ([]FlattenEntry, e
 				if err != nil {
 					return fmt.Errorf("struct %s: %w", structName, err)
 				}
-				if err := walk(embedded, prefix, nestedOverrides); err != nil {
+				if err := walk(embedded, prefix, mergeEmbedOverrides(overrides, nestedOverrides)); err != nil {
 					return err
 				}
 				continue
@@ -649,7 +1040,7 @@ func (i *ASTIndex) Expand(entries []FlattenEntry, key string) ([]FlattenEntry, e
 				entry.RefTag = refTag
 			}
 			out = append(out, entry)
-			if name := structNameOf(field.Type); name != "" && i.structs[name] != nil {
+			if name := structNameOf(field.Type); name != "" && i.structs[i.resolve(name)] != nil {
 				if err := walk(name, segments, nil); err != nil {
 					return err
 				}
@@ -666,7 +1057,7 @@ func (i *ASTIndex) Expand(entries []FlattenEntry, key string) ([]FlattenEntry, e
 // field returns the field of a struct matching the JSON key (falling back to
 // the Go field name).
 func (i *ASTIndex) field(structName string, jsonKey string) *ast.Field {
-	structType := i.structs[structName]
+	structType := i.structs[i.resolve(structName)]
 	if structType == nil {
 		return nil
 	}
@@ -788,7 +1179,9 @@ func commentProse(doc *ast.CommentGroup) ([]string, FieldTags, error) {
 		return nil, tags, nil
 	}
 	var inExample bool
+	var inDocBlock bool
 	var exampleLines []string
+	var pendingOverride string
 	for _, comment := range doc.List {
 		text := comment.Text
 		var lines []string
@@ -806,6 +1199,19 @@ func commentProse(doc *ast.CommentGroup) ([]string, FieldTags, error) {
 			continue
 		}
 		for _, line := range lines {
+			if inDocBlock {
+				// `@Doc <key>:` blocks document synthesized keys and are
+				// rendered separately; they must not leak into the field's
+				// own prose (nor into schema descriptions).
+				if line == "" || strings.HasPrefix(line, " ") || strings.HasPrefix(line, "\t") {
+					continue
+				}
+				inDocBlock = false
+			}
+			if _, isDocMarker := cutPrefixFold(line, "@Doc "); isDocMarker || strings.EqualFold(line, "@Doc") || strings.EqualFold(line, "@Doc:") {
+				inDocBlock = true
+				continue
+			}
 			if line == "" {
 				if len(prose) > 0 && prose[len(prose)-1] != "" {
 					prose = append(prose, "")
@@ -853,6 +1259,25 @@ func commentProse(doc *ast.CommentGroup) ([]string, FieldTags, error) {
 					continue
 				}
 				inExample = false
+			}
+			if value, ok := cutPrefixFold(line, "@Override "); ok {
+				key := strings.TrimSpace(strings.TrimSuffix(strings.TrimSpace(value), ":"))
+				if key == "" || strings.ContainsAny(key, " \t") {
+					return nil, tags, fmt.Errorf("invalid @Override target %q", value)
+				}
+				if tags.Overrides == nil {
+					tags.Overrides = map[string]string{}
+				}
+				pendingOverride = key
+				continue
+			}
+			if pendingOverride != "" {
+				if value, ok := cutPrefixFold(strings.TrimLeft(line, " \t"), "@Example: "); ok {
+					tags.Overrides[pendingOverride] = value
+					pendingOverride = ""
+					continue
+				}
+				return nil, tags, fmt.Errorf("@Override %s: expected an indented \"@Example:\" line, got %q", pendingOverride, line)
 			}
 			if strings.EqualFold(line, "@Omit") {
 				tags.Omit = true

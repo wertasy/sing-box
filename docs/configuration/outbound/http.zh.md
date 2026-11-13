@@ -64,6 +64,7 @@ HTTP 请求的额外标头。
 
 !!! question "自 sing-box 1.15.0 起"
 
+
 HTTP 版本。
 
 可用值：`1`、`2`、`3`。
@@ -77,6 +78,7 @@ HTTP 版本。
 #### disable_version_fallback
 
 !!! question "自 sing-box 1.15.0 起"
+
 
 禁用自动回退到更低的 HTTP 版本。
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 )
 
@@ -140,6 +141,16 @@ func (g *generator) renderExample(page *Page, sections []Section, spec *ExampleS
 	for _, key := range spec.Omit {
 		omit[key] = true
 	}
+	// Example values overridden from the definition's own field comments via
+	// `@Override <key>:` blocks (e.g. a synthesized `tag` rendered empty).
+	commentValues := make(map[string]string)
+	for _, entry := range entries {
+		for key, value := range entry.Tags.Overrides {
+			if _, exists := commentValues[key]; !exists {
+				commentValues[key] = value
+			}
+		}
+	}
 	type renderedEntry struct {
 		lines      []string
 		deprecated bool
@@ -149,7 +160,7 @@ func (g *generator) renderExample(page *Page, sections []Section, spec *ExampleS
 		if omit[entry.Key] {
 			return nil
 		}
-		value, err := g.exampleValue(spec, rootNode, entry)
+		value, err := g.exampleValue(spec, rootNode, entry, commentValues)
 		if err != nil {
 			return fmt.Errorf("%s: %w", entry.Key, err)
 		}
@@ -187,6 +198,11 @@ func (g *generator) renderExample(page *Page, sections []Section, spec *ExampleS
 				continue
 			}
 			value, known := spec.Values[key]
+			if !known {
+				if overridden, ok := commentValues[key]; ok {
+					value, known = overridden, true
+				}
+			}
 			if !known {
 				switch key {
 				case "type":
@@ -275,7 +291,7 @@ func (g *generator) resolveExampleGroups(page *Page, groups []string, lang strin
 		parts := strings.Split(label, " / ")
 		for index, part := range parts {
 			if heading, err := twinHeadingByOrdinal(enLines, "### "+part, zhLines); err == nil {
-				parts[index] = strings.TrimPrefix(heading, "### ")
+				parts[index] = headingText(heading)
 			} else if zh, known := groupZhLabels[part]; known {
 				parts[index] = zh
 			}
@@ -372,7 +388,10 @@ func isExampleContainer(g *generator, rootNode *SchemaNode, key string, depth1Co
 }
 
 // exampleValue renders the raw JSON value text of one entry.
-func (g *generator) exampleValue(spec *ExampleSpec, rootNode *SchemaNode, entry FlattenEntry) (string, error) {
+func (g *generator) exampleValue(spec *ExampleSpec, rootNode *SchemaNode, entry FlattenEntry, commentValues map[string]string) (string, error) {
+	if value, known := commentValues[entry.Key]; known {
+		return value, nil
+	}
 	if value, known := spec.Values[entry.Key]; known {
 		return value, nil
 	}
@@ -445,20 +464,25 @@ func quoteJSON(text string) string {
 }
 
 // spliceExample replaces the Structure example fence with the generated
-// block. Pages without a Structure fence are skipped.
-func (g *generator) spliceExample(page *Page, sections []Section, lang string, lines []string) ([]string, error) {
+// block. Pages without a Structure fence are skipped. The heading level
+// follows the baseline page when it has the heading.
+func (g *generator) spliceExample(page *Page, sections []Section, lang string, lines []string, baselineLines []string) ([]string, error) {
 	spec := page.ResolveExample(g.manifest)
 	if spec == nil {
-		return lines, nil
+		if !slices.Contains(lines, exampleMarkerStart) {
+			return lines, nil
+		}
+		// Generated example regions default to the plain struct example, so
+		// the manifest does not need `example: {}` placeholders.
+		spec = &ExampleSpec{}
 	}
 	headingText := structureHeading
-	var enLines []string
 	if lang == "zh" {
 		enContent, err := os.ReadFile(filepath.Join(g.docsDir, filepath.FromSlash(page.Twin)))
 		if err != nil {
 			return nil, err
 		}
-		enLines = strings.Split(string(enContent), "\n")
+		enLines := strings.Split(string(enContent), "\n")
 		resolved, err := twinHeadingByOrdinal(enLines, structureHeading, lines)
 		if err != nil {
 			// No Structure heading on the localized page: skip.
@@ -466,16 +490,19 @@ func (g *generator) spliceExample(page *Page, sections []Section, lang string, l
 		}
 		headingText = resolved
 	}
+	// Keep the canonical Structure level (the legacy pages of some page
+	// families use a shallower level); only the heading text is localized.
+	if level := atxHeadingLevel(structureHeading); level > 0 {
+		headingText = strings.Repeat("#", level) + " " + strings.TrimSpace(strings.TrimLeft(headingText, "#"))
+	}
 	headingIndex := -1
-	for index, line := range lines {
-		if line == headingText {
-			headingIndex = index
-			break
-		}
+	if location, found := locateHeading(lines, headingText); found {
+		headingIndex = location.headingIndex
 	}
 	if headingIndex < 0 {
 		return lines, nil
 	}
+	lines[headingIndex] = headingText
 	fenceStart := -1
 	fenceEnd := -1
 	for inner := headingIndex + 1; inner < len(lines); inner++ {

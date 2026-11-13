@@ -21,6 +21,9 @@ icon: material/new-box
 
 ### 字段
 
+<!-- AUTO-GENERATED-CONFIG-START -->
+<!-- 此区域由脚本自动生成，切勿手动修改 -->
+
 #### udp_timeout
 
 UDP NAT 过期时间。
@@ -30,6 +33,7 @@ UDP NAT 过期时间。
 #### udp_mapping
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 UDP NAT 映射行为。
 
@@ -45,6 +49,7 @@ UDP NAT 映射行为。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 UDP NAT 过滤行为。
 
 | 值                            | 行为                                                     |
@@ -59,9 +64,12 @@ UDP NAT 过滤行为。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 UDP NAT 会话的最大数量。
 
 达到限制时，将关闭最近最少使用的会话。
 
 未设置或设置为 `0` 时，iOS 使用 `4096`。其他平台根据总内存在 `4096` 到 `16384` 之间选择；
 无法检测总内存时使用 `16384`。
+
+<!-- AUTO-GENERATED-CONFIG-END -->

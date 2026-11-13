@@ -121,15 +121,6 @@
 <!-- AUTO-GENERATED-CONFIG-START -->
 <!-- 此区域由脚本自动生成，切勿手动修改 -->
 
-#### mode
-
-OpenVPN session mode, one of `tls` or `static_key`.
-
-`static_key` is a deprecated OpenVPN mode without a TLS control channel or
-forward secrecy.
-
-- Default: `tls`
-
 #### server
 
 OpenVPN server address.
@@ -143,6 +134,43 @@ Conflict with `servers`.
 OpenVPN server port.
 
 Required when `server` is set.
+
+#### system
+
+Use a system interface.
+
+Requires privilege and cannot conflict with existing system interfaces.
+
+If disabled, sing-box uses the internal network stack.
+
+#### name
+
+Custom interface name for the system interface.
+
+An automatically generated `ovpn` interface name will be used by default.
+
+#### mtu
+
+OpenVPN interface MTU.
+
+When empty, `1500` is used until a server-pushed MTU is received.
+
+#### mode
+
+OpenVPN session mode, one of `tls` or `static_key`.
+
+`static_key` is a deprecated OpenVPN mode without a TLS control channel or
+forward secrecy.
+
+`tls` will be used by default.
+
+#### network
+
+Default OpenVPN transport network, one of `udp` or `tcp`.
+
+This value applies to `server` and to `servers` entries without their own `network`.
+
+`udp` will be used by default.
 
 #### servers
 
@@ -159,14 +187,6 @@ Conflict with `server`.
 Randomize the `servers` order before connecting.
 
 Disabled by default.
-
-#### network
-
-Default OpenVPN transport network, one of `udp` or `tcp`.
-
-This value applies to `server` and to `servers` entries without their own `network`.
-
-- Default: `udp`
 
 #### address
 
@@ -208,7 +228,7 @@ Password for OpenVPN username/password authentication.
 
 Behavior after username/password authentication fails, one of `none`, `nointeract`, or `interact`.
 
-`none` is used by default and treats a permanent authentication failure as terminal.
+`none` will be used by default and treats a permanent authentication failure as terminal.
 
 `nointeract` and `interact` allow authentication retries.
 
@@ -283,7 +303,7 @@ Only available in TLS mode.
 
 OpenVPN data channel authentication digest.
 
-`SHA1` is used by default. It only applies to non-AEAD data ciphers and `tls_auth`.
+`SHA1` will be used by default. It only applies to non-AEAD data ciphers and `tls_auth`.
 
 #### mss_fix
 
@@ -316,11 +336,11 @@ Conflict with TCP transport.
 
 #### replay_window
 
-UDP data-channel replay window size. `64` is used by default. The maximum is `65536`.
+UDP data-channel replay window size. `64` will be used by default. The maximum is `65536`.
 
 #### replay_window_time
 
-UDP data-channel replay window duration. `15s` is used by default and the maximum is `10m`.
+UDP data-channel replay window duration. `15s` will be used by default and the maximum is `10m`.
 
 The value must use whole seconds.
 
@@ -340,7 +360,7 @@ Disabled by default.
 
 Policy for compression pushed by the server, one of `no`, `asym`, or `yes`.
 
-`no` is used by default and permits only compression stub framing. `asym` accepts compressed packets from the server but does not compress outgoing packets. `yes` is a legacy alias for `asym`.
+`no` will be used by default and permits only compression stub framing. `asym` accepts compressed packets from the server but does not compress outgoing packets. `yes` is a legacy alias for `asym`.
 
 Conflict with non-stub compression enabled by `compression` or `compression_lzo` when set to `no`.
 
@@ -465,29 +485,10 @@ Number of OpenVPN exit notifications sent when closing a UDP connection.
 
 Notifications are sent one second apart. Disabled when `0`.
 
-#### system
-
-Use a system interface.
-
-Requires privilege and cannot conflict with existing system interfaces.
-
-If disabled, sing-box uses the internal network stack.
-
-#### name
-
-Custom interface name for the system interface.
-
-An automatically generated `ovpn` interface name is used by default.
-
-#### mtu
-
-OpenVPN interface MTU.
-
-When empty, `1500` is used until a server-pushed MTU is received.
-
 #### on_demand
 
 !!! question "Since sing-box 1.15.0"
+
 
 Allow the endpoint to be disconnected when necessary.
 
@@ -501,7 +502,7 @@ Certificate name verification is disabled if empty.
 
 Certificate field matched by `tls.server_name`, one of `subject`, `name`, or `name-prefix`.
 
-`name` is used by default when `tls.server_name` is set.
+`name` will be used by default when `tls.server_name` is set.
 
 `subject` matches the full certificate subject, `name` matches the common name exactly, and `name-prefix` matches a common name prefix.
 
@@ -585,7 +586,7 @@ Peer certificate purpose check, one of `server`, `client`, or `none`.
 
 Conflict with `tls.remote_certificate_eku`.
 
-- Default: `server`
+`server` will be used by default.
 
 #### tls.certificate_profile
 
@@ -598,7 +599,7 @@ requires stronger signatures and keys.
 
 When `suiteb` is selected, the TLS 1.2 cipher list defaults to the Suite B ECDHE-ECDSA AES-GCM suites when `tls.cipher` is empty, and the TLS groups default to `secp256r1` and `secp384r1` when `tls.groups` is empty.
 
-- Default: `legacy`
+`legacy` will be used by default.
 
 #### tls.ns_certificate_type
 
@@ -610,13 +611,13 @@ Disabled by default. Prefer `tls.remote_certificate_tls`.
 
 Minimum TLS version, one of `1.0`, `1.1`, `1.2`, or `1.3`.
 
-- Default: `1.2`
+`1.2` will be used by default.
 
 #### tls.version_max
 
 Maximum TLS version, one of `1.0`, `1.1`, `1.2`, or `1.3`.
 
-The maximum supported version is used by default.
+The maximum supported version will be used by default.
 
 The value cannot be lower than `tls.version_min`.
 
@@ -680,6 +681,24 @@ Case-sensitive prefix to match against the pushed option name and value.
 
 For example, `route ` matches pushed IPv4 route options without matching `route-gateway`.
 
+#### servers.server
+
+==Required==
+
+OpenVPN server address.
+
+#### servers.server_port
+
+==Required==
+
+OpenVPN server port.
+
+#### servers.network
+
+OpenVPN transport network for this server, one of `udp` or `tcp`.
+
+The top-level `network` will be used by default.
+
 <!-- AUTO-GENERATED-CONFIG-END -->
 
 ### UDP NAT Fields
@@ -692,6 +711,6 @@ See [UDP NAT Fields](/configuration/shared/udp-nat/) for details.
 See [Dial Fields](/configuration/shared/dial/) for details.
 <!-- AUTO-GENERATED-ORIGIN-END -->
 
-## Interactive authentication
+### Interactive authentication
 
 Use `Tools` > `Endpoints` in the sing-box dashboard or any sing-box graphical client to authenticate and manage the endpoint.

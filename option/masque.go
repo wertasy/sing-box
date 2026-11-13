@@ -19,23 +19,32 @@ type MASQUEEndpointOptions struct {
 	//
 	// If disabled, sing-box uses the internal network stack.
 	System bool `json:"system,omitempty"`
+
 	// Custom interface name for system interface.
 	//
-	// An automatically generated `masque` interface name is used by default.
+	// An automatically generated `masque` interface name will be used by default.
 	Name string `json:"name,omitempty"`
+
 	// Tunnel MTU.
 	//
 	// @Default: 1280
 	//
 	// @Example: 1280
-	MTU          uint32         `json:"mtu,omitempty"`
-	UDPMapping   UDPNATBehavior `json:"udp_mapping,omitempty"`
+	MTU uint32 `json:"mtu,omitempty"`
+
+	// @Omit
+	UDPMapping UDPNATBehavior `json:"udp_mapping,omitempty"`
+
+	// @Omit
 	UDPFiltering UDPNATBehavior `json:"udp_filtering,omitempty"`
-	UDPNATMax    uint32         `json:"udp_nat_max,omitempty"`
+
+	// @Omit
+	UDPNATMax uint32 `json:"udp_nat_max,omitempty"`
 }
 
 type _MASQUEClientEndpointOptions struct {
 	DialerOptions
+
 	// @Override server:
 	//    @Example: "127.0.0.1"
 	//
@@ -43,21 +52,27 @@ type _MASQUEClientEndpointOptions struct {
 	//    @Example: 443
 	ServerOptions
 	MASQUEEndpointOptions
+
 	// Basic authorization username.
 	Username string `json:"username,omitempty"`
+
 	// Basic authorization password.
 	Password string `json:"password,omitempty"`
+
 	// @Override:
 	//    TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 	//
 	//    Required for HTTP/3.
 	OutboundTLSOptionsContainer
+
 	// URI template path of the IP proxying resource, may contain the `target` and `ipproto` variables.
 	//
-	// `/.well-known/masque/ip/{target}/{ipproto}/` is used by default.
+	// `/.well-known/masque/ip/{target}/{ipproto}/` will be used by default.
 	Path string `json:"path,omitempty"`
+
 	// Extra headers of HTTP request.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`
+
 	// HTTP version.
 	//
 	// Available values: `1`, `2`, `3`.
@@ -66,13 +81,18 @@ type _MASQUEClientEndpointOptions struct {
 	//
 	// @Default: 3
 	Version int `json:"version,omitempty" enum:"0,1,2,3"`
+
 	// Disable automatic fallback to lower HTTP version.
 	DisableVersionFallback bool `json:"disable_version_fallback,omitempty"`
+
 	// List of IP prefixes to advertise to the server.
 	//
 	// The server will route traffic for these prefixes into this endpoint, where it is handled as inbound traffic.
-	AdvertiseRoutes []netip.Prefix     `json:"advertise_routes,omitempty"`
-	UDPTimeout      badoption.Duration `json:"udp_timeout,omitempty"`
+	AdvertiseRoutes []netip.Prefix `json:"advertise_routes,omitempty"`
+
+	// @Omit
+	UDPTimeout badoption.Duration `json:"udp_timeout,omitempty"`
+
 	// Allow the endpoint to be disconnected when necessary.
 	OnDemand     bool         `json:"on_demand,omitempty"`
 	HTTP2Options HTTP2Options `json:"-"`
@@ -117,6 +137,7 @@ func (o MASQUEClientEndpointOptions) DescribeSchema(builder schema.Builder) (*sc
 type _MASQUEServerEndpointOptions struct {
 	ListenOptions
 	MASQUEEndpointOptions
+
 	// HTTP users, verified by the `Authorization` header.
 	//
 	// No authentication required if empty.
@@ -129,6 +150,7 @@ type _MASQUEServerEndpointOptions struct {
 	//      }
 	//    ]
 	Users []auth.User `json:"users,omitempty"`
+
 	// List of HTTP versions to serve.
 	//
 	// Available values: `1`, `2`, `3`.
@@ -137,21 +159,25 @@ type _MASQUEServerEndpointOptions struct {
 	//
 	// TLS is required for `3`.
 	Version badoption.Listable[int] `json:"version,omitempty" enum:"1,2,3"`
+
 	// @Override:
 	//    TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
 	//
 	//    IP proxying must be operated over TLS or QUIC. Leave it disabled only when the server is placed behind an HTTP intermediary that terminates TLS.
 	InboundTLSOptionsContainer
+
 	// URI template path of the IP proxying resource, may contain the `target` and `ipproto` variables.
 	//
-	// `/.well-known/masque/ip/{target}/{ipproto}/` is used by default.
+	// `/.well-known/masque/ip/{target}/{ipproto}/` will be used by default.
 	Path string `json:"path,omitempty"`
+
 	// List of IP prefixes of the tunnel network, at most one for each IP version.
 	//
 	// The address of the prefix is used by the server itself, other addresses in the prefix are assigned to clients.
 	//
 	// @Required
 	Address badoption.Listable[netip.Prefix] `json:"address"`
+
 	// List of IP prefixes to advertise to clients, in addition to the tunnel network.
 	//
 	// Traffic from clients to other destinations is rejected.

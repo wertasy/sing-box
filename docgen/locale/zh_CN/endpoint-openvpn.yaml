@@ -1,10 +1,13 @@
 OpenVPNClientEndpointOptions.system: |-
   使用系统接口。
 
-  需要特权且不能与已有系统接口冲突。
+  需要权限，且不能与现有系统接口冲突。
 
-  如果禁用，sing-box 将使用内部网络栈。
-OpenVPNClientEndpointOptions.name: 系统接口的自定义接口名称。
+  禁用时，sing-box 使用内部网络栈。
+OpenVPNClientEndpointOptions.name: |-
+  系统接口的自定义接口名称。
+
+  默认使用自动生成的 `ovpn` 接口名称。
 
 OpenVPNClientEndpointOptions.mtu: |-
   OpenVPN 接口 MTU。
@@ -384,7 +387,10 @@ OpenVPNServerEndpointOptions.system: |-
   需要特权且不能与已有系统接口冲突。
 
   如果禁用，sing-box 将使用内部网络栈。
-OpenVPNServerEndpointOptions.name: 系统接口的自定义接口名称。
+OpenVPNServerEndpointOptions.name: |-
+  系统接口的自定义接口名称。
+
+  默认使用自动生成的 `ovpn` 接口名称。
 OpenVPNServerEndpointOptions.mtu: |-
   OpenVPN 接口 MTU。
 

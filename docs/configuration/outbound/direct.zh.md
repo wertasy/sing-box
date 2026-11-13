@@ -48,4 +48,6 @@ icon: material/alert-decagram
 
 ### 拨号字段
 
-参阅 [拨号字段](/zh/configuration/shared/dial/)。
+<!-- AUTO-GENERATED-ORIGIN-START -->
+参阅 [拨号字段](/zh/configuration/shared/dial/) 了解详情。
+<!-- AUTO-GENERATED-ORIGIN-END -->

@@ -18,12 +18,15 @@ import (
 type RawDNSOptions struct {
 	// @Omit
 	Servers []DNSServerOptions `json:"servers,omitempty"`
+
 	// @Omit
 	Rules []DNSRule `json:"rules,omitempty"`
+
 	// Default dns server tag.
 	//
 	// The first server will be used if empty.
 	Final string `json:"final,omitempty" reference:"dns_server"`
+
 	// Stores a reverse mapping of IP addresses after responding to a DNS query in order to provide domain names when routing.
 	//
 	// Since this process relies on the act of resolving domain names by an application before making a request, it can be
@@ -73,6 +76,7 @@ type DNSClientOptions struct {
 	//
 	// One of `prefer_ipv4` `prefer_ipv6` `ipv4_only` `ipv6_only`.
 	Strategy DomainStrategy `json:"strategy,omitempty"`
+
 	// Default timeout for each DNS query.
 	//
 	// Can be overridden by `rules.[].timeout` (DNS rule action) or `domain_resolver.timeout`.
@@ -81,26 +85,31 @@ type DNSClientOptions struct {
 	//
 	// @Since 1.14.0
 	Timeout badoption.Duration `json:"timeout,omitempty"`
+
 	// Disable dns cache.
 	//
 	// Conflict with `optimistic`.
 	DisableCache bool `json:"disable_cache,omitempty"`
+
 	// Disable dns cache expire.
 	//
 	// Conflict with `optimistic`.
 	DisableExpire bool `json:"disable_expire,omitempty"`
+
 	// Make each DNS server's cache independent for special purposes. If enabled, will slightly degrade performance.
 	//
 	// @Failure: Deprecated in sing-box 1.14.0
 	//
 	//     `independent_cache` is deprecated and will be removed in sing-box 1.16.0, check [Migration](/migration/#migrate-independent-dns-cache).
 	IndependentCache bool `json:"independent_cache,omitempty" schema:"omit"`
+
 	// LRU cache capacity.
 	//
 	// Value less than 1024 will be ignored.
 	//
 	// @Since 1.11.0
 	CacheCapacity uint32 `json:"cache_capacity,omitempty"`
+
 	// Enable optimistic DNS caching. When a cached DNS entry has expired but is still within the timeout window,
 	// the stale response is returned immediately while a background refresh is triggered.
 	//
@@ -123,10 +132,11 @@ type DNSClientOptions struct {
 	//
 	// The maximum time an expired cache entry can be served optimistically.
 	//
-	// @Default: 3d
+	// `3d` will be used by default.
 	//
 	// @Since 1.14.0
 	Optimistic *OptimisticDNSOptions `json:"optimistic,omitempty"`
+
 	// Append a `edns0-subnet` OPT extra record with the specified IP prefix to every query by default.
 	//
 	// If value is an IP address instead of prefix, `/32` or `/128` will be appended automatically.
@@ -229,9 +239,10 @@ type DNSServerAddressOptions struct {
 	//
 	// @Required
 	Server string `json:"server"`
+
 	// The port of the DNS server.
 	//
-	// @Default: 53
+	// `53` will be used by default.
 	ServerPort uint16 `json:"server_port,omitempty"`
 }
 
@@ -254,9 +265,9 @@ func (o *DNSServerAddressOptions) ReplaceServerOptions(options ServerOptions) {
 type HostsDNSServerOptions struct {
 	// List of paths to hosts files.
 	//
-	// `/etc/hosts` is used by default.
+	// `/etc/hosts` will be used by default.
 	//
-	// `C:\Windows\System32\Drivers\etc\hosts` is used by default on Windows.
+	// `C:\Windows\System32\Drivers\etc\hosts` will be used by default on Windows.
 	//
 	// Example:
 	//
@@ -271,6 +282,7 @@ type HostsDNSServerOptions struct {
 	// }
 	// ```
 	Path badoption.Listable[string] `json:"path,omitempty"`
+
 	// Predefined hosts.
 	//
 	// Example:
@@ -295,6 +307,7 @@ type RawLocalDNSServerOptions struct {
 
 type LocalDNSServerOptions struct {
 	RawLocalDNSServerOptions
+
 	// When enabled, `local` DNS server will resolve DNS by dialing itself whenever possible.
 	//
 	// Specifically, it disables following behaviors which was added as features in sing-box 1.13.0:
@@ -314,6 +327,7 @@ type LocalDNSServerOptions struct {
 	//
 	// @Since 1.13.0
 	PreferGo bool `json:"prefer_go,omitempty"`
+
 	// A list of domain suffixes for which A/AAAA queries are answered from the
 	// [neighbor resolver](/configuration/shared/neighbor/) instead of the upstream.
 	//
@@ -333,31 +347,49 @@ type RemoteDNSServerOptions struct {
 }
 
 type RemoteTLSDNSServerOptions struct {
+	// @Override server_port:
+	//    The port of the DNS server.
+	//
+	//    `853` will be used by default.
+	//
 	RemoteDNSServerOptions
 	OutboundTLSOptionsContainer
 }
 
 type RemoteHTTPSDNSServerOptions struct {
+	// @Override server_port:
+	//    The port of the DNS server.
+	//
+	//    `443` will be used by default.
+	//
 	RemoteTLSDNSServerOptions
+
 	// The path of the DNS server.
 	//
 	// `/dns-query` will be used by default.
 	Path string `json:"path,omitempty"`
+
 	// @Omit
 	Method string `json:"method,omitempty"`
+
 	// Additional headers to be sent to the DNS server.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`
 }
 
+// @Doc enabled:
+//
+//	Enable FakeIP service.
 type FakeIPDNSServerOptions struct {
 	// IPv4 address range for FakeIP.
 	Inet4Range *badoption.Prefix `json:"inet4_range,omitempty" examples:"198.18.0.0/15"`
+
 	// IPv6 address range for FakeIP.
 	Inet6Range *badoption.Prefix `json:"inet6_range,omitempty" examples:"2001:2::/48"`
 }
 
 type DHCPDNSServerOptions struct {
 	LocalDNSServerOptions
+
 	// Interface name to listen on.
 	//
 	// Tge default interface will be used by default.
@@ -366,6 +398,7 @@ type DHCPDNSServerOptions struct {
 
 type MDNSDNSServerOptions struct {
 	LocalDNSServerOptions
+
 	// List of network interface names to send mDNS queries on.
 	//
 	// When empty, all interfaces that are up, multicast-capable, and non-loopback are used.

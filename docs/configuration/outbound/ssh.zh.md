@@ -83,17 +83,20 @@ SSH 用户, 默认使用 root。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 允许的加密算法。留空使用默认值。
 
 #### mac
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 允许的 MAC 算法。留空使用默认值。
 
 #### kex_algorithm
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 允许的密钥交换算法。留空使用默认值。
 

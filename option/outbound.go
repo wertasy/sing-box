@@ -89,10 +89,13 @@ type DialerOptions struct {
 type AbstractDialerOptions struct {
 	// The network interface to bind to.
 	BindInterface string `json:"bind_interface,omitempty"`
+
 	// The IPv4 address to bind to.
 	Inet4BindAddress *badoption.Addr `json:"inet4_bind_address,omitempty"`
+
 	// The IPv6 address to bind to.
 	Inet6BindAddress *badoption.Addr `json:"inet6_bind_address,omitempty"`
+
 	// Do not reserve a port when binding to a source address.
 	//
 	// This allows reusing the same source port for multiple connections if the full 4-tuple (source IP, source port, destination IP, destination port) remains unique.
@@ -104,6 +107,7 @@ type AbstractDialerOptions struct {
 	//     Only supported on Linux.
 	BindAddressNoPort bool   `json:"bind_address_no_port,omitempty"`
 	ProtectPath       string `json:"protect_path,omitempty"`
+
 	// Set netfilter routing mark.
 	//
 	// Integers (e.g. `1234`) and string hexadecimals (e.g. `"0x1234"`) are supported.
@@ -112,8 +116,10 @@ type AbstractDialerOptions struct {
 	//
 	//     Only supported on Linux.
 	RoutingMark FwMark `json:"routing_mark,omitempty"`
+
 	// Reuse listener address.
 	ReuseAddr bool `json:"reuse_addr,omitempty"`
+
 	// Set network namespace, name or path.
 	//
 	// Since sing-box 1.14.0, the tag of a [network namespace](/configuration/network-namespace/) can also be used.
@@ -125,6 +131,7 @@ type AbstractDialerOptions struct {
 	//
 	//     Only supported on Linux.
 	NetNs string `json:"netns,omitempty" reference:"network_namespace"`
+
 	// Connect timeout, in golang's Duration format.
 	//
 	// A duration string is a possibly signed sequence of
@@ -132,18 +139,22 @@ type AbstractDialerOptions struct {
 	// such as "300ms", "-1.5h" or "2h45m".
 	// Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
 	ConnectTimeout badoption.Duration `json:"connect_timeout,omitempty"`
+
 	// Enable TCP Fast Open.
 	TCPFastOpen bool `json:"tcp_fast_open,omitempty"`
+
 	// Enable TCP Multi Path.
 	//
 	// @Warning:
 	//
 	//     Go 1.21 required.
 	TCPMultiPath bool `json:"tcp_multi_path,omitempty"`
+
 	// Disable TCP keep alive.
 	//
 	// @Since 1.13.0
 	DisableTCPKeepAlive bool `json:"disable_tcp_keep_alive,omitempty"`
+
 	// TCP keep alive initial period.
 	//
 	// @Default: 5m
@@ -152,6 +163,7 @@ type AbstractDialerOptions struct {
 	//
 	//     Default value changed from `10m` to `5m`.
 	TCPKeepAlive badoption.Duration `json:"tcp_keep_alive,omitempty"`
+
 	// TCP keep alive interval.
 	//
 	// @Default: 75s
@@ -160,9 +172,11 @@ type AbstractDialerOptions struct {
 	TCPKeepAliveInterval       badoption.Duration `json:"tcp_keep_alive_interval,omitempty"`
 	TCPKeepAliveSystemDefaults bool               `json:"-"`
 	UDPBindPort                uint16             `json:"-"`
+
 	// Enable UDP fragmentation.
 	UDPFragment        *bool `json:"udp_fragment,omitempty"`
 	UDPFragmentDefault bool  `json:"-"`
+
 	// Set domain resolver to use for resolving domain names.
 	//
 	// This option uses the same format as the [route DNS rule action](/configuration/dns/rule_action/#route) without the `action` field.
@@ -182,6 +196,7 @@ type AbstractDialerOptions struct {
 	//
 	//     `outbound` DNS rule items are deprecated and will be removed in sing-box 1.14.0, so this item will be required for outbound/endpoints using domain name in server address since sing-box 1.14.0.
 	DomainResolver *DomainResolveOptions `json:"domain_resolver,omitempty"`
+
 	// Strategy for selecting network interfaces.
 	//
 	// Available values:
@@ -202,12 +217,13 @@ type AbstractDialerOptions struct {
 	//
 	//     Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
 	NetworkStrategy *NetworkStrategy `json:"network_strategy,omitempty"`
+
 	// Network types to use when using `default` or `hybrid` network strategy or
 	// preferred network types to use when using `fallback` network strategy.
 	//
 	// Available values: `wifi`, `cellular`, `ethernet`, `other`.
 	//
-	// Device's default network is used by default.
+	// Device's default network will be used by default.
 	//
 	// @Since 1.11.0
 	//
@@ -215,6 +231,7 @@ type AbstractDialerOptions struct {
 	//
 	//     Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
 	NetworkType badoption.Listable[InterfaceType] `json:"network_type,omitempty"`
+
 	// Fallback network types when preferred networks are unavailable or timeout when using `fallback` network strategy.
 	//
 	// All other networks expect preferred are used by default.
@@ -225,6 +242,7 @@ type AbstractDialerOptions struct {
 	//
 	//     Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
 	FallbackNetworkType badoption.Listable[InterfaceType] `json:"fallback_network_type,omitempty"`
+
 	// The length of time to wait before spawning a RFC 6555 Fast Fallback connection.
 	//
 	// For `domain_strategy`, is the amount of time to wait for connection to succeed before assuming
@@ -257,7 +275,7 @@ type AbstractDialerOptions struct {
 	//
 	//     `domain_strategy` is deprecated and will be removed in sing-box 1.14.0, check [Migration](/migration/#migrate-outbound-domain-strategy-option-to-domain-resolver).
 	//
-	// @Deprecated: migrated to domain resolver
+	// Deprecated: migrated to domain resolver
 	DomainStrategy DomainStrategy `json:"domain_strategy,omitempty" schema:"omit"`
 }
 
@@ -335,10 +353,11 @@ type ServerOptions struct {
 	//
 	// @Required
 	Server string `json:"server"`
+
 	// The server port.
 	//
 	// @Required
-	ServerPort uint16 `json:"server_port"`
+	ServerPort uint16 `json:"server_port,omitempty"`
 }
 
 func (o ServerOptions) Build() M.Socksaddr {

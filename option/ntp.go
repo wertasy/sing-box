@@ -5,12 +5,15 @@ import "github.com/sagernet/sing/common/json/badoption"
 type NTPOptions struct {
 	// Enable NTP service.
 	Enabled bool `json:"enabled,omitempty"`
+
 	// Time synchronization interval.
 	//
-	// @Default: 30 minutes
+	// @Default: 30m
 	Interval badoption.Duration `json:"interval,omitempty"`
+
 	// Update system time after synchronization.
 	WriteToSystem bool `json:"write_to_system,omitempty"`
+
 	// @Override server:
 	//    @Required
 	//
@@ -19,7 +22,7 @@ type NTPOptions struct {
 	// @Override server_port:
 	//    NTP server port.
 	//
-	//    123 is used by default.
+	//    123 will be used by default.
 	ServerOptions
 	DialerOptions
 }

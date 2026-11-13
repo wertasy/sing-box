@@ -55,8 +55,6 @@ The port of the DNS server.
 
 `443` will be used by default.
 
-- Default: `53`
-
 #### path
 
 The path of the DNS server.

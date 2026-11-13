@@ -27,16 +27,14 @@ icon: material/new-box
   "obfs": "fuck me till the daylight",
   "auth": "",
   "auth_str": "password",
+  "recv_window_conn": 0,
+  "recv_window": 0,
+  "disable_mtu_discovery": false,
   "network": "",
-  "tls": {},
+  "tls": {}
 
   ... // Dial Fields
   ... // QUIC Fields
-
-  // Deprecated
-  "recv_window_conn": 0,
-  "recv_window": 0,
-  "disable_mtu_discovery": false
 }
 ```
 <!-- AUTO-GENERATED-EXAMPLE-END -->
@@ -62,6 +60,7 @@ The server port.
 
 !!! question "Since sing-box 1.12.0"
 
+
 Server port range list.
 
 Conflicts with `server_port`.
@@ -70,9 +69,10 @@ Conflicts with `server_port`.
 
 !!! question "Since sing-box 1.12.0"
 
+
 Port hopping interval.
 
-- Default: `30s`
+`30s` will be used by default.
 
 #### up, down
 
@@ -127,18 +127,21 @@ TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 
 #### recv_window_conn
 
+!!! failure "Deprecated in sing-box 1.14.0"
 
-- Deprecated.
+    Use QUIC fields `stream_receive_window` instead.
 
 #### recv_window
 
+!!! failure "Deprecated in sing-box 1.14.0"
 
-- Deprecated.
+    Use QUIC fields `connection_receive_window` instead.
 
 #### disable_mtu_discovery
 
+!!! failure "Deprecated in sing-box 1.14.0"
 
-- Deprecated.
+    Use QUIC fields `disable_path_mtu_discovery` instead.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

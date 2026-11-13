@@ -37,9 +37,9 @@ icon: material/new-box
 
 List of paths to hosts files.
 
-`/etc/hosts` is used by default.
+`/etc/hosts` will be used by default.
 
-`C:\Windows\System32\Drivers\etc\hosts` is used by default on Windows.
+`C:\Windows\System32\Drivers\etc\hosts` will be used by default on Windows.
 
 Example:
 

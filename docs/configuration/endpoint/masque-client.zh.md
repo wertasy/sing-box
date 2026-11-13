@@ -82,7 +82,7 @@ HTTP 版本。
 
 当为 `2` 时，[QUIC 字段](#quic-字段) 替换为 [HTTP2 字段](#http2-字段)。
 
-- 默认值：`3`
+默认使用 `3`。
 
 #### disable_version_fallback
 
@@ -118,23 +118,11 @@ HTTP/3 需要 TLS。
 
 隧道 MTU。
 
-- 默认值：`1280`
+默认使用 `1280`。
 
 #### on_demand
 
 允许该 endpoint 在需要时断开连接。
-
-#### udp_mapping
-
-
-#### udp_filtering
-
-
-#### udp_nat_max
-
-
-#### udp_timeout
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

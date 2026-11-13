@@ -87,6 +87,7 @@ type V2RayHTTPOptions struct {
 	//
 	// The client will choose randomly and the server will verify if not empty.
 	Host badoption.Listable[string] `json:"host,omitempty"`
+
 	// Path of HTTP request.
 	//
 	// The server will verify.
@@ -97,14 +98,17 @@ type V2RayHTTPOptions struct {
 	//     but the actual code allows the client to add any suffix to the path.
 	//     sing-box uses the same behavior as V2Ray, but note that the behavior does not exist in `WebSocket` and `HTTPUpgrade` transport.
 	Path string `json:"path,omitempty"`
+
 	// Method of HTTP request.
 	//
 	// The server will verify if not empty.
 	Method string `json:"method,omitempty"`
+
 	// Extra headers of HTTP request.
 	//
 	// The server will write in response if not empty.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`
+
 	// In HTTP2 server:
 	//
 	// Specifies the time until idle clients should be closed with a GOAWAY frame. PING frames are not considered as activity.
@@ -116,8 +120,9 @@ type V2RayHTTPOptions struct {
 	// traffic on the connection, the health check will be executed every interval. If the value is zero, no health check will
 	// be performed.
 	//
-	// @Default: Zero
+	// @Default: 0s
 	IdleTimeout badoption.Duration `json:"idle_timeout,omitempty"`
+
 	// In HTTP2 client:
 	//
 	// Specifies the timeout duration after sending a PING frame, within which a response must be received.
@@ -131,12 +136,15 @@ type V2RayWebsocketOptions struct {
 	//
 	// The server will verify.
 	Path string `json:"path,omitempty"`
+
 	// Extra headers of HTTP request.
 	//
 	// The server will write in response if not empty.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`
+
 	// Allowed payload size is in the request. Enabled if not zero.
 	MaxEarlyData uint32 `json:"max_early_data,omitempty"`
+
 	// Early data is sent in path instead of header by default.
 	//
 	// To be compatible with Xray-core, set this to `Sec-WebSocket-Protocol`.
@@ -150,6 +158,7 @@ type V2RayQUICOptions struct{}
 type V2RayGRPCOptions struct {
 	// Service name of gRPC.
 	ServiceName string `json:"service_name,omitempty"`
+
 	// In standard gRPC server/client:
 	//
 	// If the transport doesn't see any activity after a duration of this time,
@@ -159,6 +168,7 @@ type V2RayGRPCOptions struct {
 	//
 	// It has the same behavior as the corresponding setting in HTTP transport.
 	IdleTimeout badoption.Duration `json:"idle_timeout,omitempty"`
+
 	// In standard gRPC server/client:
 	//
 	// The timeout that after performing a keepalive check, the client will wait for activity.
@@ -168,6 +178,7 @@ type V2RayGRPCOptions struct {
 	//
 	// It has the same behavior as the corresponding setting in HTTP transport.
 	PingTimeout badoption.Duration `json:"ping_timeout,omitempty"`
+
 	// In standard gRPC client:
 	//
 	// If enabled, the client transport sends keepalive pings even with no active connections.
@@ -184,10 +195,12 @@ type V2RayHTTPUpgradeOptions struct {
 	//
 	// The server will verify if not empty.
 	Host string `json:"host,omitempty"`
+
 	// Path of HTTP request.
 	//
 	// The server will verify.
 	Path string `json:"path,omitempty"`
+
 	// Extra headers of HTTP request.
 	//
 	// The server will write in response if not empty.

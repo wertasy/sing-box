@@ -76,6 +76,7 @@ List of [Route Rule](./rule/)
 
 !!! question "Since sing-box 1.8.0"
 
+
 List of [rule-set](/configuration/rule-set/)
 
 #### final
@@ -156,6 +157,7 @@ Automatically detected from common DHCP servers (dnsmasq, odhcpd, ISC dhcpd, Kea
 
 !!! question "Since sing-box 1.14.0"
 
+
 Tag of the default [HTTP Client](/configuration/shared/http-client/) used by remote rule-sets.
 
 If empty and `http_clients` is defined, the first HTTP client is used.
@@ -164,6 +166,7 @@ If empty and `http_clients` is defined, the first HTTP client is used.
 
 !!! question "Since sing-box 1.12.0"
 
+
 See [Dial Fields](/configuration/shared/dial/#domain_resolver) for details.
 
 Can be overridden by `outbound.domain_resolver`.
@@ -171,6 +174,7 @@ Can be overridden by `outbound.domain_resolver`.
 #### default_network_strategy
 
 !!! question "Since sing-box 1.11.0"
+
 
 See [Dial Fields](/configuration/shared/dial/#network_strategy) for details.
 
@@ -184,11 +188,13 @@ Conflicts with `default_interface`.
 
 !!! question "Since sing-box 1.11.0"
 
+
 See [Dial Fields](/configuration/shared/dial/#network_type) for details.
 
 #### default_fallback_network_type
 
 !!! question "Since sing-box 1.11.0"
+
 
 See [Dial Fields](/configuration/shared/dial/#fallback_network_type) for details.
 
@@ -196,12 +202,7 @@ See [Dial Fields](/configuration/shared/dial/#fallback_network_type) for details
 
 !!! question "Since sing-box 1.11.0"
 
+
 See [Dial Fields](/configuration/shared/dial/#fallback_delay) for details.
-
-#### geoip
-
-
-#### geosite
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->

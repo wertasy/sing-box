@@ -242,6 +242,7 @@ If no protocol is sniffed, the following ports will be recognized as protocols b
 
 !!! question "Since sing-box 1.12.0"
 
+
 Fragment TLS handshakes to bypass firewalls.
 
 This feature is intended to circumvent simple firewalls based on **plaintext packet matching**,
@@ -260,13 +261,15 @@ because the target is considered to be local or behind a transparent proxy.
 
 !!! question "Since sing-box 1.12.0"
 
+
 The fallback value used when TLS segmentation cannot automatically determine the wait time.
 
-- Default: `500ms`
+`500ms` will be used by default.
 
 #### tls_record_fragment
 
 !!! question "Since sing-box 1.12.0"
+
 
 Fragment TLS handshake into multiple TLS records to bypass firewalls.
 
@@ -287,6 +290,7 @@ and required privileges.
 #### tls_spoof_method
 
 !!! question "Since sing-box 1.14.0"
+
 
 How the forged segment is rejected by the real server. See outbound TLS
 [`spoof_method`](/configuration/shared/tls/#spoof_method) for the full table
@@ -323,7 +327,7 @@ Available protocol values an be found on in [Protocol Sniff](../sniff/)
 
 Timeout for sniffing.
 
-- Default: `300ms`
+`300ms` will be used by default.
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -355,11 +359,12 @@ Specifies DNS server tag to use instead of selecting through DNS routing.
 
 DNS resolution strategy, available values are: `prefer_ipv4`, `prefer_ipv6`, `ipv4_only`, `ipv6_only`.
 
-- Default: `dns.strategy`
+`dns.strategy` will be used by default.
 
 #### disable_cache
 
 !!! question "Since sing-box 1.12.0"
+
 
 Disable cache and save cache in this query.
 
@@ -367,17 +372,20 @@ Disable cache and save cache in this query.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Disable optimistic DNS caching in this query.
 
 #### rewrite_ttl
 
 !!! question "Since sing-box 1.12.0"
 
+
 Rewrite TTL in DNS responses.
 
 #### timeout
 
 !!! question "Since sing-box 1.14.0"
+
 
 Override the DNS query timeout for this lookup.
 
@@ -386,6 +394,7 @@ Will override `dns.timeout`.
 #### client_subnet
 
 !!! question "Since sing-box 1.12.0"
+
 
 Append a `edns0-subnet` OPT extra record with the specified IP prefix to every query by default.
 

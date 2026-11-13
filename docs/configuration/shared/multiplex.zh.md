@@ -60,7 +60,7 @@
 | yamux | https://github.com/hashicorp/yamux |
 | h2mux | https://golang.org/x/net/http2     |
 
-- 默认值：`h2mux`
+默认使用 `h2mux`。
 
 #### max_connections
 

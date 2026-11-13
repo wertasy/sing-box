@@ -46,6 +46,11 @@ func main() {
 // package doc comments. The sing-box schema subcommand itself stays
 // dependency-free: it emits a plain schema and works outside the repository.
 func runSchema(check bool) error {
+	repoRoot, err := docgen.FindRepoRoot()
+	if err != nil {
+		return err
+	}
+	schemaFile := filepath.Join(repoRoot, filepath.FromSlash(schemaPath))
 	commentSource, err := docgen.NewSchemaCommentSource()
 	if err != nil {
 		return err
@@ -56,7 +61,7 @@ func runSchema(check bool) error {
 		return err
 	}
 	if check {
-		current, err := os.ReadFile(schemaPath)
+		current, err := os.ReadFile(schemaFile)
 		if err != nil {
 			if os.IsNotExist(err) {
 				return E.New(schemaPath, " does not exist, run `go run ./cmd/internal/generate_docs`")
@@ -68,5 +73,5 @@ func runSchema(check bool) error {
 		}
 		return nil
 	}
-	return os.WriteFile(schemaPath, content, 0o644)
+	return os.WriteFile(schemaFile, content, 0o644)
 }

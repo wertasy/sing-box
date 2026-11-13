@@ -232,6 +232,7 @@ Match android package name.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Match android package name using regular expression.
 
 #### network_type
@@ -329,9 +330,5 @@ Invert match result.
 ==Required==
 
 Included rules.
-
-#### invert
-
-Invert match result.
 
 <!-- AUTO-GENERATED-CONFIG-END -->

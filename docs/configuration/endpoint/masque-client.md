@@ -54,6 +54,26 @@ The server address.
 
 The server port.
 
+#### system
+
+Use system interface.
+
+Requires privilege and cannot conflict with existing system interfaces.
+
+If disabled, sing-box uses the internal network stack.
+
+#### name
+
+Custom interface name for system interface.
+
+An automatically generated `masque` interface name will be used by default.
+
+#### mtu
+
+Tunnel MTU.
+
+`1280` will be used by default.
+
 #### username
 
 Basic authorization username.
@@ -62,11 +82,17 @@ Basic authorization username.
 
 Basic authorization password.
 
+#### tls
+
+TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
+
+Required for HTTP/3.
+
 #### path
 
 URI template path of the IP proxying resource, may contain the `target` and `ipproto` variables.
 
-`/.well-known/masque/ip/{target}/{ipproto}/` is used by default.
+`/.well-known/masque/ip/{target}/{ipproto}/` will be used by default.
 
 #### headers
 
@@ -80,17 +106,11 @@ Available values: `1`, `2`, `3`.
 
 When `2`, [QUIC Fields](#quic-fields) are replaced by [HTTP2 Fields](#http2-fields).
 
-- Default: `3`
+`3` will be used by default.
 
 #### disable_version_fallback
 
 Disable automatic fallback to lower HTTP version.
-
-#### tls
-
-TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
-
-Required for HTTP/3.
 
 #### advertise_routes
 
@@ -98,41 +118,9 @@ List of IP prefixes to advertise to the server.
 
 The server will route traffic for these prefixes into this endpoint, where it is handled as inbound traffic.
 
-#### system
-
-Use system interface.
-
-Requires privilege and cannot conflict with existing system interfaces.
-
-If disabled, sing-box uses the internal network stack.
-
-#### name
-
-Custom interface name for system interface.
-
-An automatically generated `masque` interface name is used by default.
-
-#### mtu
-
-Tunnel MTU.
-
-- Default: `1280`
-
 #### on_demand
 
 Allow the endpoint to be disconnected when necessary.
-
-#### udp_mapping
-
-
-#### udp_filtering
-
-
-#### udp_nat_max
-
-
-#### udp_timeout
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

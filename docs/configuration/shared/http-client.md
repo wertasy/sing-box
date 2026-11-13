@@ -84,7 +84,7 @@ Available values: `1`, `2`, `3`.
 
 When `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fields).
 
-- Default: `2`
+`2` will be used by default.
 
 #### disable_version_fallback
 
@@ -95,9 +95,6 @@ Disable automatic fallback to lower HTTP version.
 Custom HTTP headers.
 
 `Host` header is used as request host.
-
-#### tag
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

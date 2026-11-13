@@ -68,6 +68,7 @@ type ResolvedDNSServerOptions struct {
 	//
 	// @Required
 	Service string `json:"service"`
+
 	// Indicates whether the default DNS resolvers should be accepted for fallback queries in addition to matching domains.
 	//
 	// Specifically, default DNS resolvers are DNS servers that have `SetLinkDefaultRoute` or `SetLinkDomains ~.` set.

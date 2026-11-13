@@ -1,52 +1,28 @@
 defaults:
   heading: '### Fields'
 pages:
-
 - file: route/index.md
   defs:
-
   - name: RouteOptions
     root: RouteOptions
-
 - file: route/rule.md
   sections:
-
   - heading: '### Default Fields'
     defs:
-
     - name: default
       registry: Rule
       root: RawDefaultRule
-    extras:
-      action:
-        prose: |-
-          @Required
-
-          See [Rule Actions](../rule_action/) for details.
-        locale_key: DefaultRule.action
-      outbound:
-        prose: |-
-          @Failure: Deprecated in sing-box 1.11.0
-
-              Moved to [Rule Action](../rule_action#route).
-        locale_key: DefaultRule.outbound
-
   - heading: '### Logical Fields'
     defs:
-
     - name: logical
       registry: Rule
       root: RawLogicalRule
-    extras:
-      type:
-        prose: '`logical`'
-
+      omit_keys:
+      - invert
 - file: route/rule_action.md
   sections:
-
   - heading: '### route'
     defs:
-
     - name: route
       registry: RuleAction
       root: RouteActionOptions
@@ -64,16 +40,11 @@ pages:
       - tls_record_fragment
       - tls_spoof
       - tls_spoof_method
-    extras:
-      route-options Fields:
-        prose: See `route-options` fields below.
-
   - heading: '### bypass'
     defs:
-
     - name: route
       registry: RuleAction
-      root: RouteActionOptions
+      root: BypassActionOptions
       omit_keys:
       - action
       - override_address
@@ -88,109 +59,50 @@ pages:
       - tls_record_fragment
       - tls_spoof
       - tls_spoof_method
-    extras:
-      route-options Fields:
-        prose: See `route-options` fields below.
-    overrides:
-      outbound:
-        prose: |-
-          Tag of target outbound.
-
-          If not specified, the rule only matches in [pre-match](/configuration/shared/pre-match/)
-          from auto redirect, and will be skipped in other contexts.
-
   - heading: '### reject'
     defs:
-
     - name: reject
       registry: RuleAction
       root: _RejectActionOptions
       omit_keys:
       - action
-
   - heading: '### route-options'
     defs:
-
     - name: route-options
       registry: RuleAction
       root: RawRouteOptionsActionOptions
       omit_keys:
       - action
-    extras:
-      network_type:
-        prose: See [Dial Fields](/configuration/shared/dial/#network_type) for details.
-        locale_key: RawRouteOptionsActionOptions.network_type
-      fallback_network_type:
-        prose: See [Dial Fields](/configuration/shared/dial/#fallback_network_type) for details.
-        locale_key: RawRouteOptionsActionOptions.fallback_network_type
-
   - heading: '### sniff'
     defs:
-
     - name: sniff
       root: RouteActionSniff
       omit_keys:
       - action
-
   - heading: '### resolve'
     defs:
-
     - name: resolve
       root: RouteActionResolve
       omit_keys:
       - action
-
 - file: rule-set/headless-rule.md
   sections:
-
   - heading: '### Default Fields'
     defs:
-
     - name: default
       registry: HeadlessRule
       root: DefaultHeadlessRule
-
   - heading: '### Logical Fields'
     defs:
-
     - name: logical
       registry: HeadlessRule
       root: LogicalHeadlessRule
-    extras:
-      type:
-        prose: '`logical`'
-
+      omit_keys:
+      - invert
 - file: route/index.zh.md
   patches:
     '### Fields':
-      extras:
-        rule:
-          prose: 一组 [路由规则](./rule/)    。
-        network_strategy:
-          prose: |-
-            @Since 1.11.0
-
-            详情参阅 [拨号字段](/zh/configuration/shared/dial/#network_strategy)。
-
-            当 `outbound.bind_interface`, `outbound.inet4_bind_address` 或 `outbound.inet6_bind_address` 已设置时不生效。
-
-            可以被 `outbound.network_strategy` 覆盖。
-
-            与 `default_interface` 冲突。
-
+      remove_keys:
+      - rule
+      - network_strategy
 - file: route/rule_action.zh.md
-  patches:
-    '### route':
-      extras:
-        route-options 字段:
-          prose: 参阅下方的 `route-options` 字段。
-    '### bypass':
-      extras:
-        route-options 字段:
-          prose: 参阅下方的 `route-options` 字段。
-      overrides:
-        outbound:
-          prose: |-
-            目标出站的标签。
-
-            如果未指定，规则仅在来自 auto redirect 的[预匹配](/zh/configuration/shared/pre-match/)中匹配，在其他场景中将被跳过。

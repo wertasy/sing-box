@@ -546,6 +546,8 @@ RouteActionResolve.server: 指定要使用的 DNS 服务器的标签，而不是
 RouteActionResolve.strategy: |-
   DNS 解析策略，可用值有：`prefer_ipv4`、`prefer_ipv6`、`ipv4_only`、`ipv6_only`。
 
+  默认使用 `dns.strategy`。
+
 RouteActionResolve.timeout: |-
   覆盖此查询的 DNS 查询超时时间。
 
@@ -691,3 +693,24 @@ _RejectActionOptions.no_drop: |-
   如果未启用，则 30 秒内触发 50 次后，`method` 将被暂时覆盖为 `drop`。
 
   当 `method` 设为 `drop` 时不可用。
+
+RawDefaultRule.action: |-
+  参阅 [规则动作](../rule_action/)。
+
+  @Required
+
+RawDefaultRule.outbound: |-
+  @Failure: 已在 sing-box 1.11.0 废弃
+
+      已移动到 [规则动作](../rule_action#route).
+
+
+RouteActionOptions.route-options Fields.heading: route-options 字段
+
+RouteActionOptions.route-options Fields: |-
+  参阅下方的 `route-options` 字段。
+
+BypassActionOptions.outbound: |-
+  目标出站的标签。
+
+  如果未指定，规则仅在来自 auto redirect 的[预匹配](/zh/configuration/shared/pre-match/)中匹配，在其他场景中将被跳过。

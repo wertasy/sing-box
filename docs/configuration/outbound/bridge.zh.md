@@ -71,6 +71,6 @@ Linux iproute2 路由表索引。
 
 Linux iproute2 规则起始索引。
 
-- 默认值：`100`
+默认使用 `100`。
 
 <!-- AUTO-GENERATED-CONFIG-END -->

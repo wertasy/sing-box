@@ -46,6 +46,32 @@ See [Listen Fields](/configuration/shared/listen/) for details. `udp_timeout` is
 <!-- AUTO-GENERATED-CONFIG-START -->
 <!-- 此区域由脚本自动生成，切勿手动修改 -->
 
+#### system
+
+Use system interface.
+
+Requires privilege and cannot conflict with existing system interfaces.
+
+If disabled, sing-box uses the internal network stack.
+
+#### name
+
+Custom interface name for system interface.
+
+An automatically generated `masque` interface name will be used by default.
+
+#### mtu
+
+Tunnel MTU.
+
+`1280` will be used by default.
+
+#### users
+
+HTTP users, verified by the `Authorization` header.
+
+No authentication required if empty.
+
 #### version
 
 List of HTTP versions to serve.
@@ -55,12 +81,6 @@ Available values: `1`, `2`, `3`.
 All versions are used by default.
 
 TLS is required for `3`.
-
-#### users
-
-HTTP users, verified by the `Authorization` header.
-
-No authentication required if empty.
 
 #### tls
 
@@ -72,7 +92,7 @@ IP proxying must be operated over TLS or QUIC. Leave it disabled only when the s
 
 URI template path of the IP proxying resource, may contain the `target` and `ipproto` variables.
 
-`/.well-known/masque/ip/{target}/{ipproto}/` is used by default.
+`/.well-known/masque/ip/{target}/{ipproto}/` will be used by default.
 
 #### address
 
@@ -89,35 +109,6 @@ List of IP prefixes to advertise to clients, in addition to the tunnel network.
 Traffic from clients to other destinations is rejected.
 
 All addresses are advertised by default.
-
-#### system
-
-Use system interface.
-
-Requires privilege and cannot conflict with existing system interfaces.
-
-If disabled, sing-box uses the internal network stack.
-
-#### name
-
-Custom interface name for system interface.
-
-An automatically generated `masque` interface name is used by default.
-
-#### mtu
-
-Tunnel MTU.
-
-- Default: `1280`
-
-#### udp_mapping
-
-
-#### udp_filtering
-
-
-#### udp_nat_max
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

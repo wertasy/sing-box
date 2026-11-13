@@ -25,11 +25,16 @@ icon: material/new-box
     "server": "google.com",
     "server_port": 443,
     ... // Dial Fields
+  }
+    ... // Dial Fields
   },
   "handshake_for_server_name": {
     "example.com": {
       "server": "example.com",
       "server_port": 443,
+      ... // Dial Fields
+    }
+  }
       ... // Dial Fields
     }
   },
@@ -97,6 +102,7 @@ ShadowTLS 严格模式。
 #### wildcard_sni
 
 !!! question "自 sing-box 1.12.0 起"
+
 
 ShadowTLS 通配符 SNI 模式。
 

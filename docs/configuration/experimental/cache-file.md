@@ -49,7 +49,7 @@ Enable cache file.
 
 Path to the cache file.
 
-- Default: `cache.db`
+`cache.db` will be used by default.
 
 #### cache_id
 
@@ -82,12 +82,13 @@ will be cached until expiration.
 
 Timeout of rejected DNS response cache.
 
-- Default: `7d`
+`7d` will be used by default.
 - Deprecated.
 
 #### store_dns
 
 !!! question "Since sing-box 1.14.0"
+
 
 Store DNS cache in the cache file.
 
@@ -95,13 +96,15 @@ Store DNS cache in the cache file.
 
 !!! question "Since sing-box 1.15.0"
 
+
 Size of the write buffer.
 
-- Default: `1MB`
+`1MB` will be used by default.
 
 #### flush_interval
 
 !!! question "Since sing-box 1.15.0"
+
 
 Interval for flushing the write buffer automatically.
 

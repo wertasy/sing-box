@@ -82,11 +82,13 @@ Derper 配置文件路径。
 
 !!! question "自 sing-box 1.15.0 起"
 
+
 用于验证客户端的 Tailcat 入站标签。
 
 #### verify_client_key
 
 !!! question "自 sing-box 1.15.0 起"
+
 
 用于验证客户端的 Tailcat 公钥。
 

@@ -99,17 +99,19 @@ QUIC traffic obfuscator password.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Minimum on-wire packet size in bytes. Gecko only.
 
-- Default: `512`
+`512` will be used by default.
 
 #### obfs.max_packet_size
 
 !!! question "Since sing-box 1.14.0"
 
+
 Maximum on-wire packet size in bytes. Gecko only.
 
-- Default: `1200`
+`1200` will be used by default.
 
 #### users
 
@@ -134,9 +136,6 @@ Deny clients to use the BBR CC.
 ==Required==
 
 TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
-
-#### users.name
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -202,9 +201,10 @@ Fixed response content.
 
 !!! question "Since sing-box 1.14.0"
 
+
 BBR congestion control algorithm profile, one of `conservative` `standard` `aggressive`.
 
-- Default: `standard`
+`standard` will be used by default.
 
 #### brutal_debug
 
@@ -213,6 +213,7 @@ Enable debug information logging for Hysteria Brutal CC.
 #### realm
 
 !!! question "Since sing-box 1.14.0"
+
 
 Register this inbound to a Hysteria Realm rendezvous service to enable NAT traversal.
 
@@ -278,13 +279,13 @@ Enable port mapping.
 
 Timeout for gateway discovery and mapping operations.
 
-- Default: `10s`
+`10s` will be used by default.
 
 #### realm.port_mapping.lifetime
 
 Lease lifetime of the mapping.
 
-- Default: `10m`
+`10m` will be used by default.
 
 #### realm.http_client
 

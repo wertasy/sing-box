@@ -69,7 +69,7 @@ Custom interface name for system interface.
 
 WireGuard MTU.
 
-- Default: `1408`
+`1408` will be used by default.
 
 #### address
 
@@ -134,11 +134,12 @@ WireGuard reserved field bytes.
 
 WireGuard worker count.
 
-CPU count is used by default.
+CPU count will be used by default.
 
 #### on_demand
 
 !!! question "Since sing-box 1.15.0"
+
 
 Allow the endpoint to be disconnected when necessary.
 

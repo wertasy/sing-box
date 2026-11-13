@@ -96,21 +96,23 @@ QUIC 流量混淆器密码。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 最小线上数据包大小（字节）。仅限 Gecko。
 
 默认使用 `512`。
 
-- 默认值：`512`
+默认使用 `512`。
 
 #### obfs.max_packet_size
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 最大线上数据包大小（字节）。仅限 Gecko。
 
 默认使用 `1200`。
 
-- 默认值：`1200`
+默认使用 `1200`。
 
 #### users
 
@@ -135,9 +137,6 @@ Hysteria 用户
 ==必填==
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
-
-#### users.name
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -203,9 +202,10 @@ HTTP3 服务器认证失败时的行为 （对象配置）。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 
-- 默认值：`standard`
+默认使用 `standard`。
 
 #### brutal_debug
 
@@ -214,6 +214,7 @@ BBR 拥塞控制算法配置，可选 `conservative` `standard` `aggressive`。
 #### realm
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 将此入站注册到 Hysteria Realm 会合服务，以启用 NAT 穿透。
 
@@ -281,7 +282,7 @@ Realm 上的槽位标识符。
 
 默认使用 `10s`。
 
-- 默认值：`10s`
+默认使用 `10s`。
 
 #### realm.port_mapping.lifetime
 
@@ -289,7 +290,7 @@ Realm 上的槽位标识符。
 
 默认使用 `10m`。
 
-- 默认值：`10m`
+默认使用 `10m`。
 
 #### realm.http_client
 

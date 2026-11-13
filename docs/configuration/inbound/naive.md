@@ -51,6 +51,7 @@ Naive users.
 
 !!! question "Since sing-box 1.13.0"
 
+
 QUIC congestion control algorithm.
 
 | Algorithm      | Description                     |
@@ -59,7 +60,7 @@ QUIC congestion control algorithm.
 | `cubic`        | CUBIC                           |
 | `reno`         | New Reno                        |
 
-- Default: `bbr`
+`bbr` will be used by default.
 
 #### tls
 

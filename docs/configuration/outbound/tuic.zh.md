@@ -56,7 +56,7 @@ QUIC 拥塞控制算法
 
 可选值: `cubic`, `new_reno`, `bbr`
 
-- 默认值：`cubic`
+默认使用 `cubic`。
 
 #### udp_relay_mode
 
@@ -69,7 +69,7 @@ UDP 包中继模式
 
 与 `udp_over_stream` 冲突。
 
-- 默认值：`native`
+默认使用 `native`。
 
 #### udp_over_stream
 

@@ -47,6 +47,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 启用后，`local` DNS 服务器将尽可能通过拨号自身来解析 DNS。
 
 具体来说，它禁用了在 sing-box 1.13.0 中作为功能添加的以下行为：
@@ -67,6 +68,7 @@ icon: material/new-box
 #### neighbor_domain
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 用于从[邻居解析器](/zh/configuration/shared/neighbor/)而非上游回答 A/AAAA 查询的域后缀列表。
 

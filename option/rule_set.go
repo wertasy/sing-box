@@ -182,7 +182,8 @@ type RemoteRuleSet struct {
 	InitialPath    string             `json:"initial_path,omitempty"`
 	HTTPClient     *HTTPClientOptions `json:"http_client,omitempty"`
 	UpdateInterval badoption.Duration `json:"update_interval,omitempty"`
-	// @Deprecated: use http_client instead
+
+	// Deprecated: use http_client instead
 	DownloadDetour string `json:"download_detour,omitempty" reference:"outbound" schema:"omit"`
 }
 
@@ -262,44 +263,58 @@ type DefaultHeadlessRule struct {
 	//     Filter Fields in DNS rules, the Legacy `strategy` DNS rule action
 	//     option, and the Legacy `rule_set_ip_cidr_accept_empty` DNS rule item.
 	QueryType badoption.Listable[DNSQueryType] `json:"query_type,omitempty"`
+
 	// `tcp` or `udp`.
 	Network badoption.Listable[string] `json:"network,omitempty" enum:"tcp,udp,icmp"`
+
 	// Match full domain.
 	Domain badoption.Listable[string] `json:"domain,omitempty"`
+
 	// Match domain suffix.
 	DomainSuffix badoption.Listable[string] `json:"domain_suffix,omitempty"`
+
 	// Match domain using keyword.
 	DomainKeyword badoption.Listable[string] `json:"domain_keyword,omitempty"`
+
 	// Match domain using regular expression.
 	DomainRegex badoption.Listable[string] `json:"domain_regex,omitempty"`
+
 	// Match source IP CIDR.
 	SourceIPCIDR badoption.Listable[*badoption.Prefixable] `json:"source_ip_cidr,omitempty"`
+
 	// Match IP CIDR.
 	//
 	// @Info:
 	//
 	//     `ip_cidr` is an alias for `source_ip_cidr` when `rule_set_ipcidr_match_source` enabled in route/DNS rules.
 	IPCIDR badoption.Listable[*badoption.Prefixable] `json:"ip_cidr,omitempty"`
+
 	// Match source port.
 	SourcePort badoption.Listable[uint16] `json:"source_port,omitempty"`
+
 	// Match source port range.
 	SourcePortRange badoption.Listable[string] `json:"source_port_range,omitempty"`
+
 	// Match port.
 	Port badoption.Listable[uint16] `json:"port,omitempty"`
+
 	// Match port range.
 	PortRange badoption.Listable[string] `json:"port_range,omitempty"`
+
 	// Match process name.
 	//
 	// @Quote:
 	//
 	//     Only supported on Linux, Windows, and macOS.
 	ProcessName badoption.Listable[string] `json:"process_name,omitempty"`
+
 	// Match process path.
 	//
 	// @Quote:
 	//
 	//     Only supported on Linux, Windows, and macOS.
 	ProcessPath badoption.Listable[string] `json:"process_path,omitempty"`
+
 	// Match process path using regular expression.
 	//
 	// @Since 1.10.0
@@ -308,12 +323,15 @@ type DefaultHeadlessRule struct {
 	//
 	//     Only supported on Linux, Windows, and macOS.
 	ProcessPathRegex badoption.Listable[string] `json:"process_path_regex,omitempty"`
+
 	// Match android package name.
 	PackageName badoption.Listable[string] `json:"package_name,omitempty"`
+
 	// Match android package name using regular expression.
 	//
 	// @Since 1.14.0
 	PackageNameRegex badoption.Listable[string] `json:"package_name_regex,omitempty"`
+
 	// Match network type.
 	//
 	// Available values: `wifi`, `cellular`, `ethernet` and `other`.
@@ -324,6 +342,7 @@ type DefaultHeadlessRule struct {
 	//
 	//     Only supported in graphical clients on Android and Apple platforms.
 	NetworkType badoption.Listable[InterfaceType] `json:"network_type,omitempty"`
+
 	// Match if network is considered Metered (on Android) or considered expensive,
 	// such as Cellular or a Personal Hotspot (on Apple platforms).
 	//
@@ -333,6 +352,7 @@ type DefaultHeadlessRule struct {
 	//
 	//     Only supported in graphical clients on Android and Apple platforms.
 	NetworkIsExpensive bool `json:"network_is_expensive,omitempty"`
+
 	// Match if network is in Low Data Mode.
 	//
 	// @Since 1.11.0
@@ -341,18 +361,21 @@ type DefaultHeadlessRule struct {
 	//
 	//     Only supported in graphical clients on Apple platforms.
 	NetworkIsConstrained bool `json:"network_is_constrained,omitempty"`
+
 	// Match WiFi SSID.
 	//
 	// @Quote:
 	//
 	//     Only supported in graphical clients on Android and Apple platforms.
 	WIFISSID badoption.Listable[string] `json:"wifi_ssid,omitempty"`
+
 	// Match WiFi BSSID.
 	//
 	// @Quote:
 	//
 	//     Only supported in graphical clients on Android and Apple platforms.
 	WIFIBSSID badoption.Listable[string] `json:"wifi_bssid,omitempty"`
+
 	// Matches network interface (same values as `network_type`) address.
 	//
 	// @Since 1.13.0
@@ -361,6 +384,7 @@ type DefaultHeadlessRule struct {
 	//
 	//     Only supported in graphical clients on Android and Apple platforms.
 	NetworkInterfaceAddress *badjson.TypedMap[InterfaceType, badoption.Listable[*badoption.Prefixable]] `json:"network_interface_address,omitempty"`
+
 	// Match default interface address.
 	//
 	// @Since 1.13.0
@@ -387,15 +411,20 @@ func (r DefaultHeadlessRule) IsValid() bool {
 	return !reflect.DeepEqual(r, defaultValue)
 }
 
+// @Doc type:
+//
+//	`logical`
 type LogicalHeadlessRule struct {
 	// `and` or `or`
 	//
 	// @Required
 	Mode string `json:"mode" enum:"and,or"`
+
 	// Included rules.
 	//
 	// @Required
 	Rules []HeadlessRule `json:"rules,omitempty"`
+
 	// Invert match result.
 	Invert bool `json:"invert,omitempty"`
 }

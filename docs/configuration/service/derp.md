@@ -82,11 +82,13 @@ Setting Array value to a string `__URL__` is equivalent to configuring:
 
 !!! question "Since sing-box 1.15.0"
 
+
 Tailcat inbound tags to verify clients.
 
 #### verify_client_key
 
 !!! question "Since sing-box 1.15.0"
+
 
 Tailcat public keys to verify clients.
 

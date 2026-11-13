@@ -2,56 +2,42 @@ defaults:
   heading: '### Fields'
   omit_origins:
   - InboundOptions
-
 pages:
-
 - file: experimental/cache-file.md
-  example: {}
   defs:
   - name: CacheFileOptions
     root: CacheFileOptions
-
 - file: experimental/clash-api.md
   defs:
   - name: ClashAPIOptions
     root: ClashAPIOptions
-
 - file: experimental/v2ray-api.md
-  example: {}
   defs:
   - name: V2RayAPIOptions
     root: V2RayAPIOptions
   expand:
   - stats
-
 - file: service/api.md
   example:
     omit:
-      - tag
-  defs:
-  - name: api
-
+    - tag
+  defs: null
 - file: service/ccm.md
   example:
     omit:
-      - tag
-  defs:
-  - name: ccm
-
+    - tag
+  defs: null
 - file: service/derp.md
   example:
     omit:
-      - tag
-  defs:
-  - name: derp
-
+    - tag
+  defs: null
 - file: service/hysteria-realm.md
   example:
     omit:
-      - tag
+    - tag
   defs:
-  - name: hysteria-realm
-    omit_origins:
+  - omit_origins:
     - HTTP2Options
     - InboundOptions
   expand:
@@ -59,14 +45,11 @@ pages:
 - file: service/ocm.md
   example:
     omit:
-      - tag
-  defs:
-  - name: ocm
-
+    - tag
+  defs: null
 - file: service/resolved.md
   defs:
   - name: resolved
-    registry: Service
   - name: resolved-listen
     root: ResolvedServiceOptions
     include_origins:
@@ -78,63 +61,24 @@ pages:
 - file: service/ssm-api.md
   example:
     omit:
-      - tag
-  defs:
-  - name: ssm-api
-
+    - tag
+  defs: null
 - file: service/usbip-client.md
   example:
     omit:
-      - tag
-  defs:
-  - name: usbip-client
+    - tag
+  defs: null
 - file: service/usbip-server.md
   defs:
   - name: usbip-server
-    registry: Service
   - name: usbip-server
     registry: Service
     root: USBIPDefaultProviderOptions
     include_keys:
     - devices
 - file: service/api.zh.md
-  patches:
-    '### Fields':
-      overrides:
-        tls:
-          prose: TLS 配置,参阅 [TLS](/zh/configuration/shared/tls/#inbound)。
 - file: service/ccm.zh.md
-  patches:
-    '### Fields':
-      overrides:
-        tls:
-          prose: TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
 - file: service/derp.zh.md
-  patches:
-    '### Fields':
-      overrides:
-        tls:
-          prose: TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
 - file: service/ocm.zh.md
-  patches:
-    '### Fields':
-      overrides:
-        tls:
-          prose: TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
 - file: service/ssm-api.zh.md
-  patches:
-    '### Fields':
-      overrides:
-        tls:
-          prose: TLS 配置，参阅 [TLS](/zh/configuration/shared/tls/#入站)。
 - file: service/usbip-client.zh.md
-  patches:
-    '### Fields':
-      overrides:
-        server:
-          prose: |-
-            @Required
-
-            远程 `usbip-server` 地址。
-        server_port:
-          prose: 远程 `usbip-server` 端口。默认为 `3240`。

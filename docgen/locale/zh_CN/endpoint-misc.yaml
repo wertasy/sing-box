@@ -16,6 +16,8 @@ NTPOptions.enabled: 启用 NTP 服务。
 NTPOptions.interval: |-
   时间同步间隔。
 
+NTPOptions.write_to_system: 同步后更新系统时间。
+
 NTPOptions.server: |-
   NTP 服务器地址。
 
@@ -178,6 +180,8 @@ WireGuardEndpointOptions.mtu: |-
   WireGuard MTU。
 
 WireGuardEndpointOptions.name: 为系统接口自定义设备名称。
+
+WireGuardEndpointOptions.listen_port: 传入连接的监听端口。
 
 WireGuardEndpointOptions.on_demand: |-
   允许该 endpoint 在需要时断开连接。

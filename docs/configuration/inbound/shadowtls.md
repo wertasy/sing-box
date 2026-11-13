@@ -25,11 +25,16 @@ icon: material/new-box
     "server": "google.com",
     "server_port": 443,
     ... // Dial Fields
+  }
+    ... // Dial Fields
   },
   "handshake_for_server_name": {
     "example.com": {
       "server": "example.com",
       "server_port": 443,
+      ... // Dial Fields
+    }
+  }
       ... // Dial Fields
     }
   },
@@ -97,6 +102,7 @@ Only available in the ShadowTLS protocol 3.
 #### wildcard_sni
 
 !!! question "Since sing-box 1.12.0"
+
 
 ShadowTLS wildcard SNI mode.
 

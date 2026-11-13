@@ -40,6 +40,7 @@ icon: material/new-box
 
 !!! question "Since sing-box 1.14.0"
 
+
 Override the domain name used for the DNS challenge record.
 
 Useful when `_acme-challenge` is delegated to a different zone.
@@ -48,11 +49,13 @@ Useful when `_acme-challenge` is delegated to a different zone.
 
 !!! question "Since sing-box 1.14.0"
 
+
 How long to wait after creating the challenge record before starting propagation checks.
 
 #### propagation_timeout
 
 !!! question "Since sing-box 1.14.0"
+
 
 The maximum time to wait for the challenge record to propagate.
 
@@ -66,11 +69,13 @@ The DNS provider. See below for provider-specific fields.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Preferred DNS resolvers to use for DNS propagation checks.
 
 #### ttl
 
 !!! question "Since sing-box 1.14.0"
+
 
 The TTL of the temporary TXT record used for the DNS challenge.
 
@@ -84,6 +89,7 @@ The TTL of the temporary TXT record used for the DNS challenge.
 #### ACME-DNS
 
 !!! question "Since sing-box 1.13.0"
+
 
 ```json
 {
@@ -99,8 +105,6 @@ See [ACME-DNS](https://github.com/joohoi/acme-dns) for details.
 
 #### Alibaba Cloud DNS
 
-!!! question "Since sing-box 1.13.0"
-
 ```json
 {
   "provider": "alidns",
@@ -113,11 +117,12 @@ See [ACME-DNS](https://github.com/joohoi/acme-dns) for details.
 
 ##### security_token
 
+!!! question "Since sing-box 1.13.0"
+
+
 The Security Token for STS temporary credentials.
 
 #### Cloudflare
-
-!!! question "Since sing-box 1.13.0"
 
 ```json
 {
@@ -128,6 +133,9 @@ The Security Token for STS temporary credentials.
 ```
 
 ##### zone_token
+
+!!! question "Since sing-box 1.13.0"
+
 
 Optional API token with `Zone:Read` permission.
 

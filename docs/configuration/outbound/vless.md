@@ -73,7 +73,7 @@ V2Ray Transport configuration, see [V2Ray Transport](/configuration/shared/v2ray
 
 #### packet_encoding
 
-UDP packet encoding, xudp is used by default.
+UDP packet encoding, xudp will be used by default.
 
 | Encoding   | Description           |
 |------------|-----------------------|

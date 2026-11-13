@@ -60,7 +60,6 @@ icon: material/new-box
 #### version
 
 ==必填==
-
 !!! note
 
     由于我们有意不支持 Snell v5 的 QUIC 代理模式，v5 的线路协议实际上与 v4 没有区别，
@@ -92,7 +91,7 @@ HTTP 混淆模式，`none` `http` 之一。
 
 默认为 `none`。
 
-- 默认值：`none`
+默认使用 `none`。
 
 #### mode
 
@@ -102,6 +101,6 @@ HTTP 混淆模式，`none` `http` 之一。
 
 默认为 `default`。
 
-- 默认值：`default`
+默认使用 `default`。
 
 <!-- AUTO-GENERATED-CONFIG-END -->

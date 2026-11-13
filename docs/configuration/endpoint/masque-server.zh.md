@@ -108,16 +108,7 @@ IP 代理资源的 URI 模板路径，可以包含 `target` 和 `ipproto` 变量
 
 隧道 MTU。
 
-- 默认值：`1280`
-
-#### udp_mapping
-
-
-#### udp_filtering
-
-
-#### udp_nat_max
-
+默认使用 `1280`。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

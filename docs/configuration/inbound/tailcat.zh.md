@@ -86,7 +86,7 @@ Tailcat 用户。
 
 [DERP map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap) 的 URL。
 
-- 默认值：`https://tailcat.dev/derpmap.json`
+默认使用 `https://tailcat.dev/derpmap.json`。
 
 #### derp_region
 
@@ -114,196 +114,190 @@ DERP map 中的 DERP 区域 ID。
 
 #### bind_interface
 
-The network interface to bind to.
+要绑定到的网络接口。
 
 #### inet4_bind_address
 
-The IPv4 address to bind to.
+要绑定的 IPv4 地址。
 
 #### inet6_bind_address
 
-The IPv6 address to bind to.
+要绑定的 IPv6 地址。
 
 #### bind_address_no_port
 
-!!! question "Since sing-box 1.13.0"
+!!! question "自 sing-box 1.13.0 起"
 
 !!! quote ""
 
-    Only supported on Linux.
+    仅支持 Linux。
 
-Do not reserve a port when binding to a source address.
+绑定到源地址时不保留端口。
 
-This allows reusing the same source port for multiple connections if the full 4-tuple (source IP, source port, destination IP, destination port) remains unique.
-
-#### protect_path
-
+这允许在完整的四元组（源 IP、源端口、目标 IP、目标端口）保持唯一的情况下，为多个连接复用同一源端口。
 
 #### routing_mark
 
 !!! quote ""
 
-    Only supported on Linux.
+    仅支持 Linux。
 
-Set netfilter routing mark.
+设置 netfilter 路由标记。
 
-Integers (e.g. `1234`) and string hexadecimals (e.g. `"0x1234"`) are supported.
+支持数字 (如 `1234`) 和十六进制字符串 (如 `"0x1234"`)。
 
 #### reuse_addr
 
-Reuse listener address.
+重用监听地址。
 
 #### netns
 
-!!! question "Since sing-box 1.12.0"
+!!! question "自 sing-box 1.12.0 起"
 
 !!! quote ""
 
-    Only supported on Linux.
+    仅支持 Linux。
 
-Set network namespace, name or path.
+设置网络命名空间，名称或路径。
 
-Since sing-box 1.14.0, the tag of a [network namespace](/configuration/network-namespace/) can also be used.
-Referencing an `unshare` network namespace should be avoided.
+自 sing-box 1.14.0 起，也可以使用[网络命名空间](/zh/configuration/network-namespace/)的标签。
+应避免引用 `unshare` 类型的网络命名空间。
 
 #### connect_timeout
 
-Connect timeout, in golang's Duration format.
+连接超时，采用 golang 的 Duration 格式。
 
-A duration string is a possibly signed sequence of
-decimal numbers, each with optional fraction and a unit suffix,
-such as "300ms", "-1.5h" or "2h45m".
-Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
+持续时间字符串是一个可能有符号的序列十进制数，每个都有可选的分数和单位后缀， 例如 "300ms"、"-1.5h" 或 "2h45m"。
+有效时间单位为 "ns"、"us"（或 "µs"）、"ms"、"s"、"m"、"h"。
 
 #### tcp_fast_open
 
-Enable TCP Fast Open.
+启用 TCP Fast Open。
 
 #### tcp_multi_path
 
 !!! warning ""
 
-    Go 1.21 required.
+    需要 Go 1.21。
 
-Enable TCP Multi Path.
+启用 TCP Multi Path。
 
 #### disable_tcp_keep_alive
 
-!!! question "Since sing-box 1.13.0"
+!!! question "自 sing-box 1.13.0 起"
 
-Disable TCP keep alive.
+
+禁用 TCP keep alive。
 
 #### tcp_keep_alive
 
-!!! question "Since sing-box 1.13.0"
+!!! question "自 sing-box 1.13.0 起"
 
-    Default value changed from `10m` to `5m`.
+    默认值从 `10m` 更改为 `5m`。
 
-TCP keep alive initial period.
 
-- 默认值：`5m`
+TCP keep alive 初始周期。
+
+默认使用 `5m`。
 
 #### tcp_keep_alive_interval
 
-!!! question "Since sing-box 1.13.0"
+!!! question "自 sing-box 1.13.0 起"
 
-TCP keep alive interval.
 
-- 默认值：`75s`
+TCP keep alive 间隔。
+
+默认使用 `75s`。
 
 #### udp_fragment
 
-Enable UDP fragmentation.
+启用 UDP 分段。
 
 #### domain_resolver
 
-!!! info ""
-
-    `domain_resolver` or `route.default_domain_resolver` is optional when only one DNS server is configured.
-
 !!! warning ""
 
-    `outbound` DNS rule items are deprecated and will be removed in sing-box 1.14.0, so this item will be required for outbound/endpoints using domain name in server address since sing-box 1.14.0.
+    `outbound` DNS 规则项已弃用，且将在 sing-box 1.14.0 中被移除。因此，从 sing-box 1.14.0 版本开始，所有在服务器地址中使用域名的出站/端点均需配置此项。
+!!! info ""
 
-Set domain resolver to use for resolving domain names.
+    当只有一个 DNS 服务器已配置时，`domain_resolver` 或 `route.default_domain_resolver` 是可选的。 
 
-This option uses the same format as the [route DNS rule action](/configuration/dns/rule_action/#route) without the `action` field.
+用于设置解析域名的域名解析器。
 
-Setting this option directly to a string is equivalent to setting `server` of this options.
+此选项的格式与 [路由 DNS 规则动作](/zh/configuration/dns/rule_action/#route) 相同，但不包含 `action` 字段。  
 
-| Outbound/Endpoints | Effected domains         |
-|--------------------|--------------------------|
-| `direct`           | Domain in request        |
-| others             | Domain in server address |
+若直接将此选项设置为字符串，则等同于设置该选项的 `server` 字段。
+
+| 出站/端点       | 受影响的域名                |
+|----------------|---------------------------|
+| `direct`       | 请求中的域名                | 
+| 其他类型        | 服务器地址中的域名           |
 
 #### network_strategy
 
-!!! question "Since sing-box 1.11.0"
+!!! question "自 sing-box 1.11.0 起"
 
 !!! quote ""
 
-    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
+    仅在 Android 与 iOS 平台图形客户端中支持，并且需要 `route.auto_detect_interface`。
 
-Strategy for selecting network interfaces.
+用于选择网络接口的策略。
 
-Available values:
+可用值：
 
-- `default` (default): Connect to default network or networks specified in `network_type` sequentially.
-- `hybrid`: Connect to all networks or networks specified in `network_type` concurrently.
-- `fallback`: Connect to default network or preferred networks specified in `network_type` concurrently, and try fallback networks when unavailable or timeout.
+- `default`（默认值）：按顺序连接默认网络或 `network_type` 中指定的网络。
+- `hybrid`：同时连接所有网络或 `network_type` 中指定的网络。
+- `fallback`：同时连接默认网络或 `network_type` 中指定的首选网络，当不可用或超时时尝试回退网络。
 
-For fallback, when preferred interfaces fails or times out,
-it will enter a 15s fast fallback state (Connect to all preferred and fallback networks concurrently),
-and exit immediately if preferred networks recover.
+对于回退模式，当首选接口失败或超时时，
+将进入15秒的快速回退状态（同时连接所有首选和回退网络），
+如果首选网络恢复，则立即退出。
 
-Conflicts with `bind_interface`, `inet4_bind_address` and `inet6_bind_address`.
+与 `bind_interface`, `bind_inet4_address` 和 `bind_inet6_address` 冲突。
 
 #### network_type
 
-!!! question "Since sing-box 1.11.0"
+!!! question "自 sing-box 1.11.0 起"
 
 !!! quote ""
 
-    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
+    仅在 Android 与 iOS 平台图形客户端中支持，并且需要 `route.auto_detect_interface`。
 
-Network types to use when using `default` or `hybrid` network strategy or
-preferred network types to use when using `fallback` network strategy.
+当使用 `default` 或 `hybrid` 网络策略时要使用的网络类型，或当使用 `fallback` 网络策略时要使用的首选网络类型。
 
-Available values: `wifi`, `cellular`, `ethernet`, `other`.
+可用值：`wifi`, `cellular`, `ethernet`, `other`。
 
-Device's default network is used by default.
+默认使用设备默认网络。
 
 #### fallback_network_type
 
-!!! question "Since sing-box 1.11.0"
+!!! question "自 sing-box 1.11.0 起"
 
 !!! quote ""
 
-    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
+    仅在 Android 与 iOS 平台图形客户端中支持，并且需要 `route.auto_detect_interface`。
 
-Fallback network types when preferred networks are unavailable or timeout when using `fallback` network strategy.
+当使用 `fallback` 网络策略时，在首选网络不可用或超时的情况下要使用的回退网络类型。
 
-All other networks expect preferred are used by default.
+默认使用除首选网络外的所有其他网络。
 
 #### fallback_delay
 
-!!! question "Since sing-box 1.11.0"
+!!! question "自 sing-box 1.11.0 起"
 
 !!! quote ""
 
-    Only supported in graphical clients on Android and Apple platforms with `auto_detect_interface` enabled.
+    仅在启用了 `auto_detect_interface` 的 Android 与 Apple 平台图形客户端中支持。
 
-The length of time to wait before spawning a RFC 6555 Fast Fallback connection.
+在生成 RFC 6555 快速回退连接之前等待的时间长度。
 
-For `domain_strategy`, is the amount of time to wait for connection to succeed before assuming
-that IPv4/IPv6 is misconfigured and falling back to other type of addresses.
+对于 `domain_strategy`，是在假设之前等待 IPv6 成功的时间量如果设置了 "prefer_ipv4"，则 IPv6 配置错误并回退到 IPv4。
 
-For `network_strategy`, is the amount of time to wait for connection to succeed before falling
-back to other interfaces.
+对于 `network_strategy`，对于 `network_strategy`，是在回退到其他接口之前等待连接成功的时间。
 
-Only take effect when `domain_strategy` or `network_strategy` is set.
+仅当 `domain_strategy` 或 `network_strategy` 已设置时生效。
 
-- 默认值：`300ms`
+默认使用 `300ms`。
 
 #### domain_strategy
 

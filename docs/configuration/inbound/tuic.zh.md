@@ -55,13 +55,13 @@ QUIC 拥塞控制算法
 
 可选值: `cubic`, `new_reno`, `bbr`
 
-- 默认值：`cubic`
+默认使用 `cubic`。
 
 #### auth_timeout
 
 服务器等待客户端发送认证命令的时间
 
-- 默认值：`3s`
+默认使用 `3s`。
 
 #### zero_rtt_handshake
 
@@ -76,16 +76,13 @@ QUIC 拥塞控制算法
 
 发送心跳包以保持连接存活的时间间隔
 
-- 默认值：`10s`
+默认使用 `10s`。
 
 #### tls
 
 ==必填==
 
 TLS 配置, 参阅 [TLS](/zh/configuration/shared/tls/#入站)。
-
-#### users.name
-
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

@@ -64,11 +64,12 @@ Extra headers of HTTP request.
 
 !!! question "Since sing-box 1.15.0"
 
+
 HTTP version.
 
 Available values: `1`, `2`, `3`.
 
-`2` is used by default, or `1` if `path` or the `Host` header is set.
+`2` will be used by default, or `1` if `path` or the `Host` header is set.
 
 `path` and the `Host` header are only available for `1`.
 
@@ -77,6 +78,7 @@ When `3`, [HTTP2 Fields](#http2-fields) are replaced by [QUIC Fields](#quic-fiel
 #### disable_version_fallback
 
 !!! question "Since sing-box 1.15.0"
+
 
 Disable automatic fallback to lower HTTP version.
 

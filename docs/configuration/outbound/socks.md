@@ -7,8 +7,8 @@
 {
   "type": "socks",
   "tag": "socks-out",
-  "server": "127.0.0.1",
-  "server_port": 1080,
+  "server": "",
+  "server_port": 0,
   "version": "5",
   "username": "sekai",
   "password": "admin",

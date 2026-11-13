@@ -1,9 +1,5 @@
 defaults:
   heading: '### Fields'
-
 pages:
-
 - file: outbound/trojan.md
   defs:
-  - name: trojan
-    registry: Outbound

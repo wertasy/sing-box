@@ -1,0 +1,7 @@
+defaults:
+  heading: '### Fields'
+pages:
+- file: network-namespace/index.md
+  defs:
+  - name: network-namespace
+    root: NetworkNamespace

@@ -1,0 +1,7 @@
+defaults:
+  heading: '### Fields'
+pages:
+- file: shared/udp-nat.md
+  defs:
+  - name: udp-nat
+    root: UDPNATOptions

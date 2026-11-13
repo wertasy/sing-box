@@ -105,9 +105,9 @@ func renderTagLine(entries []FlattenEntry, node *SchemaNode, index *SchemaIndex,
 	var lines []string
 	if tags.Default != "" {
 		if lang == "zh" {
-			lines = append(lines, "- 默认值：`"+tags.Default+"`")
+			lines = append(lines, "默认使用 `"+tags.Default+"`。")
 		} else {
-			lines = append(lines, "- Default: `"+tags.Default+"`")
+			lines = append(lines, "`"+tags.Default+"` will be used by default.")
 		}
 	}
 	if tags.Enum != "" {
@@ -160,17 +160,20 @@ func renderTagLine(entries []FlattenEntry, node *SchemaNode, index *SchemaIndex,
 //	@indicator: Server only         -> ==Server only==
 //	@since 1.11.0                   -> !!! question "Since sing-box 1.11.0"
 //	                                   (zh: !!! question "自 sing-box 1.11.0 起")
+//	@Deprecated in 1.14.0:          -> !!! failure "Deprecated in sing-box 1.14.0"
+//	                                   (zh: !!! failure "已在 sing-box 1.14.0 废弃")
 //	@note                           -> !!! note
 //	@note: Some title               -> !!! note "Some title"
 //	@note: ""                       -> !!! note ""
 //	@admonition question "Free .."  -> !!! question "Free .." (generic form)
 //	@tab "With auto_redirect"       -> === "With auto_redirect"
 var (
-	requiredMarker   = "@Required"
-	indicatorPrefix  = "@Indicator: "
-	admonitionPrefix = "@Admonition "
-	sincePrefix      = "@Since "
-	tabPrefix        = "@Tab "
+	requiredMarker     = "@Required"
+	indicatorPrefix    = "@Indicator: "
+	admonitionPrefix   = "@Admonition "
+	sincePrefix        = "@Since "
+	deprecatedInPrefix = "@Deprecated in "
+	tabPrefix          = "@Tab "
 )
 
 // admonitionTypes enumerates the mkdocs admonition types accepted by the
@@ -213,9 +216,19 @@ func renderAdmonition(admonitionType string, title string, titled bool) string {
 	return "!!! " + admonitionType + ` "` + title + `"`
 }
 
-// markerRank orders the metadata blocks that documentation descriptions keep
-// after the field description: required banner, status indicators, version
-// hints, admonitions, then tabbed presentations. Zero means "not a marker".
+// Marker ranks used to order metadata blocks after the field description:
+// version hints (@Since), deprecation notices (@Deprecated in <version>:),
+// then the remaining markers (@Required, @Indicator, admonitions, tabs) which
+// keep their relative source order.
+const (
+	markerRankRequired   = 1
+	markerRankIndicator  = 2
+	markerRankSince      = 3
+	markerRankDeprecated = 4
+	markerRankAdmonition = 5
+	markerRankTab        = 6
+)
+
 // hasPrefixFold reports whether s starts with prefix, ignoring case.
 func hasPrefixFold(s, prefix string) bool {
 	return len(s) >= len(prefix) && strings.EqualFold(s[:len(prefix)], prefix)
@@ -229,18 +242,23 @@ func cutPrefixFold(s, prefix string) (string, bool) {
 	return s[len(prefix):], true
 }
 
+// markerRank reports the order rank of a metadata marker line. Zero means
+// "not a marker".
 func markerRank(line string) int {
 	if strings.EqualFold(line, requiredMarker) {
-		return 1
+		return markerRankRequired
 	}
 	if hasPrefixFold(line, indicatorPrefix) {
-		return 2
+		return markerRankIndicator
 	}
 	if hasPrefixFold(line, sincePrefix) {
-		return 3
+		return markerRankSince
+	}
+	if hasPrefixFold(line, deprecatedInPrefix) {
+		return markerRankDeprecated
 	}
 	if hasPrefixFold(line, tabPrefix) {
-		return 5
+		return markerRankTab
 	}
 	if !strings.HasPrefix(line, "@") {
 		return 0
@@ -250,7 +268,7 @@ func markerRank(line string) int {
 		name = name[:index]
 	}
 	if name == "admonition" || admonitionTypes[name] {
-		return 4
+		return markerRankAdmonition
 	}
 	return 0
 }
@@ -286,41 +304,73 @@ func splitMarkerGroups(prose []string) ([]string, [][]string) {
 	return trimBlankLines(description), groups
 }
 
-// markersFirst restores the rendering order: marker blocks first (in source
-// order), then the field description. Go comments are authored with the
-// description first for readability, so this pass runs before rendering.
-func markersFirst(prose []string) []string {
+// orderMarkers reassembles prose as: @Since groups first, then @Deprecated
+// in <version>: groups, then every other group (required banners, quotes,
+// warnings, tabs), with the field description last. Go comments are authored
+// with the description first for readability, so this pass runs before
+// rendering.
+func orderMarkers(prose []string) []string {
 	description, groups := splitMarkerGroups(prose)
 	if len(groups) == 0 || len(description) == 0 {
 		return prose
 	}
-	out := make([]string, 0, len(prose))
+	var since, deprecated, rest [][]string
 	for _, group := range groups {
+		switch markerRank(group[0]) {
+		case markerRankSince:
+			since = append(since, group)
+		case markerRankDeprecated:
+			deprecated = append(deprecated, group)
+		default:
+			rest = append(rest, group)
+		}
+	}
+	// @Since keeps its rendered position above the field description, exactly
+	// as in the hand-written documentation; deprecation notices follow, then
+	// the remaining groups (required banners, quotes, warnings, tabs), and the
+	// description comes last.
+	out := make([]string, 0, len(prose))
+	for _, group := range since {
 		if len(out) > 0 {
 			out = append(out, "")
 		}
 		out = append(out, group...)
 	}
-	out = append(out, "")
+	for _, group := range deprecated {
+		if len(out) > 0 {
+			out = append(out, "")
+		}
+		out = append(out, group...)
+	}
+	if len(out) > 0 {
+		out = append(out, "")
+	}
+	for _, group := range rest {
+		out = append(out, group...)
+	}
+	if len(out) > 0 {
+		out = append(out, "")
+	}
 	out = append(out, description...)
 	return out
 }
 
 // reorderDescription moves marker blocks after the field description, in the
-// fixed order required, indicators, version hints, admonitions, tabs; this is
-// the schema description order (JSON consumers read the description first).
+// fixed order required, indicators, version hints, deprecation notices,
+// admonitions, tabs; this is the schema description order (JSON consumers
+// read the description first).
 func reorderDescription(prose []string) []string {
 	description, groups := splitMarkerGroups(prose)
 	if len(groups) == 0 || len(description) == 0 {
 		return prose
 	}
-	ordered := make([][][]string, 6)
+	ordered := make([][][]string, markerRankTab+1)
 	for _, group := range groups {
 		rank := markerRank(group[0])
 		ordered[rank] = append(ordered[rank], group)
 	}
 	out := append([]string{}, description...)
-	for rank := 1; rank < len(ordered); rank++ {
+	for rank := markerRankRequired; rank < len(ordered); rank++ {
 		for _, block := range ordered[rank] {
 			out = append(out, "")
 			out = append(out, block...)
@@ -371,6 +421,18 @@ func expandProse(prose []string, pageLang string, proseLang string) []string {
 			} else {
 				expanded = append(expanded, indent+`!!! question "Since sing-box `+version+`"`)
 			}
+		case hasPrefixFold(trimmed, deprecatedInPrefix):
+			// `@Deprecated in <version>:` renders like a failure admonition;
+			// indented body lines below the marker follow verbatim.
+			version := strings.TrimSpace(trimmed[len(deprecatedInPrefix):])
+			if index := strings.IndexByte(version, ':'); index >= 0 {
+				version = version[:index]
+			}
+			if proseLang == "zh" {
+				expanded = append(expanded, indent+`!!! failure "已在 sing-box `+version+` 废弃"`)
+			} else {
+				expanded = append(expanded, indent+`!!! failure "Deprecated in sing-box `+version+`"`)
+			}
 		case hasPrefixFold(trimmed, admonitionPrefix):
 			// A quoted title renders verbatim; without quotes the marker is
 			// emitted bare (mkdocs default title), distinguishing it from the
@@ -393,10 +455,11 @@ func expandProse(prose []string, pageLang string, proseLang string) []string {
 	return expanded
 }
 
-// renderFieldBlock renders one `#### <key>` block in the requested language.
-func renderFieldBlock(entryKey string, prose []string, tagLines []string) string {
+// renderFieldBlock renders one `<level> <key>` field block in the requested
+// language; the heading level follows the section heading of the page.
+func renderFieldBlock(entryKey string, prose []string, tagLines []string, level int) string {
 	var block strings.Builder
-	block.WriteString("#### " + entryKey + "\n\n")
+	block.WriteString(strings.Repeat("#", level) + " " + entryKey + "\n\n")
 	if len(prose) > 0 {
 		block.WriteString(strings.Join(prose, "\n"))
 		block.WriteString("\n")
@@ -409,26 +472,84 @@ func renderFieldBlock(entryKey string, prose []string, tagLines []string) string
 	return strings.TrimSuffix(block.String(), "\n")
 }
 
-var headingPattern = regexp.MustCompile(`^### `)
-var fieldHeadingPattern = regexp.MustCompile(`^#### `)
+// atxHeadingLevel returns the level of an ATX heading line (`#` to `######`
+// followed by a space), or zero for non-heading lines.
+func atxHeadingLevel(line string) int {
+	level := 0
+	for level < len(line) && line[level] == '#' {
+		level++
+	}
+	if level > 0 && level <= 6 && len(line) > level && line[level] == ' ' {
+		return level
+	}
+	return 0
+}
+
+// headingText strips the ATX level markers from a heading line.
+func headingText(line string) string {
+	return strings.TrimSpace(strings.TrimLeft(line, "#"))
+}
 
 type sectionLocation struct {
 	headingIndex int
 	endIndex     int // exclusive
+	level        int // heading level of the section heading
+}
+
+// newSectionLocation bounds a section that starts at headingIndex: the
+// section ends before the next heading at the same or a shallower level.
+// Headings inside an existing generated marker region do not bound the
+// section; the region is delimited by its markers instead.
+func newSectionLocation(headingLine string, headingIndex int, lines []string) sectionLocation {
+	level := atxHeadingLevel(headingLine)
+	end := len(lines)
+	inMarker := false
+	for inner := headingIndex + 1; inner < len(lines); inner++ {
+		switch lines[inner] {
+		case markerStart:
+			inMarker = true
+			continue
+		case markerEnd:
+			inMarker = false
+			continue
+		}
+		if inMarker {
+			continue
+		}
+		if current := atxHeadingLevel(lines[inner]); current > 0 && current <= level {
+			end = inner
+			break
+		}
+	}
+	return sectionLocation{headingIndex: headingIndex, endIndex: end, level: level}
+}
+
+// locateHeading finds a heading by text: an exact full-line match wins
+// (including the authored level), otherwise the first ATX heading whose text
+// matches is accepted regardless of level. The heading argument may carry its
+// level markers ("### Fields") or be the bare text ("Fields").
+func locateHeading(lines []string, heading string) (sectionLocation, bool) {
+	for index, line := range lines {
+		if line == heading {
+			return newSectionLocation(line, index, lines), true
+		}
+	}
+	text := heading
+	if atxHeadingLevel(heading) > 0 {
+		text = headingText(heading)
+	}
+	pattern := regexp.MustCompile(`^#{1,6} ` + regexp.QuoteMeta(text) + `$`)
+	for index, line := range lines {
+		if pattern.MatchString(line) {
+			return newSectionLocation(line, index, lines), true
+		}
+	}
+	return sectionLocation{}, false
 }
 
 func locateSection(lines []string, heading string) (sectionLocation, error) {
-	for index, line := range lines {
-		if line == heading {
-			end := len(lines)
-			for inner := index + 1; inner < len(lines); inner++ {
-				if headingPattern.MatchString(lines[inner]) {
-					end = inner
-					break
-				}
-			}
-			return sectionLocation{headingIndex: index, endIndex: end}, nil
-		}
+	if location, found := locateHeading(lines, heading); found {
+		return location, nil
 	}
 	return sectionLocation{}, fmt.Errorf("heading %q not found", heading)
 }
@@ -443,6 +564,19 @@ type sectionParts struct {
 
 func splitSection(lines []string, location sectionLocation, format string) (sectionParts, error) {
 	parts := sectionParts{oldProse: make(map[string][]string)}
+	// Within the section, headings deeper than the section heading are field
+	// keys: plain headings exactly one level below, plus dotted nested keys at
+	// any deeper level. Deeper plain headings are prose.
+	fieldKey := func(line string) (string, bool) {
+		level := atxHeadingLevel(line)
+		if level <= location.level {
+			return "", false
+		}
+		if level > location.level+1 && !nestedHeadingPattern.MatchString(line) {
+			return "", false
+		}
+		return headingText(line), true
+	}
 	content := lines[location.headingIndex+1 : location.endIndex]
 	// Remove the blank line following the heading.
 	if len(content) > 0 && content[0] == "" {
@@ -476,8 +610,7 @@ func splitSection(lines []string, location sectionLocation, format string) (sect
 		if inMarker {
 			// Field headings inside an existing generated region still
 			// define the previous order, keeping re-runs stable.
-			if fieldHeadingPattern.MatchString(line) {
-				key := strings.TrimSpace(strings.TrimPrefix(line, "####"))
+			if key, ok := fieldKey(line); ok {
 				if _, loaded := parts.oldProse[key]; !loaded {
 					parts.oldOrder = append(parts.oldOrder, key)
 					parts.oldProse[key] = nil
@@ -485,8 +618,7 @@ func splitSection(lines []string, location sectionLocation, format string) (sect
 			}
 			continue
 		}
-		if fieldHeadingPattern.MatchString(line) {
-			key := strings.TrimSpace(strings.TrimPrefix(line, "####"))
+		if key, ok := fieldKey(line); ok {
 			if key == "" {
 				return parts, fmt.Errorf("empty field heading at offset %d", offset)
 			}
@@ -505,7 +637,7 @@ func splitSection(lines []string, location sectionLocation, format string) (sect
 		// stays outside the markers.
 		first := -1
 		for offset, line := range content {
-			if fieldHeadingPattern.MatchString(line) {
+			if _, ok := fieldKey(line); ok {
 				first = offset
 				break
 			}
@@ -520,9 +652,7 @@ func splitSection(lines []string, location sectionLocation, format string) (sect
 		start = first
 		end = len(content) - 1
 		for offset := first; offset <= end; offset++ {
-			line := content[offset]
-			if fieldHeadingPattern.MatchString(line) {
-				key := strings.TrimSpace(strings.TrimPrefix(line, "####"))
+			if key, ok := fieldKey(content[offset]); ok {
 				if _, loaded := parts.oldProse[key]; !loaded {
 					parts.oldOrder = append(parts.oldOrder, key)
 					parts.oldProse[key] = nil
@@ -588,32 +718,49 @@ func spliceSection(lines []string, location sectionLocation, replacement []strin
 }
 
 // twinHeadingByOrdinal maps an English section heading to the localized twin
-// heading with the same ordinal among level-3 headings.
-func twinHeadingByOrdinal(enLines []string, enHeading string, zhLines []string) (string, error) {
-	ordinal := 0
-	seen := 0
-	for _, line := range enLines {
-		if !headingPattern.MatchString(line) {
+// heading with the same ordinal among headings of the same level. The English
+// heading is located level-insensitively, so pages whose baseline uses a
+// different heading level resolve identically.
+// headingIndexes returns the line indexes of ATX headings outside fenced
+// code blocks, so `#` lines inside JSON examples do not shift ordinals.
+func headingIndexes(lines []string) []int {
+	var indexes []int
+	inFence := false
+	for index, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		if strings.HasPrefix(trimmed, "```") || strings.HasPrefix(trimmed, "~~~") {
+			inFence = !inFence
 			continue
 		}
-		seen++
-		if line == enHeading {
-			ordinal = seen
-			break
+		if inFence {
+			continue
+		}
+		if atxHeadingLevel(line) > 0 {
+			indexes = append(indexes, index)
 		}
 	}
-	if ordinal == 0 {
+	return indexes
+}
+
+func twinHeadingByOrdinal(enLines []string, enHeading string, zhLines []string) (string, error) {
+	enLocation, found := locateHeading(enLines, enHeading)
+	if !found {
 		return "", fmt.Errorf("twin heading: %q not found in english page", enHeading)
 	}
-	seen = 0
-	for _, line := range zhLines {
-		if !headingPattern.MatchString(line) {
-			continue
+	// Map by the ordinal of the heading in the whole document: localized
+	// pages mirror the english structure but may use legacy levels for
+	// structural sections, so the level itself must not take part in the
+	// mapping. Heading indexes skip fenced code blocks.
+	ordinal := 0
+	for _, index := range headingIndexes(enLines) {
+		if index > enLocation.headingIndex {
+			break
 		}
-		seen++
-		if seen == ordinal {
-			return line, nil
-		}
+		ordinal++
 	}
-	return "", fmt.Errorf("twin heading: localized page has no level-3 heading #%d for %q", ordinal, enHeading)
+	zhIndexes := headingIndexes(zhLines)
+	if ordinal == 0 || ordinal > len(zhIndexes) {
+		return "", fmt.Errorf("twin heading: localized page has no heading #%d for %q", ordinal, enHeading)
+	}
+	return zhLines[zhIndexes[ordinal-1]], nil
 }

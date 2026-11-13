@@ -83,17 +83,20 @@ Client version. Random version will be used if empty.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Allowed ciphers. Default values are used if empty.
 
 #### mac
 
 !!! question "Since sing-box 1.14.0"
 
+
 Allowed MAC algorithms. Default values are used if empty.
 
 #### kex_algorithm
 
 !!! question "Since sing-box 1.14.0"
+
 
 Allowed key exchange algorithms. Default values are used if empty.
 

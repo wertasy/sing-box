@@ -311,6 +311,7 @@ DNS 查询类型。值可以为整数或者类型名称字符串。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 匹配查询中的 `edns0-subnet` OPT 附加记录（EDNS 客户端子网）。
 
 列出的前缀在不比收到的客户端子网更具体、且包含其地址时匹配。
@@ -320,6 +321,7 @@ DNS 查询类型。值可以为整数或者类型名称字符串。
 #### query_dnssec
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 匹配设置了 DNSSEC OK (`DO`) 位的查询。
 
@@ -377,6 +379,7 @@ DNS 查询类型。值可以为整数或者类型名称字符串。
 
 !!! question "自 sing-box 1.8.0 起"
 
+
 匹配非公开源 IP。
 
 #### source_port
@@ -428,6 +431,7 @@ DNS 查询类型。值可以为整数或者类型名称字符串。
 #### package_name_regex
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 使用正则表达式匹配 Android 应用包名。
 
@@ -538,6 +542,7 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 匹配指定 DNS 服务器的首选域名。
 
 | 类型            | 匹配                                                          |
@@ -553,6 +558,7 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 
 !!! question "自 sing-box 1.15.0 起"
 
+
 匹配指定 DNS 服务器的服务器地址。
 
 | 类型            | 匹配                               |
@@ -567,6 +573,7 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 #### dns_search_domain
 
 !!! question "自 sing-box 1.15.0 起"
+
 
 匹配指定 DNS 服务器的搜索域。
 
@@ -599,6 +606,7 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 
 !!! question "自 sing-box 1.8.0 起"
 
+
 匹配[规则集](/zh/configuration/route/#rule_set)。
 
 #### rule_set_ipcidr_match_source
@@ -617,11 +625,13 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 
 !!! question "自 sing-box 1.10.0 起"
 
+
 使规则集中的 `ip_cidr` 规则匹配源 IP。
 
 #### match_response
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 启用响应匹配。启用后，此规则将匹配已评估的响应（由前序 [`evaluate`](/zh/configuration/dns/rule_action/#evaluate) 动作设置），而不仅是匹配原始查询。
 
@@ -635,6 +645,7 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 #### ip_accept_any
 
 !!! question "自 sing-box 1.12.0 起"
+
 
 当 DNS 查询响应包含至少一个地址时匹配。
 
@@ -682,45 +693,6 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 
     已移动到 [DNS 规则动作](../rule_action#route).
 
-#### ip_cidr
-
-!!! question "自 sing-box 1.9.0 起"
-
-与查询响应匹配 IP CIDR。
-
-作为旧版地址筛选字段已废弃。请改为配合 `match_response` 使用，
-参阅[迁移指南](/zh/migration/#迁移地址筛选字段到响应匹配)。
-
-#### ip_is_private
-
-!!! question "自 sing-box 1.9.0 起"
-
-与查询响应匹配非公开 IP。
-
-作为旧版地址筛选字段已废弃。请改为配合 `match_response` 使用，
-参阅[迁移指南](/zh/migration/#迁移地址筛选字段到响应匹配)。
-
-#### geoip
-
-!!! failure "已在 sing-box 1.12.0 中被移除"
-
-    GeoIP 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
-
-与查询响应匹配 GeoIP。
-
-#### rule_set_ip_cidr_accept_empty
-
-!!! question "自 sing-box 1.10.0 起"
-
-!!! failure "已在 sing-box 1.14.0 废弃"
-
-    `rule_set_ip_cidr_accept_empty` 已废弃且将在 sing-box 1.16.0 中被移除，
-    参阅[迁移指南](/zh/migration/#迁移地址筛选字段到响应匹配)。
-
-使规则集中的 `ip_cidr` 规则接受空查询响应。
-
-- 已废弃。
-
 <!-- AUTO-GENERATED-CONFIG-END -->
 
 ### 旧版地址筛选字段
@@ -755,6 +727,7 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 
 !!! question "自 sing-box 1.9.0 起"
 
+
 与查询响应匹配 IP CIDR。
 
 作为旧版地址筛选字段已废弃。请改为配合 `match_response` 使用，
@@ -763,6 +736,7 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 #### ip_is_private
 
 !!! question "自 sing-box 1.9.0 起"
+
 
 与查询响应匹配非公开 IP。
 
@@ -779,48 +753,6 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
     参阅[迁移指南](/zh/migration/#迁移地址筛选字段到响应匹配)。
 
 使规则集中的 `ip_cidr` 规则接受空查询响应。
-
-- 已废弃。
-
-#### outbound
-
-!!! failure "已在 sing-box 1.12.0 废弃"
-
-    `outbound` 规则项已废弃且将在 sing-box 1.14.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-outbound-dns-规则项到域解析选项)。
-
-匹配出站。
-
-`any` 可作为值用于匹配任意出站。
-
-#### geosite
-
-!!! failure "已在 sing-box 1.12.0 中被移除"
-
-    GeoSite 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geosite-到规则集)。
-
-匹配 Geosite。
-
-- 已废弃。
-
-#### source_geoip
-
-!!! failure "已在 sing-box 1.12.0 中被移除"
-
-    GeoIP 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
-
-匹配源 GeoIP。
-
-#### rule_set_ipcidr_match_source
-
-!!! question "自 sing-box 1.9.0 起"
-
-!!! failure "已在 sing-box 1.10.0 废弃"
-
-    `rule_set_ipcidr_match_source` 已重命名为 `rule_set_ip_cidr_match_source` 且将在 sing-box 1.11.0 中被移除。
-
-使规则集中的 `ip_cidr` 规则匹配源 IP。
-
-- 已废弃。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 
@@ -859,67 +791,6 @@ Available values: `wifi`, `cellular`, `ethernet` and `other`.
 匹配 DNS 额外记录。
 
 记录格式与 [predefined 动作 extra](/zh/configuration/dns/rule_action/#extra) 中相同。
-
-#### outbound
-
-!!! failure "已在 sing-box 1.12.0 废弃"
-
-    `outbound` 规则项已废弃且将在 sing-box 1.14.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-outbound-dns-规则项到域解析选项)。
-
-匹配出站。
-
-`any` 可作为值用于匹配任意出站。
-
-#### geosite
-
-!!! failure "已在 sing-box 1.12.0 中被移除"
-
-    GeoSite 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geosite-到规则集)。
-
-匹配 Geosite。
-
-- 已废弃。
-
-#### source_geoip
-
-!!! failure "已在 sing-box 1.12.0 中被移除"
-
-    GeoIP 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
-
-匹配源 GeoIP。
-
-#### geoip
-
-!!! failure "已在 sing-box 1.12.0 中被移除"
-
-    GeoIP 已在 sing-box 1.8.0 废弃且在 sing-box 1.12.0 中被移除，参阅 [迁移指南](/zh/migration/#迁移-geoip-到规则集)。
-
-与查询响应匹配 GeoIP。
-
-#### rule_set_ip_cidr_accept_empty
-
-!!! question "自 sing-box 1.10.0 起"
-
-!!! failure "已在 sing-box 1.14.0 废弃"
-
-    `rule_set_ip_cidr_accept_empty` 已废弃且将在 sing-box 1.16.0 中被移除，
-    参阅[迁移指南](/zh/migration/#迁移地址筛选字段到响应匹配)。
-
-使规则集中的 `ip_cidr` 规则接受空查询响应。
-
-- 已废弃。
-
-#### rule_set_ipcidr_match_source
-
-!!! question "自 sing-box 1.9.0 起"
-
-!!! failure "已在 sing-box 1.10.0 废弃"
-
-    `rule_set_ipcidr_match_source` 已重命名为 `rule_set_ip_cidr_match_source` 且将在 sing-box 1.11.0 中被移除。
-
-使规则集中的 `ip_cidr` 规则匹配源 IP。
-
-- 已废弃。
 
 <!-- AUTO-GENERATED-CONFIG-END -->
 

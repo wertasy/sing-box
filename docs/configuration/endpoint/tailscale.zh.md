@@ -68,7 +68,7 @@ icon: material/new-box
 
 示例：`$HOME/.tailscale`
 
-- 默认值：`tailscale`
+默认使用 `tailscale`。
 
 #### auth_key
 
@@ -82,7 +82,7 @@ icon: material/new-box
 
 协调服务器 URL。
 
-- 默认值：`https://controlplane.tailscale.com`
+默认使用 `https://controlplane.tailscale.com`。
 
 #### ephemeral
 
@@ -93,6 +93,7 @@ icon: material/new-box
 !!! question "自 sing-box 1.14.0 起"
 
     在 iOS、tvOS 和 Android 上，默认使用设备名称。
+
 
 节点的主机名。
 
@@ -130,6 +131,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 为此节点通告的标签，用于 ACL 执行。
 
 示例：`["tag:server"]`
@@ -137,6 +139,7 @@ icon: material/new-box
 #### listen_port
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 监听 WireGuard 和点对点流量的 UDP 端口。
 
@@ -146,11 +149,13 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 监听来自其他 Tailscale 节点的中继连接的端口。
 
 #### relay_server_static_endpoints
 
 !!! question "自 sing-box 1.13.0 起"
+
 
 为中继服务器通告的静态端点。
 
@@ -158,11 +163,13 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 为 Tailscale 创建系统 TUN 接口。
 
 #### system_interface_name
 
 !!! question "自 sing-box 1.13.0 起"
+
 
 自定义 TUN 接口名。默认使用 `tailscale`（macOS 上为 `utun`）。
 
@@ -170,17 +177,19 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.13.0 起"
 
+
 覆盖 TUN 的 MTU。默认使用 Tailscale 自己的 MTU。
 
 #### udp_timeout
 
 UDP NAT 过期时间。
 
-- 默认值：`5m`
+默认使用 `5m`。
 
 #### ssh_server
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 在 tailnet 的 TCP 22 端口上运行 Tailscale SSH 服务器。
 
@@ -226,15 +235,17 @@ UDP NAT 过期时间。
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 存储从 tailnet 对等节点接收到的文件的目录。
 
 相对路径基于工作目录解析，与 [state_directory](#state_directory) 相同。
 
-- 默认值：`Taildrop`
+默认使用 `Taildrop`。
 
 #### on_demand
 
 !!! question "自 sing-box 1.15.0 起"
+
 
 允许该 endpoint 在需要时断开连接。
 

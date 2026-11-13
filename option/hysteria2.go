@@ -14,16 +14,28 @@ import (
 	M "github.com/sagernet/sing/common/metadata"
 )
 
+// @Doc up_mbps, down_mbps:
+//
+//	Max bandwidth, in Mbps.
+//
+//	Not limited if empty.
+//
+//	Conflict with `ignore_client_bandwidth`.
 type Hysteria2InboundOptions struct {
 	ListenOptions
+
 	// @Omit
 	UpMbps int `json:"up_mbps,omitempty"`
+
 	// @Omit
 	DownMbps int `json:"down_mbps,omitempty"`
+
 	// @Omit
 	Obfs *Hysteria2Obfs `json:"obfs,omitempty"`
+
 	// Hysteria2 users
 	Users []Hysteria2User `json:"users,omitempty"`
+
 	// *When `up_mbps` and `down_mbps` are not set*:
 	//
 	// Commands clients to use the BBR CC instead of Hysteria CC.
@@ -32,6 +44,7 @@ type Hysteria2InboundOptions struct {
 	//
 	// Deny clients to use the BBR CC.
 	IgnoreClientBandwidth bool `json:"ignore_client_bandwidth,omitempty"`
+
 	// @Override:
 	//
 	//    @Required
@@ -39,6 +52,7 @@ type Hysteria2InboundOptions struct {
 	//    TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
 	InboundTLSOptionsContainer
 	QUICOptions
+
 	// HTTP3 server behavior (URL string configuration) when authentication fails.
 	//
 	// | Scheme       | Example                 | Description        |
@@ -50,14 +64,17 @@ type Hysteria2InboundOptions struct {
 	//
 	// A 404 page will be returned if masquerade is not configured.
 	Masquerade *Hysteria2Masquerade `json:"masquerade,omitempty"`
+
 	// BBR congestion control algorithm profile, one of `conservative` `standard` `aggressive`.
 	//
 	// @Default: standard
 	//
 	// @Since 1.14.0
 	BBRProfile string `json:"bbr_profile,omitempty" enum:"standard,conservative,aggressive"`
+
 	// Enable debug information logging for Hysteria Brutal CC.
 	BrutalDebug bool `json:"brutal_debug,omitempty"`
+
 	// Register this inbound to a Hysteria Realm rendezvous service to enable NAT traversal.
 	//
 	// See [Hysteria Realm](/configuration/service/hysteria-realm/) for the rendezvous service.
@@ -71,28 +88,34 @@ type Hysteria2Realm struct {
 	//
 	// @Required
 	ServerURL string `json:"server_url"`
+
 	// Bearer token for the realm. Must match one of `users[].token` configured on the realm.
 	Token string `json:"token,omitempty"`
+
 	// The same slot identifier the target Hysteria2 server registered.
 	//
 	// @Required
 	RealmID string `json:"realm_id"`
+
 	// List of STUN servers (`host` or `host:port`) used to discover this client's public addresses.
 	//
 	// Domain names are resolved using [`domain_resolver`](/configuration/shared/dial/#domain_resolver) from Dial Fields.
 	//
 	// @Required
 	STUNServers LegacyListable[string] `json:"stun_servers"`
+
 	// Restrict realm connections (STUN, hole punching, and the resulting QUIC path) to a single IP version.
 	//
 	// `4` or `6`. Both are used if empty.
 	IPVersion int `json:"ip_version,omitempty" enum:"0,4,6"`
+
 	// Maintain a UDP port mapping on the local gateway via UPnP or NAT-PMP.
 	//
 	// Improves hole-punching reliability behind gateways that support it.
 	//
 	// Requires IPv4: conflicts with `"ip_version": 6`.
 	PortMapping *Hysteria2RealmPortMapping `json:"port_mapping,omitempty"`
+
 	// HTTP client used to talk to the realm.
 	//
 	// See [HTTP Client](/configuration/shared/http-client/) for details.
@@ -108,10 +131,12 @@ func (r Hysteria2Realm) STUNServersIsDomain() bool {
 type Hysteria2RealmPortMapping struct {
 	// Enable port mapping.
 	Enabled bool `json:"enabled,omitempty"`
+
 	// Timeout for gateway discovery and mapping operations.
 	//
 	// @Default: 10s
 	Timeout badoption.Duration `json:"timeout,omitempty"`
+
 	// Lease lifetime of the mapping.
 	//
 	// @Default: 10m
@@ -119,7 +144,29 @@ type Hysteria2RealmPortMapping struct {
 }
 
 type Hysteria2InboundRealm struct {
+	// @Override realm_id:
+	//    @Required
+	//
+	//    Slot identifier on the realm.
+	//
+	//    1–64 characters, must match `^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$`.
+	//
+	//    Outbounds must use the same `realm_id` to find this server.
+	//
+	// @Override stun_servers:
+	//    @Required
+	//
+	//    List of STUN servers (`host` or `host:port`) used to discover public addresses.
+	//
+	// @Override ip_version:
+	//    Restrict realm connections (STUN, hole punching, and the resulting QUIC path) to a single IP version.
+	//
+	//    `4` or `6`. Both are used if empty.
+	//
+	//    The `listen` address must be compatible with the selected version.
+	//
 	Hysteria2Realm
+
 	// Set domain resolver to use for resolving STUN server domain names.
 	//
 	// This option uses the same format as the [route DNS rule action](/configuration/dns/rule_action/#route) without the `action` field.
@@ -137,6 +184,7 @@ type Hysteria2ObfsGecko struct {
 	//
 	// @Since 1.14.0
 	MinPacketSize int `json:"min_packet_size,omitempty"`
+
 	// Maximum on-wire packet size in bytes. Gecko only.
 	//
 	// @Default: 1200
@@ -150,6 +198,7 @@ type _Hysteria2Obfs struct {
 	//
 	// Disabled if empty.
 	Type string `json:"type,omitempty" enum:"salamander,gecko"`
+
 	// QUIC traffic obfuscator password.
 	Password     string             `json:"password,omitempty"`
 	GeckoOptions Hysteria2ObfsGecko `json:"-"`
@@ -200,6 +249,7 @@ func (o Hysteria2Obfs) DescribeSchema(builder schema.Builder) (*schema.Node, err
 
 type Hysteria2User struct {
 	Name string `json:"name,omitempty"`
+
 	// Authentication password
 	Password string `json:"password,omitempty"`
 }
@@ -297,6 +347,7 @@ type Hysteria2MasqueradeFile struct {
 type Hysteria2MasqueradeProxy struct {
 	// Reverse proxy target URL.
 	URL string `json:"url"`
+
 	// Rewrite the `Host` header to the target URL.
 	RewriteHost bool `json:"rewrite_host,omitempty"`
 }
@@ -304,61 +355,97 @@ type Hysteria2MasqueradeProxy struct {
 type Hysteria2MasqueradeString struct {
 	// Fixed response status code.
 	StatusCode int `json:"status_code,omitempty"`
+
 	// Fixed response headers.
 	Headers badoption.HTTPHeader `json:"headers,omitempty"`
+
 	// Fixed response content.
 	Content string `json:"content"`
 }
 
+// @Doc up_mbps, down_mbps:
+//
+//	Max bandwidth, in Mbps.
+//
+//	If empty, the BBR congestion control algorithm will be used instead of Hysteria CC.
 type Hysteria2OutboundOptions struct {
 	DialerOptions
+
+	// @Override server:
+	//    @Required
+	//
+	//    The server address.
+	//
+	//    Conflicts with `realm`.
+	//
+	// @Override server_port:
+	//    @Required
+	//
+	//    The server port.
+	//
+	//    Ignored if `server_ports` is set.
+	//
+	//    Conflicts with `realm`.
+	//
 	ServerOptions
+
 	// Server port range list.
 	//
 	// Conflicts with `server_port` and `realm`.
 	//
 	// @Since 1.11.0
 	ServerPorts LegacyListable[string] `json:"server_ports,omitempty"`
+
 	// Port hopping interval.
 	//
 	// @Default: 30s
 	//
 	// @Since 1.11.0
 	HopInterval badoption.Duration `json:"hop_interval,omitempty"`
+
 	// Maximum port hopping interval, used for randomization.
 	//
 	// If set, the actual hop interval will be randomly chosen between `hop_interval` and `hop_interval_max`.
 	//
 	// @Since 1.14.0
 	HopIntervalMax badoption.Duration `json:"hop_interval_max,omitempty"`
+
 	// @Omit
 	UpMbps int `json:"up_mbps,omitempty"`
+
 	// @Omit
 	DownMbps int `json:"down_mbps,omitempty"`
+
 	// @Omit
 	Obfs *Hysteria2Obfs `json:"obfs,omitempty"`
+
 	// Authentication password.
 	Password string `json:"password,omitempty"`
+
 	// Enabled network
 	//
 	// One of `tcp` `udp`.
 	//
 	// Both is enabled by default.
 	Network NetworkList `json:"network,omitempty"`
+
 	// @Override:
 	//    @Required
 	//
 	//    TLS configuration, see [TLS](/configuration/shared/tls/#outbound).
 	OutboundTLSOptionsContainer
 	QUICOptions
+
 	// BBR congestion control algorithm profile, one of `conservative` `standard` `aggressive`.
 	//
 	// @Default: standard
 	//
 	// @Since 1.14.0
 	BBRProfile string `json:"bbr_profile,omitempty" enum:"standard,conservative,aggressive"`
+
 	// Enable debug information logging for Hysteria Brutal CC.
 	BrutalDebug bool `json:"brutal_debug,omitempty"`
+
 	// Disable Chrome QUIC fingerprint parroting.
 	//
 	// If it is not disabled, the client's QUIC handshake is made to parrot Chrome's, so that Hysteria traffic
@@ -376,6 +463,7 @@ type Hysteria2OutboundOptions struct {
 	//     Chrome does not declare support for Ed25519, so a server using an Ed25519 certificate will fail the
 	//     handshake. Use an ECDSA or RSA certificate instead.
 	DisableChromeParrot bool `json:"disable_chrome_parrot,omitempty"`
+
 	// Connect to a Hysteria2 server through a Hysteria Realm rendezvous service.
 	//
 	// Conflicts with `server`, `server_port` and `server_ports`.
@@ -393,25 +481,27 @@ type HysteriaRealmUser struct {
 	//
 	// @Required
 	Name string `json:"name"`
+
 	// Bearer token presented by Hysteria2 inbounds and outbounds via `Authorization: Bearer <token>`.
 	//
 	// @Required
 	Token string `json:"token"`
+
 	// Maximum number of realm slots this user may hold concurrently.
 	MaxRealms int `json:"max_realms,omitempty"`
 }
 
 type HysteriaRealmServiceOptions struct {
 	ListenOptions
+
 	// @Override:
-	//
-	//    @Required
 	//
 	//    TLS configuration, see [TLS](/configuration/shared/tls/#inbound).
 	//
 	//    When configured, the realm serves HTTP/2 over TLS; otherwise plain HTTP/1.1.
 	InboundTLSOptionsContainer
 	HTTP2Options
+
 	// Authorized users.
 	//
 	// @Example:

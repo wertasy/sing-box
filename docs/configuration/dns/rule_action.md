@@ -42,6 +42,7 @@ The action to perform. `route` will be used by default.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Only available with `route`, `respond`, `reject` and `predefined` actions.
 
 Requires [`match_response`](/configuration/dns/rule/#match_response) (for logical rules, in sub-rules).
@@ -94,6 +95,7 @@ Tag of target server.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Conflict with `race`. Has no effect without a preceding `race` rule.
 
 By default, no query is sent in parallel with pending race rules: a matched `route` action
@@ -104,11 +106,11 @@ the pending race rules; its response is used only after none of the race rules m
 
 #### strategy
 
+!!! question "Since sing-box 1.12.0"
+
 !!! failure "Deprecated in sing-box 1.14.0"
 
     `strategy` is deprecated in sing-box 1.14.0 and will be removed in sing-box 1.16.0.
-
-!!! question "Since sing-box 1.12.0"
 
 Set domain strategy for this query.
 
@@ -122,6 +124,7 @@ Disable cache and save cache in this query.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Disable optimistic DNS caching in this query.
 
 #### rewrite_ttl
@@ -131,6 +134,7 @@ Rewrite TTL in DNS responses.
 #### timeout
 
 !!! question "Since sing-box 1.14.0"
+
 
 Override the DNS query timeout for matched queries.
 
@@ -147,6 +151,7 @@ Will override `dns.client_subnet`.
 #### remove_client_subnet
 
 !!! question "Since sing-box 1.14.0"
+
 
 Remove the `edns0-subnet` OPT extra record from the query, and suppress `dns.client_subnet`.
 
@@ -201,6 +206,7 @@ A tagged response is only referenced via [`match_response`](/configuration/dns/r
 
 !!! question "Since sing-box 1.14.0"
 
+
 Has no effect without a preceding `race` rule.
 
 By default, no query is sent in parallel with pending race rules: a matched `evaluate` action
@@ -217,6 +223,7 @@ Disable cache and save cache in this query.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Disable optimistic DNS caching in this query.
 
 #### rewrite_ttl
@@ -226,6 +233,7 @@ Rewrite TTL in DNS responses.
 #### timeout
 
 !!! question "Since sing-box 1.14.0"
+
 
 Override the DNS query timeout for matched queries.
 
@@ -243,17 +251,18 @@ Will override `dns.client_subnet`.
 
 !!! question "Since sing-box 1.14.0"
 
+
 Remove the `edns0-subnet` OPT extra record from the query, and suppress `dns.client_subnet`.
 
 Conflict with `client_subnet`.
 
 #### strategy
 
+!!! question "Since sing-box 1.12.0"
+
 !!! failure "Deprecated in sing-box 1.14.0"
 
     `strategy` is deprecated in sing-box 1.14.0 and will be removed in sing-box 1.16.0.
-
-!!! question "Since sing-box 1.12.0"
 
 Set domain strategy for this query.
 
@@ -353,7 +362,7 @@ The response code.
 | `NOTIMP`   | `not_implemented`                | Not implemented |
 | `REFUSED`  | `refused`                        | Refused         |
 
-- Default: `NOERROR`
+`NOERROR` will be used by default.
 
 #### answer
 

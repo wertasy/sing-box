@@ -411,7 +411,6 @@ TunInboundOptions.route_address: |-
   @Since 1.10.0
 
 TunInboundOptions.route_address_set: |-
-  @Since 1.10.0
 
   @Tab "`auto_redirect` 已启用"
 
@@ -440,7 +439,6 @@ TunInboundOptions.route_exclude_address: |-
   @Since 1.10.0
 
 TunInboundOptions.route_exclude_address_set: |-
-  @Since 1.10.0
 
   @Tab "`auto_redirect` 已启用"
 

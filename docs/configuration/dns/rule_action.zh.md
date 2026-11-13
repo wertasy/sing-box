@@ -42,6 +42,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 仅可用于 `route`、`respond`、`reject` 和 `predefined` 动作。
 
 需要 [`match_response`](/zh/configuration/dns/rule/#match_response)（对 logical 规则，位于子规则中）。
@@ -87,6 +88,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 与 `race` 冲突。没有前序竞态规则时无效果。
 
 默认情况下，查询决不与未判定的竞态规则并行发出：已匹配的 `route` 动作扣住其查询，直到所有竞态规则均未匹配后才发送。
@@ -113,6 +115,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 在此查询中禁用乐观 DNS 缓存。
 
 #### rewrite_ttl
@@ -122,6 +125,7 @@ icon: material/new-box
 #### timeout
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 覆盖匹配查询的 DNS 查询超时时间。
 
@@ -138,6 +142,7 @@ icon: material/new-box
 #### remove_client_subnet
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 移除查询中的 `edns0-subnet` OPT 附加记录，并抑制 `dns.client_subnet`。
 
@@ -190,6 +195,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 没有前序竞态规则时无效果。
 
 默认情况下，查询决不与未判定的竞态规则并行发出：已匹配的 `evaluate` 动作扣住其查询，规则匹配在此处停止，直到所有竞态规则均未匹配。
@@ -204,6 +210,7 @@ icon: material/new-box
 
 !!! question "自 sing-box 1.14.0 起"
 
+
 在此查询中禁用乐观 DNS 缓存。
 
 #### rewrite_ttl
@@ -213,6 +220,7 @@ icon: material/new-box
 #### timeout
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 覆盖匹配查询的 DNS 查询超时时间。
 
@@ -229,6 +237,7 @@ icon: material/new-box
 #### remove_client_subnet
 
 !!! question "自 sing-box 1.14.0 起"
+
 
 移除查询中的 `edns0-subnet` OPT 附加记录，并抑制 `dns.client_subnet`。
 
@@ -340,7 +349,7 @@ icon: material/new-box
 | `NOTIMP`   | `not_implemented`  | Not implemented |
 | `REFUSED`  | `refused`          | Refused         |
 
-- 默认值：`NOERROR`
+默认使用 `NOERROR`。
 
 #### answer
 

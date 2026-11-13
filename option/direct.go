@@ -9,16 +9,19 @@ import (
 
 type DirectInboundOptions struct {
 	ListenOptions
+
 	// Listen network, one of `tcp` `udp`.
 	//
 	// Both if empty.
 	//
 	// @Example: "udp"
 	Network NetworkList `json:"network,omitempty"`
+
 	// Override the connection destination address.
 	//
 	// @Example: "1.0.0.1"
 	OverrideAddress string `json:"override_address,omitempty"`
+
 	// Override the connection destination port.
 	//
 	// @Example: 53
@@ -27,11 +30,24 @@ type DirectInboundOptions struct {
 
 type _DirectOutboundOptions struct {
 	DialerOptions
-	// @Deprecated: Use Route Action instead
+
+	// @Deprecated in 1.11.0:
+	//
+	//     Destination override fields are deprecated in sing-box 1.11.0 and will be removed in sing-box 1.13.0, see [Migration](/migration/#migrate-destination-override-fields-to-route-options).
+	//
+	// Override the connection destination address.
 	OverrideAddress string `json:"override_address,omitempty" schema:"omit"`
-	// @Deprecated: Use Route Action instead
+
+	// @Deprecated in 1.11.0:
+	//
+	//     Destination override fields are deprecated in sing-box 1.11.0 and will be removed in sing-box 1.13.0, see [Migration](/migration/#migrate-destination-override-fields-to-route-options).
+	//
+	// Override the connection destination port.
+	//
+	// Protocol value can be `1` or `2`.
 	OverridePort uint16 `json:"override_port,omitempty" schema:"omit"`
-	// @Deprecated: removed
+
+	// Deprecated: removed
 	ProxyProtocol uint8 `json:"proxy_protocol,omitempty" schema:"omit"`
 }
 
